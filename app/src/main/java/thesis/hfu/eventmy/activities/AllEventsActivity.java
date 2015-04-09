@@ -5,19 +5,15 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.Toast;
-
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
-
 import org.apache.http.Header;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.ArrayList;
-
 import thesis.hfu.eventmy.R;
 import thesis.hfu.eventmy.database.DBconnection;
 import thesis.hfu.eventmy.functions.BuildJSON;
@@ -26,8 +22,10 @@ import thesis.hfu.eventmy.list_decoration.DividerItemDecoration;
 import thesis.hfu.eventmy.objects.AllEventsListAdapter;
 import thesis.hfu.eventmy.objects.Event;
 
+import java.util.ArrayList;
 
-public class AllEvents extends Activity{
+
+public class AllEventsActivity extends Activity{
 
     private ImageButton addEventButton;
     private RecyclerView allEventsRecycler;
@@ -96,8 +94,11 @@ public class AllEvents extends Activity{
             }
 
             @Override
-            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                super.onFailure(statusCode, headers, throwable, errorResponse);
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                Log.d("schlecht", statusCode + "");
+                Log.d("schlecht",headers.toString());
+                Log.d("schlecht",responseString);
+                Log.d("schlecht", throwable.toString());
             }
         });
 

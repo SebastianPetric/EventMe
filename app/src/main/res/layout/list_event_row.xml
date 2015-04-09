@@ -59,7 +59,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:text="12"
+                        android:text="0"
                         android:id="@+id/textViewListRowEventOrganizer" android:layout_marginTop="5dp"
                         android:layout_gravity="center_horizontal" android:layout_marginBottom="10dp"/>
             </LinearLayout>
@@ -78,7 +78,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:text="23"
+                        android:text="0"
                         android:id="@+id/textViewListRowEventCosts" android:layout_marginTop="5dp"
                         android:layout_gravity="center_horizontal" android:layout_marginBottom="10dp"/>
             </LinearLayout>
@@ -98,7 +98,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:text="75"
+                        android:text="0"
                         android:id="@+id/textViewlistRowEventPercentage" android:layout_marginTop="5dp"
                         android:layout_gravity="center_horizontal" android:layout_marginBottom="10dp"/>
             </LinearLayout>

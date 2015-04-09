@@ -92,7 +92,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:id="@+id/textViewNewTaskEditorField" android:layout_marginLeft="10dp" android:text="Sebastian"
+                        android:id="@+id/textViewNewTaskEditorField" android:layout_marginLeft="10dp"
                         android:layout_gravity="center_vertical"/>
             </LinearLayout>
             <RelativeLayout
@@ -113,7 +113,7 @@
         <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/edit_task_finish_button"
+                android:text="@string/new_task_finish_button"
                 android:id="@+id/buttonNewTaskFinishButton" android:layout_gravity="right" android:layout_marginRight="23dp"
                 android:layout_marginTop="23dp"/>
     </LinearLayout>

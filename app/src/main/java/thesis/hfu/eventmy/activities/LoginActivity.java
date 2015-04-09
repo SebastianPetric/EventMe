@@ -90,7 +90,7 @@ public class LoginActivity extends ActionBarActivity {
                     Toast.makeText(getApplicationContext(), response.getString(MESSAGE), Toast.LENGTH_SHORT).show();
                     if (response.getInt(STATUS) == 200) {
                         CheckSharedPreferences.getInstance().setPreferances(getApplicationContext(),response.getString(USER_ID));
-                        Intent intent= new Intent(getApplicationContext(),AllEvents.class);
+                        Intent intent= new Intent(getApplicationContext(),AllEventsActivity.class);
                         startActivity(intent);
                     }
                 } catch (JSONException e) {

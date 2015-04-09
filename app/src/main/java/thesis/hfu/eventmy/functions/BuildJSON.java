@@ -30,6 +30,11 @@ public class BuildJSON {
     private static final String STATUS_FRIEND="status_friend";
     private static final String COSTS_OF_EVENT="costs_of_event";
     private static final String NUM_ORGANIZERS_EVENT="num_organizers_event";
+    private static final String EDITOR_ID="editor_id";
+    private static final String TASK="task";
+    private static final String DESCRIPTION="description";
+    private static final String QUANTITY="quantity";
+
 
 
     public static BuildJSON getInstance () {
@@ -81,6 +86,18 @@ public class BuildJSON {
         params.put(OWNER_ID,Integer.parseInt(owner_id));
         return params;
     }
+
+
+    public RequestParams createTaskJSON(int event_id,String editor_id,String task,String description,String quantity) {
+
+        RequestParams params= new RequestParams();
+        params.put(EVENT_ID, event_id);
+        params.put(EDITOR_ID,Integer.parseInt(editor_id));
+        params.put(TASK,task);
+        params.put(DESCRIPTION,description);
+        params.put(QUANTITY,quantity);
+        return params;
+    }
     public RequestParams updateAllEventsJSON(String user_id) {
 
         RequestParams params= new RequestParams();
@@ -111,7 +128,7 @@ public class BuildJSON {
             int event_id = jsonArray.getJSONObject(i).getInt(EVENT_ID);
             String name= jsonArray.getJSONObject(i).getString(NAME);
             String location= jsonArray.getJSONObject(i).getString(LOCATION);
-            int costsOfEvent=Integer.parseInt(jsonArray.getJSONObject(i).getString(COSTS_OF_EVENT));
+            double costsOfEvent=Double.parseDouble(jsonArray.getJSONObject(i).getString(COSTS_OF_EVENT));
             int numOrganizersEvent=Integer.parseInt(jsonArray.getJSONObject(i).getString(NUM_ORGANIZERS_EVENT));
             DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
             Date date=null;

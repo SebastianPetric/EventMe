@@ -32,8 +32,13 @@
         </activity>
 
         <activity
-            android:name=".activities.AllEvents"
+            android:name=".activities.AllEventsActivity"
             android:label="Alle Events" >
+        </activity>
+
+        <activity
+                android:name=".activities.CreateTaskActivity"
+                android:label="Aufgabe erstellen" >
         </activity>
     </application>
 

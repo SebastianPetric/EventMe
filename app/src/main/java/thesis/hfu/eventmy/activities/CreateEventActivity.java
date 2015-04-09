@@ -103,7 +103,7 @@ public class CreateEventActivity extends Activity {
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 try {
                     Toast.makeText(getApplicationContext(),response.getString(MESSAGE).toString(),Toast.LENGTH_SHORT).show();
-                    Intent intent= new Intent(getApplicationContext(),AllEvents.class);
+                    Intent intent= new Intent(getApplicationContext(),AllEventsActivity.class);
                     startActivity(intent);
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -114,7 +114,7 @@ public class CreateEventActivity extends Activity {
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
                 try {
                     Toast.makeText(getApplicationContext(),errorResponse.getString(MESSAGE).toString(),Toast.LENGTH_SHORT).show();
-                    Intent intent= new Intent(getApplicationContext(),AllEvents.class);
+                    Intent intent= new Intent(getApplicationContext(),AllEventsActivity.class);
                     startActivity(intent);
                 } catch (JSONException e) {
                     e.printStackTrace();
