@@ -40,6 +40,11 @@
                 android:name=".activities.CreateTaskActivity"
                 android:label="Aufgabe erstellen" >
         </activity>
+
+        <activity
+                android:name=".activities.AllTasksOfEventActivity"
+                android:label="Alle Aufgaben" >
+        </activity>
     </application>
 
     <!--  Internet Permissions -->

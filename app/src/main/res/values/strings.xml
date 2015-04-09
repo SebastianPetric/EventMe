@@ -22,6 +22,10 @@
     <!-- ALL EVENTS SCREEN -->
     <string name="all_events_header">Alle Events</string>
 
+    <!-- ALL TASKS OF EVENT SCREEN -->
+    <string name="all_tasks_of_event_header">Alle Aufgaben</string>
+
+
     <!-- TASKS OF EVENT SCREEN -->
     <string name="tasks_of_event_header">Aufgaben</string>
     <string name="tasks_of_event_eventName">Event XY</string>

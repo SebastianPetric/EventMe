@@ -18,6 +18,10 @@ public class Event {
         this.location=location;
     }
 
+    //----------------------------------------------------------------------
+    //-----------------Getter and Setter-------------------------------------
+    //----------------------------------------------------------------------
+
     public int getEvent_id() {
         return event_id;
     }
@@ -36,27 +40,21 @@ public class Event {
     public void setDate(Date date) {
         this.date = date;
     }
-
     public String getLocation() {
         return location;
     }
-
     public void setLocation(String location) {
         this.location = location;
     }
-
     public double getCosts() {
         return costs;
     }
-
     public void setCosts(int costs) {
         this.costs = costs;
     }
-
     public int getNumOrganizers() {
         return numOrganizers;
     }
-
     public void setNumOrganizers(int numOrganizers) {
         this.numOrganizers = numOrganizers;
     }

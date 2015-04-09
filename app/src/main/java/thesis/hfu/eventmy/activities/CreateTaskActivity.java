@@ -4,7 +4,6 @@ package thesis.hfu.eventmy.activities;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.*;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -97,14 +96,6 @@ public class CreateTaskActivity extends Activity{
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-            }
-
-            @Override
-            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-                Log.d("schlecht",statusCode+"");
-                Log.d("schlecht",headers.toString());
-                Log.d("schlecht",responseString);
-                Log.d("schlecht",throwable.toString());
             }
         });
 
