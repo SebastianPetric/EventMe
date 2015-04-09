@@ -1,18 +1,16 @@
 package thesis.hfu.eventmy.functions;
 
 import com.loopj.android.http.RequestParams;
-
 import org.json.JSONArray;
 import org.json.JSONException;
+import thesis.hfu.eventmy.objects.Event;
+import thesis.hfu.eventmy.objects.User;
 
-import java.util.Date;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-
-import thesis.hfu.eventmy.objects.Event;
-import thesis.hfu.eventmy.objects.User;
+import java.util.Date;
 
 public class BuildJSON {
 
@@ -115,7 +113,6 @@ public class BuildJSON {
             try {
                 date = (Date) df.parse(jsonArray.getJSONObject(i).getString(DATE));
                 String newDateString = df.format(date);
-                System.out.println(newDateString);
             } catch (ParseException e) {
                 e.printStackTrace();
             }

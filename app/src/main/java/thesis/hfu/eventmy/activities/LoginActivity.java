@@ -3,6 +3,7 @@ package thesis.hfu.eventmy.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -63,7 +64,7 @@ public class LoginActivity extends ActionBarActivity {
                if(v.getId()==R.id.loginButton){
 
                    if(!getEmailField().equals(EMPTY_STRING)&&!getPasswordField().equals(EMPTY_STRING)) {
-                       if (CheckIf.getInstance().EmailIsValid(getEmailField())) {
+                       if (CheckIf.EmailIsValid(getEmailField())) {
                             login(getEmailField(),getPasswordField());
                        }else{
                            Toast.makeText(getApplicationContext(),ERROR_EMAIL,Toast.LENGTH_SHORT).show();
@@ -89,7 +90,7 @@ public class LoginActivity extends ActionBarActivity {
                     Toast.makeText(getApplicationContext(), response.getString(MESSAGE), Toast.LENGTH_SHORT).show();
                     if (response.getInt(STATUS) == 200) {
                         CheckSharedPreferences.getInstance().setPreferances(getApplicationContext(),response.getString(USER_ID));
-                        Intent intent= new Intent(getApplicationContext(),CreateEventActivity.class);
+                        Intent intent= new Intent(getApplicationContext(),AllEvents.class);
                         startActivity(intent);
                     }
                 } catch (JSONException e) {
@@ -99,6 +100,8 @@ public class LoginActivity extends ActionBarActivity {
 
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                Log.d("schlecht",statusCode+"");
+
                 try {
                     Toast.makeText(getApplicationContext(), errorResponse.getString(MESSAGE), Toast.LENGTH_SHORT).show();
                 } catch (JSONException e) {

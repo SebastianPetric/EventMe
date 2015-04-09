@@ -16,7 +16,7 @@
             <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="EventName"
                     android:id="@+id/textViewListRowEventName" android:layout_marginLeft="12dp"
                     android:layout_marginTop="10dp"/>
@@ -28,7 +28,7 @@
                 android:text="Location"
                 android:id="@+id/textViewListRowEventLocation"
                 android:layout_marginLeft="12dp"
-                android:layout_marginTop="10dp" />
+                android:layout_marginTop="5dp" />
 
             <TextView
                     android:layout_width="wrap_content"
@@ -49,7 +49,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="0.33333333333" android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp">
-                <ImageButton android:layout_width="45dp" android:layout_height="45dp"
+                <ImageButton android:layout_width="wrap_content" android:layout_height="wrap_content"
                              android:layout_alignParentRight="true" android:layout_alignParentEnd="true"
                              android:layout_alignParentBottom="true" android:src="@drawable/organizers_icon"
                              android:id="@+id/imageButtonListRowEventOrganizer"
@@ -60,7 +60,7 @@
                         android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:text="12"
-                        android:id="@+id/textViewListRowEventOrganizer" android:layout_marginTop="10dp"
+                        android:id="@+id/textViewListRowEventOrganizer" android:layout_marginTop="5dp"
                         android:layout_gravity="center_horizontal" android:layout_marginBottom="10dp"/>
             </LinearLayout>
             <LinearLayout
@@ -79,7 +79,7 @@
                         android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:text="23"
-                        android:id="@+id/textViewListRowEventCosts" android:layout_marginTop="10dp"
+                        android:id="@+id/textViewListRowEventCosts" android:layout_marginTop="5dp"
                         android:layout_gravity="center_horizontal" android:layout_marginBottom="10dp"/>
             </LinearLayout>
             <LinearLayout
@@ -99,7 +99,7 @@
                         android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:text="75"
-                        android:id="@+id/textViewlistRowEventPercentage" android:layout_marginTop="10dp"
+                        android:id="@+id/textViewlistRowEventPercentage" android:layout_marginTop="5dp"
                         android:layout_gravity="center_horizontal" android:layout_marginBottom="10dp"/>
             </LinearLayout>
         </LinearLayout>

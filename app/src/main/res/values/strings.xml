@@ -53,7 +53,7 @@
     <string name="new_event_header">Event erstellen</string>
     <string name="new_event_date">Datum:</string>
     <string name="new_event_date_field"></string>
-    <string name="new_event_name">Eventart</string>
+    <string name="new_event_name">Event</string>
     <string name="new_event_location">Location</string>
     <string name="new_event_finish_button">Erstellen</string>
 

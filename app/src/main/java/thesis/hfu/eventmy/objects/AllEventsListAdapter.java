@@ -8,10 +8,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
+import thesis.hfu.eventmy.R;
 
 import java.util.ArrayList;
-
-import thesis.hfu.eventmy.R;
 
 public class AllEventsListAdapter extends
         RecyclerView.Adapter<AllEventsListAdapter.MyViewHolder> {
@@ -37,7 +36,7 @@ public class AllEventsListAdapter extends
 
         viewHolder.name.setText(event.getName());
         viewHolder.location.setText(event.getLocation());
-        viewHolder.date.setText(event.getDate().getDay()+"."+event.getDate().getMonth()+"."+event.getDate().getYear());
+        viewHolder.date.setText(event.getDate().getDate()+"."+(event.getDate().getMonth()+1)+"."+event.getDate().getYear());
     }
 
     @Override
