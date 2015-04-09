@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+    <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
+        <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.50" android:layout_marginTop="10dp" android:layout_marginBottom="10dp">
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="EventName"
+                    android:id="@+id/textViewListRowEventName" android:layout_marginLeft="12dp"
+                    android:layout_marginTop="10dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="Location"
+                android:id="@+id/textViewListRowEventLocation"
+                android:layout_marginLeft="12dp"
+                android:layout_marginTop="10dp" />
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:text="Datum"
+                    android:id="@+id/textViewListRowEventDate" android:layout_marginTop="5dp" android:layout_marginLeft="12dp"
+                    android:layout_marginBottom="10dp"/>
+        </LinearLayout>
+        <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.50">
+            <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.33333333333" android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp">
+                <ImageButton android:layout_width="45dp" android:layout_height="45dp"
+                             android:layout_alignParentRight="true" android:layout_alignParentEnd="true"
+                             android:layout_alignParentBottom="true" android:src="@drawable/organizers_icon"
+                             android:id="@+id/imageButtonListRowEventOrganizer"
+                             android:background="@drawable/icons_shape" android:layout_gravity="center_horizontal"
+                             android:layout_marginTop="10dp"/>
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:text="12"
+                        android:id="@+id/textViewListRowEventOrganizer" android:layout_marginTop="10dp"
+                        android:layout_gravity="center_horizontal" android:layout_marginBottom="10dp"/>
+            </LinearLayout>
+            <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.33333333333" android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp">
+                <ImageButton android:layout_width="wrap_content" android:layout_height="wrap_content"
+                             android:layout_alignParentRight="true" android:layout_alignParentEnd="true"
+                             android:layout_alignParentBottom="true" android:src="@drawable/euro_icon"
+                             android:id="@+id/imageButtonListRowEventCosts" android:background="@drawable/icons_shape"
+                             android:layout_gravity="center_horizontal" android:layout_marginTop="10dp"/>
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:text="23"
+                        android:id="@+id/textViewListRowEventCosts" android:layout_marginTop="10dp"
+                        android:layout_gravity="center_horizontal" android:layout_marginBottom="10dp"/>
+            </LinearLayout>
+            <LinearLayout
+                    android:orientation="vertical"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.33333333333" android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp">
+                <ImageButton android:layout_width="wrap_content" android:layout_height="wrap_content"
+                             android:layout_alignParentRight="true" android:layout_alignParentEnd="true"
+                             android:layout_alignParentBottom="true" android:src="@drawable/percentage_icon"
+                             android:id="@+id/imageButtonlistRowEventPercentage"
+                             android:background="@drawable/icons_shape" android:layout_gravity="center_horizontal"
+                             android:layout_marginTop="10dp"/>
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:text="75"
+                        android:id="@+id/textViewlistRowEventPercentage" android:layout_marginTop="10dp"
+                        android:layout_gravity="center_horizontal" android:layout_marginBottom="10dp"/>
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>
