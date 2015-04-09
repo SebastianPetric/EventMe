@@ -4,6 +4,7 @@ import com.loopj.android.http.RequestParams;
 import org.json.JSONArray;
 import org.json.JSONException;
 import thesis.hfu.eventmy.objects.Event;
+import thesis.hfu.eventmy.objects.Task;
 import thesis.hfu.eventmy.objects.User;
 
 import java.text.DateFormat;
@@ -34,6 +35,10 @@ public class BuildJSON {
     private static final String TASK="task";
     private static final String DESCRIPTION="description";
     private static final String QUANTITY="quantity";
+    private static final String TASK_ID="task_id";
+    private static final String COSTS_OF_TASK="costs_of_task";
+    private static final String PERCENTAGE_OF_TASK="percentage_of_task";
+    private static final String EDITOR_NAME="editor_name";
 
 
 
@@ -88,11 +93,11 @@ public class BuildJSON {
     }
 
 
-    public RequestParams createTaskJSON(int event_id,String editor_id,String task,String description,String quantity) {
+    public RequestParams createTaskJSON(int event_id,int editor_id,String task,String description,String quantity) {
 
         RequestParams params= new RequestParams();
         params.put(EVENT_ID, event_id);
-        params.put(EDITOR_ID,Integer.parseInt(editor_id));
+        params.put(EDITOR_ID,editor_id);
         params.put(TASK,task);
         params.put(DESCRIPTION,description);
         params.put(QUANTITY,quantity);
@@ -102,6 +107,13 @@ public class BuildJSON {
 
         RequestParams params= new RequestParams();
         params.put(USER_ID, Integer.parseInt(user_id));
+        return params;
+    }
+
+    public RequestParams updateAllTasksJSON(int event_id) {
+
+        RequestParams params= new RequestParams();
+        params.put(EVENT_ID, event_id);
         return params;
     }
 
@@ -124,24 +136,44 @@ public class BuildJSON {
     public ArrayList<Event> getAllEventsJSON(JSONArray jsonArray) throws JSONException {
         ArrayList<Event> eventList= new ArrayList<>();
 
-        for(int i=0;i<jsonArray.length();i++){
+        for(int i=0;i<jsonArray.length();i++) {
             int event_id = jsonArray.getJSONObject(i).getInt(EVENT_ID);
-            String name= jsonArray.getJSONObject(i).getString(NAME);
-            String location= jsonArray.getJSONObject(i).getString(LOCATION);
-            double costsOfEvent=Double.parseDouble(jsonArray.getJSONObject(i).getString(COSTS_OF_EVENT));
-            int numOrganizersEvent=Integer.parseInt(jsonArray.getJSONObject(i).getString(NUM_ORGANIZERS_EVENT));
+            String name = jsonArray.getJSONObject(i).getString(NAME);
+            String location = jsonArray.getJSONObject(i).getString(LOCATION);
+            double costsOfEvent = Double.parseDouble(jsonArray.getJSONObject(i).getString(COSTS_OF_EVENT));
+            int numOrganizersEvent = Integer.parseInt(jsonArray.getJSONObject(i).getString(NUM_ORGANIZERS_EVENT));
             DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-            Date date=null;
+            Date date = null;
             try {
                 date = (Date) df.parse(jsonArray.getJSONObject(i).getString(DATE));
-                String newDateString = df.format(date);
             } catch (ParseException e) {
                 e.printStackTrace();
             }
-            Event event= new Event(event_id,costsOfEvent,numOrganizersEvent,name,location,date);
+            Event event = new Event(event_id, costsOfEvent, numOrganizersEvent, name, location, date);
             eventList.add(event);
         }
         return eventList;
     }
+
+    public ArrayList<Task>  getAllTasksOfEventJSON(JSONArray jsonArray) throws JSONException {
+        ArrayList<Task> taskList= new ArrayList<>();
+
+        for(int i=0;i<jsonArray.length();i++) {
+            int task_id=jsonArray.getJSONObject(i).getInt(TASK_ID);
+            int event_id=jsonArray.getJSONObject(i).getInt(EVENT_ID);
+            String task=jsonArray.getJSONObject(i).getString(TASK);
+            String quantity=jsonArray.getJSONObject(i).getString(QUANTITY);
+            String description=jsonArray.getJSONObject(i).getString(DESCRIPTION);
+            Double costs_of_task=jsonArray.getJSONObject(i).getDouble(COSTS_OF_TASK);
+            int percentage_of_task=jsonArray.getJSONObject(i).getInt(PERCENTAGE_OF_TASK);
+            String editor_name=jsonArray.getJSONObject(i).getString(EDITOR_NAME);
+            int editor_id=jsonArray.getJSONObject(i).getInt(EDITOR_ID);
+
+            Task newTask= new Task(task_id,event_id,percentage_of_task,editor_id,costs_of_task,task, quantity,description,editor_name);
+            taskList.add(newTask);
+        }
+        return taskList;
+    }
+
 }
 

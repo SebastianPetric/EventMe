@@ -28,6 +28,7 @@ public class CreateTaskActivity extends Activity{
     private static final String EMPTY_STRING= "";
     private static final String MESSAGE= "message";
     private static final String DEFAULT= "";
+    private static final String DEFAULT_EDITOR= "-1";
     private static final String EVENT_ID= "event_id";
     private static final String ERROR_TASK= "Geben Sie eine Aufgabe an!";
 
@@ -41,6 +42,7 @@ public class CreateTaskActivity extends Activity{
 
 
         if(CheckSharedPreferences.getInstance().isLoggedIn(getApplicationContext())){
+            setEditor(R.id.textViewNewTaskEditorField);
             setTask(R.id.editTextNewTaskNameField);
             setQuantity(R.id.editTextNewTaskQuantityField);
             setDescription(R.id.editTextNewTaskNoteField);
@@ -52,8 +54,6 @@ public class CreateTaskActivity extends Activity{
             CheckSharedPreferences.getInstance().endSession(getApplicationContext());
         }
     }
-
-
 
     public class CustomClickListener implements View.OnClickListener{
 
@@ -67,10 +67,10 @@ public class CreateTaskActivity extends Activity{
                     }else if(getDescriptionField().equals(EMPTY_STRING)){
                         setDescriptionField(DEFAULT);
                     }else if(getEditorField().equals(EMPTY_STRING)){
-                        setEditorField(DEFAULT);
+                        setEditorField(DEFAULT_EDITOR);
                     }
                     if(CheckSharedPreferences.getInstance().isLoggedIn(getApplicationContext())){
-                        createTask(getEvent_id(),"3",getTaskField(),DEFAULT,DEFAULT);
+                        createTask(getEvent_id(),-1,getTaskField(),DEFAULT,DEFAULT);
                     }else{
                         CheckSharedPreferences.getInstance().endSession(getApplicationContext());
                     }
@@ -82,7 +82,11 @@ public class CreateTaskActivity extends Activity{
     }
 
 
-    public void createTask(int event_id,String editor_id,String task,String description,String quantity){
+    //----------------------------------------------------------------------
+    //-----------------Functions-------------------------------------
+    //----------------------------------------------------------------------
+
+    public void createTask(int event_id,int editor_id,String task,String description,String quantity){
 
         RequestParams params= BuildJSON.getInstance().createTaskJSON(event_id,editor_id,task,description,quantity);
         DBconnection.post(URL_CREATE_TASK,params,new JsonHttpResponseHandler(){
@@ -91,7 +95,8 @@ public class CreateTaskActivity extends Activity{
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 try {
                     Toast.makeText(getApplicationContext(),response.getString(MESSAGE),Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(getApplicationContext(),AllEventsActivity.class);
+                    Intent intent = new Intent(getApplicationContext(),AllTasksOfEventActivity.class);
+                    intent.putExtra(EVENT_ID,getEvent_id());
                     startActivity(intent);
                 } catch (JSONException e) {
                     e.printStackTrace();

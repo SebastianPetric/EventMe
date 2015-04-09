@@ -5,10 +5,10 @@ public class Task {
 
     private int task_id, event_id,percentage,editor_id;
     private double costOfTask;
-    private String task,quantity,description;
+    private String task,quantity,description,editor_name;
 
 
-    public Task(int task_id,int event_id,int percentage,int editor_id,double costOfTask, String task, String quantity,String description){
+    public Task(int task_id,int event_id,int percentage,int editor_id,double costOfTask, String task, String quantity,String description,String editor_name){
 
         this.task_id=task_id;
         this.event_id=event_id;
@@ -18,6 +18,7 @@ public class Task {
         this.costOfTask=costOfTask;
         this.quantity=quantity;
         this.description=description;
+        this.editor_name=editor_name;
     }
 
 
@@ -72,5 +73,11 @@ public class Task {
     }
     public void setDescription(String description) {
         this.description = description;
+    }
+    public String getEditor_name() {
+        return editor_name;
+    }
+    public void setEditor_name(String editor_name) {
+        this.editor_name = editor_name;
     }
 }

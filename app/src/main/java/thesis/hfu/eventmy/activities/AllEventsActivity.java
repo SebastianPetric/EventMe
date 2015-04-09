@@ -65,6 +65,8 @@ public class AllEventsActivity extends Activity{
             if(v.getId()==R.id.imageButtonAddNewEvent){
                 if(CheckSharedPreferences.getInstance().isLoggedIn(getApplicationContext())){
                     createEvent();
+                }else{
+                    CheckSharedPreferences.getInstance().endSession(getApplicationContext());
                 }
             }
         }
