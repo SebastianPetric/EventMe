@@ -4,12 +4,14 @@ package thesis.hfu.eventmy.objects;
 import java.util.Date;
 
 public class Event {
-    private int event_id;
+    private int event_id,costs,numOrganizers;
     private String name,location;
     private Date date=null;
 
-    public Event(int event_id,String name,String location, Date date){
+    public Event(int event_id,int costs, int numOrganizers,String name,String location, Date date){
         this.event_id=event_id;
+        this.costs=costs;
+        this.numOrganizers=numOrganizers;
         this.name=name;
         this.date=date;
         this.location=location;
@@ -40,5 +42,21 @@ public class Event {
 
     public void setLocation(String location) {
         this.location = location;
+    }
+
+    public int getCosts() {
+        return costs;
+    }
+
+    public void setCosts(int costs) {
+        this.costs = costs;
+    }
+
+    public int getNumOrganizers() {
+        return numOrganizers;
+    }
+
+    public void setNumOrganizers(int numOrganizers) {
+        this.numOrganizers = numOrganizers;
     }
 }

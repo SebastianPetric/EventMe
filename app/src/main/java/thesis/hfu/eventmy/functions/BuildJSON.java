@@ -28,6 +28,9 @@ public class BuildJSON {
     private static final String LOCATION="location";
     private static final String DATE="date";
     private static final String STATUS_FRIEND="status_friend";
+    private static final String COSTS_OF_EVENT="costs_of_event";
+    private static final String NUM_ORGANIZERS_EVENT="num_organizers_event";
+
 
     public static BuildJSON getInstance () {
         if (BuildJSON.instance == null) {
@@ -108,6 +111,8 @@ public class BuildJSON {
             int event_id = jsonArray.getJSONObject(i).getInt(EVENT_ID);
             String name= jsonArray.getJSONObject(i).getString(NAME);
             String location= jsonArray.getJSONObject(i).getString(LOCATION);
+            int costsOfEvent=Integer.parseInt(jsonArray.getJSONObject(i).getString(COSTS_OF_EVENT));
+            int numOrganizersEvent=Integer.parseInt(jsonArray.getJSONObject(i).getString(NUM_ORGANIZERS_EVENT));
             DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
             Date date=null;
             try {
@@ -116,7 +121,7 @@ public class BuildJSON {
             } catch (ParseException e) {
                 e.printStackTrace();
             }
-            Event event= new Event(event_id,name,location,date);
+            Event event= new Event(event_id,costsOfEvent,numOrganizersEvent,name,location,date);
             eventList.add(event);
         }
         return eventList;

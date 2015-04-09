@@ -17,9 +17,6 @@ public class AllEventsListAdapter extends
 
     private ArrayList<Event> events;
     private Context context;
-    private static final String MESSAGE = "message";
-
-    private static final String URL_GET_ALL_EVENTS= "get_all_events.php";
 
     public AllEventsListAdapter(Context context,ArrayList<Event> list) {
         this.events = list;
@@ -37,6 +34,8 @@ public class AllEventsListAdapter extends
         viewHolder.name.setText(event.getName());
         viewHolder.location.setText(event.getLocation());
         viewHolder.date.setText(event.getDate().getDate()+"."+(event.getDate().getMonth()+1)+"."+event.getDate().getYear());
+        viewHolder.costs.setText(String.valueOf(event.getCosts()));
+        viewHolder.numberOrganizers.setText(String.valueOf(event.getNumOrganizers()));
     }
 
     @Override
@@ -50,7 +49,7 @@ public class AllEventsListAdapter extends
     public class MyViewHolder extends RecyclerView.ViewHolder implements
             View.OnClickListener {
 
-        private TextView name,location,date,numberOrganizers,Costs,Percentage;
+        private TextView name,location,date,numberOrganizers,costs,Percentage;
 
         public MyViewHolder(View itemView) {
             super(itemView);
@@ -58,7 +57,7 @@ public class AllEventsListAdapter extends
             location = (TextView) itemView.findViewById(R.id.textViewListRowEventLocation);
             date= (TextView) itemView.findViewById(R.id.textViewListRowEventDate);
             numberOrganizers= (TextView) itemView.findViewById(R.id.textViewListRowEventOrganizer);
-            Costs= (TextView) itemView.findViewById(R.id.textViewListRowEventCosts);
+            costs= (TextView) itemView.findViewById(R.id.textViewListRowEventCosts);
             Percentage= (TextView) itemView.findViewById(R.id.textViewlistRowEventPercentage);
             itemView.setOnClickListener(this);
         }
