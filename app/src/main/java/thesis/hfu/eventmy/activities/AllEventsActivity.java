@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.Toast;
@@ -84,6 +85,7 @@ public class AllEventsActivity extends Activity{
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 try {
                     Toast.makeText(getApplicationContext(), response.getString(MESSAGE), Toast.LENGTH_SHORT).show();
+                    Log.d("gut", response.toString());
                     if(response.getInt(STATUS)==200) {
                         setEventList(BuildJSON.getInstance().getAllEventsJSON(response.getJSONArray(EVENTS)));
                         recAdapter = new AllEventsListAdapter(getApplicationContext(),getEventList());
@@ -92,6 +94,14 @@ public class AllEventsActivity extends Activity{
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+
+
+
+            }
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                Log.d("schlecht", headers.toString());
+                Log.d("schlecht",responseString);
+                Log.d("schlecht",throwable.toString());
             }
         });
 

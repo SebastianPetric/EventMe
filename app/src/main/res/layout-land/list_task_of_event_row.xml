@@ -12,7 +12,7 @@
                 android:orientation="vertical"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.50">
+                android:layout_weight="0.50" android:layout_marginLeft="12dp">
             <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -32,7 +32,7 @@
                 android:orientation="horizontal"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.50">
+                android:layout_weight="0.50" android:layout_marginRight="12dp">
             <LinearLayout
                     android:orientation="vertical"
                     android:layout_width="0dp"
@@ -48,7 +48,7 @@
                         android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:text="12"
-                        android:id="@+id/textViewListRowTaskOfEventOrganizer" android:layout_marginTop="10dp"
+                        android:id="@+id/textViewListRowTaskOfEventCosts" android:layout_marginTop="10dp"
                         android:layout_gravity="center_horizontal" android:layout_marginBottom="10dp"/>
             </LinearLayout>
             <LinearLayout
@@ -67,7 +67,7 @@
                         android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:text="23"
-                        android:id="@+id/textViewListRowTaskOfEventCosts" android:layout_marginTop="10dp"
+                        android:id="@+id/textViewListRowTaskOfEventPercentage" android:layout_marginTop="10dp"
                         android:layout_gravity="center_horizontal" android:layout_marginBottom="10dp"/>
             </LinearLayout>
             <LinearLayout
@@ -86,7 +86,7 @@
                         android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:text="@string/tasks_of_event_row_editor"
-                        android:id="@+id/textViewlistRowTaskOfEventPercentage" android:layout_marginTop="10dp"
+                        android:id="@+id/textViewlistRowTaskOfEventOrganizer" android:layout_marginTop="10dp"
                         android:layout_gravity="center_horizontal" android:layout_marginBottom="10dp"/>
             </LinearLayout>
         </LinearLayout>

@@ -39,6 +39,7 @@ public class AllEventsListAdapter extends
         viewHolder.date.setText(event.getDate().getDate()+"."+(event.getDate().getMonth()+1)+"."+event.getDate().getYear());
         viewHolder.costs.setText(String.valueOf(event.getCosts()));
         viewHolder.numberOrganizers.setText(String.valueOf(event.getNumOrganizers()));
+        viewHolder.Percentage.setText(String.valueOf(event.getPercentage_of_event()));
     }
 
     @Override
@@ -47,8 +48,6 @@ public class AllEventsListAdapter extends
                 R.layout.list_event_row, arg0, false);
         return new MyViewHolder(itemView);
     }
-
-
     public class MyViewHolder extends RecyclerView.ViewHolder implements
             View.OnClickListener {
 

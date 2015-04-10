@@ -38,6 +38,7 @@ public class BuildJSON {
     private static final String TASK_ID="task_id";
     private static final String COSTS_OF_TASK="costs_of_task";
     private static final String PERCENTAGE_OF_TASK="percentage_of_task";
+    private static final String PERCENTAGE_OF_EVENT="percentage_of_event";
     private static final String EDITOR_NAME="editor_name";
 
 
@@ -117,6 +118,16 @@ public class BuildJSON {
         return params;
     }
 
+    public RequestParams updatePercentageOfTaskJSON(int task_id,int editor_id,int percentage) {
+
+        RequestParams params= new RequestParams();
+        params.put(TASK_ID,task_id);
+        params.put(EDITOR_ID,editor_id);
+        params.put(PERCENTAGE_OF_TASK,percentage);
+        return params;
+    }
+
+
     public RequestParams becomeEditorOfTaskJSON(int editor_id,int task_id) {
 
         RequestParams params= new RequestParams();
@@ -153,6 +164,7 @@ public class BuildJSON {
             String location = jsonArray.getJSONObject(i).getString(LOCATION);
             double costsOfEvent = Double.parseDouble(jsonArray.getJSONObject(i).getString(COSTS_OF_EVENT));
             int numOrganizersEvent = Integer.parseInt(jsonArray.getJSONObject(i).getString(NUM_ORGANIZERS_EVENT));
+            double percentageOfEvent=jsonArray.getJSONObject(i).getDouble(PERCENTAGE_OF_EVENT);
             DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
             Date date = null;
             try {
@@ -160,7 +172,7 @@ public class BuildJSON {
             } catch (ParseException e) {
                 e.printStackTrace();
             }
-            Event event = new Event(event_id, costsOfEvent, numOrganizersEvent, name, location, date);
+            Event event = new Event(event_id, costsOfEvent,percentageOfEvent,numOrganizersEvent, name, location, date);
             eventList.add(event);
         }
         return eventList;

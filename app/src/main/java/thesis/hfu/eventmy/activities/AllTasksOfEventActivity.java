@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.Toast;
@@ -91,6 +92,7 @@ public class AllTasksOfEventActivity extends Activity {
                     Toast.makeText(getApplicationContext(), response.getString(MESSAGE), Toast.LENGTH_SHORT).show();
 
                     if (response.getInt(STATUS) == 200) {
+                        Log.d("gut",response.toString());
                         setTaskList(BuildJSON.getInstance().getAllTasksOfEventJSON(response.getJSONArray(TASKS)));
                         recAdapter = new AllTasksOfEventListAdapter(getApplicationContext(), getTaskList());
                         allTasksOfEventRecycler.setAdapter(recAdapter);
@@ -115,7 +117,6 @@ public class AllTasksOfEventActivity extends Activity {
         intent.putExtra(EVENT_ID,getEvent_id());
         startActivity(intent);
     }
-
 
     //----------------------------------------------------------------------
     //-----------------Getter and Setter-------------------------------------

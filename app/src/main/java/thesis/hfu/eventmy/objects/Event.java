@@ -5,13 +5,14 @@ import java.util.Date;
 
 public class Event {
     private int event_id,numOrganizers;
-    private double costs;
+    private double costs,percentage_of_event;
     private String name,location;
     private Date date=null;
 
-    public Event(int event_id,double costs, int numOrganizers,String name,String location, Date date){
+    public Event(int event_id,double costs,double percentage_of_event, int numOrganizers,String name,String location, Date date){
         this.event_id=event_id;
         this.costs=costs;
+        this.percentage_of_event=percentage_of_event;
         this.numOrganizers=numOrganizers;
         this.name=name;
         this.date=date;
@@ -57,5 +58,13 @@ public class Event {
     }
     public void setNumOrganizers(int numOrganizers) {
         this.numOrganizers = numOrganizers;
+    }
+
+    public double getPercentage_of_event() {
+        return percentage_of_event;
+    }
+
+    public void setPercentage_of_event(double percentage_of_event) {
+        this.percentage_of_event = percentage_of_event;
     }
 }

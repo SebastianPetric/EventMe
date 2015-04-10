@@ -74,5 +74,9 @@
     <string name="organizers_header">Organisatoren</string>
     <string name="organizers_finishbutton">Aktualisieren</string>
 
+    <!-- DIALOG SCREEN PERCENTAGE -->
+    <string name="dialog_percentage_header">Erledigt (%)</string>
+
+
 
 </resources>
