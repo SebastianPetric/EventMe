@@ -17,6 +17,7 @@ import thesis.hfu.eventmy.R;
 import thesis.hfu.eventmy.database.DBconnection;
 import thesis.hfu.eventmy.functions.BuildJSON;
 import thesis.hfu.eventmy.functions.CheckSharedPreferences;
+import thesis.hfu.eventmy.list_decoration.DividerItemDecoration;
 import thesis.hfu.eventmy.objects.AllTasksOfEventListAdapter;
 import thesis.hfu.eventmy.objects.Task;
 
@@ -52,6 +53,7 @@ public class AllTasksOfEventActivity extends Activity {
             allTasksOfEventRecycler.setHasFixedSize(true);
             LinearLayoutManager layoutManager= new LinearLayoutManager(this);
             allTasksOfEventRecycler.setLayoutManager(layoutManager);
+            allTasksOfEventRecycler.addItemDecoration(new DividerItemDecoration(this));
             updateAllTasks(getEvent_id());
             getAddTaskButton().setOnClickListener(new AddTaskCLickListener());
         }else{

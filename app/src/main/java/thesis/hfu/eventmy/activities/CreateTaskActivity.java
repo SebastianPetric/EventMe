@@ -23,12 +23,13 @@ public class CreateTaskActivity extends Activity{
     private Button createTaskButton;
     private ImageView addEditorButton;
     private int event_id;
+    private String editorValue;
 
 
     private static final String EMPTY_STRING= "";
     private static final String MESSAGE= "message";
     private static final String DEFAULT= "";
-    private static final String DEFAULT_EDITOR= "-1";
+    private static final String DEFAULT_EDITOR= "offen";
     private static final String EVENT_ID= "event_id";
     private static final String ERROR_TASK= "Geben Sie eine Aufgabe an!";
 
@@ -55,22 +56,21 @@ public class CreateTaskActivity extends Activity{
         }
     }
 
+
+
     public class CustomClickListener implements View.OnClickListener{
 
         @Override
         public void onClick(View v) {
             if(v.getId()==R.id.buttonNewTaskFinishButton){
 
-                if(!getTaskField().equals(EMPTY_STRING)){
-                    if(getQuantityField().equals(EMPTY_STRING)){
-                        setQuantityField(DEFAULT);
-                    }else if(getDescriptionField().equals(EMPTY_STRING)){
-                        setDescriptionField(DEFAULT);
-                    }else if(getEditorField().equals(EMPTY_STRING)){
-                        setEditorField(DEFAULT_EDITOR);
+                if(!getTaskField().matches(EMPTY_STRING)){
+                    if(getEditorField().matches(EMPTY_STRING)){
+                        setEditorValue(DEFAULT_EDITOR);
                     }
+
                     if(CheckSharedPreferences.getInstance().isLoggedIn(getApplicationContext())){
-                        createTask(getEvent_id(),-1,getTaskField(),DEFAULT,DEFAULT);
+                        createTask(getEvent_id(), -1, getTaskField(), getDescriptionField(), getQuantityField());
                     }else{
                         CheckSharedPreferences.getInstance().endSession(getApplicationContext());
                     }
@@ -164,5 +164,11 @@ public class CreateTaskActivity extends Activity{
     }
     public void setEvent_id(int event_id) {
         this.event_id = event_id;
+    }
+    public String getEditorValue() {
+        return editorValue;
+    }
+    public void setEditorValue(String editorValue) {
+        this.editorValue = editorValue;
     }
 }

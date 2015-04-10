@@ -117,6 +117,17 @@ public class BuildJSON {
         return params;
     }
 
+    public RequestParams becomeEditorOfTaskJSON(int editor_id,int task_id) {
+
+        RequestParams params= new RequestParams();
+        params.put(EDITOR_ID, editor_id);
+        params.put(TASK_ID, task_id);
+        return params;
+    }
+
+
+
+
     public ArrayList<User> getAllUsersJSON(JSONArray jsonArray) throws JSONException {
         ArrayList<User> userList= new ArrayList<>();
 
