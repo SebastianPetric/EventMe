@@ -5,7 +5,6 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,7 +20,6 @@ import thesis.hfu.eventmy.R;
 import thesis.hfu.eventmy.database.DBconnection;
 import thesis.hfu.eventmy.functions.BuildJSON;
 import thesis.hfu.eventmy.functions.CheckSharedPreferences;
-
 import java.util.ArrayList;
 
 
@@ -63,7 +61,11 @@ public class AllTasksOfEventListAdapter extends
             public void onClick(View v) {
                 setViewHolder(viewHolder);
                 setPosition(position);
-                becomeEditorOfTask(Integer.parseInt(CheckSharedPreferences.getInstance().getUser_id()), task.getTask_id());
+                if(CheckSharedPreferences.getInstance().isLoggedIn(context.getApplicationContext())) {
+                    becomeEditorOfTask(Integer.parseInt(CheckSharedPreferences.getInstance().getUser_id()), task.getTask_id());
+                }else{
+                    CheckSharedPreferences.getInstance().endSession(context.getApplicationContext());
+                }
             }
         });
         viewHolder.percentageButton.setOnClickListener(new View.OnClickListener() {
@@ -72,11 +74,10 @@ public class AllTasksOfEventListAdapter extends
                 setViewHolder(viewHolder);
                 setPosition(position);
                 AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
-                String[] percentages={"0","25","50","75","100"};
+                String[] percentageValues={"0","25","50","75","100"};
                 builder.setTitle(R.string.dialog_percentage_header)
-                        .setItems(percentages, new DialogInterface.OnClickListener() {
+                        .setItems(percentageValues, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int position) {
-
                                 switch (position) {
                                     case 0:  setPercentageValue(0);
                                         break;
@@ -89,50 +90,23 @@ public class AllTasksOfEventListAdapter extends
                                     case 4:  setPercentageValue(100);
                                         break;
                                 }
-
-                                updatePercentage(task.getTask_id(), Integer.parseInt(CheckSharedPreferences.getInstance().getUser_id()), getPercentageValue());
+                                if(CheckSharedPreferences.getInstance().isLoggedIn(context.getApplicationContext())) {
+                                    updatePercentage(task.getTask_id(), Integer.parseInt(CheckSharedPreferences.getInstance().getUser_id()), getPercentageValue());
+                                }else{
+                                    CheckSharedPreferences.getInstance().endSession(context.getApplicationContext());
+                                }
                             }
                         });
                 builder.show();
             }
         });
-
     }
-
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup arg0, int arg1) {
         View itemView = LayoutInflater.from(arg0.getContext()).inflate(
                 R.layout.list_task_of_event_row, arg0, false);
         return new MyViewHolder(itemView);
     }
-
-    public MyViewHolder getViewHolder() {
-        return viewHolder;
-    }
-
-    public void setViewHolder(MyViewHolder viewHolder) {
-        this.viewHolder = viewHolder;
-    }
-
-    public int getPosition() {
-        return position;
-    }
-
-    public void setPosition(int position) {
-        this.position = position;
-    }
-    public ArrayList<Task> getTasks(){
-        return this.tasks;
-    }
-
-    public int getPercentageValue() {
-        return percentageValue;
-    }
-
-    public void setPercentageValue(int percentageValue) {
-        this.percentageValue = percentageValue;
-    }
-
 
     public class MyViewHolder extends RecyclerView.ViewHolder implements
             View.OnClickListener {
@@ -162,6 +136,10 @@ public class AllTasksOfEventListAdapter extends
         }
     }
 
+    //----------------------------------------------------------------------
+    //-----------------Functions-------------------------------------
+    //----------------------------------------------------------------------
+
     public void updatePercentage(int task_id, int editor_id, final int percentage){
 
         RequestParams params = BuildJSON.getInstance().updatePercentageOfTaskJSON(task_id,editor_id,percentage);
@@ -170,23 +148,15 @@ public class AllTasksOfEventListAdapter extends
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 try {
-                    Toast.makeText(context.getApplicationContext(),response.getString("message"),Toast.LENGTH_SHORT).show();
-                    if(response.getInt("status")==200){
+                    Toast.makeText(context.getApplicationContext(),response.getString(MESSAGE),Toast.LENGTH_SHORT).show();
+                    if(response.getInt(STATUS)==200){
                         Task task = getTasks().get(getPosition());
                         task.setPercentage(percentage);
                         getViewHolder().percentageField.setText(String.valueOf(task.getPercentage()));
                     }
-
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-            }
-
-            @Override
-            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-                Log.d("schlecht",headers.toString());
-                Log.d("schlecht",responseString);
-                Log.d("schlecht",throwable.toString());
             }
         });
     }
@@ -213,6 +183,34 @@ public class AllTasksOfEventListAdapter extends
             }
         });
 
+    }
+
+    public MyViewHolder getViewHolder() {
+        return viewHolder;
+    }
+
+
+    //----------------------------------------------------------------------
+    //-----------------Getter and Setter-------------------------------------
+    //----------------------------------------------------------------------
+
+    public void setViewHolder(MyViewHolder viewHolder) {
+        this.viewHolder = viewHolder;
+    }
+    public int getPosition() {
+        return position;
+    }
+    public void setPosition(int position) {
+        this.position = position;
+    }
+    public ArrayList<Task> getTasks(){
+        return this.tasks;
+    }
+    public int getPercentageValue() {
+        return percentageValue;
+    }
+    public void setPercentageValue(int percentageValue) {
+        this.percentageValue = percentageValue;
     }
 
 

@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.Toast;
@@ -47,16 +46,15 @@ public class AllEventsActivity extends Activity{
             setAddEvent(R.id.imageButtonAddNewEvent);
             updateAllEvents(CheckSharedPreferences.getInstance().getUser_id());
             setAllEventsRecycler(R.id.recyclerViewAllEvents);
-            allEventsRecycler.setHasFixedSize(true);
+            getAllEventsRecycler().setHasFixedSize(true);
             LinearLayoutManager layoutManager= new LinearLayoutManager(this);
-            allEventsRecycler.setLayoutManager(layoutManager);
-            allEventsRecycler.addItemDecoration(new DividerItemDecoration(this));
+            getAllEventsRecycler().setLayoutManager(layoutManager);
+            getAllEventsRecycler().addItemDecoration(new DividerItemDecoration(this));
             getAddEventButton().setOnClickListener(new AddEventCLickListener());
         }else{
             CheckSharedPreferences.getInstance().endSession(getApplicationContext());
         }
     }
-
 
 
     public class AddEventCLickListener implements View.OnClickListener{
@@ -73,6 +71,7 @@ public class AllEventsActivity extends Activity{
         }
     }
 
+
     //----------------------------------------------------------------------
     //-----------------Functions-------------------------------------
     //----------------------------------------------------------------------
@@ -85,23 +84,14 @@ public class AllEventsActivity extends Activity{
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 try {
                     Toast.makeText(getApplicationContext(), response.getString(MESSAGE), Toast.LENGTH_SHORT).show();
-                    Log.d("gut", response.toString());
-                    if(response.getInt(STATUS)==200) {
+                    if (response.getInt(STATUS) == 200) {
                         setEventList(BuildJSON.getInstance().getAllEventsJSON(response.getJSONArray(EVENTS)));
-                        recAdapter = new AllEventsListAdapter(getApplicationContext(),getEventList());
-                        allEventsRecycler.setAdapter(recAdapter);
+                        recAdapter = new AllEventsListAdapter(getApplicationContext(), getEventList());
+                        getAllEventsRecycler().setAdapter(recAdapter);
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-
-
-
-            }
-            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-                Log.d("schlecht", headers.toString());
-                Log.d("schlecht",responseString);
-                Log.d("schlecht",throwable.toString());
             }
         });
 
@@ -131,7 +121,6 @@ public class AllEventsActivity extends Activity{
     public ArrayList<Event> getEventList() {
         return eventList;
     }
-
     public void setEventList(ArrayList<Event> eventList) {
         this.eventList = eventList;
     }

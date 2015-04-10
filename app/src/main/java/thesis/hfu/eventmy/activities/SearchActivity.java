@@ -50,11 +50,11 @@ public class SearchActivity extends Activity {
             setSearchButton(R.id.buttonSearchButton);
             getSearchButton().setOnClickListener(new CustomClickListener());
             setRecyclerView(R.id.recyclerViewSearch);
-            recyclerView.setHasFixedSize(true);
+            getRecyclerView().setHasFixedSize(true);
             LinearLayoutManager layoutManager= new LinearLayoutManager(this);
-            recyclerView.setLayoutManager(layoutManager);
+            getRecyclerView().setLayoutManager(layoutManager);
             searchUser(EMPTY_STRING,CheckSharedPreferences.getInstance().getUser_id());
-            recyclerView.addItemDecoration(new DividerItemDecoration(this));
+            getRecyclerView().addItemDecoration(new DividerItemDecoration(this));
         }else{
             CheckSharedPreferences.getInstance().endSession(getApplicationContext());
         }
@@ -92,7 +92,7 @@ public class SearchActivity extends Activity {
                     if(response.getInt(STATUS)==200) {
                         setUserList(BuildJSON.getInstance().getAllUsersJSON(response.getJSONArray(USERS)));
                         recAdapter = new SearchListAdapter(getApplicationContext(),getUserList());
-                        recyclerView.setAdapter(recAdapter);
+                        getRecyclerView().setAdapter(recAdapter);
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -134,5 +134,8 @@ public class SearchActivity extends Activity {
     }
     public void setUserList(ArrayList<User> userList) {
         this.userList = userList;
+    }
+    public RecyclerView getRecyclerView(){
+        return this.recyclerView;
     }
 }

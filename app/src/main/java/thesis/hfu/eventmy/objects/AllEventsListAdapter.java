@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import thesis.hfu.eventmy.R;
 import thesis.hfu.eventmy.activities.AllTasksOfEventActivity;
-
 import java.util.ArrayList;
 
 public class AllEventsListAdapter extends

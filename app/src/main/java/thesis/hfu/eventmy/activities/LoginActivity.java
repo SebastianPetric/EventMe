@@ -58,7 +58,6 @@ public class LoginActivity extends ActionBarActivity {
                    startActivity(intent);
                }
                if(v.getId()==R.id.loginButton){
-
                    if(!getEmailField().equals(EMPTY_STRING)&&!getPasswordField().equals(EMPTY_STRING)) {
                        if (CheckIf.EmailIsValid(getEmailField())) {
                             login(getEmailField(),getPasswordField());
@@ -89,15 +88,6 @@ public class LoginActivity extends ActionBarActivity {
                         Intent intent= new Intent(getApplicationContext(),AllEventsActivity.class);
                         startActivity(intent);
                     }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-
-            @Override
-            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                try {
-                    Toast.makeText(getApplicationContext(), errorResponse.getString(MESSAGE), Toast.LENGTH_SHORT).show();
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

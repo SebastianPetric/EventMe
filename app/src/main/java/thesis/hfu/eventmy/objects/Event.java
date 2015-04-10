@@ -59,11 +59,9 @@ public class Event {
     public void setNumOrganizers(int numOrganizers) {
         this.numOrganizers = numOrganizers;
     }
-
     public double getPercentage_of_event() {
         return percentage_of_event;
     }
-
     public void setPercentage_of_event(double percentage_of_event) {
         this.percentage_of_event = percentage_of_event;
     }

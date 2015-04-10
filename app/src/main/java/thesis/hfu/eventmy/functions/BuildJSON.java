@@ -137,8 +137,6 @@ public class BuildJSON {
     }
 
 
-
-
     public ArrayList<User> getAllUsersJSON(JSONArray jsonArray) throws JSONException {
         ArrayList<User> userList= new ArrayList<>();
 
@@ -197,6 +195,5 @@ public class BuildJSON {
         }
         return taskList;
     }
-
 }
 

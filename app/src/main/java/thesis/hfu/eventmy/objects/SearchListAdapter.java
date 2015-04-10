@@ -9,20 +9,17 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
-
 import org.apache.http.Header;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.ArrayList;
-
 import thesis.hfu.eventmy.R;
 import thesis.hfu.eventmy.database.DBconnection;
 import thesis.hfu.eventmy.functions.BuildJSON;
 import thesis.hfu.eventmy.functions.CheckSharedPreferences;
+
+import java.util.ArrayList;
 
 public class SearchListAdapter extends
         RecyclerView.Adapter<SearchListAdapter.MyViewHolder> {
@@ -88,7 +85,6 @@ public class SearchListAdapter extends
                         viewHolder.removeButton.setVisibility(View.GONE);
                         viewHolder.openRequest.setVisibility(View.VISIBLE);
                     }
-
                     if(CheckSharedPreferences.getInstance().isLoggedIn(context)){
                          friendRequest(CheckSharedPreferences.getInstance().getUser_id(),String.valueOf(user_b.getUser_id()));
                     }else {
@@ -105,7 +101,6 @@ public class SearchListAdapter extends
                 viewHolder.addButton.setVisibility(View.VISIBLE);
                 viewHolder.removeButton.setVisibility(View.GONE);
                 viewHolder.openRequest.setVisibility(View.GONE);
-
 
                 if(CheckSharedPreferences.getInstance().isLoggedIn(context)){
                     removeFriend(CheckSharedPreferences.getInstance().getUser_id(), String.valueOf(user_b.getUser_id()));
@@ -146,9 +141,9 @@ public class SearchListAdapter extends
 
         @Override
         public void onClick(View v) {
-            Toast.makeText(v.getContext(),
+            /*Toast.makeText(v.getContext(),
                     "Klick " + users.get(getPosition()).getName(),
-                    Toast.LENGTH_SHORT).show();
+                    Toast.LENGTH_SHORT).show();*/
         }
     }
 

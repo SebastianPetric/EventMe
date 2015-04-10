@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.Toast;
@@ -51,10 +50,10 @@ public class AllTasksOfEventActivity extends Activity {
             setEvent_id(getIntent().getExtras().getInt(EVENT_ID));
             setAddTaskButton(R.id.imageButtonAddNewTask);
             setAllTasksOfEventRecycler(R.id.recyclerViewAllTasksOfEvent);
-            allTasksOfEventRecycler.setHasFixedSize(true);
+            getAllTasksOfEventRecycler().setHasFixedSize(true);
             LinearLayoutManager layoutManager= new LinearLayoutManager(this);
-            allTasksOfEventRecycler.setLayoutManager(layoutManager);
-            allTasksOfEventRecycler.addItemDecoration(new DividerItemDecoration(this));
+            getAllTasksOfEventRecycler().setLayoutManager(layoutManager);
+            getAllTasksOfEventRecycler().addItemDecoration(new DividerItemDecoration(this));
             updateAllTasks(getEvent_id());
             getAddTaskButton().setOnClickListener(new AddTaskCLickListener());
         }else{
@@ -68,7 +67,6 @@ public class AllTasksOfEventActivity extends Activity {
         public void onClick(View v) {
             if(v.getId()==R.id.imageButtonAddNewTask){
                 if(CheckSharedPreferences.getInstance().isLoggedIn(getApplicationContext())){
-
                     createTask();
                 }else{
                     CheckSharedPreferences.getInstance().endSession(getApplicationContext());
@@ -90,12 +88,10 @@ public class AllTasksOfEventActivity extends Activity {
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 try {
                     Toast.makeText(getApplicationContext(), response.getString(MESSAGE), Toast.LENGTH_SHORT).show();
-
                     if (response.getInt(STATUS) == 200) {
-                        Log.d("gut",response.toString());
                         setTaskList(BuildJSON.getInstance().getAllTasksOfEventJSON(response.getJSONArray(TASKS)));
                         recAdapter = new AllTasksOfEventListAdapter(getApplicationContext(), getTaskList());
-                        allTasksOfEventRecycler.setAdapter(recAdapter);
+                        getAllTasksOfEventRecycler().setAdapter(recAdapter);
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();

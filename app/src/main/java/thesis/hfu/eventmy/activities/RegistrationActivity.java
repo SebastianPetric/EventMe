@@ -85,15 +85,6 @@ public class RegistrationActivity extends Activity {
                     e.printStackTrace();
                 }
             }
-
-            @Override
-            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                try {
-                    Toast.makeText(getApplicationContext(), errorResponse.getString(MESSAGE), Toast.LENGTH_SHORT).show();
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
         });
     }
 

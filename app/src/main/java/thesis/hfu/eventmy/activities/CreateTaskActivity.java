@@ -25,10 +25,8 @@ public class CreateTaskActivity extends Activity{
     private int event_id;
     private String editorValue;
 
-
     private static final String EMPTY_STRING= "";
     private static final String MESSAGE= "message";
-    private static final String DEFAULT= "";
     private static final String DEFAULT_EDITOR= "offen";
     private static final String EVENT_ID= "event_id";
     private static final String ERROR_TASK= "Geben Sie eine Aufgabe an!";
@@ -41,21 +39,19 @@ public class CreateTaskActivity extends Activity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_task);
 
-
         if(CheckSharedPreferences.getInstance().isLoggedIn(getApplicationContext())){
+            setEvent_id(getIntent().getExtras().getInt(EVENT_ID));
             setEditor(R.id.textViewNewTaskEditorField);
             setTask(R.id.editTextNewTaskNameField);
             setQuantity(R.id.editTextNewTaskQuantityField);
             setDescription(R.id.editTextNewTaskNoteField);
             setAddEditorButton(R.id.imageButtonNewTaskAddButton);
             setCreateTaskButton(R.id.buttonNewTaskFinishButton);
-            this.event_id= getIntent().getExtras().getInt(EVENT_ID);
             getCreateTaskButton().setOnClickListener(new CustomClickListener());
         }else{
             CheckSharedPreferences.getInstance().endSession(getApplicationContext());
         }
     }
-
 
 
     public class CustomClickListener implements View.OnClickListener{
@@ -68,7 +64,6 @@ public class CreateTaskActivity extends Activity{
                     if(getEditorField().matches(EMPTY_STRING)){
                         setEditorValue(DEFAULT_EDITOR);
                     }
-
                     if(CheckSharedPreferences.getInstance().isLoggedIn(getApplicationContext())){
                         createTask(getEvent_id(), -1, getTaskField(), getDescriptionField(), getQuantityField());
                     }else{
@@ -103,7 +98,6 @@ public class CreateTaskActivity extends Activity{
                 }
             }
         });
-
     }
 
 
@@ -114,26 +108,17 @@ public class CreateTaskActivity extends Activity{
     public String getTaskField() {
         return task.getText().toString();
     }
-    public void setTaskField(String value){
-        this.task.setText(value);
-    }
     public void setTask(int res) {
         this.task = (EditText) findViewById(res);
     }
     public String getQuantityField() {
         return quantity.getText().toString();
     }
-    public void setQuantityField(String value){
-        this.quantity.setText(value);
-    }
     public void setQuantity(int res) {
         this.quantity = (EditText) findViewById(res);
     }
     public String getDescriptionField() {
         return description.getText().toString();
-    }
-    public void setDescriptionField(String value){
-        this.description.setText(value);
     }
     public void setDescription(int res) {
         this.description= (EditText) findViewById(res);
@@ -164,9 +149,6 @@ public class CreateTaskActivity extends Activity{
     }
     public void setEvent_id(int event_id) {
         this.event_id = event_id;
-    }
-    public String getEditorValue() {
-        return editorValue;
     }
     public void setEditorValue(String editorValue) {
         this.editorValue = editorValue;
