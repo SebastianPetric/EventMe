@@ -20,6 +20,7 @@ import thesis.hfu.eventmy.R;
 import thesis.hfu.eventmy.database.DBconnection;
 import thesis.hfu.eventmy.functions.BuildJSON;
 import thesis.hfu.eventmy.functions.CheckSharedPreferences;
+
 import java.util.ArrayList;
 
 
@@ -62,7 +63,7 @@ public class AllTasksOfEventListAdapter extends
                 setViewHolder(viewHolder);
                 setPosition(position);
                 if(CheckSharedPreferences.getInstance().isLoggedIn(context.getApplicationContext())) {
-                    becomeEditorOfTask(Integer.parseInt(CheckSharedPreferences.getInstance().getUser_id()), task.getTask_id());
+                    changeEditorOfTask(Integer.parseInt(CheckSharedPreferences.getInstance().getUser_id()), task.getTask_id());
                 }else{
                     CheckSharedPreferences.getInstance().endSession(context.getApplicationContext());
                 }
@@ -162,7 +163,7 @@ public class AllTasksOfEventListAdapter extends
     }
 
 
-    public void becomeEditorOfTask(final int editor_id,int task_id){
+    public void changeEditorOfTask(final int editor_id, int task_id){
 
         RequestParams params= BuildJSON.getInstance().becomeEditorOfTaskJSON(editor_id, task_id);
         DBconnection.post(URL_BECOME_EDITOR_OF_TASK, params, new JsonHttpResponseHandler() {

@@ -94,7 +94,6 @@ public class AllEventsActivity extends Activity{
                 }
             }
         });
-
     }
 
     public void createEvent(){
