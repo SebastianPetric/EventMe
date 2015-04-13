@@ -20,6 +20,7 @@ import org.json.JSONObject;
 import thesis.hfu.eventmy.R;
 import thesis.hfu.eventmy.database.DBconnection;
 import thesis.hfu.eventmy.functions.BuildJSON;
+import thesis.hfu.eventmy.functions.Calculation;
 import thesis.hfu.eventmy.functions.CheckIf;
 import thesis.hfu.eventmy.functions.CheckSharedPreferences;
 
@@ -35,13 +36,15 @@ public class AllTasksOfEventListAdapter extends
 
     private static final String URL_BECOME_EDITOR_OF_TASK= "become_editor_of_task.php";
     private static final String URL_UPDATE_PERCENTAGE_OF_TASK= "update_percentage_of_task.php";
-    private static final String URL_UPDATE_COSTS_OF_TASK= "update_costs_of_task.php";
+    private static final String URL_UPDATE_COSTS_OF_TASK = "update_costs_of_task.php";
+
 
     private ArrayList<Task> tasks;
     private Context context;
     private MyViewHolder viewHolder;
     private int position,percentageValue;
     private double costsValue;
+    private int type_of_update;
 
     public AllTasksOfEventListAdapter(Context context,ArrayList<Task> list) {
         this.tasks = list;
@@ -118,22 +121,25 @@ public class AllTasksOfEventListAdapter extends
 
                 LayoutInflater li = LayoutInflater.from(v.getContext());
                 View promptsView = li.inflate(R.layout.dialog_add_costs, null);
-                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(v.getContext());
+                AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
 
                 final EditText userInput = (EditText) promptsView.findViewById(R.id.editTextDialogUserInput);
-                alertDialogBuilder.setView(promptsView);
+                builder.setView(promptsView);
 
-                alertDialogBuilder
-                        .setCancelable(false)
-
-                        .setPositiveButton(R.string.dialog_costs_ok,
+                builder.setCancelable(false)
+                        .setNeutralButton(R.string.dialog_costs_new,
                                 new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int id) {
                                         if (CheckIf.isNumeric(userInput.getText().toString())) {
                                             dialog.cancel();
-                                            setCostsValue(userInput.getText().toString());
-                                            updateCosts(task.getTask_id(), Integer.parseInt(CheckSharedPreferences.getInstance().getUser_id()), getCostsValue());
-                                        } else {
+                                            setCostsValue(Calculation.getInstance().round(Double.parseDouble(userInput.getText().toString())));
+                                            setType_of_update(0);
+                                            if (CheckSharedPreferences.getInstance().isLoggedIn(context)) {
+                                                updateCosts(task.getTask_id(), Integer.parseInt(CheckSharedPreferences.getInstance().getUser_id()), getCostsValue(), getType_of_update());
+                                            }else{
+                                                CheckSharedPreferences.getInstance().endSession(context);
+                                            }
+                                            } else {
                                             Toast.makeText(context.getApplicationContext(), "Sie haben keine Zahlen eingegeben!", Toast.LENGTH_SHORT).show();
                                         }
                                     }
@@ -144,20 +150,24 @@ public class AllTasksOfEventListAdapter extends
                                         dialog.cancel();
                                     }
                                 })
-                        .setNeutralButton(R.string.dialog_costs_add, new DialogInterface.OnClickListener() {
+                        .setPositiveButton(R.string.dialog_costs_add, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
                                 if (CheckIf.isNumeric(userInput.getText().toString())) {
                                     dialog.cancel();
-                                    setCostsValue(userInput.getText().toString());
-                                    updateCosts(task.getTask_id(), Integer.parseInt(CheckSharedPreferences.getInstance().getUser_id()), getCostsValue());
-                                } else {
+                                    setCostsValue(Calculation.getInstance().round(Double.parseDouble(userInput.getText().toString())));
+                                    setType_of_update(1);
+                                    if(CheckSharedPreferences.getInstance().isLoggedIn(context)) {
+                                        updateCosts(task.getTask_id(), Integer.parseInt(CheckSharedPreferences.getInstance().getUser_id()), getCostsValue(), getType_of_update());
+                                    }else{
+                                        CheckSharedPreferences.getInstance().endSession(context);
+                                    }
+                                    } else {
                                     Toast.makeText(context.getApplicationContext(), "Sie haben keine Zahlen eingegeben!", Toast.LENGTH_SHORT).show();
                                 }
                             }
                         });
-                AlertDialog alertDialog = alertDialogBuilder.create();
+                AlertDialog alertDialog = builder.create();
                 alertDialog.show();
-
             }
         });
     }
@@ -166,14 +176,6 @@ public class AllTasksOfEventListAdapter extends
         View itemView = LayoutInflater.from(arg0.getContext()).inflate(
                 R.layout.list_task_of_event_row, arg0, false);
         return new MyViewHolder(itemView);
-    }
-
-    public double getCostsValue() {
-        return costsValue;
-    }
-
-    public void setCostsValue(String costsValue) {
-        this.costsValue = Double.parseDouble(costsValue);
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder implements
@@ -229,9 +231,9 @@ public class AllTasksOfEventListAdapter extends
         });
     }
 
-    public void updateCosts(int task_id, int editor_id, final double costs){
+    public void updateCosts(int task_id, int editor_id, final double costs, final int status){
 
-        RequestParams params = BuildJSON.getInstance().updateCostsOfTaskJSON(task_id, editor_id, costs);
+        RequestParams params = BuildJSON.getInstance().updateCostsOfTaskJSON(task_id, editor_id,costs, status);
         DBconnection.post(URL_UPDATE_COSTS_OF_TASK,params,new JsonHttpResponseHandler(){
 
             @Override
@@ -240,8 +242,14 @@ public class AllTasksOfEventListAdapter extends
                     Toast.makeText(context.getApplicationContext(),response.getString(MESSAGE),Toast.LENGTH_SHORT).show();
                     if(response.getInt(STATUS)==200){
                         Task task = getTasks().get(getPosition());
-                        task.setCostOfTask(costs);
-                        getViewHolder().costField.setText(String.valueOf(task.getPercentage()));
+                        if(status==0) {
+                            task.setCostOfTask(costs);
+                            getViewHolder().costField.setText((String.valueOf(task.getCostOfTask())));
+                        }else if(status==1){
+                            task.setCostOfTask(task.getCostOfTask()+costs);
+                            getViewHolder().costField.setText(String.valueOf(task.getCostOfTask()));
+                        }
+
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -249,8 +257,6 @@ public class AllTasksOfEventListAdapter extends
             }
         });
     }
-
-
     public void changeEditorOfTask(final int editor_id, int task_id){
 
         RequestParams params= BuildJSON.getInstance().becomeEditorOfTaskJSON(editor_id, task_id);
@@ -301,7 +307,16 @@ public class AllTasksOfEventListAdapter extends
     public void setPercentageValue(int percentageValue) {
         this.percentageValue = percentageValue;
     }
-
-
-
+    public double getCostsValue() {
+        return costsValue;
+    }
+    public void setCostsValue(Double costsValue) {
+        this.costsValue = costsValue;
+    }
+    public int getType_of_update() {
+        return type_of_update;
+    }
+    public void setType_of_update(int type_of_update) {
+        this.type_of_update = type_of_update;
+    }
 }

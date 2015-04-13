@@ -20,7 +20,7 @@
     <string name="registration_button">Registrieren</string>
 
     <!-- ALL EVENTS SCREEN -->
-    <string name="all_events_header">Alle Events</string>
+    <string name="all_events_header">Aktuelle Events</string>
 
     <!-- ALL TASKS OF EVENT SCREEN -->
     <string name="all_tasks_of_event_header">Alle Aufgaben</string>
@@ -79,7 +79,7 @@
 
     <!-- DIALOG SCREEN PERCENTAGE -->
     <string name="dialog_costs_header">Kosten</string>
-    <string name="dialog_costs_ok">Neu</string>
+    <string name="dialog_costs_new">Neu</string>
     <string name="dialog_costs_add">Hinzufuegen</string>
     <string name="dialog_costs_cancel">Abbrechen</string>
 

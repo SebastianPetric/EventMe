@@ -40,6 +40,7 @@ public class BuildJSON {
     private static final String PERCENTAGE_OF_TASK="percentage_of_task";
     private static final String PERCENTAGE_OF_EVENT="percentage_of_event";
     private static final String EDITOR_NAME="editor_name";
+    private static final String TYPE_OF_UPDATE="type_of_update";
 
 
 
@@ -126,17 +127,15 @@ public class BuildJSON {
         params.put(PERCENTAGE_OF_TASK,percentage);
         return params;
     }
-    public RequestParams updateCostsOfTaskJSON(int task_id,int editor_id,double costs) {
+    public RequestParams updateCostsOfTaskJSON(int task_id, int editor_id, double costs, int type_of_update) {
 
         RequestParams params= new RequestParams();
         params.put(TASK_ID,task_id);
         params.put(EDITOR_ID,editor_id);
         params.put(COSTS_OF_TASK,costs);
+        params.put(TYPE_OF_UPDATE,type_of_update);
         return params;
     }
-
-
-
     public RequestParams becomeEditorOfTaskJSON(int editor_id,int task_id) {
 
         RequestParams params= new RequestParams();
