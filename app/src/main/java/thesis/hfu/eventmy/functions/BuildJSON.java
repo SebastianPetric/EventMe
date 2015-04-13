@@ -126,6 +126,15 @@ public class BuildJSON {
         params.put(PERCENTAGE_OF_TASK,percentage);
         return params;
     }
+    public RequestParams updateCostsOfTaskJSON(int task_id,int editor_id,double costs) {
+
+        RequestParams params= new RequestParams();
+        params.put(TASK_ID,task_id);
+        params.put(EDITOR_ID,editor_id);
+        params.put(COSTS_OF_TASK,costs);
+        return params;
+    }
+
 
 
     public RequestParams becomeEditorOfTaskJSON(int editor_id,int task_id) {

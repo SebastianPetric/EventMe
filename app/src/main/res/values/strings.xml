@@ -77,6 +77,11 @@
     <!-- DIALOG SCREEN PERCENTAGE -->
     <string name="dialog_percentage_header">Erledigt (%)</string>
 
+    <!-- DIALOG SCREEN PERCENTAGE -->
+    <string name="dialog_costs_header">Kosten</string>
+    <string name="dialog_costs_ok">Neu</string>
+    <string name="dialog_costs_add">Hinzufuegen</string>
+    <string name="dialog_costs_cancel">Abbrechen</string>
 
 
 </resources>

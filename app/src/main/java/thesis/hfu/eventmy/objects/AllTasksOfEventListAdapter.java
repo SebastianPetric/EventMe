@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -19,6 +20,7 @@ import org.json.JSONObject;
 import thesis.hfu.eventmy.R;
 import thesis.hfu.eventmy.database.DBconnection;
 import thesis.hfu.eventmy.functions.BuildJSON;
+import thesis.hfu.eventmy.functions.CheckIf;
 import thesis.hfu.eventmy.functions.CheckSharedPreferences;
 
 import java.util.ArrayList;
@@ -33,11 +35,13 @@ public class AllTasksOfEventListAdapter extends
 
     private static final String URL_BECOME_EDITOR_OF_TASK= "become_editor_of_task.php";
     private static final String URL_UPDATE_PERCENTAGE_OF_TASK= "update_percentage_of_task.php";
+    private static final String URL_UPDATE_COSTS_OF_TASK= "update_costs_of_task.php";
 
     private ArrayList<Task> tasks;
     private Context context;
     private MyViewHolder viewHolder;
     private int position,percentageValue;
+    private double costsValue;
 
     public AllTasksOfEventListAdapter(Context context,ArrayList<Task> list) {
         this.tasks = list;
@@ -62,9 +66,9 @@ public class AllTasksOfEventListAdapter extends
             public void onClick(View v) {
                 setViewHolder(viewHolder);
                 setPosition(position);
-                if(CheckSharedPreferences.getInstance().isLoggedIn(context.getApplicationContext())) {
+                if (CheckSharedPreferences.getInstance().isLoggedIn(context.getApplicationContext())) {
                     changeEditorOfTask(Integer.parseInt(CheckSharedPreferences.getInstance().getUser_id()), task.getTask_id());
-                }else{
+                } else {
                     CheckSharedPreferences.getInstance().endSession(context.getApplicationContext());
                 }
             }
@@ -80,25 +84,80 @@ public class AllTasksOfEventListAdapter extends
                         .setItems(percentageValues, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int position) {
                                 switch (position) {
-                                    case 0:  setPercentageValue(0);
+                                    case 0:
+                                        setPercentageValue(0);
                                         break;
-                                    case 1:  setPercentageValue(25);
+                                    case 1:
+                                        setPercentageValue(25);
                                         break;
-                                    case 2:  setPercentageValue(50);
+                                    case 2:
+                                        setPercentageValue(50);
                                         break;
-                                    case 3:  setPercentageValue(75);
+                                    case 3:
+                                        setPercentageValue(75);
                                         break;
-                                    case 4:  setPercentageValue(100);
+                                    case 4:
+                                        setPercentageValue(100);
                                         break;
                                 }
-                                if(CheckSharedPreferences.getInstance().isLoggedIn(context.getApplicationContext())) {
+                                if (CheckSharedPreferences.getInstance().isLoggedIn(context.getApplicationContext())) {
                                     updatePercentage(task.getTask_id(), Integer.parseInt(CheckSharedPreferences.getInstance().getUser_id()), getPercentageValue());
-                                }else{
+                                } else {
                                     CheckSharedPreferences.getInstance().endSession(context.getApplicationContext());
                                 }
                             }
                         });
                 builder.show();
+            }
+        });
+        viewHolder.costButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setViewHolder(viewHolder);
+                setPosition(position);
+
+                LayoutInflater li = LayoutInflater.from(v.getContext());
+                View promptsView = li.inflate(R.layout.dialog_add_costs, null);
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(v.getContext());
+
+                final EditText userInput = (EditText) promptsView.findViewById(R.id.editTextDialogUserInput);
+                alertDialogBuilder.setView(promptsView);
+
+                alertDialogBuilder
+                        .setCancelable(false)
+
+                        .setPositiveButton(R.string.dialog_costs_ok,
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+                                        if (CheckIf.isNumeric(userInput.getText().toString())) {
+                                            dialog.cancel();
+                                            setCostsValue(userInput.getText().toString());
+                                            updateCosts(task.getTask_id(), Integer.parseInt(CheckSharedPreferences.getInstance().getUser_id()), getCostsValue());
+                                        } else {
+                                            Toast.makeText(context.getApplicationContext(), "Sie haben keine Zahlen eingegeben!", Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
+                                })
+                        .setNegativeButton(R.string.dialog_costs_cancel,
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+                                        dialog.cancel();
+                                    }
+                                })
+                        .setNeutralButton(R.string.dialog_costs_add, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                if (CheckIf.isNumeric(userInput.getText().toString())) {
+                                    dialog.cancel();
+                                    setCostsValue(userInput.getText().toString());
+                                    updateCosts(task.getTask_id(), Integer.parseInt(CheckSharedPreferences.getInstance().getUser_id()), getCostsValue());
+                                } else {
+                                    Toast.makeText(context.getApplicationContext(), "Sie haben keine Zahlen eingegeben!", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        });
+                AlertDialog alertDialog = alertDialogBuilder.create();
+                alertDialog.show();
+
             }
         });
     }
@@ -107,6 +166,14 @@ public class AllTasksOfEventListAdapter extends
         View itemView = LayoutInflater.from(arg0.getContext()).inflate(
                 R.layout.list_task_of_event_row, arg0, false);
         return new MyViewHolder(itemView);
+    }
+
+    public double getCostsValue() {
+        return costsValue;
+    }
+
+    public void setCostsValue(String costsValue) {
+        this.costsValue = Double.parseDouble(costsValue);
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder implements
@@ -154,6 +221,27 @@ public class AllTasksOfEventListAdapter extends
                         Task task = getTasks().get(getPosition());
                         task.setPercentage(percentage);
                         getViewHolder().percentageField.setText(String.valueOf(task.getPercentage()));
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+    public void updateCosts(int task_id, int editor_id, final double costs){
+
+        RequestParams params = BuildJSON.getInstance().updateCostsOfTaskJSON(task_id, editor_id, costs);
+        DBconnection.post(URL_UPDATE_COSTS_OF_TASK,params,new JsonHttpResponseHandler(){
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                try {
+                    Toast.makeText(context.getApplicationContext(),response.getString(MESSAGE),Toast.LENGTH_SHORT).show();
+                    if(response.getInt(STATUS)==200){
+                        Task task = getTasks().get(getPosition());
+                        task.setCostOfTask(costs);
+                        getViewHolder().costField.setText(String.valueOf(task.getPercentage()));
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
