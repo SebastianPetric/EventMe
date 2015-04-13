@@ -33,6 +33,7 @@ public class AllTasksOfEventListAdapter extends
     private static final String MESSAGE= "message";
     private static final String STATUS= "status";
     private static final String EDITOR_NAME= "editor_name";
+    private static final String ERROR_NUMERIC= "Sie haben keine Zahlen eingegeben!";
 
     private static final String URL_BECOME_EDITOR_OF_TASK= "become_editor_of_task.php";
     private static final String URL_UPDATE_PERCENTAGE_OF_TASK= "update_percentage_of_task.php";
@@ -140,7 +141,7 @@ public class AllTasksOfEventListAdapter extends
                                                 CheckSharedPreferences.getInstance().endSession(context);
                                             }
                                             } else {
-                                            Toast.makeText(context.getApplicationContext(), "Sie haben keine Zahlen eingegeben!", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(context.getApplicationContext(),ERROR_NUMERIC, Toast.LENGTH_SHORT).show();
                                         }
                                     }
                                 })
@@ -162,7 +163,7 @@ public class AllTasksOfEventListAdapter extends
                                         CheckSharedPreferences.getInstance().endSession(context);
                                     }
                                     } else {
-                                    Toast.makeText(context.getApplicationContext(), "Sie haben keine Zahlen eingegeben!", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(context.getApplicationContext(),ERROR_NUMERIC, Toast.LENGTH_SHORT).show();
                                 }
                             }
                         });
@@ -212,7 +213,7 @@ public class AllTasksOfEventListAdapter extends
 
     public void updatePercentage(int task_id, int editor_id, final int percentage){
 
-        RequestParams params = BuildJSON.getInstance().updatePercentageOfTaskJSON(task_id,editor_id,percentage);
+        RequestParams params = BuildJSON.getInstance().updatePercentageOfTaskJSON(task_id, editor_id, percentage);
         DBconnection.post(URL_UPDATE_PERCENTAGE_OF_TASK,params,new JsonHttpResponseHandler(){
 
             @Override
@@ -233,7 +234,7 @@ public class AllTasksOfEventListAdapter extends
 
     public void updateCosts(int task_id, int editor_id, final double costs, final int status){
 
-        RequestParams params = BuildJSON.getInstance().updateCostsOfTaskJSON(task_id, editor_id,costs, status);
+        RequestParams params = BuildJSON.getInstance().updateCostsOfTaskJSON(task_id, editor_id, costs, status);
         DBconnection.post(URL_UPDATE_COSTS_OF_TASK,params,new JsonHttpResponseHandler(){
 
             @Override
@@ -277,13 +278,7 @@ public class AllTasksOfEventListAdapter extends
                 }
             }
         });
-
     }
-
-    public MyViewHolder getViewHolder() {
-        return viewHolder;
-    }
-
 
     //----------------------------------------------------------------------
     //-----------------Getter and Setter-------------------------------------
@@ -318,5 +313,8 @@ public class AllTasksOfEventListAdapter extends
     }
     public void setType_of_update(int type_of_update) {
         this.type_of_update = type_of_update;
+    }
+    public MyViewHolder getViewHolder() {
+        return viewHolder;
     }
 }

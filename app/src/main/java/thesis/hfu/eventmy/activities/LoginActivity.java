@@ -8,16 +8,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-import com.loopj.android.http.JsonHttpResponseHandler;
-import com.loopj.android.http.RequestParams;
-import org.apache.http.Header;
-import org.json.JSONException;
-import org.json.JSONObject;
 import thesis.hfu.eventmy.R;
-import thesis.hfu.eventmy.database.DBconnection;
-import thesis.hfu.eventmy.functions.BuildJSON;
+import thesis.hfu.eventmy.database.DBfunctions;
 import thesis.hfu.eventmy.functions.CheckIf;
-import thesis.hfu.eventmy.functions.CheckSharedPreferences;
 
 
 public class LoginActivity extends ActionBarActivity {
@@ -26,15 +19,9 @@ public class LoginActivity extends ActionBarActivity {
     private Button loginFinishButton;
     private TextView registrationTextButton;
 
-    private static final String MESSAGE = "message";
-    private static final String STATUS = "status";
-    private static final String USER_ID = "user_id";
-
     private static final String ERROR_EMAIL = "Email nicht korrekt!";
     private static final String ERROR_FIELD = "Bitte alle Felder korrekt ausfüllen!";
     private static final String EMPTY_STRING = "";
-
-    private static final String URL_LOGIN= "login_check.php";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,22 +32,25 @@ public class LoginActivity extends ActionBarActivity {
         setPasswordField(R.id.loginPasswortEditText);
         setLoginFinishButton(R.id.loginButton);
         setRegistrationTextButton(R.id.loginRegistrationButton);
-        getLoginFinishButton().setOnClickListener(new CustomButtonListener());
-        getRegistrationTextButton().setOnClickListener(new CustomButtonListener());
+        getLoginFinishButton().setOnClickListener(new CustomClickListener());
+        getRegistrationTextButton().setOnClickListener(new CustomClickListener());
     }
 
-    public class CustomButtonListener implements View.OnClickListener{
+    //----------------------------------------------------------------------
+    //-----------------CUSTOM ONCLICKLISTENER-------------------------------------
+    //----------------------------------------------------------------------
+
+    public class CustomClickListener implements View.OnClickListener{
 
         @Override
         public void onClick(View v) {
                if(v.getId()==R.id.loginRegistrationButton){
                    Intent intent= new Intent(getApplicationContext(),RegistrationActivity.class);
                    startActivity(intent);
-               }
-               if(v.getId()==R.id.loginButton){
+               }else if(v.getId()==R.id.loginButton){
                    if(!getEmailField().equals(EMPTY_STRING)&&!getPasswordField().equals(EMPTY_STRING)) {
                        if (CheckIf.EmailIsValid(getEmailField())) {
-                            login(getEmailField(),getPasswordField());
+                            DBfunctions.getInstance().login(getApplicationContext(),getEmailField(),getPasswordField());
                        }else{
                            Toast.makeText(getApplicationContext(),ERROR_EMAIL,Toast.LENGTH_SHORT).show();
                        }
@@ -69,30 +59,6 @@ public class LoginActivity extends ActionBarActivity {
                    }
                }
         }
-    }
-
-    //----------------------------------------------------------------------
-    //-----------------Functions-------------------------------------
-    //----------------------------------------------------------------------
-
-    public void login(String email,String password){
-        RequestParams params= BuildJSON.getInstance().loginJSON(email,password);
-        DBconnection.post(URL_LOGIN, params, new JsonHttpResponseHandler() {
-
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                try {
-                    Toast.makeText(getApplicationContext(), response.getString(MESSAGE), Toast.LENGTH_SHORT).show();
-                    if (response.getInt(STATUS) == 200) {
-                        CheckSharedPreferences.getInstance().setPreferances(getApplicationContext(),response.getString(USER_ID));
-                        Intent intent= new Intent(getApplicationContext(),AllEventsActivity.class);
-                        startActivity(intent);
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
     }
 
     //----------------------------------------------------------------------

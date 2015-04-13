@@ -2,18 +2,11 @@ package thesis.hfu.eventmy.activities;
 
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.*;
-import com.loopj.android.http.JsonHttpResponseHandler;
-import com.loopj.android.http.RequestParams;
-import org.apache.http.Header;
-import org.json.JSONException;
-import org.json.JSONObject;
 import thesis.hfu.eventmy.R;
-import thesis.hfu.eventmy.database.DBconnection;
-import thesis.hfu.eventmy.functions.BuildJSON;
+import thesis.hfu.eventmy.database.DBfunctions;
 import thesis.hfu.eventmy.functions.CheckSharedPreferences;
 
 public class CreateTaskActivity extends Activity{
@@ -26,12 +19,9 @@ public class CreateTaskActivity extends Activity{
     private String editorValue;
 
     private static final String EMPTY_STRING= "";
-    private static final String MESSAGE= "message";
     private static final String DEFAULT_EDITOR= "offen";
     private static final String EVENT_ID= "event_id";
     private static final String ERROR_TASK= "Geben Sie eine Aufgabe an!";
-
-    private static final String URL_CREATE_TASK= "create_task.php";
 
 
     @Override
@@ -54,6 +44,10 @@ public class CreateTaskActivity extends Activity{
     }
 
 
+    //----------------------------------------------------------------------
+    //-----------------CUSTOM ONCLICKLISTENER-------------------------------------
+    //----------------------------------------------------------------------
+
     public class CustomClickListener implements View.OnClickListener{
 
         @Override
@@ -65,7 +59,7 @@ public class CreateTaskActivity extends Activity{
                         setEditorValue(DEFAULT_EDITOR);
                     }
                     if(CheckSharedPreferences.getInstance().isLoggedIn(getApplicationContext())){
-                        createTask(getEvent_id(), -1, getTaskField(), getDescriptionField(), getQuantityField());
+                        DBfunctions.getInstance().createTask(getApplicationContext(),getEvent_id(),-1,getTaskField(),getDescriptionField(),getQuantityField());
                     }else{
                         CheckSharedPreferences.getInstance().endSession(getApplicationContext());
                     }
@@ -75,31 +69,6 @@ public class CreateTaskActivity extends Activity{
             }
         }
     }
-
-
-    //----------------------------------------------------------------------
-    //-----------------Functions-------------------------------------
-    //----------------------------------------------------------------------
-
-    public void createTask(int event_id,int editor_id,String task,String description,String quantity){
-
-        RequestParams params= BuildJSON.getInstance().createTaskJSON(event_id,editor_id,task,description,quantity);
-        DBconnection.post(URL_CREATE_TASK,params,new JsonHttpResponseHandler(){
-
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                try {
-                    Toast.makeText(getApplicationContext(),response.getString(MESSAGE),Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(getApplicationContext(),AllTasksOfEventActivity.class);
-                    intent.putExtra(EVENT_ID,getEvent_id());
-                    startActivity(intent);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-    }
-
 
     //----------------------------------------------------------------------
     //-----------------Getter and Setter-------------------------------------

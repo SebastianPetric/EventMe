@@ -18,6 +18,7 @@
     <string name="registration_password">Passwort</string>
     <string name="registration_password_repeat">Passwort wiederholen</string>
     <string name="registration_button">Registrieren</string>
+    <string name="registration_cancel_button">Abbrechen</string>
 
     <!-- ALL EVENTS SCREEN -->
     <string name="all_events_header">Aktuelle Events</string>

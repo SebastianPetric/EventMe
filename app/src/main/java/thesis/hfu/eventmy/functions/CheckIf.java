@@ -7,16 +7,17 @@ public class CheckIf {
 
     private static CheckIf instance;
 
-    public static CheckIf getInstance () {
-        if (CheckIf.instance == null) {
+    public static CheckIf getInstance(){
+
+        if (CheckIf.instance == null){
             CheckIf.instance = new CheckIf();
         }
         return CheckIf.instance;
     }
 
     public static boolean EmailIsValid(String email) {
-        boolean isValid=false;
 
+        boolean isValid=false;
         String expression = "^[\\w\\.-]+@([\\w\\-]+\\.)+[A-Z]{2,4}$";
         CharSequence inputStr = email;
         Pattern pattern = Pattern.compile(expression, Pattern.CASE_INSENSITIVE);
@@ -26,14 +27,13 @@ public class CheckIf {
         }
         return isValid;
     }
-    public static boolean isNumeric(String str)
-    {
-        try
-        {
+
+    public static boolean isNumeric(String str){
+
+        try {
             double d = Double.parseDouble(str);
         }
-        catch(NumberFormatException nfe)
-        {
+        catch(NumberFormatException nfe){
             return false;
         }
         return true;

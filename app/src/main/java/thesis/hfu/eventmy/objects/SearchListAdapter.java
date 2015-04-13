@@ -8,15 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
-import com.loopj.android.http.JsonHttpResponseHandler;
-import com.loopj.android.http.RequestParams;
-import org.apache.http.Header;
-import org.json.JSONException;
-import org.json.JSONObject;
 import thesis.hfu.eventmy.R;
-import thesis.hfu.eventmy.database.DBconnection;
-import thesis.hfu.eventmy.functions.BuildJSON;
+import thesis.hfu.eventmy.database.DBfunctions;
 import thesis.hfu.eventmy.functions.CheckSharedPreferences;
 
 import java.util.ArrayList;
@@ -26,10 +19,6 @@ public class SearchListAdapter extends
 
     private ArrayList<User> users;
     private Context context;
-    private static final String MESSAGE = "message";
-
-    private static final String URL_FRIEND_REQUEST= "friend_request.php";
-    private static final String URL_REMOVE_FRIEND= "remove_friend.php";
 
     public SearchListAdapter(Context context,ArrayList<User> list) {
         this.users = list;
@@ -86,13 +75,12 @@ public class SearchListAdapter extends
                         viewHolder.openRequest.setVisibility(View.VISIBLE);
                     }
                     if(CheckSharedPreferences.getInstance().isLoggedIn(context)){
-                         friendRequest(CheckSharedPreferences.getInstance().getUser_id(),String.valueOf(user_b.getUser_id()));
+                        DBfunctions.getInstance().friendRequest(context.getApplicationContext(),CheckSharedPreferences.getInstance().getUser_id(),String.valueOf(user_b.getUser_id()));
                     }else {
                         CheckSharedPreferences.getInstance().endSession(context);
                     }
              }
         });
-
         viewHolder.removeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -103,7 +91,7 @@ public class SearchListAdapter extends
                 viewHolder.openRequest.setVisibility(View.GONE);
 
                 if(CheckSharedPreferences.getInstance().isLoggedIn(context)){
-                    removeFriend(CheckSharedPreferences.getInstance().getUser_id(), String.valueOf(user_b.getUser_id()));
+                    DBfunctions.getInstance().removeFriend(context.getApplicationContext(), CheckSharedPreferences.getInstance().getUser_id(), String.valueOf(user_b.getUser_id()));
                 }else {
                     CheckSharedPreferences.getInstance().endSession(context);
                 }
@@ -145,59 +133,5 @@ public class SearchListAdapter extends
                     "Klick " + users.get(getPosition()).getName(),
                     Toast.LENGTH_SHORT).show();*/
         }
-    }
-
-    //----------------------------------------------------------------------
-    //-----------------Functions-------------------------------------
-    //----------------------------------------------------------------------
-
-    public void friendRequest(String user1_id,String user2_id){
-
-        RequestParams params = BuildJSON.getInstance().addFriendJSON(user1_id, user2_id);
-        DBconnection.post(URL_FRIEND_REQUEST, params, new JsonHttpResponseHandler() {
-
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                try {
-                    Toast.makeText(context,response.getString(MESSAGE),Toast.LENGTH_SHORT).show();
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-
-            @Override
-            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                  try {
-                    Toast.makeText(context,errorResponse.getString(MESSAGE),Toast.LENGTH_SHORT).show();
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-    }
-    public void removeFriend(String usera_id,String userb_id){
-
-        RequestParams params = BuildJSON.getInstance().addFriendJSON(usera_id, userb_id);
-        DBconnection.post(URL_REMOVE_FRIEND, params, new JsonHttpResponseHandler() {
-
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                try {
-                    Toast.makeText(context,response.getString(MESSAGE),Toast.LENGTH_SHORT).show();
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-            }
-
-            @Override
-            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                try {
-                    Toast.makeText(context,errorResponse.getString(MESSAGE),Toast.LENGTH_SHORT).show();
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
     }
 }

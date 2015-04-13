@@ -102,17 +102,22 @@
 
 
         <LinearLayout
-                android:orientation="vertical"
+                android:orientation="horizontal"
                 android:layout_width="0dp"
-                android:layout_weight="0.75"
+                android:layout_weight="0.60"
                 android:layout_height="wrap_content">
+            <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/registration_cancel_button"
+                    android:id="@+id/registrationCancelButton"/>
             <Button
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/registration_button"
                     android:id="@+id/registrationButton"
-                    android:ems="8"
-                    android:layout_marginTop="26dp" android:layout_gravity="right"/>
+                    android:layout_marginTop="26dp" android:layout_gravity="right" android:layout_marginLeft="10dp"/>
+
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

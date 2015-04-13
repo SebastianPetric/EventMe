@@ -14,8 +14,9 @@ public class CheckSharedPreferences {
     private static final String SAVED_UID = "savedUserID";
     private String user_id;
 
-    public static CheckSharedPreferences getInstance () {
-        if (CheckSharedPreferences.instance == null) {
+    public static CheckSharedPreferences getInstance(){
+
+        if (CheckSharedPreferences.instance == null){
             CheckSharedPreferences.instance = new CheckSharedPreferences();
         }
         return CheckSharedPreferences.instance;
@@ -49,6 +50,10 @@ public class CheckSharedPreferences {
         Intent intent= new Intent(c,LoginActivity.class);
         c.startActivity(intent);
     }
+
+    //----------------------------------------------------------------------
+    //-----------------Getter and Setter-------------------------------------
+    //----------------------------------------------------------------------
 
     public String getUser_id() {
         return user_id;

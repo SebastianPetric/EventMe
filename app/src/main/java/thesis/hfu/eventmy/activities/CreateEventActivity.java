@@ -5,19 +5,13 @@ import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.*;
-import com.loopj.android.http.JsonHttpResponseHandler;
-import com.loopj.android.http.RequestParams;
-import org.apache.http.Header;
-import org.json.JSONException;
-import org.json.JSONObject;
 import thesis.hfu.eventmy.R;
-import thesis.hfu.eventmy.database.DBconnection;
-import thesis.hfu.eventmy.functions.BuildJSON;
+import thesis.hfu.eventmy.database.DBfunctions;
 import thesis.hfu.eventmy.functions.CheckSharedPreferences;
+
 import java.sql.Date;
 import java.util.Calendar;
 
@@ -28,13 +22,10 @@ public class CreateEventActivity extends Activity {
     private ImageButton addDateButton;
     private Button finishButton;
     private Date eventDate;
-    private static final String MESSAGE= "message";
+
     private static final String EMPTY_STRING = "";
-    private static final String DEFAULT_DATE = "";
     private static final String DATE_PICKER = "datepicker";
     private static final String ERROR_EMPTY_FIELD = "Bitte füllen Sie alle Felder aus!";
-
-    private static final String URL_CREATE_EVENT= "create_event.php";
 
 
     @Override
@@ -48,22 +39,21 @@ public class CreateEventActivity extends Activity {
             setEditTextName(R.id.editTextNewEventNameField);
             setTextViewDate(R.id.textViewNewEventDateField);
             setFinishButton(R.id.buttonNewEventFinishButton);
-            getFinishButton().setOnClickListener(new NewEventFinishButton());
-            getAddDateButton().setOnClickListener(new NewEventFinishButton());
+            getFinishButton().setOnClickListener(new CustomClickListener());
+            getAddDateButton().setOnClickListener(new CustomClickListener());
         }else{
             CheckSharedPreferences.getInstance().endSession(getApplicationContext());
         }
     }
 
-
-    public class NewEventFinishButton implements View.OnClickListener{
+    public class CustomClickListener implements View.OnClickListener{
 
         @Override
         public void onClick(View v) {
             if(v.getId()==R.id.buttonNewEventFinishButton){
-                if(!getEventNameField().equals(EMPTY_STRING)&&!getEventLocationField().equals(EMPTY_STRING)&&!getEventDateField().equals(DEFAULT_DATE)){
+                if(!getEventNameField().equals(EMPTY_STRING)&&!getEventLocationField().equals(EMPTY_STRING)&&!getEventDateField().equals(EMPTY_STRING)){
                     if(CheckSharedPreferences.getInstance().isLoggedIn(getApplicationContext())) {
-                        createEvent();
+                        DBfunctions.getInstance().createEvent(getApplicationContext(), getEventNameField(), getEventLocationField(), getEventDate(), CheckSharedPreferences.getInstance().getUser_id());
                     }
                 }else{
                     Toast.makeText(getApplicationContext(),ERROR_EMPTY_FIELD,Toast.LENGTH_SHORT).show();
@@ -74,6 +64,12 @@ public class CreateEventActivity extends Activity {
             }
         }
     }
+
+
+    //----------------------------------------------------------------------
+    //-----------------DATEPICKER-------------------------------------
+    //----------------------------------------------------------------------
+
 
     public class DatePickerFragment extends DialogFragment
             implements DatePickerDialog.OnDateSetListener {
@@ -92,24 +88,6 @@ public class CreateEventActivity extends Activity {
             setEventDateField(date);
             setEventDate(new Date((year),month,day));
         }
-    }
-
-    public void createEvent(){
-
-        RequestParams params = BuildJSON.getInstance().createEventJSON(getEventNameField(),getEventLocationField(), getEventDate(),CheckSharedPreferences.getInstance().getUser_id());
-        DBconnection.post(URL_CREATE_EVENT,params,new JsonHttpResponseHandler(){
-
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                try {
-                    Toast.makeText(getApplicationContext(),response.getString(MESSAGE),Toast.LENGTH_SHORT).show();
-                    Intent intent= new Intent(getApplicationContext(),AllEventsActivity.class);
-                    startActivity(intent);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
     }
 
     //----------------------------------------------------------------------

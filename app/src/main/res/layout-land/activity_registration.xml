@@ -98,21 +98,26 @@
             <View
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="0.25" />
+                android:layout_weight="0.75" />
 
 
             <LinearLayout
-                android:orientation="vertical"
-                android:layout_width="0dp"
-                android:layout_weight="0.75"
-                android:layout_height="wrap_content">
+                    android:orientation="horizontal"
+                    android:layout_width="0dp"
+                    android:layout_weight="0.50"
+                    android:layout_height="wrap_content">
                 <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/registration_button"
-                    android:id="@+id/registrationButton"
-                    android:ems="8"
-                    android:layout_marginTop="26dp" android:layout_gravity="right"/>
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/registration_cancel_button"
+                        android:id="@+id/registrationCancelButton"/>
+                <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/registration_button"
+                        android:id="@+id/registrationButton"
+                        android:layout_marginTop="26dp" android:layout_gravity="right" android:layout_marginLeft="10dp"/>
+
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

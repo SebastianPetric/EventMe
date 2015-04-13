@@ -43,9 +43,9 @@ public class BuildJSON {
     private static final String TYPE_OF_UPDATE="type_of_update";
 
 
+    public static BuildJSON getInstance(){
 
-    public static BuildJSON getInstance () {
-        if (BuildJSON.instance == null) {
+        if (BuildJSON.instance == null){
             BuildJSON.instance = new BuildJSON();
         }
         return BuildJSON.instance;
@@ -60,6 +60,7 @@ public class BuildJSON {
         params.put(PASSWORD, password);
         return params;
     }
+
     public RequestParams loginJSON(String email, String password) {
 
         RequestParams params= new RequestParams();
@@ -94,7 +95,6 @@ public class BuildJSON {
         return params;
     }
 
-
     public RequestParams createTaskJSON(int event_id,int editor_id,String task,String description,String quantity) {
 
         RequestParams params= new RequestParams();
@@ -105,6 +105,7 @@ public class BuildJSON {
         params.put(QUANTITY,quantity);
         return params;
     }
+
     public RequestParams updateAllEventsJSON(String user_id) {
 
         RequestParams params= new RequestParams();
@@ -127,6 +128,7 @@ public class BuildJSON {
         params.put(PERCENTAGE_OF_TASK,percentage);
         return params;
     }
+
     public RequestParams updateCostsOfTaskJSON(int task_id, int editor_id, double costs, int type_of_update) {
 
         RequestParams params= new RequestParams();
@@ -136,6 +138,7 @@ public class BuildJSON {
         params.put(TYPE_OF_UPDATE,type_of_update);
         return params;
     }
+
     public RequestParams becomeEditorOfTaskJSON(int editor_id,int task_id) {
 
         RequestParams params= new RequestParams();
@@ -144,8 +147,8 @@ public class BuildJSON {
         return params;
     }
 
-
     public ArrayList<User> getAllUsersJSON(JSONArray jsonArray) throws JSONException {
+
         ArrayList<User> userList= new ArrayList<>();
 
         for(int i=0;i<jsonArray.length();i++){
@@ -160,8 +163,8 @@ public class BuildJSON {
         return userList;
     }
 
-
     public ArrayList<Event> getAllEventsJSON(JSONArray jsonArray) throws JSONException {
+
         ArrayList<Event> eventList= new ArrayList<>();
 
         for(int i=0;i<jsonArray.length();i++) {
@@ -185,6 +188,7 @@ public class BuildJSON {
     }
 
     public ArrayList<Task>  getAllTasksOfEventJSON(JSONArray jsonArray) throws JSONException {
+
         ArrayList<Task> taskList= new ArrayList<>();
 
         for(int i=0;i<jsonArray.length();i++) {
