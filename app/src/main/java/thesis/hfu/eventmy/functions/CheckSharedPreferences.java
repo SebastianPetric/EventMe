@@ -42,13 +42,13 @@ public class CheckSharedPreferences {
         }
     }
 
-    public void endSession(Context c){
-        SharedPreferences sharedpreferences = c.getSharedPreferences(SAVED_PROFILE,c.MODE_PRIVATE);
+    public void endSession(Context context){
+        SharedPreferences sharedpreferences = context.getSharedPreferences(SAVED_PROFILE,context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedpreferences.edit();
         editor.clear();
         editor.apply();
-        Intent intent= new Intent(c,LoginActivity.class);
-        c.startActivity(intent);
+        Intent intent= new Intent(context,LoginActivity.class);
+        context.startActivity(intent);
     }
 
     //----------------------------------------------------------------------
