@@ -3,9 +3,7 @@ package thesis.hfu.eventmy.functions;
 
 import android.content.Context;
 import android.content.Intent;
-import thesis.hfu.eventmy.activities.CreateEventActivity;
-import thesis.hfu.eventmy.activities.CreateTaskActivity;
-import thesis.hfu.eventmy.activities.LoginActivity;
+import thesis.hfu.eventmy.activities.*;
 
 public class StartActivityFunctions {
 
@@ -37,5 +35,18 @@ public class StartActivityFunctions {
         intent.putExtra(EVENT_ID, event_id);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.getApplicationContext().startActivity(intent);
+    }
+
+    public void startAllEventsActivity(Context context){
+        Intent intent = new Intent(context.getApplicationContext(), AllEventsActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.getApplicationContext().startActivity(intent);
+    }
+
+    public void startAllTasksActivity(Context context,final int event_id){
+        Intent intent = new Intent(context.getApplicationContext(), AllTasksOfEventActivity.class);
+        intent.putExtra(EVENT_ID, event_id);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(intent);
     }
 }

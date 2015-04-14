@@ -2,14 +2,14 @@ package thesis.hfu.eventmy.objects;
 
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import thesis.hfu.eventmy.R;
-import thesis.hfu.eventmy.activities.AllTasksOfEventActivity;
+import thesis.hfu.eventmy.functions.StartActivityFunctions;
+
 import java.util.ArrayList;
 
 public class AllEventsListAdapter extends
@@ -17,8 +17,6 @@ public class AllEventsListAdapter extends
 
     private ArrayList<Event> events;
     private Context context;
-
-    private static final String EVENT_ID="event_id";
 
     public AllEventsListAdapter(Context context,ArrayList<Event> list) {
         this.events = list;
@@ -65,9 +63,7 @@ public class AllEventsListAdapter extends
 
         @Override
         public void onClick(View v) {
-            Intent intent= new Intent(v.getContext(), AllTasksOfEventActivity.class);
-            intent.putExtra(EVENT_ID,events.get(getPosition()).getEvent_id());
-            v.getContext().startActivity(intent);
+            StartActivityFunctions.getInstance().startAllTasksActivity(context.getApplicationContext(),events.get(getPosition()).getEvent_id());
         }
     }
 }

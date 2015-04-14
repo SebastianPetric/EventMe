@@ -54,7 +54,7 @@ public class CreateEventActivity extends Activity {
                 if(!getEventNameField().equals(EMPTY_STRING)&&!getEventLocationField().equals(EMPTY_STRING)&&!getEventDateField().equals(EMPTY_STRING)){
                     if(CheckSharedPreferences.getInstance().isLoggedIn(getApplicationContext())) {
                         DBfunctions.getInstance().createEvent(getApplicationContext(), getEventNameField(), getEventLocationField(), getEventDate(), CheckSharedPreferences.getInstance().getUser_id());
-                    }
+                    }else CheckSharedPreferences.getInstance().endSession(getApplicationContext());
                 }else{
                     Toast.makeText(getApplicationContext(),ERROR_EMPTY_FIELD,Toast.LENGTH_SHORT).show();
                 }

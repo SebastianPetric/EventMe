@@ -1,7 +1,6 @@
 package thesis.hfu.eventmy.database;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.widget.Toast;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -9,12 +8,9 @@ import com.loopj.android.http.RequestParams;
 import org.apache.http.Header;
 import org.json.JSONException;
 import org.json.JSONObject;
-import thesis.hfu.eventmy.activities.AllEventsActivity;
-import thesis.hfu.eventmy.activities.AllTasksOfEventActivity;
-import thesis.hfu.eventmy.activities.LoginActivity;
-import thesis.hfu.eventmy.activities.SearchActivity;
 import thesis.hfu.eventmy.functions.BuildJSON;
 import thesis.hfu.eventmy.functions.CheckSharedPreferences;
+import thesis.hfu.eventmy.functions.StartActivityFunctions;
 import thesis.hfu.eventmy.objects.*;
 
 import java.sql.Date;
@@ -58,10 +54,6 @@ public class DBfunctions {
     //Friend Request
     private static final String URL_FRIEND_REQUEST= "friend_request.php";
 
-    //Update Percentage
-    private static final String URL_UPDATE_PERCENTAGE_OF_TASK= "update_percentage_of_task.php";
-
-
     public static DBfunctions getInstance() {
         if (DBfunctions.instance == null) {
             DBfunctions.instance = new DBfunctions();
@@ -78,9 +70,7 @@ public class DBfunctions {
                     Toast.makeText(context.getApplicationContext(), response.getString(MESSAGE), Toast.LENGTH_SHORT).show();
                     if (response.getInt(STATUS) == 200) {
                         CheckSharedPreferences.getInstance().setPreferances(context.getApplicationContext(), response.getString(USER_ID));
-                        Intent intent = new Intent(context.getApplicationContext(), SearchActivity.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        context.getApplicationContext().startActivity(intent);
+                        StartActivityFunctions.getInstance().startAllEventsActivity(context.getApplicationContext());
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -98,10 +88,7 @@ public class DBfunctions {
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 try {
                     Toast.makeText(context.getApplicationContext(), response.getString(MESSAGE), Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(context.getApplicationContext(), LoginActivity.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    context.getApplicationContext().startActivity(intent);
-
+                    StartActivityFunctions.getInstance().startLoginActivity(context.getApplicationContext());
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -139,16 +126,13 @@ public class DBfunctions {
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 try {
                     Toast.makeText(context.getApplicationContext(), response.getString(MESSAGE), Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(context.getApplicationContext(), AllEventsActivity.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    context.getApplicationContext().startActivity(intent);
+                    StartActivityFunctions.getInstance().startAllEventsActivity(context.getApplicationContext());
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
             }
         });
     }
-
 
     public void createTask(final Context context, final int event_id, int editor_id, String task, String description, String quantity) {
 
@@ -159,17 +143,13 @@ public class DBfunctions {
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 try {
                     Toast.makeText(context.getApplicationContext(), response.getString(MESSAGE), Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(context.getApplicationContext(), AllTasksOfEventActivity.class);
-                    intent.putExtra(EVENT_ID, event_id);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    context.startActivity(intent);
+                    StartActivityFunctions.getInstance().startAllTasksActivity(context.getApplicationContext(),event_id);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
             }
         });
     }
-
 
     public void updateAllTasks(final Context context, final RecyclerView recyclerView, int event_id) {
 
@@ -181,7 +161,6 @@ public class DBfunctions {
                 try {
                     Toast.makeText(context.getApplicationContext(), response.getString(MESSAGE), Toast.LENGTH_SHORT).show();
                     if (response.getInt(STATUS) == 200) {
-
                         ArrayList<Task> taskList = BuildJSON.getInstance().getAllTasksOfEventJSON(response.getJSONArray(TASKS));
                         RecyclerView.Adapter<AllTasksOfEventListAdapter.MyViewHolder> recAdapter = new AllTasksOfEventListAdapter(context.getApplicationContext(), taskList);
                         recyclerView.setAdapter(recAdapter);
@@ -213,7 +192,6 @@ public class DBfunctions {
             }
         });
     }
-
 
     public void removeFriend(final Context context,String usera_id, String userb_id) {
 
