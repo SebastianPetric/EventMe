@@ -48,11 +48,6 @@ public class DBfunctions {
     private static final String USERS = "users";
     private static final String URL_SEARCH_USER = "search_user.php";
 
-    //Remove Friend
-    private static final String URL_REMOVE_FRIEND = "remove_friend.php";
-
-    //Friend Request
-    private static final String URL_FRIEND_REQUEST= "friend_request.php";
 
     public static DBfunctions getInstance() {
         if (DBfunctions.instance == null) {
@@ -70,7 +65,7 @@ public class DBfunctions {
                     Toast.makeText(context.getApplicationContext(), response.getString(MESSAGE), Toast.LENGTH_SHORT).show();
                     if (response.getInt(STATUS) == 200) {
                         CheckSharedPreferences.getInstance().setPreferances(context.getApplicationContext(), response.getString(USER_ID));
-                        StartActivityFunctions.getInstance().startAllEventsActivity(context.getApplicationContext());
+                        StartActivityFunctions.getInstance().startEventOrganizersActivity(context.getApplicationContext());
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -186,38 +181,6 @@ public class DBfunctions {
                         RecyclerView.Adapter<SearchListAdapter.MyViewHolder> recAdapter = new SearchListAdapter(context.getApplicationContext(), userList);
                         recyclerView.setAdapter(recAdapter);
                     }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-    }
-
-    public void removeFriend(final Context context,String usera_id, String userb_id) {
-
-        RequestParams params = BuildJSON.getInstance().addFriendJSON(usera_id, userb_id);
-        DBconnection.post(URL_REMOVE_FRIEND, params, new JsonHttpResponseHandler() {
-
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                try {
-                    Toast.makeText(context.getApplicationContext(), response.getString(MESSAGE), Toast.LENGTH_SHORT).show();
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-    }
-
-    public void friendRequest(final Context context,String user1_id,String user2_id){
-
-        RequestParams params = BuildJSON.getInstance().addFriendJSON(user1_id, user2_id);
-        DBconnection.post(URL_FRIEND_REQUEST, params, new JsonHttpResponseHandler() {
-
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                try {
-                    Toast.makeText(context.getApplicationContext(),response.getString(MESSAGE),Toast.LENGTH_SHORT).show();
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

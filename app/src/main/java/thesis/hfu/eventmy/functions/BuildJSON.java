@@ -28,7 +28,7 @@ public class BuildJSON {
     private static final String OWNER_ID="owner_id";
     private static final String LOCATION="location";
     private static final String DATE="date";
-    private static final String STATUS_FRIEND="status_friend";
+    private static final String STATUS ="status";
     private static final String COSTS_OF_EVENT="costs_of_event";
     private static final String NUM_ORGANIZERS_EVENT="num_organizers_event";
     private static final String EDITOR_ID="editor_id";
@@ -74,6 +74,14 @@ public class BuildJSON {
         RequestParams params= new RequestParams();
         params.put(SEARCH, search);
         params.put(USER_ID,user_id);
+        return params;
+    }
+
+    public RequestParams searchFriendsEventJSON(String user_id,int event_id) {
+
+        RequestParams params= new RequestParams();
+        params.put(USER_ID, Integer.parseInt(user_id));
+        params.put(EVENT_ID,event_id);
         return params;
     }
 
@@ -156,7 +164,7 @@ public class BuildJSON {
             String name= jsonArray.getJSONObject(i).getString(NAME);
             String prename= jsonArray.getJSONObject(i).getString(PRENAME);
             String email= jsonArray.getJSONObject(i).getString(EMAIL);
-            int status= jsonArray.getJSONObject(i).getInt(STATUS_FRIEND);
+            int status= jsonArray.getJSONObject(i).getInt(STATUS);
             User user= new User(user_id,status,name,prename,email);
             userList.add(user);
         }

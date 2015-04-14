@@ -49,4 +49,16 @@ public class StartActivityFunctions {
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
     }
+
+    public void startSearchActivity(Context context){
+        Intent intent = new Intent(context.getApplicationContext(), SearchActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.getApplicationContext().startActivity(intent);
+    }
+
+    public void startEventOrganizersActivity(Context context){
+        Intent intent = new Intent(context.getApplicationContext(), EventOrganizersActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.getApplicationContext().startActivity(intent);
+    }
 }

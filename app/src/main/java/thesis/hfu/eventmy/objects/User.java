@@ -3,11 +3,11 @@ package thesis.hfu.eventmy.objects;
 
 public class User {
 
-   private int user_id,status;
+   private int user_id, status;
    private String name,prename,email;
 
    public User(int Uid,int status,String name,String prename,String email){
-       this.status=status;
+       this.status = status;
        this.user_id=Uid;
        this.name=name;
        this.prename=prename;
