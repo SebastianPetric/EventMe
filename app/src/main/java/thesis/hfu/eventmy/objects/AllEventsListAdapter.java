@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import thesis.hfu.eventmy.R;
 import thesis.hfu.eventmy.functions.StartActivityFunctions;
@@ -37,6 +38,13 @@ public class AllEventsListAdapter extends
         viewHolder.costs.setText(String.valueOf(event.getCosts()));
         viewHolder.numberOrganizers.setText(String.valueOf(event.getNumOrganizers()));
         viewHolder.Percentage.setText(String.valueOf(event.getPercentage_of_event()));
+        viewHolder.addOrganizersButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                StartActivityFunctions.getInstance().startEventOrganizersActivity(context.getApplicationContext(),event.getEvent_id());
+            }
+        });
+
     }
 
     @Override
@@ -45,10 +53,12 @@ public class AllEventsListAdapter extends
                 R.layout.list_event_row, arg0, false);
         return new MyViewHolder(itemView);
     }
+
     public class MyViewHolder extends RecyclerView.ViewHolder implements
             View.OnClickListener {
 
         private TextView name,location,date,numberOrganizers,costs,Percentage;
+        private ImageButton addOrganizersButton;
 
         public MyViewHolder(View itemView) {
             super(itemView);
@@ -58,6 +68,7 @@ public class AllEventsListAdapter extends
             numberOrganizers= (TextView) itemView.findViewById(R.id.textViewListRowEventOrganizer);
             costs= (TextView) itemView.findViewById(R.id.textViewListRowEventCosts);
             Percentage= (TextView) itemView.findViewById(R.id.textViewlistRowEventPercentage);
+            addOrganizersButton= (ImageButton) itemView.findViewById(R.id.imageButtonListRowEventOrganizer);
             itemView.setOnClickListener(this);
         }
 

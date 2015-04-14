@@ -30,18 +30,18 @@ import java.util.ArrayList;
         private static final String MESSAGE = "message";
         private static final String STATUS = "status";
         private MyViewHolder viewHolder;
-        private int position;
-
+        private int position,event_id;
 
         //Remove Friend
-        private static final String URL_REMOVE_FRIEND = "remove_friend_from_event.php";
+        private static final String URL_REMOVE_FRIEND_FROM_EVENT = "remove_friend_from_event.php";
 
         //Friend Request
-        private static final String URL_FRIEND_REQUEST= "add_friend_to_event.php";
+        private static final String URL_FRIEND_TO_EVENT = "add_friend_to_event.php";
 
-        public EventOrganizersListAdapter(Context context,ArrayList<User> list) {
+        public EventOrganizersListAdapter(Context context,ArrayList<User> list,int event_id) {
             this.users = list;
             this.context=context;
+            this.event_id=event_id;
         }
         @Override
         public int getItemCount() {
@@ -75,7 +75,7 @@ import java.util.ArrayList;
                     setViewHolder(viewHolder);
 
                     if(CheckSharedPreferences.getInstance().isLoggedIn(context)){
-                        friendRequest(CheckSharedPreferences.getInstance().getUser_id(),String.valueOf(user_b.getUser_id()));
+                        addFriendToEvent(getUserList().get(getPosition()).getUser_id(),getEvent_id());
                     }else {
                         CheckSharedPreferences.getInstance().endSession(context);
                     }
@@ -90,7 +90,7 @@ import java.util.ArrayList;
                     setViewHolder(viewHolder);
 
                     if(CheckSharedPreferences.getInstance().isLoggedIn(context)){
-                        removeFriend(CheckSharedPreferences.getInstance().getUser_id(), String.valueOf(user_b.getUser_id()));
+                       removeFriendFromEvent(getUserList().get(getPosition()).getUser_id(),getEvent_id());
                     }else {
                         CheckSharedPreferences.getInstance().endSession(context);
                     }
@@ -104,6 +104,8 @@ import java.util.ArrayList;
                     R.layout.list_event_organizers_row, arg0, false);
             return new MyViewHolder(itemView);
         }
+
+
 
         public class MyViewHolder extends RecyclerView.ViewHolder implements
                 View.OnClickListener {
@@ -136,10 +138,10 @@ import java.util.ArrayList;
         //-----------------Functions-------------------------------------
         //----------------------------------------------------------------------
 
-        public void friendRequest(String user1_id,String user2_id){
+        public void addFriendToEvent(int user_id,int event_id){
 
-            RequestParams params = BuildJSON.getInstance().addFriendJSON(user1_id, user2_id);
-            DBconnection.post(URL_FRIEND_REQUEST, params, new JsonHttpResponseHandler() {
+            RequestParams params = BuildJSON.getInstance().addRemoveFriendToEventJSON(user_id, event_id);
+            DBconnection.post(URL_FRIEND_TO_EVENT, params, new JsonHttpResponseHandler() {
 
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
@@ -148,18 +150,10 @@ import java.util.ArrayList;
                         if (response.getInt(STATUS) == 200) {
                             final User user_b = getUserList().get(getPosition());
 
-
-                            if (user_b.getStatus() == 3) {
-                                user_b.setStatus(2);
+                                // User wird hinzugefügt
+                                user_b.setStatus(1);
                                 getViewHolder().addButton.setVisibility(View.GONE);
                                 getViewHolder().removeButton.setVisibility(View.VISIBLE);
-
-
-                            } else if (user_b.getStatus() == 1) {
-                                user_b.setStatus(0);
-                                getViewHolder().addButton.setVisibility(View.GONE);
-                                getViewHolder().removeButton.setVisibility(View.GONE);
-                            }
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -168,22 +162,22 @@ import java.util.ArrayList;
             });
         }
 
-        public void removeFriend(String usera_id, String userb_id) {
+        public void removeFriendFromEvent(int user_id,int event_id) {
 
-            RequestParams params = BuildJSON.getInstance().addFriendJSON(usera_id, userb_id);
-            DBconnection.post(URL_REMOVE_FRIEND, params, new JsonHttpResponseHandler() {
+            RequestParams params = BuildJSON.getInstance().addRemoveFriendToEventJSON(user_id, event_id);
+            DBconnection.post(URL_REMOVE_FRIEND_FROM_EVENT, params, new JsonHttpResponseHandler() {
 
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                     try {
                         Toast.makeText(context.getApplicationContext(), response.getString(MESSAGE), Toast.LENGTH_SHORT).show();
-                        if(response.getInt(STATUS)==200) {
-
-
+                        if (response.getInt(STATUS) == 200) {
                             final User user_b = getUserList().get(getPosition());
-                            user_b.setStatus(1);
-                            getViewHolder().addButton.setVisibility(View.VISIBLE);
-                            getViewHolder().removeButton.setVisibility(View.GONE);
+
+                                //User wird entfernt
+                                user_b.setStatus(0);
+                                getViewHolder().addButton.setVisibility(View.VISIBLE);
+                                getViewHolder().removeButton.setVisibility(View.GONE);
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -210,5 +204,8 @@ import java.util.ArrayList;
         }
         public ArrayList<User> getUserList(){
             return this.users;
+        }
+        public int getEvent_id() {
+            return event_id;
         }
     }

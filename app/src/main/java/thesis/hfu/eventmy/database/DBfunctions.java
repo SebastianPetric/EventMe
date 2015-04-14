@@ -48,6 +48,9 @@ public class DBfunctions {
     private static final String USERS = "users";
     private static final String URL_SEARCH_USER = "search_user.php";
 
+    //Search Friend for Event
+    private static final String URL_SEARCH_FRIENDS_EVENT = "search_friends_for_event.php";
+
 
     public static DBfunctions getInstance() {
         if (DBfunctions.instance == null) {
@@ -65,7 +68,7 @@ public class DBfunctions {
                     Toast.makeText(context.getApplicationContext(), response.getString(MESSAGE), Toast.LENGTH_SHORT).show();
                     if (response.getInt(STATUS) == 200) {
                         CheckSharedPreferences.getInstance().setPreferances(context.getApplicationContext(), response.getString(USER_ID));
-                        StartActivityFunctions.getInstance().startEventOrganizersActivity(context.getApplicationContext());
+                        StartActivityFunctions.getInstance().startAllEventsActivity(context.getApplicationContext());
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -138,7 +141,7 @@ public class DBfunctions {
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 try {
                     Toast.makeText(context.getApplicationContext(), response.getString(MESSAGE), Toast.LENGTH_SHORT).show();
-                    StartActivityFunctions.getInstance().startAllTasksActivity(context.getApplicationContext(),event_id);
+                    StartActivityFunctions.getInstance().startAllTasksActivity(context.getApplicationContext(), event_id);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -179,6 +182,27 @@ public class DBfunctions {
                     if (response.getInt(STATUS) == 200) {
                         ArrayList<User> userList = BuildJSON.getInstance().getAllUsersJSON(response.getJSONArray(USERS));
                         RecyclerView.Adapter<SearchListAdapter.MyViewHolder> recAdapter = new SearchListAdapter(context.getApplicationContext(), userList);
+                        recyclerView.setAdapter(recAdapter);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+    public void searchFriendsForEvent(final Context context, final RecyclerView recyclerView, String user_id, final int event_id) {
+
+        RequestParams params = BuildJSON.getInstance().searchFriendsEventJSON(user_id, event_id);
+        DBconnection.post(URL_SEARCH_FRIENDS_EVENT, params, new JsonHttpResponseHandler() {
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                try {
+                    Toast.makeText(context.getApplicationContext(), response.getString(MESSAGE), Toast.LENGTH_SHORT).show();
+                    if (response.getInt(STATUS) == 200) {
+                        ArrayList<User> userList = BuildJSON.getInstance().getAllUsersJSON(response.getJSONArray(USERS));
+                        RecyclerView.Adapter<EventOrganizersListAdapter.MyViewHolder> recAdapter = new EventOrganizersListAdapter(context.getApplicationContext(), userList,event_id);
                         recyclerView.setAdapter(recAdapter);
                     }
                 } catch (JSONException e) {

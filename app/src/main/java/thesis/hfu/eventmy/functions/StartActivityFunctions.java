@@ -9,6 +9,7 @@ public class StartActivityFunctions {
 
     private static StartActivityFunctions instance;
     private static final String EVENT_ID="event_id";
+    private static final String USER_ID="user_id";
 
     public static StartActivityFunctions getInstance(){
 
@@ -56,8 +57,9 @@ public class StartActivityFunctions {
         context.getApplicationContext().startActivity(intent);
     }
 
-    public void startEventOrganizersActivity(Context context){
+    public void startEventOrganizersActivity(Context context, int event_id){
         Intent intent = new Intent(context.getApplicationContext(), EventOrganizersActivity.class);
+        intent.putExtra(EVENT_ID, event_id);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.getApplicationContext().startActivity(intent);
     }

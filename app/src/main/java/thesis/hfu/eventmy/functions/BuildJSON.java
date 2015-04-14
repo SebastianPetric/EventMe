@@ -85,6 +85,14 @@ public class BuildJSON {
         return params;
     }
 
+    public RequestParams addRemoveFriendToEventJSON(int user_id,int event_id) {
+
+        RequestParams params= new RequestParams();
+        params.put(USER_ID, user_id);
+        params.put(EVENT_ID,event_id);
+        return params;
+    }
+
     public RequestParams addFriendJSON(String user1_id, String user2_id) {
 
         RequestParams params= new RequestParams();
