@@ -1,9 +1,13 @@
 package thesis.hfu.eventmy.activities;
 
-import android.app.Activity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 import thesis.hfu.eventmy.R;
@@ -16,7 +20,7 @@ import thesis.hfu.eventmy.objects.Task;
 import java.util.ArrayList;
 
 
-public class AllTasksOfEventActivity extends Activity {
+public class AllTasksOfEventActivity extends ActionBarActivity {
 
     private ImageButton addTaskButton;
     private RecyclerView allTasksOfEventRecycler;
@@ -31,6 +35,8 @@ public class AllTasksOfEventActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_all_tasks_of_event);
 
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
 
         if(CheckSharedPreferences.getInstance().isLoggedIn(getApplicationContext())){
             setEvent_id(getIntent().getExtras().getInt(EVENT_ID));
@@ -65,6 +71,25 @@ public class AllTasksOfEventActivity extends Activity {
                 }
             }
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_all_tasks, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        if (item.getItemId()==R.id.action_search) {
+            StartActivityFunctions.getInstance().startSearchActivity(getApplicationContext());
+            return true;
+        }else if(item.getItemId()==R.id.action_friends){
+
+            return true;
+        }return super.onOptionsItemSelected(item);
     }
 
 

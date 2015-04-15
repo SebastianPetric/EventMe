@@ -48,7 +48,7 @@
 
         <activity
                 android:name=".activities.EventOrganizersActivity"
-                android:label="Freunde um sie zum Event hinzuzufügen" >
+                android:label="Organisatoren" >
         </activity>
     </application>
 

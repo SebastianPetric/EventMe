@@ -1,9 +1,13 @@
 package thesis.hfu.eventmy.activities;
 
-import android.app.Activity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -13,7 +17,7 @@ import thesis.hfu.eventmy.functions.CheckSharedPreferences;
 import thesis.hfu.eventmy.list_decoration.DividerItemDecoration;
 
 
-public class SearchActivity extends Activity {
+public class SearchActivity extends ActionBarActivity {
 
     private EditText searchField;
     private Button searchButton;
@@ -25,6 +29,9 @@ public class SearchActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_list);
+
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
 
         if(CheckSharedPreferences.getInstance().isLoggedIn(getApplicationContext())){
             setSearchField(R.id.editTextSearchField);
@@ -58,6 +65,24 @@ public class SearchActivity extends Activity {
                 }
             }
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_search, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        if (item.getItemId()==R.id.action_search) {
+            return true;
+        }else if(item.getItemId()==R.id.action_friends){
+
+            return true;
+        }return super.onOptionsItemSelected(item);
     }
 
 
