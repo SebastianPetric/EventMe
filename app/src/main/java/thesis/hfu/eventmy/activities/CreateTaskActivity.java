@@ -28,7 +28,6 @@ public class CreateTaskActivity extends ActionBarActivity {
     private static final String EVENT_ID= "event_id";
     private static final String ERROR_TASK= "Geben Sie eine Aufgabe an!";
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,7 +50,6 @@ public class CreateTaskActivity extends ActionBarActivity {
         }
     }
 
-
     //----------------------------------------------------------------------
     //-----------------CUSTOM ONCLICKLISTENER-------------------------------------
     //----------------------------------------------------------------------
@@ -61,7 +59,6 @@ public class CreateTaskActivity extends ActionBarActivity {
         @Override
         public void onClick(View v) {
             if(v.getId()==R.id.buttonNewTaskFinishButton){
-
                 if(!getTaskField().matches(EMPTY_STRING)){
                     if(getEditorField().matches(EMPTY_STRING)){
                         setEditorValue(DEFAULT_EDITOR);
@@ -78,6 +75,10 @@ public class CreateTaskActivity extends ActionBarActivity {
         }
     }
 
+    //----------------------------------------------------------------------
+    //-----------------ACTION BAR MENU-------------------------------------
+    //----------------------------------------------------------------------
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -87,7 +88,6 @@ public class CreateTaskActivity extends ActionBarActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle item selection
         if (item.getItemId()==R.id.action_search) {
             StartActivityFunctions.getInstance().startSearchActivity(getApplicationContext());
             return true;

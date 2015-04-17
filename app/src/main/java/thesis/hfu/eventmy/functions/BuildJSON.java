@@ -41,6 +41,7 @@ public class BuildJSON {
     private static final String PERCENTAGE_OF_EVENT="percentage_of_event";
     private static final String EDITOR_NAME="editor_name";
     private static final String TYPE_OF_UPDATE="type_of_update";
+    private static final String ADMIN_ID="admin_id";
 
 
     public static BuildJSON getInstance(){
@@ -69,25 +70,25 @@ public class BuildJSON {
         return params;
     }
 
-    public RequestParams searchUserJSON(String search,String user_id) {
+    public RequestParams searchUserJSON(String search,String admin_id) {
 
         RequestParams params= new RequestParams();
         params.put(SEARCH, search);
-        params.put(USER_ID,user_id);
+        params.put(ADMIN_ID,admin_id);
         return params;
     }
 
     public RequestParams getFriendsListJSON(String admin_id) {
 
         RequestParams params= new RequestParams();
-        params.put("admin_id",Integer.parseInt(admin_id));
+        params.put(ADMIN_ID,Integer.parseInt(admin_id));
         return params;
     }
 
-    public RequestParams searchFriendsEventJSON(String user_id,int event_id) {
+    public RequestParams searchFriendsEventJSON(String admin_id,int event_id) {
 
         RequestParams params= new RequestParams();
-        params.put(USER_ID, Integer.parseInt(user_id));
+        params.put(ADMIN_ID, Integer.parseInt(admin_id));
         params.put(EVENT_ID,event_id);
         return params;
     }
@@ -130,10 +131,10 @@ public class BuildJSON {
         return params;
     }
 
-    public RequestParams updateAllEventsJSON(String user_id) {
+    public RequestParams updateAllEventsJSON(String admin_id) {
 
         RequestParams params= new RequestParams();
-        params.put(USER_ID, Integer.parseInt(user_id));
+        params.put(ADMIN_ID, Integer.parseInt(admin_id));
         return params;
     }
 
@@ -201,7 +202,7 @@ public class BuildJSON {
             DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
             Date date = null;
             try {
-                date = (Date) df.parse(jsonArray.getJSONObject(i).getString(DATE));
+                date = df.parse(jsonArray.getJSONObject(i).getString(DATE));
             } catch (ParseException e) {
                 e.printStackTrace();
             }

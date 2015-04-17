@@ -1,6 +1,5 @@
 package thesis.hfu.eventmy.activities;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.View;
@@ -11,6 +10,7 @@ import android.widget.Toast;
 import thesis.hfu.eventmy.R;
 import thesis.hfu.eventmy.database.DBfunctions;
 import thesis.hfu.eventmy.functions.CheckIf;
+import thesis.hfu.eventmy.functions.StartActivityFunctions;
 
 
 public class LoginActivity extends ActionBarActivity {
@@ -45,8 +45,7 @@ public class LoginActivity extends ActionBarActivity {
         @Override
         public void onClick(View v) {
                if(v.getId()==R.id.loginRegistrationButton){
-                   Intent intent= new Intent(getApplicationContext(),RegistrationActivity.class);
-                   startActivity(intent);
+                   StartActivityFunctions.getInstance().startRegistrationActivity(getApplicationContext());
                }else if(v.getId()==R.id.loginButton){
                    if(!getEmailField().equals(EMPTY_STRING)&&!getPasswordField().equals(EMPTY_STRING)) {
                        if (CheckIf.EmailIsValid(getEmailField())) {

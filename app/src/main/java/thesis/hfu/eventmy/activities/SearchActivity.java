@@ -25,7 +25,6 @@ public class SearchActivity extends ActionBarActivity {
     private RecyclerView recyclerView;
     private static final String EMPTY_STRING = "";
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,6 +67,10 @@ public class SearchActivity extends ActionBarActivity {
         }
     }
 
+    //----------------------------------------------------------------------
+    //-----------------ACTION BAR MENU-------------------------------------
+    //----------------------------------------------------------------------
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -77,7 +80,6 @@ public class SearchActivity extends ActionBarActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle item selection
         if (item.getItemId()==R.id.action_search) {
             return true;
         }else if(item.getItemId()==R.id.action_friends){

@@ -15,20 +15,15 @@ import thesis.hfu.eventmy.database.DBfunctions;
 import thesis.hfu.eventmy.functions.CheckSharedPreferences;
 import thesis.hfu.eventmy.functions.StartActivityFunctions;
 import thesis.hfu.eventmy.list_decoration.DividerItemDecoration;
-import thesis.hfu.eventmy.objects.Task;
-
-import java.util.ArrayList;
 
 
 public class AllTasksOfEventActivity extends ActionBarActivity {
 
     private ImageButton addTaskButton;
     private RecyclerView allTasksOfEventRecycler;
-    private ArrayList<Task> taskList;
     private int event_id;
 
     private static final String EVENT_ID="event_id";
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +48,6 @@ public class AllTasksOfEventActivity extends ActionBarActivity {
         }
     }
 
-
     //----------------------------------------------------------------------
     //-----------------CUSTOM ONCLICKLISTENER-------------------------------------
     //----------------------------------------------------------------------
@@ -73,6 +67,10 @@ public class AllTasksOfEventActivity extends ActionBarActivity {
         }
     }
 
+    //----------------------------------------------------------------------
+    //-----------------ACTION BAR MENU-------------------------------------
+    //----------------------------------------------------------------------
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -82,7 +80,6 @@ public class AllTasksOfEventActivity extends ActionBarActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle item selection
         if (item.getItemId()==R.id.action_search) {
             StartActivityFunctions.getInstance().startSearchActivity(getApplicationContext());
             return true;

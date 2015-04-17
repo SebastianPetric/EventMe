@@ -32,7 +32,6 @@ public class CreateEventActivity extends ActionBarActivity {
     private static final String DATE_PICKER = "datepicker";
     private static final String ERROR_EMPTY_FIELD = "Bitte füllen Sie alle Felder aus!";
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,6 +53,10 @@ public class CreateEventActivity extends ActionBarActivity {
         }
     }
 
+    //----------------------------------------------------------------------
+    //-----------------CUSTOM ONCLICKLISTENER-------------------------------------
+    //----------------------------------------------------------------------
+
     public class CustomClickListener implements View.OnClickListener{
 
         @Override
@@ -73,6 +76,10 @@ public class CreateEventActivity extends ActionBarActivity {
         }
     }
 
+    //----------------------------------------------------------------------
+    //-----------------ACTION BAR MENU-------------------------------------
+    //----------------------------------------------------------------------
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -82,7 +89,6 @@ public class CreateEventActivity extends ActionBarActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle item selection
         if (item.getItemId()==R.id.action_search) {
             StartActivityFunctions.getInstance().startSearchActivity(getApplicationContext());
             return true;
@@ -96,11 +102,9 @@ public class CreateEventActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-
     //----------------------------------------------------------------------
     //-----------------DATEPICKER-------------------------------------
     //----------------------------------------------------------------------
-
 
     public class DatePickerFragment extends DialogFragment
             implements DatePickerDialog.OnDateSetListener {

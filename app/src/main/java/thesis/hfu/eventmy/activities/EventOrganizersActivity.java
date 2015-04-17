@@ -68,6 +68,10 @@ public class EventOrganizersActivity extends ActionBarActivity {
         }
     }
 
+    //----------------------------------------------------------------------
+    //-----------------ACTION BAR MENU-------------------------------------
+    //----------------------------------------------------------------------
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -77,7 +81,6 @@ public class EventOrganizersActivity extends ActionBarActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle item selection
         if (item.getItemId()==R.id.action_search) {
             StartActivityFunctions.getInstance().startSearchActivity(getApplicationContext());
             return true;

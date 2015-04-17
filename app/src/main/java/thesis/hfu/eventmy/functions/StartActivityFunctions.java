@@ -25,6 +25,12 @@ public class StartActivityFunctions {
         context.getApplicationContext().startActivity(intent);
     }
 
+    public void startRegistrationActivity(Context context){
+        Intent intent = new Intent(context.getApplicationContext(),RegistrationActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.getApplicationContext().startActivity(intent);
+    }
+
     public void startCreateEventActivity(Context context){
         Intent intent= new Intent(context.getApplicationContext(),CreateEventActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

@@ -38,6 +38,9 @@ public class FriendslistActivity extends ActionBarActivity {
         }
     }
 
+    //----------------------------------------------------------------------
+    //-----------------ACTION BAR MENU-------------------------------------
+    //----------------------------------------------------------------------
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -48,7 +51,6 @@ public class FriendslistActivity extends ActionBarActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle item selection
         if (item.getItemId()==R.id.action_search) {
             StartActivityFunctions.getInstance().startSearchActivity(getApplicationContext());
             return true;
@@ -61,7 +63,6 @@ public class FriendslistActivity extends ActionBarActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-
 
     //----------------------------------------------------------------------
     //-----------------Getter and Setter-------------------------------------

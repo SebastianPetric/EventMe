@@ -37,7 +37,6 @@ public class DBfunctions {
     private static final String URL_CREATE_EVENT = "create_event.php";
 
     //Create Task
-    private static final String EVENT_ID = "event_id";
     private static final String URL_CREATE_TASK = "create_task.php";
 
     //Update all Tasks
@@ -98,9 +97,9 @@ public class DBfunctions {
         });
     }
 
-    public void updateAllEvents(final Context context, final RecyclerView recyclerView, String user_id) {
+    public void updateAllEvents(final Context context, final RecyclerView recyclerView, String admin_id) {
 
-        RequestParams params = BuildJSON.getInstance().updateAllEventsJSON(user_id);
+        RequestParams params = BuildJSON.getInstance().updateAllEventsJSON(admin_id);
         DBconnection.post(URL_GET_ALL_EVENTS, params, new JsonHttpResponseHandler() {
 
             @Override
@@ -119,9 +118,9 @@ public class DBfunctions {
         });
     }
 
-    public void createEvent(final Context context, String eventName, String location, Date date, String user_id) {
+    public void createEvent(final Context context, String eventName, String location, Date date, String admin_id) {
 
-        RequestParams params = BuildJSON.getInstance().createEventJSON(eventName, location, date, user_id);
+        RequestParams params = BuildJSON.getInstance().createEventJSON(eventName, location, date, admin_id);
         DBconnection.post(URL_CREATE_EVENT, params, new JsonHttpResponseHandler() {
 
             @Override
@@ -174,9 +173,9 @@ public class DBfunctions {
         });
     }
 
-    public void searchUser(final Context context, final RecyclerView recyclerView, String search, String user_id) {
+    public void searchUser(final Context context, final RecyclerView recyclerView, String search, String admin_id) {
 
-        RequestParams params = BuildJSON.getInstance().searchUserJSON(search, user_id);
+        RequestParams params = BuildJSON.getInstance().searchUserJSON(search, admin_id);
         DBconnection.post(URL_SEARCH_USER, params, new JsonHttpResponseHandler() {
 
             @Override
@@ -195,9 +194,9 @@ public class DBfunctions {
         });
     }
 
-    public void searchFriendsForEvent(final Context context, final RecyclerView recyclerView, String user_id, final int event_id) {
+    public void searchFriendsForEvent(final Context context, final RecyclerView recyclerView, String admin_id, final int event_id) {
 
-        RequestParams params = BuildJSON.getInstance().searchFriendsEventJSON(user_id, event_id);
+        RequestParams params = BuildJSON.getInstance().searchFriendsEventJSON(admin_id, event_id);
         DBconnection.post(URL_SEARCH_FRIENDS_EVENT, params, new JsonHttpResponseHandler() {
 
             @Override
