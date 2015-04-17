@@ -17,7 +17,7 @@
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceLarge"
                     android:text="Large Text"
-                    android:id="@+id/textViewListEventOrganizersRowName"/>
+                    android:id="@+id/textViewListEventOrganizersRowName" android:layout_marginLeft="23dp"/>
             <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -34,14 +34,15 @@
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:text="Small Text"
-                    android:id="@+id/textViewListEventOrganizersRowEmail" android:layout_weight="0.25"/>
+                    android:id="@+id/textViewListEventOrganizersRowEmail" android:layout_weight="0.25"
+                    android:layout_marginLeft="23dp"/>
         </LinearLayout>
     </LinearLayout>
 
     <LinearLayout
             android:orientation="horizontal"
             android:layout_width="0dp"
-            android:layout_height="wrap_content" android:layout_weight="0.25">
+            android:layout_height="wrap_content" android:layout_weight="0.25" android:layout_marginTop="5dp">
         <ImageButton
                 android:layout_width="45dp"
                 android:layout_height="45dp"
@@ -59,7 +60,7 @@
                 android:layout_alignParentBottom="true"
                 android:src="@drawable/decline_button"
                 android:id="@+id/imageButtonDeleteFromEvent" android:background="@drawable/add_button_shape"
-                />
+                android:layout_marginRight="23dp"/>
     </LinearLayout>
 
 </LinearLayout>

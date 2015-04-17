@@ -71,7 +71,7 @@ public class AllTasksOfEventListAdapter extends
                 setViewHolder(viewHolder);
                 setPosition(position);
                 if (CheckSharedPreferences.getInstance().isLoggedIn(context.getApplicationContext())) {
-                    changeEditorOfTask(Integer.parseInt(CheckSharedPreferences.getInstance().getUser_id()), task.getTask_id());
+                    changeEditorOfTask(Integer.parseInt(CheckSharedPreferences.getInstance().getAdmin_id()), task.getTask_id());
                 } else {
                     CheckSharedPreferences.getInstance().endSession(context.getApplicationContext());
                 }
@@ -105,7 +105,7 @@ public class AllTasksOfEventListAdapter extends
                                         break;
                                 }
                                 if (CheckSharedPreferences.getInstance().isLoggedIn(context.getApplicationContext())) {
-                                    updatePercentage(task.getTask_id(), Integer.parseInt(CheckSharedPreferences.getInstance().getUser_id()), getPercentageValue());
+                                    updatePercentage(task.getTask_id(), Integer.parseInt(CheckSharedPreferences.getInstance().getAdmin_id()), getPercentageValue());
                                 } else {
                                     CheckSharedPreferences.getInstance().endSession(context.getApplicationContext());
                                 }
@@ -136,7 +136,7 @@ public class AllTasksOfEventListAdapter extends
                                             setCostsValue(Calculation.getInstance().round(Double.parseDouble(userInput.getText().toString())));
                                             setType_of_update(0);
                                             if (CheckSharedPreferences.getInstance().isLoggedIn(context)) {
-                                                updateCosts(task.getTask_id(), Integer.parseInt(CheckSharedPreferences.getInstance().getUser_id()), getCostsValue(), getType_of_update());
+                                                updateCosts(task.getTask_id(), Integer.parseInt(CheckSharedPreferences.getInstance().getAdmin_id()), getCostsValue(), getType_of_update());
                                             }else{
                                                 CheckSharedPreferences.getInstance().endSession(context);
                                             }
@@ -158,7 +158,7 @@ public class AllTasksOfEventListAdapter extends
                                     setCostsValue(Calculation.getInstance().round(Double.parseDouble(userInput.getText().toString())));
                                     setType_of_update(1);
                                     if(CheckSharedPreferences.getInstance().isLoggedIn(context)) {
-                                        updateCosts(task.getTask_id(), Integer.parseInt(CheckSharedPreferences.getInstance().getUser_id()), getCostsValue(), getType_of_update());
+                                        updateCosts(task.getTask_id(), Integer.parseInt(CheckSharedPreferences.getInstance().getAdmin_id()), getCostsValue(), getType_of_update());
                                     }else{
                                         CheckSharedPreferences.getInstance().endSession(context);
                                     }

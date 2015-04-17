@@ -88,7 +88,7 @@ public class SearchListAdapter extends
                     setViewHolder(viewHolder);
 
                     if(CheckSharedPreferences.getInstance().isLoggedIn(context)){
-                        friendRequest(CheckSharedPreferences.getInstance().getUser_id(),String.valueOf(user_b.getUser_id()));
+                        friendRequest(CheckSharedPreferences.getInstance().getAdmin_id(),user_b.getUser_id());
                     }else {
                         CheckSharedPreferences.getInstance().endSession(context);
                     }
@@ -103,7 +103,7 @@ public class SearchListAdapter extends
                 setViewHolder(viewHolder);
 
                 if(CheckSharedPreferences.getInstance().isLoggedIn(context)){
-                    removeFriend(CheckSharedPreferences.getInstance().getUser_id(), String.valueOf(user_b.getUser_id()));
+                    removeFriend(CheckSharedPreferences.getInstance().getAdmin_id(), user_b.getUser_id());
                     }else {
                     CheckSharedPreferences.getInstance().endSession(context);
                 }
@@ -150,9 +150,9 @@ public class SearchListAdapter extends
     //-----------------Functions-------------------------------------
     //----------------------------------------------------------------------
 
-    public void friendRequest(String user1_id,String user2_id){
+    public void friendRequest(String user1_id,int user2_id){
 
-        RequestParams params = BuildJSON.getInstance().addFriendJSON(user1_id, user2_id);
+        RequestParams params = BuildJSON.getInstance().addRemoveFriendJSON(user1_id, user2_id);
         DBconnection.post(URL_FRIEND_REQUEST, params, new JsonHttpResponseHandler() {
 
             @Override
@@ -184,9 +184,9 @@ public class SearchListAdapter extends
         });
     }
 
-    public void removeFriend(String usera_id, String userb_id) {
+    public void removeFriend(String usera_id, int userb_id) {
 
-        RequestParams params = BuildJSON.getInstance().addFriendJSON(usera_id, userb_id);
+        RequestParams params = BuildJSON.getInstance().addRemoveFriendJSON(usera_id, userb_id);
         DBconnection.post(URL_REMOVE_FRIEND, params, new JsonHttpResponseHandler() {
 
             @Override

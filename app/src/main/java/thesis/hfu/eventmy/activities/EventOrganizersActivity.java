@@ -44,7 +44,7 @@ public class EventOrganizersActivity extends ActionBarActivity {
             LinearLayoutManager layoutManager= new LinearLayoutManager(this);
             getRecyclerView().setLayoutManager(layoutManager);
             getRecyclerView().addItemDecoration(new DividerItemDecoration(this));
-            DBfunctions.getInstance().searchFriendsForEvent(getApplicationContext(), getRecyclerView(), CheckSharedPreferences.getInstance().getUser_id(),getEvent_id());
+            DBfunctions.getInstance().searchFriendsForEvent(getApplicationContext(), getRecyclerView(), CheckSharedPreferences.getInstance().getAdmin_id(),getEvent_id());
         }else{
             CheckSharedPreferences.getInstance().endSession(getApplicationContext());
         }
@@ -60,7 +60,7 @@ public class EventOrganizersActivity extends ActionBarActivity {
         public void onClick(View v) {
             if(v.getId()==R.id.buttonEventOrganizersSearchButton){
                 if(CheckSharedPreferences.getInstance().isLoggedIn(getApplicationContext())){
-                    DBfunctions.getInstance().searchFriendsForEvent(getApplicationContext(), getRecyclerView(), CheckSharedPreferences.getInstance().getUser_id(), getEvent_id());
+                    DBfunctions.getInstance().searchFriendsForEvent(getApplicationContext(), getRecyclerView(), CheckSharedPreferences.getInstance().getAdmin_id(), getEvent_id());
                 }else{
                     CheckSharedPreferences.getInstance().endSession(getApplicationContext());
                 }
@@ -82,9 +82,13 @@ public class EventOrganizersActivity extends ActionBarActivity {
             StartActivityFunctions.getInstance().startSearchActivity(getApplicationContext());
             return true;
         }else if(item.getItemId()==R.id.action_friends){
-
+            StartActivityFunctions.getInstance().startFriendsListActivity(getApplicationContext());
             return true;
-        }return super.onOptionsItemSelected(item);
+        }else if(item.getItemId()==android.R.id.home){
+            StartActivityFunctions.getInstance().startAllEventsActivity(getApplicationContext());
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     //----------------------------------------------------------------------

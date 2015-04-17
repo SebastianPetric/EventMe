@@ -87,9 +87,13 @@ public class AllTasksOfEventActivity extends ActionBarActivity {
             StartActivityFunctions.getInstance().startSearchActivity(getApplicationContext());
             return true;
         }else if(item.getItemId()==R.id.action_friends){
-
+            StartActivityFunctions.getInstance().startFriendsListActivity(getApplicationContext());
             return true;
-        }return super.onOptionsItemSelected(item);
+        }else if(item.getItemId()==android.R.id.home){
+            StartActivityFunctions.getInstance().startAllEventsActivity(getApplicationContext());
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
 

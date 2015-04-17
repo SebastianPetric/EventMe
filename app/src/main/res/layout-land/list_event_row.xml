@@ -19,7 +19,7 @@
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="EventName"
                     android:id="@+id/textViewListRowEventName" android:layout_marginLeft="12dp"
-                    android:layout_marginTop="10dp"/>
+                    android:layout_marginTop="5dp"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -36,7 +36,7 @@
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:text="Datum"
                     android:id="@+id/textViewListRowEventDate" android:layout_marginTop="5dp" android:layout_marginLeft="12dp"
-                    android:layout_marginBottom="10dp"/>
+                    android:layout_marginBottom="5dp"/>
         </LinearLayout>
         <LinearLayout
                 android:orientation="horizontal"
@@ -52,7 +52,7 @@
                              android:layout_alignParentRight="true" android:layout_alignParentEnd="true"
                              android:layout_alignParentBottom="true" android:src="@drawable/organizers_icon"
                              android:id="@+id/imageButtonListRowEventOrganizer" android:background="@drawable/icons_shape"
-                             android:layout_gravity="center_horizontal" android:layout_marginTop="10dp"/>
+                             android:layout_gravity="center_horizontal" android:layout_marginTop="5dp"/>
                 <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -71,7 +71,7 @@
                              android:layout_alignParentBottom="true" android:src="@drawable/euro_icon"
                              android:id="@+id/imageButtonListRowEventCosts"
                              android:background="@drawable/icons_shape" android:layout_gravity="center_horizontal"
-                             android:layout_marginTop="10dp"/>
+                             android:layout_marginTop="5dp"/>
                 <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -90,7 +90,7 @@
                              android:layout_alignParentBottom="true" android:src="@drawable/percentage_icon"
                              android:id="@+id/imageButtonlistRowEventPercentage"
                              android:background="@drawable/icons_shape" android:layout_gravity="center_horizontal"
-                             android:layout_marginTop="10dp"/>
+                             android:layout_marginTop="5dp"/>
                 <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"

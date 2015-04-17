@@ -51,6 +51,10 @@ public class DBfunctions {
     //Search Friend for Event
     private static final String URL_SEARCH_FRIENDS_EVENT = "search_friends_for_event.php";
 
+    //Get FriendsList
+    private static final String URL_GET_FRIENDSLIST = "get_friendlist.php";
+
+
 
     public static DBfunctions getInstance() {
         if (DBfunctions.instance == null) {
@@ -203,6 +207,27 @@ public class DBfunctions {
                     if (response.getInt(STATUS) == 200) {
                         ArrayList<User> userList = BuildJSON.getInstance().getAllUsersJSON(response.getJSONArray(USERS));
                         RecyclerView.Adapter<EventOrganizersListAdapter.MyViewHolder> recAdapter = new EventOrganizersListAdapter(context.getApplicationContext(), userList,event_id);
+                        recyclerView.setAdapter(recAdapter);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+    public void getFriendsList(final Context context, final RecyclerView recyclerView, String admin_id) {
+
+        RequestParams params = BuildJSON.getInstance().getFriendsListJSON(admin_id);
+        DBconnection.post(URL_GET_FRIENDSLIST, params, new JsonHttpResponseHandler() {
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                try {
+                    Toast.makeText(context.getApplicationContext(), response.getString(MESSAGE), Toast.LENGTH_SHORT).show();
+                    if (response.getInt(STATUS) == 200) {
+                        ArrayList<User> userList = BuildJSON.getInstance().getAllUsersJSON(response.getJSONArray(USERS));
+                        RecyclerView.Adapter<FriendsListAdapter.MyViewHolder> recAdapter = new FriendsListAdapter(context.getApplicationContext(), userList);
                         recyclerView.setAdapter(recAdapter);
                     }
                 } catch (JSONException e) {

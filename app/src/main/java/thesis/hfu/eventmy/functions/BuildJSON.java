@@ -77,6 +77,13 @@ public class BuildJSON {
         return params;
     }
 
+    public RequestParams getFriendsListJSON(String admin_id) {
+
+        RequestParams params= new RequestParams();
+        params.put("admin_id",Integer.parseInt(admin_id));
+        return params;
+    }
+
     public RequestParams searchFriendsEventJSON(String user_id,int event_id) {
 
         RequestParams params= new RequestParams();
@@ -93,11 +100,12 @@ public class BuildJSON {
         return params;
     }
 
-    public RequestParams addFriendJSON(String user1_id, String user2_id) {
+
+    public RequestParams addRemoveFriendJSON(String admin_id, int user_id) {
 
         RequestParams params= new RequestParams();
-        params.put(USER_A_ID, Integer.parseInt(user1_id));
-        params.put(USER_B_ID, Integer.parseInt(user2_id));
+        params.put(USER_A_ID, Integer.parseInt(admin_id));
+        params.put(USER_B_ID, user_id);
         return params;
     }
 

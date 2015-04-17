@@ -14,6 +14,7 @@ import android.widget.EditText;
 import thesis.hfu.eventmy.R;
 import thesis.hfu.eventmy.database.DBfunctions;
 import thesis.hfu.eventmy.functions.CheckSharedPreferences;
+import thesis.hfu.eventmy.functions.StartActivityFunctions;
 import thesis.hfu.eventmy.list_decoration.DividerItemDecoration;
 
 
@@ -42,7 +43,7 @@ public class SearchActivity extends ActionBarActivity {
             LinearLayoutManager layoutManager= new LinearLayoutManager(this);
             getRecyclerView().setLayoutManager(layoutManager);
             getRecyclerView().addItemDecoration(new DividerItemDecoration(this));
-            DBfunctions.getInstance().searchUser(getApplicationContext(),getRecyclerView(),EMPTY_STRING,CheckSharedPreferences.getInstance().getUser_id());
+            DBfunctions.getInstance().searchUser(getApplicationContext(),getRecyclerView(),EMPTY_STRING,CheckSharedPreferences.getInstance().getAdmin_id());
         }else{
             CheckSharedPreferences.getInstance().endSession(getApplicationContext());
         }
@@ -59,7 +60,7 @@ public class SearchActivity extends ActionBarActivity {
             if(v.getId()==R.id.buttonSearchButton){
 
                 if(CheckSharedPreferences.getInstance().isLoggedIn(getApplicationContext())){
-                    DBfunctions.getInstance().searchUser(getApplicationContext(),getRecyclerView(),getSearchField(),CheckSharedPreferences.getInstance().getUser_id());
+                    DBfunctions.getInstance().searchUser(getApplicationContext(),getRecyclerView(),getSearchField(),CheckSharedPreferences.getInstance().getAdmin_id());
                     }else{
                     CheckSharedPreferences.getInstance().endSession(getApplicationContext());
                 }
@@ -80,9 +81,13 @@ public class SearchActivity extends ActionBarActivity {
         if (item.getItemId()==R.id.action_search) {
             return true;
         }else if(item.getItemId()==R.id.action_friends){
-
+            StartActivityFunctions.getInstance().startFriendsListActivity(getApplicationContext());
             return true;
-        }return super.onOptionsItemSelected(item);
+        }else if(item.getItemId()==android.R.id.home){
+            StartActivityFunctions.getInstance().startAllEventsActivity(getApplicationContext());
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
 

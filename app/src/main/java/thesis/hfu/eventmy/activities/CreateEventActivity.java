@@ -61,7 +61,7 @@ public class CreateEventActivity extends ActionBarActivity {
             if(v.getId()==R.id.buttonNewEventFinishButton){
                 if(!getEventNameField().equals(EMPTY_STRING)&&!getEventLocationField().equals(EMPTY_STRING)&&!getEventDateField().equals(EMPTY_STRING)){
                     if(CheckSharedPreferences.getInstance().isLoggedIn(getApplicationContext())) {
-                        DBfunctions.getInstance().createEvent(getApplicationContext(), getEventNameField(), getEventLocationField(), getEventDate(), CheckSharedPreferences.getInstance().getUser_id());
+                        DBfunctions.getInstance().createEvent(getApplicationContext(), getEventNameField(), getEventLocationField(), getEventDate(), CheckSharedPreferences.getInstance().getAdmin_id());
                     }else CheckSharedPreferences.getInstance().endSession(getApplicationContext());
                 }else{
                     Toast.makeText(getApplicationContext(),ERROR_EMPTY_FIELD,Toast.LENGTH_SHORT).show();
@@ -87,9 +87,13 @@ public class CreateEventActivity extends ActionBarActivity {
             StartActivityFunctions.getInstance().startSearchActivity(getApplicationContext());
             return true;
         }else if(item.getItemId()==R.id.action_friends){
-
+            StartActivityFunctions.getInstance().startFriendsListActivity(getApplicationContext());
             return true;
-        }return super.onOptionsItemSelected(item);
+        }else if(item.getItemId()==android.R.id.home){
+            StartActivityFunctions.getInstance().startAllEventsActivity(getApplicationContext());
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
 

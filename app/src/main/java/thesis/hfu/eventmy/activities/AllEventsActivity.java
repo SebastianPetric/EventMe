@@ -37,7 +37,7 @@ public class AllEventsActivity extends ActionBarActivity{
             getAllEventsRecycler().setLayoutManager(layoutManager);
             getAllEventsRecycler().addItemDecoration(new DividerItemDecoration(this));
             getAddEventButton().setOnClickListener(new CustomClickListener());
-            DBfunctions.getInstance().updateAllEvents(getApplicationContext(), getAllEventsRecycler(), CheckSharedPreferences.getInstance().getUser_id());
+            DBfunctions.getInstance().updateAllEvents(getApplicationContext(), getAllEventsRecycler(), CheckSharedPreferences.getInstance().getAdmin_id());
         }else{
             CheckSharedPreferences.getInstance().endSession(getApplicationContext());
         }
@@ -76,9 +76,14 @@ public class AllEventsActivity extends ActionBarActivity{
                 StartActivityFunctions.getInstance().startSearchActivity(getApplicationContext());
                 return true;
         }else if(item.getItemId()==R.id.action_friends){
-
+                StartActivityFunctions.getInstance().startFriendsListActivity(getApplicationContext());
                 return true;
-        }return super.onOptionsItemSelected(item);
+        }else if(item.getItemId()==android.R.id.home){
+                CheckSharedPreferences.getInstance().endSession(getApplicationContext());
+                StartActivityFunctions.getInstance().startLoginActivity(getApplicationContext());
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     //----------------------------------------------------------------------

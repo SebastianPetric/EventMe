@@ -50,6 +50,11 @@
                 android:name=".activities.EventOrganizersActivity"
                 android:label="Organisatoren" >
         </activity>
+
+        <activity
+                android:name=".activities.FriendslistActivity"
+                android:label="Freundesliste" >
+        </activity>
     </application>
 
     <!--  Internet Permissions -->

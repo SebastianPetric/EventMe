@@ -12,21 +12,21 @@
                 android:orientation="vertical"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.50" android:layout_marginLeft="12dp">
+                android:layout_weight="0.50" android:layout_marginLeft="23dp">
             <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceLarge"
                     android:text="AufgabenName"
-                    android:id="@+id/textViewListRowTaskOfEventName" android:layout_marginLeft="12dp"
-                    android:layout_marginTop="10dp"/>
+                    android:id="@+id/textViewListRowTaskOfEventName" android:layout_marginLeft="0dp"
+                    android:layout_marginTop="5dp"/>
             <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:text="Menge"
-                    android:id="@+id/textViewListRowTaskOfEventDate" android:layout_marginTop="10dp" android:layout_marginLeft="12dp"
-                    android:layout_marginBottom="10dp"/>
+                    android:id="@+id/textViewListRowTaskOfEventDate" android:layout_marginTop="10dp" android:layout_marginLeft="0dp"
+                    android:layout_marginBottom="5dp"/>
         </LinearLayout>
         <LinearLayout
                 android:orientation="horizontal"
@@ -42,14 +42,14 @@
                              android:layout_alignParentRight="true" android:layout_alignParentEnd="true"
                              android:layout_alignParentBottom="true" android:src="@drawable/euro_icon"
                              android:id="@+id/imageButtonListRowTaskOfEventCosts" android:background="@drawable/add_button_shape"
-                             android:layout_gravity="center_horizontal" android:layout_marginTop="10dp"/>
+                             android:layout_gravity="center_horizontal" android:layout_marginTop="5dp"/>
                 <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:text="12"
                         android:id="@+id/textViewListRowTaskOfEventCosts" android:layout_marginTop="10dp"
-                        android:layout_gravity="center_horizontal" android:layout_marginBottom="10dp"/>
+                        android:layout_gravity="center_horizontal" android:layout_marginBottom="5dp"/>
             </LinearLayout>
             <LinearLayout
                     android:orientation="vertical"
@@ -61,14 +61,14 @@
                              android:layout_alignParentBottom="true" android:src="@drawable/percentage_icon"
                              android:id="@+id/imageButtonListRowTaskOfEventPercentage"
                              android:background="@drawable/add_button_shape" android:layout_gravity="center_horizontal"
-                             android:layout_marginTop="10dp"/>
+                             android:layout_marginTop="5dp"/>
                 <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:text="23"
                         android:id="@+id/textViewListRowTaskOfEventPercentage" android:layout_marginTop="10dp"
-                        android:layout_gravity="center_horizontal" android:layout_marginBottom="10dp"/>
+                        android:layout_gravity="center_horizontal" android:layout_marginBottom="5dp"/>
             </LinearLayout>
             <LinearLayout
                     android:orientation="vertical"
@@ -80,14 +80,14 @@
                              android:layout_alignParentBottom="true" android:src="@drawable/editor_icon"
                              android:id="@+id/imageButtonlistRowTaskOfEventPercentage"
                              android:background="@drawable/add_button_shape" android:layout_gravity="center_horizontal"
-                             android:layout_marginTop="10dp"/>
+                             android:layout_marginTop="5dp"/>
                 <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:text="@string/tasks_of_event_row_editor"
                         android:id="@+id/textViewlistRowTaskOfEventOrganizer" android:layout_marginTop="10dp"
-                        android:layout_gravity="center_horizontal" android:layout_marginBottom="10dp"/>
+                        android:layout_gravity="center_horizontal" android:layout_marginBottom="5dp"/>
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
