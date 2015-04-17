@@ -1,6 +1,7 @@
 package thesis.hfu.eventmy.database;
 
 import android.content.Context;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.widget.Toast;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -97,7 +98,7 @@ public class DBfunctions {
         });
     }
 
-    public void updateAllEvents(final Context context, final RecyclerView recyclerView, String admin_id) {
+    public void updateAllEvents(final Context context, final SwipeRefreshLayout swipeRefreshLayout, final RecyclerView recyclerView, String admin_id) {
 
         RequestParams params = BuildJSON.getInstance().updateAllEventsJSON(admin_id);
         DBconnection.post(URL_GET_ALL_EVENTS, params, new JsonHttpResponseHandler() {
@@ -110,6 +111,33 @@ public class DBfunctions {
                         ArrayList<Event> eventList = BuildJSON.getInstance().getAllEventsJSON(response.getJSONArray(EVENTS));
                         RecyclerView.Adapter<AllEventsListAdapter.MyViewHolder> recAdapter = new AllEventsListAdapter(context.getApplicationContext(), eventList);
                         recyclerView.setAdapter(recAdapter);
+                        if(swipeRefreshLayout!=null){
+                            swipeRefreshLayout.setRefreshing(false);
+                        }
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+    public void updateAllTasks(final Context context,final SwipeRefreshLayout swipeRefreshLayout, final RecyclerView recyclerView, int event_id) {
+
+        RequestParams params = BuildJSON.getInstance().updateAllTasksJSON(event_id);
+        DBconnection.post(URL_GET_ALL_TASKS_OF_EVENT, params, new JsonHttpResponseHandler() {
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                try {
+                    Toast.makeText(context.getApplicationContext(), response.getString(MESSAGE), Toast.LENGTH_SHORT).show();
+                    if (response.getInt(STATUS) == 200) {
+                        ArrayList<Task> taskList = BuildJSON.getInstance().getAllTasksOfEventJSON(response.getJSONArray(TASKS));
+                        RecyclerView.Adapter<AllTasksOfEventListAdapter.MyViewHolder> recAdapter = new AllTasksOfEventListAdapter(context.getApplicationContext(), taskList);
+                        recyclerView.setAdapter(recAdapter);
+                        if(swipeRefreshLayout!=null){
+                            swipeRefreshLayout.setRefreshing(false);
+                        }
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -152,28 +180,7 @@ public class DBfunctions {
         });
     }
 
-    public void updateAllTasks(final Context context, final RecyclerView recyclerView, int event_id) {
-
-        RequestParams params = BuildJSON.getInstance().updateAllTasksJSON(event_id);
-        DBconnection.post(URL_GET_ALL_TASKS_OF_EVENT, params, new JsonHttpResponseHandler() {
-
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                try {
-                    Toast.makeText(context.getApplicationContext(), response.getString(MESSAGE), Toast.LENGTH_SHORT).show();
-                    if (response.getInt(STATUS) == 200) {
-                        ArrayList<Task> taskList = BuildJSON.getInstance().getAllTasksOfEventJSON(response.getJSONArray(TASKS));
-                        RecyclerView.Adapter<AllTasksOfEventListAdapter.MyViewHolder> recAdapter = new AllTasksOfEventListAdapter(context.getApplicationContext(), taskList);
-                        recyclerView.setAdapter(recAdapter);
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-    }
-
-    public void searchUser(final Context context, final RecyclerView recyclerView, String search, String admin_id) {
+    public void searchUser(final Context context,final SwipeRefreshLayout swipeRefreshLayout, final RecyclerView recyclerView, String search, String admin_id) {
 
         RequestParams params = BuildJSON.getInstance().searchUserJSON(search, admin_id);
         DBconnection.post(URL_SEARCH_USER, params, new JsonHttpResponseHandler() {
@@ -186,6 +193,9 @@ public class DBfunctions {
                         ArrayList<User> userList = BuildJSON.getInstance().getAllUsersJSON(response.getJSONArray(USERS));
                         RecyclerView.Adapter<SearchListAdapter.MyViewHolder> recAdapter = new SearchListAdapter(context.getApplicationContext(), userList);
                         recyclerView.setAdapter(recAdapter);
+                        if(swipeRefreshLayout!=null){
+                            swipeRefreshLayout.setRefreshing(false);
+                        }
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -194,7 +204,7 @@ public class DBfunctions {
         });
     }
 
-    public void searchFriendsForEvent(final Context context, final RecyclerView recyclerView, String admin_id, final int event_id) {
+    public void searchFriendsForEvent(final Context context,final SwipeRefreshLayout swipeRefreshLayout, final RecyclerView recyclerView, String admin_id, final int event_id) {
 
         RequestParams params = BuildJSON.getInstance().searchFriendsEventJSON(admin_id, event_id);
         DBconnection.post(URL_SEARCH_FRIENDS_EVENT, params, new JsonHttpResponseHandler() {
@@ -207,6 +217,9 @@ public class DBfunctions {
                         ArrayList<User> userList = BuildJSON.getInstance().getAllUsersJSON(response.getJSONArray(USERS));
                         RecyclerView.Adapter<EventOrganizersListAdapter.MyViewHolder> recAdapter = new EventOrganizersListAdapter(context.getApplicationContext(), userList,event_id);
                         recyclerView.setAdapter(recAdapter);
+                        if(swipeRefreshLayout!=null){
+                            swipeRefreshLayout.setRefreshing(false);
+                        }
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -215,7 +228,7 @@ public class DBfunctions {
         });
     }
 
-    public void getFriendsList(final Context context, final RecyclerView recyclerView, String admin_id) {
+    public void getFriendsList(final Context context,final SwipeRefreshLayout swipeRefreshLayout, final RecyclerView recyclerView, String admin_id) {
 
         RequestParams params = BuildJSON.getInstance().getFriendsListJSON(admin_id);
         DBconnection.post(URL_GET_FRIENDSLIST, params, new JsonHttpResponseHandler() {
@@ -228,6 +241,9 @@ public class DBfunctions {
                         ArrayList<User> userList = BuildJSON.getInstance().getAllUsersJSON(response.getJSONArray(USERS));
                         RecyclerView.Adapter<FriendsListAdapter.MyViewHolder> recAdapter = new FriendsListAdapter(context.getApplicationContext(), userList);
                         recyclerView.setAdapter(recAdapter);
+                        if(swipeRefreshLayout!=null){
+                            swipeRefreshLayout.setRefreshing(false);
+                        }
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();

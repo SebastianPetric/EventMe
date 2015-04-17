@@ -1,6 +1,7 @@
 package thesis.hfu.eventmy.activities;
 
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -20,6 +21,7 @@ public class AllEventsActivity extends ActionBarActivity{
 
     private ImageButton addEventButton;
     private RecyclerView allEventsRecycler;
+    private SwipeRefreshLayout syncRefresh;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,13 +33,15 @@ public class AllEventsActivity extends ActionBarActivity{
 
         if(CheckSharedPreferences.getInstance().isLoggedIn(getApplicationContext())){
             setAddEvent(R.id.imageButtonAddNewEvent);
+            setSyncRefresh(R.id.swipe_refresh_all_events);
             setAllEventsRecycler(R.id.recyclerViewAllEvents);
             getAllEventsRecycler().setHasFixedSize(true);
             LinearLayoutManager layoutManager= new LinearLayoutManager(this);
             getAllEventsRecycler().setLayoutManager(layoutManager);
             getAllEventsRecycler().addItemDecoration(new DividerItemDecoration(this));
             getAddEventButton().setOnClickListener(new CustomClickListener());
-            DBfunctions.getInstance().updateAllEvents(getApplicationContext(), getAllEventsRecycler(), CheckSharedPreferences.getInstance().getAdmin_id());
+            getSyncRefresh().setOnRefreshListener(new CustomSwipeListener());
+            DBfunctions.getInstance().updateAllEvents(getApplicationContext(),null, getAllEventsRecycler(), CheckSharedPreferences.getInstance().getAdmin_id());
         }else{
             CheckSharedPreferences.getInstance().endSession(getApplicationContext());
         }
@@ -45,7 +49,7 @@ public class AllEventsActivity extends ActionBarActivity{
     }
 
     //----------------------------------------------------------------------
-    //-----------------CUSTOM ONCLICKLISTENER-------------------------------------
+    //-----------------CUSTOM LICKLISTENER-------------------------------------
     //----------------------------------------------------------------------
 
     public class CustomClickListener implements View.OnClickListener{
@@ -59,6 +63,14 @@ public class AllEventsActivity extends ActionBarActivity{
                     CheckSharedPreferences.getInstance().endSession(getApplicationContext());
                 }
             }
+        }
+    }
+
+    public class CustomSwipeListener implements SwipeRefreshLayout.OnRefreshListener{
+
+        @Override
+        public void onRefresh() {
+            DBfunctions.getInstance().updateAllEvents(getApplicationContext(),getSyncRefresh(), getAllEventsRecycler(), CheckSharedPreferences.getInstance().getAdmin_id());
         }
     }
 
@@ -104,5 +116,11 @@ public class AllEventsActivity extends ActionBarActivity{
     }
     public void setAllEventsRecycler(int res) {
         this.allEventsRecycler = (RecyclerView) findViewById(res);
+    }
+    public SwipeRefreshLayout getSyncRefresh() {
+        return syncRefresh;
+    }
+    public void setSyncRefresh(int res) {
+        this.syncRefresh = (SwipeRefreshLayout) findViewById(res);
     }
 }

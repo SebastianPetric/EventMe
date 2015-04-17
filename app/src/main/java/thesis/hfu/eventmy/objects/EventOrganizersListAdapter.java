@@ -105,8 +105,6 @@ import java.util.ArrayList;
             return new MyViewHolder(itemView);
         }
 
-
-
         public class MyViewHolder extends RecyclerView.ViewHolder implements
                 View.OnClickListener {
 
@@ -132,7 +130,6 @@ import java.util.ArrayList;
                     Toast.LENGTH_SHORT).show();*/
             }
         }
-
 
         //----------------------------------------------------------------------
         //-----------------Functions-------------------------------------

@@ -118,17 +118,7 @@ public class FriendsListAdapter extends
                     Toast.makeText(context.getApplicationContext(), response.getString(MESSAGE), Toast.LENGTH_SHORT).show();
                     if (response.getInt(STATUS) == 200) {
                         getUserList().remove(getPosition());
-                        //final User user_b = getUserList().get(getPosition());
-
-                        //User wird entfernt
-                        //user_b.setStatus(0);
-                        //getViewHolder().removeButton.setVisibility(View.GONE);
-
-                        /*FriendsListAdapter adp = (FriendsListAdapter) this.getAdapter();
-                        adp.UpdateDataList(EfficientAdapter.MY_DATA);
-                        adp.notifyDataSetChanged();
-                        QuickList.invalidateViews();
-                        QuickList.scrollBy(0, 0);*/
+                        notifyDataSetChanged();
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();

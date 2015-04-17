@@ -1,6 +1,7 @@
 package thesis.hfu.eventmy.activities;
 
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -17,6 +18,7 @@ import thesis.hfu.eventmy.list_decoration.DividerItemDecoration;
 public class FriendslistActivity extends ActionBarActivity {
 
     private RecyclerView FriendsListRecycler;
+    private SwipeRefreshLayout syncRefresh;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,13 +30,28 @@ public class FriendslistActivity extends ActionBarActivity {
 
         if(CheckSharedPreferences.getInstance().isLoggedIn(getApplicationContext())){
             setFriendsListRecycler(R.id.recyclerViewFriendsList);
+            setSyncRefresh(R.id.swipe_refresh_friendslist);
             getFriendsListRecycler().setHasFixedSize(true);
             LinearLayoutManager layoutManager= new LinearLayoutManager(this);
             getFriendsListRecycler().setLayoutManager(layoutManager);
             getFriendsListRecycler().addItemDecoration(new DividerItemDecoration(this));
-            DBfunctions.getInstance().getFriendsList(getApplicationContext(),getFriendsListRecycler(),CheckSharedPreferences.getInstance().getAdmin_id());
+            getSyncRefresh().setOnRefreshListener(new CustomSwipeListener());
+            DBfunctions.getInstance().getFriendsList(getApplicationContext(),null,getFriendsListRecycler(),CheckSharedPreferences.getInstance().getAdmin_id());
         }else{
             CheckSharedPreferences.getInstance().endSession(getApplicationContext());
+        }
+    }
+
+    //----------------------------------------------------------------------
+    //-----------------CUSTOM LICKLISTENER-------------------------------------
+    //----------------------------------------------------------------------
+
+    public class CustomSwipeListener implements SwipeRefreshLayout.OnRefreshListener{
+
+        @Override
+        public void onRefresh() {
+            DBfunctions.getInstance().getFriendsList(getApplicationContext(),getSyncRefresh(), getFriendsListRecycler(), CheckSharedPreferences.getInstance().getAdmin_id());
+            getSyncRefresh().setRefreshing(false);
         }
     }
 
@@ -73,5 +90,11 @@ public class FriendslistActivity extends ActionBarActivity {
     }
     public void setFriendsListRecycler(int res) {
         this.FriendsListRecycler = (RecyclerView) findViewById(res);
+    }
+    public SwipeRefreshLayout getSyncRefresh() {
+        return syncRefresh;
+    }
+    public void setSyncRefresh(int res) {
+        this.syncRefresh = (SwipeRefreshLayout) findViewById(res);
     }
 }

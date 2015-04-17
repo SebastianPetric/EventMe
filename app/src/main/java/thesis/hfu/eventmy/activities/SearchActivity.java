@@ -1,6 +1,7 @@
 package thesis.hfu.eventmy.activities;
 
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -24,6 +25,7 @@ public class SearchActivity extends ActionBarActivity {
     private Button searchButton;
     private RecyclerView recyclerView;
     private static final String EMPTY_STRING = "";
+    private SwipeRefreshLayout syncRefresh;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,13 +38,15 @@ public class SearchActivity extends ActionBarActivity {
         if(CheckSharedPreferences.getInstance().isLoggedIn(getApplicationContext())){
             setSearchField(R.id.editTextSearchField);
             setSearchButton(R.id.buttonSearchButton);
+            setSyncRefresh(R.id.swipe_refresh_search);
             getSearchButton().setOnClickListener(new CustomClickListener());
             setRecyclerView(R.id.recyclerViewSearch);
             getRecyclerView().setHasFixedSize(true);
             LinearLayoutManager layoutManager= new LinearLayoutManager(this);
             getRecyclerView().setLayoutManager(layoutManager);
             getRecyclerView().addItemDecoration(new DividerItemDecoration(this));
-            DBfunctions.getInstance().searchUser(getApplicationContext(),getRecyclerView(),EMPTY_STRING,CheckSharedPreferences.getInstance().getAdmin_id());
+            getSyncRefresh().setOnRefreshListener(new CustomSwipeListener());
+            DBfunctions.getInstance().searchUser(getApplicationContext(),null,getRecyclerView(),EMPTY_STRING,CheckSharedPreferences.getInstance().getAdmin_id());
         }else{
             CheckSharedPreferences.getInstance().endSession(getApplicationContext());
         }
@@ -57,13 +61,20 @@ public class SearchActivity extends ActionBarActivity {
         @Override
         public void onClick(View v) {
             if(v.getId()==R.id.buttonSearchButton){
-
                 if(CheckSharedPreferences.getInstance().isLoggedIn(getApplicationContext())){
-                    DBfunctions.getInstance().searchUser(getApplicationContext(),getRecyclerView(),getSearchField(),CheckSharedPreferences.getInstance().getAdmin_id());
+                    DBfunctions.getInstance().searchUser(getApplicationContext(),null,getRecyclerView(),getSearchField(),CheckSharedPreferences.getInstance().getAdmin_id());
                     }else{
                     CheckSharedPreferences.getInstance().endSession(getApplicationContext());
                 }
             }
+        }
+    }
+
+    public class CustomSwipeListener implements SwipeRefreshLayout.OnRefreshListener{
+
+        @Override
+        public void onRefresh() {
+            DBfunctions.getInstance().searchUser(getApplicationContext(),getSyncRefresh(),getRecyclerView(), EMPTY_STRING, CheckSharedPreferences.getInstance().getAdmin_id());
         }
     }
 
@@ -114,5 +125,11 @@ public class SearchActivity extends ActionBarActivity {
     }
     public RecyclerView getRecyclerView(){
         return this.recyclerView;
+    }
+    public SwipeRefreshLayout getSyncRefresh() {
+        return syncRefresh;
+    }
+    public void setSyncRefresh(int res) {
+        this.syncRefresh = (SwipeRefreshLayout) findViewById(res);
     }
 }

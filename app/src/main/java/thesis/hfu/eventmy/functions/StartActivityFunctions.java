@@ -9,7 +9,6 @@ public class StartActivityFunctions {
 
     private static StartActivityFunctions instance;
     private static final String EVENT_ID="event_id";
-    private static final String USER_ID="user_id";
 
     public static StartActivityFunctions getInstance(){
 
@@ -75,5 +74,4 @@ public class StartActivityFunctions {
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.getApplicationContext().startActivity(intent);
     }
-
 }

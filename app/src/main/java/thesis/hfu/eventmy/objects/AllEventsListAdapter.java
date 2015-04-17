@@ -44,7 +44,6 @@ public class AllEventsListAdapter extends
                 StartActivityFunctions.getInstance().startEventOrganizersActivity(context.getApplicationContext(),event.getEvent_id());
             }
         });
-
     }
 
     @Override

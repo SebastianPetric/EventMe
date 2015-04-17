@@ -1,6 +1,7 @@
 package thesis.hfu.eventmy.activities;
 
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -22,6 +23,7 @@ public class EventOrganizersActivity extends ActionBarActivity {
     private Button searchButton;
     private EditText searchField;
     private RecyclerView recyclerView;
+    private SwipeRefreshLayout syncRefresh;
     private int event_id;
 
     private static final String EVENT_ID="event_id";
@@ -36,6 +38,7 @@ public class EventOrganizersActivity extends ActionBarActivity {
 
         if(CheckSharedPreferences.getInstance().isLoggedIn(getApplicationContext())) {
             setEvent_id(getIntent().getExtras().getInt(EVENT_ID));
+            setSyncRefresh(R.id.swipe_refresh_event_organizers);
             setSearchField(R.id.editTextEventOrganizersSearchField);
             setSearchButton(R.id.buttonEventOrganizersSearchButton);
             setRecyclerView(R.id.recyclerEventOrganizers);
@@ -44,14 +47,17 @@ public class EventOrganizersActivity extends ActionBarActivity {
             LinearLayoutManager layoutManager= new LinearLayoutManager(this);
             getRecyclerView().setLayoutManager(layoutManager);
             getRecyclerView().addItemDecoration(new DividerItemDecoration(this));
-            DBfunctions.getInstance().searchFriendsForEvent(getApplicationContext(), getRecyclerView(), CheckSharedPreferences.getInstance().getAdmin_id(),getEvent_id());
+            getSyncRefresh().setOnRefreshListener(new CustomSwipeListener());
+            DBfunctions.getInstance().searchFriendsForEvent(getApplicationContext(),null, getRecyclerView(), CheckSharedPreferences.getInstance().getAdmin_id(),getEvent_id());
         }else{
             CheckSharedPreferences.getInstance().endSession(getApplicationContext());
         }
     }
 
+
+
     //----------------------------------------------------------------------
-    //-----------------CUSTOM ONCLICKLISTENER-------------------------------------
+    //-----------------CUSTOM LICKLISTENER-------------------------------------
     //----------------------------------------------------------------------
 
     public class CustomClickListener implements View.OnClickListener{
@@ -60,11 +66,19 @@ public class EventOrganizersActivity extends ActionBarActivity {
         public void onClick(View v) {
             if(v.getId()==R.id.buttonEventOrganizersSearchButton){
                 if(CheckSharedPreferences.getInstance().isLoggedIn(getApplicationContext())){
-                    DBfunctions.getInstance().searchFriendsForEvent(getApplicationContext(), getRecyclerView(), CheckSharedPreferences.getInstance().getAdmin_id(), getEvent_id());
+                    DBfunctions.getInstance().searchFriendsForEvent(getApplicationContext(),null, getRecyclerView(), CheckSharedPreferences.getInstance().getAdmin_id(), getEvent_id());
                 }else{
                     CheckSharedPreferences.getInstance().endSession(getApplicationContext());
                 }
             }
+        }
+    }
+
+    public class CustomSwipeListener implements SwipeRefreshLayout.OnRefreshListener{
+
+        @Override
+        public void onRefresh() {
+            DBfunctions.getInstance().searchFriendsForEvent(getApplicationContext(), getSyncRefresh(), getRecyclerView(), CheckSharedPreferences.getInstance().getAdmin_id(), getEvent_id());
         }
     }
 
@@ -121,5 +135,11 @@ public class EventOrganizersActivity extends ActionBarActivity {
     }
     public void setEvent_id(int event_id) {
         this.event_id = event_id;
+    }
+    public SwipeRefreshLayout getSyncRefresh() {
+        return syncRefresh;
+    }
+    public void setSyncRefresh(int res) {
+        this.syncRefresh = (SwipeRefreshLayout) findViewById(res);
     }
 }
