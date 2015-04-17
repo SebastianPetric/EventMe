@@ -42,18 +42,34 @@
     <LinearLayout
             android:orientation="horizontal"
             android:layout_width="0dp"
-            android:layout_height="50dp" android:layout_weight="0.25">
-        <RelativeLayout android:layout_width="match_parent" android:layout_height="wrap_content">
-            <ImageButton
-                    android:layout_width="45dp"
-                    android:layout_height="45dp"
-                    android:layout_alignParentRight="true"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentBottom="true"
-                    android:src="@drawable/decline_button"
-                    android:id="@+id/imageButtonDeleteFromFriendsList" android:background="@drawable/add_button_shape"
-                    android:layout_marginRight="23dp"/>
-        </RelativeLayout>
+            android:layout_height="wrap_content" android:layout_weight="0.25" android:layout_marginTop="5dp">
+        <ImageButton
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentBottom="true"
+                android:src="@drawable/add_button"
+                android:id="@+id/imageButtonAddToFriendsList" android:background="@drawable/add_button_shape"
+                />
+        <ImageButton
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentBottom="true"
+                android:src="@drawable/decline_button"
+                android:id="@+id/imageButtonDeleteFromFriendsList" android:background="@drawable/add_button_shape"
+                />
+        <ImageButton
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentBottom="true"
+                android:src="@drawable/questionmark"
+                android:id="@+id/imageButtonOpenRequestFriendsList" android:background="@drawable/add_button_shape"
+                android:layout_marginRight="23dp"/>
     </LinearLayout>
 
 </LinearLayout>

@@ -34,6 +34,9 @@ public class FriendsListAdapter extends
     //Remove Friend
     private static final String URL_REMOVE_FRIEND_FROM_FRIENDSLIST = "remove_friend_from_friendslist.php";
 
+    //Add Friend
+    private static final String URL_ADD_FRIEND_TO_FRIENDSLIST = "friend_request.php";
+
 
     public FriendsListAdapter(Context context,ArrayList<User> list) {
         this.users = list;
@@ -51,6 +54,34 @@ public class FriendsListAdapter extends
         viewHolder.name.setText(user_b.getName());
         viewHolder.prename.setText(user_b.getPrename());
         viewHolder.email.setText(user_b.getEmail());
+
+        if(user_b.getStatus()==0){
+            viewHolder.addButton.setVisibility(View.GONE);
+            viewHolder.removeButton.setVisibility(View.GONE);
+            viewHolder.openButton.setVisibility(View.VISIBLE);
+        }else if(user_b.getStatus()==2){
+            viewHolder.addButton.setVisibility(View.GONE);
+            viewHolder.removeButton.setVisibility(View.VISIBLE);
+            viewHolder.openButton.setVisibility(View.GONE);
+        }else if(user_b.getStatus()==3){
+            viewHolder.addButton.setVisibility(View.VISIBLE);
+            viewHolder.removeButton.setVisibility(View.VISIBLE);
+            viewHolder.openButton.setVisibility(View.GONE);
+        }
+        viewHolder.addButton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                setPosition(position);
+                setViewHolder(viewHolder);
+
+                if(CheckSharedPreferences.getInstance().isLoggedIn(context)){
+                    addFriendToFriendslist(CheckSharedPreferences.getInstance().getAdmin_id(), getUserList().get(getPosition()).getUser_id());
+                }else {
+                    CheckSharedPreferences.getInstance().endSession(context);
+                }
+            }
+        });
 
         viewHolder.removeButton.setOnClickListener(new View.OnClickListener() {
 
@@ -74,16 +105,14 @@ public class FriendsListAdapter extends
                 R.layout.list_friendslist_row, arg0, false);
         return new MyViewHolder(itemView);
     }
-
-
-
+    
     public class MyViewHolder extends RecyclerView.ViewHolder implements
             View.OnClickListener {
 
         TextView name;
         TextView prename;
         TextView email;
-        ImageButton removeButton;
+        ImageButton removeButton,addButton,openButton;
 
         public MyViewHolder(View itemView) {
             super(itemView);
@@ -91,6 +120,8 @@ public class FriendsListAdapter extends
             prename = (TextView) itemView.findViewById(R.id.textViewFriendsListRowPrename);
             email= (TextView) itemView.findViewById(R.id.textViewFriendsListRowEmail);
             removeButton= (ImageButton) itemView.findViewById(R.id.imageButtonDeleteFromFriendsList);
+            addButton= (ImageButton) itemView.findViewById(R.id.imageButtonAddToFriendsList);
+            openButton= (ImageButton) itemView.findViewById(R.id.imageButtonOpenRequestFriendsList);
             itemView.setOnClickListener(this);
         }
 
@@ -119,6 +150,40 @@ public class FriendsListAdapter extends
                     if (response.getInt(STATUS) == 200) {
                         getUserList().remove(getPosition());
                         notifyDataSetChanged();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+    public void addFriendToFriendslist(String admin_id,int user_id) {
+
+        RequestParams params = BuildJSON.getInstance().addRemoveFriendJSON(admin_id, user_id);
+        DBconnection.post(URL_ADD_FRIEND_TO_FRIENDSLIST, params, new JsonHttpResponseHandler() {
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                try {
+                    Toast.makeText(context.getApplicationContext(),response.getString(MESSAGE),Toast.LENGTH_SHORT).show();
+                    if(response.getInt(STATUS)==200){
+                        final User user_b = getUserList().get(getPosition());
+
+                        //Users become friends
+                        if(user_b.getStatus()==3){
+                            user_b.setStatus(2);
+                            getViewHolder().addButton.setVisibility(View.GONE);
+                            getViewHolder().removeButton.setVisibility(View.VISIBLE);
+                            getViewHolder().openButton.setVisibility(View.GONE);
+
+                            //Request is open and has to be answered by the other user
+                        }else if(user_b.getStatus()==1){
+                            user_b.setStatus(0);
+                            getViewHolder().addButton.setVisibility(View.GONE);
+                            getViewHolder().removeButton.setVisibility(View.GONE);
+                            getViewHolder().openButton.setVisibility(View.VISIBLE);
+                        }
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
