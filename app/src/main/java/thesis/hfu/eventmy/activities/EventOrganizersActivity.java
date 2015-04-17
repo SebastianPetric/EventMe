@@ -27,6 +27,7 @@ public class EventOrganizersActivity extends ActionBarActivity {
     private int event_id;
 
     private static final String EVENT_ID="event_id";
+    private static final String EMPTY_STRING="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +49,7 @@ public class EventOrganizersActivity extends ActionBarActivity {
             getRecyclerView().setLayoutManager(layoutManager);
             getRecyclerView().addItemDecoration(new DividerItemDecoration(this));
             getSyncRefresh().setOnRefreshListener(new CustomSwipeListener());
-            DBfunctions.getInstance().searchFriendsForEvent(getApplicationContext(),null, getRecyclerView(), CheckSharedPreferences.getInstance().getAdmin_id(),getEvent_id());
+            DBfunctions.getInstance().searchFriendsForEvent(getApplicationContext(),null, getRecyclerView(),EMPTY_STRING, CheckSharedPreferences.getInstance().getAdmin_id(),getEvent_id());
         }else{
             CheckSharedPreferences.getInstance().endSession(getApplicationContext());
         }
@@ -66,7 +67,7 @@ public class EventOrganizersActivity extends ActionBarActivity {
         public void onClick(View v) {
             if(v.getId()==R.id.buttonEventOrganizersSearchButton){
                 if(CheckSharedPreferences.getInstance().isLoggedIn(getApplicationContext())){
-                    DBfunctions.getInstance().searchFriendsForEvent(getApplicationContext(),null, getRecyclerView(), CheckSharedPreferences.getInstance().getAdmin_id(), getEvent_id());
+                    DBfunctions.getInstance().searchFriendsForEvent(getApplicationContext(),null, getRecyclerView(),getSearchFieldValue(), CheckSharedPreferences.getInstance().getAdmin_id(), getEvent_id());
                 }else{
                     CheckSharedPreferences.getInstance().endSession(getApplicationContext());
                 }
@@ -78,7 +79,7 @@ public class EventOrganizersActivity extends ActionBarActivity {
 
         @Override
         public void onRefresh() {
-            DBfunctions.getInstance().searchFriendsForEvent(getApplicationContext(), getSyncRefresh(), getRecyclerView(), CheckSharedPreferences.getInstance().getAdmin_id(), getEvent_id());
+            DBfunctions.getInstance().searchFriendsForEvent(getApplicationContext(), getSyncRefresh(), getRecyclerView(),EMPTY_STRING, CheckSharedPreferences.getInstance().getAdmin_id(),getEvent_id());
         }
     }
 

@@ -9,6 +9,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import thesis.hfu.eventmy.R;
 import thesis.hfu.eventmy.database.DBfunctions;
 import thesis.hfu.eventmy.functions.CheckSharedPreferences;
@@ -19,6 +22,10 @@ public class FriendslistActivity extends ActionBarActivity {
 
     private RecyclerView FriendsListRecycler;
     private SwipeRefreshLayout syncRefresh;
+    private EditText searchField;
+    private Button searchButton;
+
+    private String EMPTY_STRING="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,26 +38,44 @@ public class FriendslistActivity extends ActionBarActivity {
         if(CheckSharedPreferences.getInstance().isLoggedIn(getApplicationContext())){
             setFriendsListRecycler(R.id.recyclerViewFriendsList);
             setSyncRefresh(R.id.swipe_refresh_friendslist);
+            setSearchButton(R.id.buttonFriendsListSearchButton);
+            setSearchField(R.id.editTextFriendsListSearchField);
             getFriendsListRecycler().setHasFixedSize(true);
             LinearLayoutManager layoutManager= new LinearLayoutManager(this);
             getFriendsListRecycler().setLayoutManager(layoutManager);
             getFriendsListRecycler().addItemDecoration(new DividerItemDecoration(this));
             getSyncRefresh().setOnRefreshListener(new CustomSwipeListener());
-            DBfunctions.getInstance().getFriendsList(getApplicationContext(),null,getFriendsListRecycler(),CheckSharedPreferences.getInstance().getAdmin_id());
+            getSearchButton().setOnClickListener(new CustomClickListener());
+            DBfunctions.getInstance().getFriendsList(getApplicationContext(),null,getFriendsListRecycler(),EMPTY_STRING,CheckSharedPreferences.getInstance().getAdmin_id());
         }else{
             CheckSharedPreferences.getInstance().endSession(getApplicationContext());
         }
     }
 
     //----------------------------------------------------------------------
-    //-----------------CUSTOM LICKLISTENER-------------------------------------
+    //-----------------CUSTOM LISTENER-------------------------------------
     //----------------------------------------------------------------------
+
+
+    public class CustomClickListener implements View.OnClickListener{
+
+        @Override
+        public void onClick(View v) {
+            if(v.getId()==R.id.buttonFriendsListSearchButton){
+                if(CheckSharedPreferences.getInstance().isLoggedIn(getApplicationContext())){
+                    DBfunctions.getInstance().getFriendsList(getApplicationContext(),null,getFriendsListRecycler(),getSearchFieldValue(),CheckSharedPreferences.getInstance().getAdmin_id());
+                }else{
+                    CheckSharedPreferences.getInstance().endSession(getApplicationContext());
+                }
+            }
+        }
+    }
 
     public class CustomSwipeListener implements SwipeRefreshLayout.OnRefreshListener{
 
         @Override
         public void onRefresh() {
-            DBfunctions.getInstance().getFriendsList(getApplicationContext(),getSyncRefresh(), getFriendsListRecycler(), CheckSharedPreferences.getInstance().getAdmin_id());
+            DBfunctions.getInstance().getFriendsList(getApplicationContext(),getSyncRefresh(), getFriendsListRecycler(),EMPTY_STRING,CheckSharedPreferences.getInstance().getAdmin_id());
             getSyncRefresh().setRefreshing(false);
         }
     }
@@ -96,5 +121,17 @@ public class FriendslistActivity extends ActionBarActivity {
     }
     public void setSyncRefresh(int res) {
         this.syncRefresh = (SwipeRefreshLayout) findViewById(res);
+    }
+    public String getSearchFieldValue() {
+        return searchField.getText().toString();
+    }
+    public void setSearchField(int res) {
+        this.searchField = (EditText) findViewById(res);
+    }
+    public Button getSearchButton() {
+        return searchButton;
+    }
+    public void setSearchButton(int res) {
+        this.searchButton = (Button) findViewById(res);
     }
 }

@@ -105,7 +105,7 @@ public class FriendsListAdapter extends
                 R.layout.list_friendslist_row, arg0, false);
         return new MyViewHolder(itemView);
     }
-    
+
     public class MyViewHolder extends RecyclerView.ViewHolder implements
             View.OnClickListener {
 

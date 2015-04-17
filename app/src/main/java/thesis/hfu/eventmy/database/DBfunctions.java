@@ -204,9 +204,9 @@ public class DBfunctions {
         });
     }
 
-    public void searchFriendsForEvent(final Context context,final SwipeRefreshLayout swipeRefreshLayout, final RecyclerView recyclerView, String admin_id, final int event_id) {
+    public void searchFriendsForEvent(final Context context,final SwipeRefreshLayout swipeRefreshLayout, final RecyclerView recyclerView, String search, String admin_id, final int event_id) {
 
-        RequestParams params = BuildJSON.getInstance().searchFriendsEventJSON(admin_id, event_id);
+        RequestParams params = BuildJSON.getInstance().searchFriendsEventJSON(admin_id, event_id,search);
         DBconnection.post(URL_SEARCH_FRIENDS_EVENT, params, new JsonHttpResponseHandler() {
 
             @Override
@@ -228,9 +228,9 @@ public class DBfunctions {
         });
     }
 
-    public void getFriendsList(final Context context,final SwipeRefreshLayout swipeRefreshLayout, final RecyclerView recyclerView, String admin_id) {
+    public void getFriendsList(final Context context,final SwipeRefreshLayout swipeRefreshLayout, final RecyclerView recyclerView,String search, String admin_id) {
 
-        RequestParams params = BuildJSON.getInstance().getFriendsListJSON(admin_id);
+        RequestParams params = BuildJSON.getInstance().getFriendsListJSON(search,admin_id);
         DBconnection.post(URL_GET_FRIENDSLIST, params, new JsonHttpResponseHandler() {
 
             @Override

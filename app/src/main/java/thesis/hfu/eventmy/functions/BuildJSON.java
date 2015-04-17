@@ -78,18 +78,20 @@ public class BuildJSON {
         return params;
     }
 
-    public RequestParams getFriendsListJSON(String admin_id) {
+    public RequestParams getFriendsListJSON(String search,String admin_id) {
 
         RequestParams params= new RequestParams();
         params.put(ADMIN_ID,Integer.parseInt(admin_id));
+        params.put(SEARCH,search);
         return params;
     }
 
-    public RequestParams searchFriendsEventJSON(String admin_id,int event_id) {
+    public RequestParams searchFriendsEventJSON(String admin_id,int event_id,String search) {
 
         RequestParams params= new RequestParams();
         params.put(ADMIN_ID, Integer.parseInt(admin_id));
         params.put(EVENT_ID,event_id);
+        params.put(SEARCH,search);
         return params;
     }
 
