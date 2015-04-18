@@ -47,7 +47,7 @@ public class FriendslistActivity extends ActionBarActivity {
             getFriendsListRecycler().addItemDecoration(new DividerItemDecoration(this));
             getSyncRefresh().setOnRefreshListener(new CustomSwipeListener());
             getSearchButton().setOnClickListener(new CustomClickListener());
-            DBfunctions.getInstance().getFriendsList(getApplicationContext(),null,getFriendsListRecycler(),EMPTY_STRING,CheckSharedPreferences.getInstance().getAdmin_id());
+            DBfunctions.getInstance().searchFriendsList(getApplicationContext(), null, getFriendsListRecycler(), EMPTY_STRING, CheckSharedPreferences.getInstance().getAdmin_id());
         }else{
             CheckSharedPreferences.getInstance().endSession(getApplicationContext());
         }
@@ -63,7 +63,7 @@ public class FriendslistActivity extends ActionBarActivity {
         public void onClick(View v) {
             if(v.getId()==R.id.buttonFriendsListSearchButton){
                 if(CheckSharedPreferences.getInstance().isLoggedIn(getApplicationContext())){
-                    DBfunctions.getInstance().getFriendsList(getApplicationContext(),null,getFriendsListRecycler(),getSearchFieldValue(),CheckSharedPreferences.getInstance().getAdmin_id());
+                    DBfunctions.getInstance().searchFriendsList(getApplicationContext(), null, getFriendsListRecycler(), getSearchFieldValue(), CheckSharedPreferences.getInstance().getAdmin_id());
                 }else{
                     CheckSharedPreferences.getInstance().endSession(getApplicationContext());
                 }
@@ -75,8 +75,11 @@ public class FriendslistActivity extends ActionBarActivity {
 
         @Override
         public void onRefresh() {
-            DBfunctions.getInstance().getFriendsList(getApplicationContext(),getSyncRefresh(), getFriendsListRecycler(),EMPTY_STRING,CheckSharedPreferences.getInstance().getAdmin_id());
-            getSyncRefresh().setRefreshing(false);
+            if(CheckSharedPreferences.getInstance().isLoggedIn(getApplicationContext())){
+                DBfunctions.getInstance().searchFriendsList(getApplicationContext(), getSyncRefresh(), getFriendsListRecycler(), EMPTY_STRING, CheckSharedPreferences.getInstance().getAdmin_id());
+            }else{
+                CheckSharedPreferences.getInstance().endSession(getApplicationContext());
+            }
         }
     }
 

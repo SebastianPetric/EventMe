@@ -171,5 +171,4 @@ public class CreateEventActivity extends ActionBarActivity {
     public void setEventDate(Date eventDate) {
         this.eventDate = eventDate;
     }
-
 }

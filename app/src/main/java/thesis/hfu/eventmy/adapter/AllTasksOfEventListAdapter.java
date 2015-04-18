@@ -188,54 +188,6 @@ public class AllTasksOfEventListAdapter extends
         return new MyViewHolder(itemView);
     }
 
-    public TextView getEventName() {
-        return eventName;
-    }
-
-    public void setEventName(TextView eventName) {
-        this.eventName = eventName;
-    }
-
-    public TextView getEventDate() {
-        return eventDate;
-    }
-
-    public void setEventDate(TextView eventDate) {
-        this.eventDate = eventDate;
-    }
-
-    public TextView getEventTotalOrganizers() {
-        return eventTotalOrganizers;
-    }
-
-    public void setEventTotalOrganizers(TextView eventTotalOrganizers) {
-        this.eventTotalOrganizers = eventTotalOrganizers;
-    }
-
-    public TextView getEventTotalCosts() {
-        return eventTotalCosts;
-    }
-
-    public void setEventTotalCosts(TextView eventTotalCosts) {
-        this.eventTotalCosts = eventTotalCosts;
-    }
-
-    public TextView getEventTotalPercentage() {
-        return eventTotalPercentage;
-    }
-
-    public void setEventTotalPercentage(TextView eventTotalPercentage) {
-        this.eventTotalPercentage = eventTotalPercentage;
-    }
-
-    public int getEvent_id() {
-        return event_id;
-    }
-
-    public void setEvent_id(int event_id) {
-        this.event_id = event_id;
-    }
-
     public class MyViewHolder extends RecyclerView.ViewHolder implements
             View.OnClickListener {
 
@@ -281,8 +233,12 @@ public class AllTasksOfEventListAdapter extends
                         Task task = getTasks().get(getPosition());
                         task.setPercentage(percentage);
                         getViewHolder().percentageField.setText(String.valueOf(task.getPercentage()));
-                        DBfunctions.getInstance().updateEventDetails(null, CheckSharedPreferences.getInstance().getAdmin_id(), getEvent_id(), getEventTotalOrganizers(), getEventTotalPercentage(), getEventTotalCosts(), getEventName(), getEventDate());
-                    }
+                        if(CheckSharedPreferences.getInstance().isLoggedIn(context)) {
+                            DBfunctions.getInstance().updateEventDetails(null, CheckSharedPreferences.getInstance().getAdmin_id(), getEvent_id(), getEventTotalOrganizers(), getEventTotalPercentage(), getEventTotalCosts(), getEventName(), getEventDate());
+                        }else{
+                            CheckSharedPreferences.getInstance().endSession(context);
+                        }
+                        }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -305,9 +261,13 @@ public class AllTasksOfEventListAdapter extends
                             task.setCostOfTask(costs);
                             getViewHolder().costField.setText((String.valueOf(task.getCostOfTask())));
                         }else if(status==1){
-                            task.setCostOfTask(task.getCostOfTask()+costs);
+                            task.setCostOfTask(task.getCostOfTask() + costs);
                             getViewHolder().costField.setText(String.valueOf(task.getCostOfTask()));
+                        }
+                        if(CheckSharedPreferences.getInstance().isLoggedIn(context)) {
                             DBfunctions.getInstance().updateEventDetails(null, CheckSharedPreferences.getInstance().getAdmin_id(), getEvent_id(), getEventTotalOrganizers(), getEventTotalPercentage(), getEventTotalCosts(), getEventName(), getEventDate());
+                        }else{
+                            CheckSharedPreferences.getInstance().endSession(context);
                         }
                     }
                 } catch (JSONException e) {
@@ -374,5 +334,23 @@ public class AllTasksOfEventListAdapter extends
     }
     public MyViewHolder getViewHolder() {
         return viewHolder;
+    }
+    public TextView getEventName() {
+        return eventName;
+    }
+    public TextView getEventDate() {
+        return eventDate;
+    }
+    public TextView getEventTotalOrganizers() {
+        return eventTotalOrganizers;
+    }
+    public TextView getEventTotalCosts() {
+        return eventTotalCosts;
+    }
+    public TextView getEventTotalPercentage() {
+        return eventTotalPercentage;
+    }
+    public int getEvent_id() {
+        return event_id;
     }
 }

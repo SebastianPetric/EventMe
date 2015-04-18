@@ -70,7 +70,7 @@ public class BuildJSON {
         return params;
     }
 
-    public RequestParams searchUserJSON(String search,String admin_id) {
+    public RequestParams searchAllUsersJSON(String search, String admin_id) {
 
         RequestParams params= new RequestParams();
         params.put(SEARCH, search);
@@ -86,7 +86,7 @@ public class BuildJSON {
         return params;
     }
 
-    public RequestParams searchFriendsEventJSON(String admin_id,int event_id,String search) {
+    public RequestParams searchFriendsForEventJSON(String admin_id, int event_id, String search) {
 
         RequestParams params= new RequestParams();
         params.put(ADMIN_ID, Integer.parseInt(admin_id));
@@ -95,7 +95,7 @@ public class BuildJSON {
         return params;
     }
 
-    public RequestParams addRemoveFriendToEventJSON(int user_id,int event_id) {
+    public RequestParams addRemoveFriendEventJSON(int user_id, int event_id) {
 
         RequestParams params= new RequestParams();
         params.put(USER_ID, user_id);
@@ -133,10 +133,17 @@ public class BuildJSON {
         return params;
     }
 
-    public RequestParams updateAllEventsJSON(String admin_id) {
+    public RequestParams getAllEventsJSON(String admin_id) {
 
         RequestParams params= new RequestParams();
         params.put(ADMIN_ID, Integer.parseInt(admin_id));
+        return params;
+    }
+
+    public RequestParams getAllTasksJSON(int event_id) {
+
+        RequestParams params= new RequestParams();
+        params.put(EVENT_ID, event_id);
         return params;
     }
 
@@ -144,13 +151,6 @@ public class BuildJSON {
 
         RequestParams params= new RequestParams();
         params.put(ADMIN_ID, Integer.parseInt(admin_id));
-        params.put(EVENT_ID, event_id);
-        return params;
-    }
-
-    public RequestParams updateAllTasksJSON(int event_id) {
-
-        RequestParams params= new RequestParams();
         params.put(EVENT_ID, event_id);
         return params;
     }

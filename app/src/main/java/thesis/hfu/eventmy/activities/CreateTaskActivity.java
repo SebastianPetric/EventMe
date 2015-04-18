@@ -22,15 +22,12 @@ public class CreateTaskActivity extends ActionBarActivity {
     private Button createTaskButton;
     private ImageView addEditorButton;
     private int event_id;
-    private String eventNameValue,eventDateValue,totalOrganizersValue,totalCostsValue,totalPercentageValue;
     private String editorValue;
 
 
     private static final String EMPTY_STRING= "";
     private static final String DEFAULT_EDITOR= "offen";
     private static final String EVENT_ID= "event_id";
-    private static final String EVENT_NAME="event_name";
-    private static final String EVENT_DATE="event_date";
     private static final String ERROR_TASK= "Geben Sie eine Aufgabe an!";
 
     @Override
@@ -43,8 +40,6 @@ public class CreateTaskActivity extends ActionBarActivity {
 
         if(CheckSharedPreferences.getInstance().isLoggedIn(getApplicationContext())){
             setEvent_id(getIntent().getExtras().getInt(EVENT_ID));
-            setEventDateValue(getIntent().getExtras().getString(EVENT_DATE));
-            setEventNameValue(getIntent().getExtras().getString(EVENT_NAME));
             setEditor(R.id.textViewNewTaskEditorField);
             setTask(R.id.editTextNewTaskNameField);
             setQuantity(R.id.editTextNewTaskQuantityField);
@@ -162,43 +157,4 @@ public class CreateTaskActivity extends ActionBarActivity {
     public void setEditorValue(String editorValue) {
         this.editorValue = editorValue;
     }
-    public String getEventNameValue() {
-        return eventNameValue;
-    }
-
-    public void setEventNameValue(String eventNameValue) {
-        this.eventNameValue = eventNameValue;
-    }
-    public String getTotalOrganizersValue() {
-        return totalOrganizersValue;
-    }
-
-    public void setTotalOrganizersValue(String totalOrganizersValue) {
-        this.totalOrganizersValue = totalOrganizersValue;
-    }
-
-    public String getTotalCostsValue() {
-        return totalCostsValue;
-    }
-
-    public void setTotalCostsValue(String totalCostsValue) {
-        this.totalCostsValue = totalCostsValue;
-    }
-
-    public String getTotalPercentageValue() {
-        return totalPercentageValue;
-    }
-
-    public void setTotalPercentageValue(String totalPercentageValue) {
-        this.totalPercentageValue = totalPercentageValue;
-    }
-
-    public String getEventDateValue() {
-        return eventDateValue;
-    }
-
-    public void setEventDateValue(String eventDateValue) {
-        this.eventDateValue = eventDateValue;
-    }
-
 }

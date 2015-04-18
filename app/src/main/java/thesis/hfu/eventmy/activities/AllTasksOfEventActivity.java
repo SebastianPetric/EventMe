@@ -23,11 +23,10 @@ import thesis.hfu.eventmy.list_decoration.DividerItemDecoration;
 public class AllTasksOfEventActivity extends ActionBarActivity {
 
     private ImageButton addTaskButton, addOrganizersButton;
-    private TextView totalOrganizers,totalCosts,totalPercentage,eventName,eventDate;
+    private TextView totalOrganizersTextView, totalCostsTextView, totalPercentageTextView, eventNameTextView, eventDateTextView;
     private RecyclerView allTasksOfEventRecycler;
     private SwipeRefreshLayout syncRefresh;
     private int event_id;
-    private String eventNameValue,eventDateValue,totalOrganizersValue,totalCostsValue,totalPercentageValue;
 
     private static final String EVENT_ID="event_id";
 
@@ -43,11 +42,11 @@ public class AllTasksOfEventActivity extends ActionBarActivity {
             setEvent_id(getIntent().getExtras().getInt(EVENT_ID));
 
             setAddTaskButton(R.id.imageButtonAddNewTask);
-            setTotalOrganizers(R.id.textViewTaskOfEventTotalOrganizers);
-            setTotalCosts(R.id.textViewTaskOfEventTotalCosts);
-            setTotalPercentage(R.id.textViewTaskOfEventTotalPercentage);
-            setEventName(R.id.textViewTaskOfEventEventName);
-            setEventDate(R.id.textViewTaskOfEventDate);
+            setTotalOrganizersTextView(R.id.textViewTaskOfEventTotalOrganizers);
+            setTotalCostsTextView(R.id.textViewTaskOfEventTotalCosts);
+            setTotalPercentageTextView(R.id.textViewTaskOfEventTotalPercentage);
+            setEventNameTextView(R.id.textViewTaskOfEventEventName);
+            setEventDateTextView(R.id.textViewTaskOfEventDate);
             setAddOrganizersButton(R.id.imageButtonTasksOfEventOrganizers);
             setSyncRefresh(R.id.swipe_refresh_all_tasks);
             setAllTasksOfEventRecycler(R.id.recyclerViewAllTasksOfEvent);
@@ -59,7 +58,7 @@ public class AllTasksOfEventActivity extends ActionBarActivity {
             getSyncRefresh().setOnRefreshListener(new CustomSwipeListener());
             getAddOrganizersButton().setOnClickListener(new CustomClickListener());
             DBfunctions.getInstance().updateEventDetails(null, CheckSharedPreferences.getInstance().getAdmin_id(), getEvent_id(), getEventTotalOrganizersTextView(), getEventTotalPercentageTextView(), getEventTotalCostsTextView(), getEventNameTextView(), getEventDateTextView());
-            DBfunctions.getInstance().updateAllTasks(getApplicationContext(),null,getAllTasksOfEventRecycler(),getEvent_id(),getEventTotalOrganizersTextView(), getEventTotalPercentageTextView(), getEventTotalCostsTextView(),getEventNameTextView(),getEventDateTextView());
+            DBfunctions.getInstance().getAllTasks(getApplicationContext(), null, getAllTasksOfEventRecycler(), getEvent_id(), getEventTotalOrganizersTextView(), getEventTotalPercentageTextView(), getEventTotalCostsTextView(), getEventNameTextView(), getEventDateTextView());
         }else{
             CheckSharedPreferences.getInstance().endSession(getApplicationContext());
         }
@@ -95,8 +94,12 @@ public class AllTasksOfEventActivity extends ActionBarActivity {
 
         @Override
         public void onRefresh() {
-            DBfunctions.getInstance().updateEventDetails(null, CheckSharedPreferences.getInstance().getAdmin_id(), getEvent_id(),getEventTotalOrganizersTextView(), getEventTotalPercentageTextView(), getEventTotalCostsTextView(),getEventNameTextView(),getEventDateTextView());
-            DBfunctions.getInstance().updateAllTasks(getApplicationContext(),getSyncRefresh(), getAllTasksOfEventRecycler(), getEvent_id(),getEventTotalOrganizersTextView(), getEventTotalPercentageTextView(), getEventTotalCostsTextView(),getEventNameTextView(),getEventDateTextView());
+            if(CheckSharedPreferences.getInstance().isLoggedIn(getApplicationContext())){
+                DBfunctions.getInstance().updateEventDetails(null, CheckSharedPreferences.getInstance().getAdmin_id(), getEvent_id(), getEventTotalOrganizersTextView(), getEventTotalPercentageTextView(), getEventTotalCostsTextView(), getEventNameTextView(), getEventDateTextView());
+                DBfunctions.getInstance().getAllTasks(getApplicationContext(), getSyncRefresh(), getAllTasksOfEventRecycler(), getEvent_id(), getEventTotalOrganizersTextView(), getEventTotalPercentageTextView(), getEventTotalCostsTextView(), getEventNameTextView(), getEventDateTextView());
+            }else{
+                CheckSharedPreferences.getInstance().endSession(getApplicationContext());
+            }
         }
     }
 
@@ -159,39 +162,38 @@ public class AllTasksOfEventActivity extends ActionBarActivity {
     public ImageButton getAddOrganizersButton() {
         return addOrganizersButton;
     }
-
     public void setAddOrganizersButton(int res) {
         this.addOrganizersButton = (ImageButton) findViewById(res);
     }
-    public void setTotalOrganizers(int res) {
-        this.totalOrganizers = (TextView) findViewById(res);
+    public void setTotalOrganizersTextView(int res) {
+        this.totalOrganizersTextView = (TextView) findViewById(res);
     }
-    public void setTotalCosts(int res) {
-        this.totalCosts = (TextView) findViewById(res);
+    public void setTotalCostsTextView(int res) {
+        this.totalCostsTextView = (TextView) findViewById(res);
     }
-    public void setTotalPercentage(int res) {
-        this.totalPercentage = (TextView) findViewById(res);
+    public void setTotalPercentageTextView(int res) {
+        this.totalPercentageTextView = (TextView) findViewById(res);
     }
-    public void setEventName(int res) {
-        this.eventName = (TextView) findViewById(res);
+    public void setEventNameTextView(int res) {
+        this.eventNameTextView = (TextView) findViewById(res);
     }
-    public void setEventDate(int res) {
-        this.eventDate = (TextView) findViewById(res);
+    public void setEventDateTextView(int res) {
+        this.eventDateTextView = (TextView) findViewById(res);
     }
     public TextView getEventNameTextView(){
-        return this.eventName;
+        return this.eventNameTextView;
     }
     public TextView getEventDateTextView(){
-        return this.eventDate;
+        return this.eventDateTextView;
     }
     public TextView getEventTotalOrganizersTextView(){
-        return this.totalOrganizers;
+        return this.totalOrganizersTextView;
     }
     public TextView getEventTotalCostsTextView(){
-        return this.totalCosts;
+        return this.totalCostsTextView;
     }
     public TextView getEventTotalPercentageTextView(){
-        return this.totalPercentage;
+        return this.totalPercentageTextView;
     }
 
 

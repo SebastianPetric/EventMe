@@ -138,7 +138,7 @@ import java.util.ArrayList;
 
         public void addFriendToEvent(int user_id,int event_id){
 
-            RequestParams params = BuildJSON.getInstance().addRemoveFriendToEventJSON(user_id, event_id);
+            RequestParams params = BuildJSON.getInstance().addRemoveFriendEventJSON(user_id, event_id);
             DBconnection.post(URL_FRIEND_TO_EVENT, params, new JsonHttpResponseHandler() {
 
                 @Override
@@ -161,7 +161,7 @@ import java.util.ArrayList;
 
         public void removeFriendFromEvent(int user_id,int event_id) {
 
-            RequestParams params = BuildJSON.getInstance().addRemoveFriendToEventJSON(user_id, event_id);
+            RequestParams params = BuildJSON.getInstance().addRemoveFriendEventJSON(user_id, event_id);
             DBconnection.post(URL_REMOVE_FRIEND_FROM_EVENT, params, new JsonHttpResponseHandler() {
 
                 @Override

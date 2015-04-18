@@ -78,7 +78,11 @@ public class EventOrganizersActivity extends ActionBarActivity {
 
         @Override
         public void onRefresh() {
-            DBfunctions.getInstance().searchFriendsForEvent(getApplicationContext(), getSyncRefresh(), getRecyclerView(),EMPTY_STRING, CheckSharedPreferences.getInstance().getAdmin_id(),getEvent_id());
+            if(CheckSharedPreferences.getInstance().isLoggedIn(getApplicationContext())){
+                DBfunctions.getInstance().searchFriendsForEvent(getApplicationContext(), getSyncRefresh(), getRecyclerView(),EMPTY_STRING, CheckSharedPreferences.getInstance().getAdmin_id(),getEvent_id());
+            }else{
+                CheckSharedPreferences.getInstance().endSession(getApplicationContext());
+            }
         }
     }
 
@@ -102,7 +106,7 @@ public class EventOrganizersActivity extends ActionBarActivity {
             StartActivityFunctions.getInstance().startFriendsListActivity(getApplicationContext());
             return true;
         }else if(item.getItemId()==android.R.id.home){
-            StartActivityFunctions.getInstance().startAllTasksActivity(getApplicationContext(),getEvent_id());
+            StartActivityFunctions.getInstance().startAllTasksActivity(getApplicationContext(), getEvent_id());
             return true;
         }else if(item.getItemId()==R.id.action_logout){
             LogoutDialog.getInstance().startLogoutDialog(getFragmentManager());

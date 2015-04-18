@@ -42,7 +42,7 @@ public class AllEventsActivity extends ActionBarActivity{
             getAllEventsRecycler().addItemDecoration(new DividerItemDecoration(this));
             getAddEventButton().setOnClickListener(new CustomClickListener());
             getSyncRefresh().setOnRefreshListener(new CustomSwipeListener());
-            DBfunctions.getInstance().updateAllEvents(getApplicationContext(),null, getAllEventsRecycler(), CheckSharedPreferences.getInstance().getAdmin_id());
+            DBfunctions.getInstance().getAllEvents(getApplicationContext(), null, getAllEventsRecycler(), CheckSharedPreferences.getInstance().getAdmin_id());
         }else{
             CheckSharedPreferences.getInstance().endSession(getApplicationContext());
         }
@@ -70,7 +70,11 @@ public class AllEventsActivity extends ActionBarActivity{
 
         @Override
         public void onRefresh() {
-            DBfunctions.getInstance().updateAllEvents(getApplicationContext(),getSyncRefresh(), getAllEventsRecycler(), CheckSharedPreferences.getInstance().getAdmin_id());
+            if(CheckSharedPreferences.getInstance().isLoggedIn(getApplicationContext())){
+                DBfunctions.getInstance().getAllEvents(getApplicationContext(), getSyncRefresh(), getAllEventsRecycler(), CheckSharedPreferences.getInstance().getAdmin_id());
+            }else{
+                CheckSharedPreferences.getInstance().endSession(getApplicationContext());
+            }
         }
     }
 
