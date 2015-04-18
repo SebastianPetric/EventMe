@@ -1,9 +1,5 @@
 package thesis.hfu.eventmy.activities;
 
-import android.app.AlertDialog;
-import android.app.Dialog;
-import android.app.DialogFragment;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
@@ -20,6 +16,7 @@ import thesis.hfu.eventmy.database.DBfunctions;
 import thesis.hfu.eventmy.functions.CheckSharedPreferences;
 import thesis.hfu.eventmy.functions.StartActivityFunctions;
 import thesis.hfu.eventmy.list_decoration.DividerItemDecoration;
+import thesis.hfu.eventmy.objects.LogoutDialog;
 
 
 public class AllTasksOfEventActivity extends ActionBarActivity {
@@ -106,34 +103,9 @@ public class AllTasksOfEventActivity extends ActionBarActivity {
             StartActivityFunctions.getInstance().startAllEventsActivity(getApplicationContext());
             return true;
         }else if(item.getItemId()==R.id.action_all_tasks_logout){
-            LogoutDialog dialog= new LogoutDialog();
-            dialog.show(getFragmentManager(),"logoutDialog");
+            LogoutDialog.getInstance().startLogoutDialog(getFragmentManager());
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    //----------------------------------------------------------------------
-    //-----------------LOGOUT DIALOG-------------------------------------
-    //----------------------------------------------------------------------
-
-    public class LogoutDialog extends DialogFragment {
-        @Override
-        public Dialog onCreateDialog(Bundle savedInstanceState) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-            builder.setMessage(R.string.dialog_logout_message)
-                    .setPositiveButton(R.string.dialog_logout_ok, new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
-                            dialog.cancel();
-                            CheckSharedPreferences.getInstance().endSession(getApplicationContext());
-                        }
-                    })
-                    .setNegativeButton(R.string.dialog_logout_cancel, new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
-                            dialog.cancel();
-                        }
-                    });
-            return builder.create();
-        }
     }
 
     //----------------------------------------------------------------------

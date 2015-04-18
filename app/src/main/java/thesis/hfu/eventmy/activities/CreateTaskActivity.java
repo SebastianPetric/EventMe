@@ -1,10 +1,6 @@
 package thesis.hfu.eventmy.activities;
 
 
-import android.app.AlertDialog;
-import android.app.Dialog;
-import android.app.DialogFragment;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
@@ -17,6 +13,7 @@ import thesis.hfu.eventmy.R;
 import thesis.hfu.eventmy.database.DBfunctions;
 import thesis.hfu.eventmy.functions.CheckSharedPreferences;
 import thesis.hfu.eventmy.functions.StartActivityFunctions;
+import thesis.hfu.eventmy.objects.LogoutDialog;
 
 public class CreateTaskActivity extends ActionBarActivity {
 
@@ -102,34 +99,9 @@ public class CreateTaskActivity extends ActionBarActivity {
             StartActivityFunctions.getInstance().startAllTasksActivity(getApplicationContext(), getEvent_id());
             return true;
         }else if(item.getItemId()==R.id.action_create_task_logout){
-            LogoutDialog dialog= new LogoutDialog();
-            dialog.show(getFragmentManager(),"logoutDialog");
+            LogoutDialog.getInstance().startLogoutDialog(getFragmentManager());
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    //----------------------------------------------------------------------
-    //-----------------LOGOUT DIALOG-------------------------------------
-    //----------------------------------------------------------------------
-
-    public class LogoutDialog extends DialogFragment {
-        @Override
-        public Dialog onCreateDialog(Bundle savedInstanceState) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-            builder.setMessage(R.string.dialog_logout_message)
-                    .setPositiveButton(R.string.dialog_logout_ok, new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
-                            dialog.cancel();
-                            CheckSharedPreferences.getInstance().endSession(getApplicationContext());
-                        }
-                    })
-                    .setNegativeButton(R.string.dialog_logout_cancel, new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
-                            dialog.cancel();
-                        }
-                    });
-            return builder.create();
-        }
     }
 
     //----------------------------------------------------------------------
