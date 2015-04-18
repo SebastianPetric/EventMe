@@ -4,7 +4,7 @@
     <string name="action_settings">Settings</string>
     <string name="action_search">Suche</string>
     <string name="action_friends">Freundesliste</string>
-    <string name="action_logout">Abmeldung</string>
+    <string name="action_logout">Abmelden</string>
 
     <!-- LOGIN SCREEN -->
     <string name="login_header">Login</string>
@@ -14,7 +14,6 @@
     <string name="login_button">Anmelden</string>
 
     <!-- REGISTRATION SCREEN -->
-    <string name="registration_header">Registrierung</string>
     <string name="registration_name">Name</string>
     <string name="registration_prename">Vorname</string>
     <string name="registration_email">Email</string>
@@ -23,15 +22,7 @@
     <string name="registration_button">Registrieren</string>
     <string name="registration_cancel_button">Abbrechen</string>
 
-    <!-- ALL EVENTS SCREEN -->
-    <string name="all_events_header">Aktuelle Events</string>
-
-    <!-- ALL TASKS OF EVENT SCREEN -->
-    <string name="all_tasks_of_event_header">Alle Aufgaben</string>
-
-
     <!-- TASKS OF EVENT SCREEN -->
-    <string name="tasks_of_event_header">Aufgaben</string>
     <string name="tasks_of_event_eventName">Event XY</string>
     <string name="tasks_of_event_date">Datum</string>
     <string name="tasks_of_event_total_organisators">12</string>
@@ -42,7 +33,6 @@
     <string name="tasks_of_event_row_editor">Inaktiv</string>
 
     <!-- EDIT TASK SCREEN -->
-    <string name="edit_task_header">Aufgabe bearbeiten</string>
     <string name="edit_task_quantity">Menge:</string>
     <string name="edit_task_note">Anmerkung:</string>
     <string name="edit_task_previous_note_header">Bisherige Anmerkungen:</string>
@@ -50,7 +40,6 @@
     <string name="edit_task_finish_button">Aktualisieren</string>
 
     <!-- NEW TASK SCREEN -->
-    <string name="new_task_header">Aufgabe erstellen</string>
     <string name="new_task_quantity">Menge:</string>
     <string name="new_task_note">Anmerkung:</string>
     <string name="new_task_name">Aufgabe:</string>
@@ -58,7 +47,6 @@
     <string name="new_task_finish_button">Erstellen</string>
 
     <!-- NEW EVENT SCREEN -->
-    <string name="new_event_header">Event erstellen</string>
     <string name="new_event_date">Datum:</string>
     <string name="new_event_date_field"></string>
     <string name="new_event_name">Event</string>
@@ -66,16 +54,14 @@
     <string name="new_event_finish_button">Erstellen</string>
 
     <!-- FRIENDSLIST SCREEN -->
-    <string name="friendslist_header">Freundesliste</string>
-    <string name="friendslist_finishbutton">Aktualisieren</string>
+    <string name="friendslist_search">Freund suchen</string>
 
     <!-- SEARCH SCREEN -->
-    <string name="search_header">Suche</string>
+    <string name="search_header">Suchen</string>
     <string name="search_finishbutton">Aktualisieren</string>
     <string name="search_search_button">Suchen</string>
 
     <!-- ORGANIZERS SCREEN -->
-    <string name="organizers_header">Organisatoren</string>
     <string name="organizers_finishbutton">Aktualisieren</string>
 
     <!-- DIALOG SCREEN PERCENTAGE -->

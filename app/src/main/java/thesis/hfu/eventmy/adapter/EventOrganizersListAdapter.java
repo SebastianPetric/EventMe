@@ -1,4 +1,4 @@
-package thesis.hfu.eventmy.objects;
+package thesis.hfu.eventmy.adapter;
 
 
 import android.content.Context;
@@ -18,6 +18,7 @@ import thesis.hfu.eventmy.R;
 import thesis.hfu.eventmy.database.DBconnection;
 import thesis.hfu.eventmy.functions.BuildJSON;
 import thesis.hfu.eventmy.functions.CheckSharedPreferences;
+import thesis.hfu.eventmy.objects.User;
 
 import java.util.ArrayList;
 
@@ -101,7 +102,7 @@ import java.util.ArrayList;
         @Override
         public MyViewHolder onCreateViewHolder(ViewGroup arg0, int arg1) {
             View itemView = LayoutInflater.from(arg0.getContext()).inflate(
-                    R.layout.list_event_organizers_row, arg0, false);
+                    R.layout.list_event_task_organizers_row, arg0, false);
             return new MyViewHolder(itemView);
         }
 
@@ -149,8 +150,7 @@ import java.util.ArrayList;
 
                                 // User wird hinzugefügt
                                 user_b.setStatus(1);
-                                getViewHolder().addButton.setVisibility(View.GONE);
-                                getViewHolder().removeButton.setVisibility(View.VISIBLE);
+                                notifyDataSetChanged();
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -172,9 +172,8 @@ import java.util.ArrayList;
                             final User user_b = getUserList().get(getPosition());
 
                                 //User wird entfernt
-                                user_b.setStatus(0);
-                                getViewHolder().addButton.setVisibility(View.VISIBLE);
-                                getViewHolder().removeButton.setVisibility(View.GONE);
+                            user_b.setStatus(0);
+                            notifyDataSetChanged();
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();

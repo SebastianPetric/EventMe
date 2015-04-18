@@ -18,7 +18,7 @@
                     android:inputType="textPersonName"
                     android:ems="10"
                     android:id="@+id/editTextFriendsListSearchField" android:layout_weight="0.75"
-                    android:hint="@string/search_header" />
+                    android:hint="@string/friendslist_search" />
             <Button
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"

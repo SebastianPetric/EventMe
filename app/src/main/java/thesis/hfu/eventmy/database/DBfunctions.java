@@ -3,16 +3,20 @@ package thesis.hfu.eventmy.database;
 import android.content.Context;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
+import android.widget.TextView;
 import android.widget.Toast;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import org.apache.http.Header;
 import org.json.JSONException;
 import org.json.JSONObject;
+import thesis.hfu.eventmy.adapter.*;
 import thesis.hfu.eventmy.functions.BuildJSON;
 import thesis.hfu.eventmy.functions.CheckSharedPreferences;
 import thesis.hfu.eventmy.functions.StartActivityFunctions;
-import thesis.hfu.eventmy.objects.*;
+import thesis.hfu.eventmy.objects.Event;
+import thesis.hfu.eventmy.objects.Task;
+import thesis.hfu.eventmy.objects.User;
 
 import java.sql.Date;
 import java.util.ArrayList;
@@ -53,6 +57,10 @@ public class DBfunctions {
 
     //Get FriendsList
     private static final String URL_GET_FRIENDSLIST = "get_friendlist.php";
+
+    //UPDATE EVENT DETAILS
+    private static final String URL_UPDATE_EVENT_DETAILS = "update_event_details.php";
+
 
 
 
@@ -122,7 +130,33 @@ public class DBfunctions {
         });
     }
 
-    public void updateAllTasks(final Context context,final SwipeRefreshLayout swipeRefreshLayout, final RecyclerView recyclerView, int event_id) {
+    public void updateEventDetails(final SwipeRefreshLayout swipeRefreshLayout,String admin_id,int event_id, final TextView totalOrg, final TextView totalPercentage, final TextView totalCosts, final TextView event_name, final TextView event_date) {
+
+        RequestParams params = BuildJSON.getInstance().updateEventDetailsJSON(admin_id, event_id);
+        DBconnection.post(URL_UPDATE_EVENT_DETAILS, params, new JsonHttpResponseHandler() {
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                try {
+                    if (response.getInt(STATUS) == 200) {
+                        Event event = BuildJSON.getInstance().getEventJSON(response.getJSONArray(EVENTS));
+                        event_name.setText(event.getName());
+                        event_date.setText(event.getDate().getDate()+"."+(event.getDate().getMonth()+1)+"."+event.getDate().getYear());
+                        totalOrg.setText(event.getNumOrganizers()+"");
+                        totalCosts.setText(String.valueOf(event.getCosts()));
+                        totalPercentage.setText(String.valueOf(event.getPercentage_of_event()));
+                        if(swipeRefreshLayout!=null){
+                            swipeRefreshLayout.setRefreshing(false);
+                        }
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+    public void updateAllTasks(final Context context,final SwipeRefreshLayout swipeRefreshLayout, final RecyclerView recyclerView, final int event_id, final TextView totalOrg, final TextView totalPerc, final TextView totalCos, final TextView name, final TextView date) {
 
         RequestParams params = BuildJSON.getInstance().updateAllTasksJSON(event_id);
         DBconnection.post(URL_GET_ALL_TASKS_OF_EVENT, params, new JsonHttpResponseHandler() {
@@ -133,9 +167,9 @@ public class DBfunctions {
                     Toast.makeText(context.getApplicationContext(), response.getString(MESSAGE), Toast.LENGTH_SHORT).show();
                     if (response.getInt(STATUS) == 200) {
                         ArrayList<Task> taskList = BuildJSON.getInstance().getAllTasksOfEventJSON(response.getJSONArray(TASKS));
-                        RecyclerView.Adapter<AllTasksOfEventListAdapter.MyViewHolder> recAdapter = new AllTasksOfEventListAdapter(context.getApplicationContext(), taskList);
+                        RecyclerView.Adapter<AllTasksOfEventListAdapter.MyViewHolder> recAdapter = new AllTasksOfEventListAdapter(context.getApplicationContext(), taskList,event_id, name, date, totalOrg, totalCos, totalPerc);
                         recyclerView.setAdapter(recAdapter);
-                        if(swipeRefreshLayout!=null){
+                        if (swipeRefreshLayout != null) {
                             swipeRefreshLayout.setRefreshing(false);
                         }
                     }
@@ -143,7 +177,8 @@ public class DBfunctions {
                     e.printStackTrace();
                 }
             }
-        });
+                }
+        );
     }
 
     public void createEvent(final Context context, String eventName, String location, Date date, String admin_id) {

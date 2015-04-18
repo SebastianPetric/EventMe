@@ -17,7 +17,7 @@ import thesis.hfu.eventmy.database.DBfunctions;
 import thesis.hfu.eventmy.functions.CheckSharedPreferences;
 import thesis.hfu.eventmy.functions.StartActivityFunctions;
 import thesis.hfu.eventmy.list_decoration.DividerItemDecoration;
-import thesis.hfu.eventmy.objects.LogoutDialog;
+import thesis.hfu.eventmy.dialogs.LogoutDialog;
 
 public class FriendslistActivity extends ActionBarActivity {
 
@@ -57,7 +57,6 @@ public class FriendslistActivity extends ActionBarActivity {
     //-----------------CUSTOM LISTENER-------------------------------------
     //----------------------------------------------------------------------
 
-
     public class CustomClickListener implements View.OnClickListener{
 
         @Override
@@ -88,7 +87,7 @@ public class FriendslistActivity extends ActionBarActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_friendslist, menu);
+        inflater.inflate(R.menu.menu, menu);
         return true;
     }
 
@@ -98,12 +97,11 @@ public class FriendslistActivity extends ActionBarActivity {
             StartActivityFunctions.getInstance().startSearchActivity(getApplicationContext());
             return true;
         }else if(item.getItemId()==R.id.action_friends){
-            StartActivityFunctions.getInstance().startFriendsListActivity(getApplicationContext());
             return true;
         }else if(item.getItemId()==android.R.id.home){
             StartActivityFunctions.getInstance().startAllEventsActivity(getApplicationContext());
             return true;
-        }else if(item.getItemId()==R.id.action_friendslist_logout){
+        }else if(item.getItemId()==R.id.action_logout){
             LogoutDialog.getInstance().startLogoutDialog(getFragmentManager());
         }
         return super.onOptionsItemSelected(item);

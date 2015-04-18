@@ -1,4 +1,4 @@
-package thesis.hfu.eventmy.objects;
+package thesis.hfu.eventmy.adapter;
 
 
 import android.content.Context;
@@ -10,6 +10,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import thesis.hfu.eventmy.R;
 import thesis.hfu.eventmy.functions.StartActivityFunctions;
+import thesis.hfu.eventmy.objects.Event;
 
 import java.util.ArrayList;
 

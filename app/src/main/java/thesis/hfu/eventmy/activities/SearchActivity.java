@@ -17,7 +17,7 @@ import thesis.hfu.eventmy.database.DBfunctions;
 import thesis.hfu.eventmy.functions.CheckSharedPreferences;
 import thesis.hfu.eventmy.functions.StartActivityFunctions;
 import thesis.hfu.eventmy.list_decoration.DividerItemDecoration;
-import thesis.hfu.eventmy.objects.LogoutDialog;
+import thesis.hfu.eventmy.dialogs.LogoutDialog;
 
 
 public class SearchActivity extends ActionBarActivity {
@@ -86,7 +86,7 @@ public class SearchActivity extends ActionBarActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_search, menu);
+        inflater.inflate(R.menu.menu, menu);
         return true;
     }
 
@@ -100,7 +100,7 @@ public class SearchActivity extends ActionBarActivity {
         }else if(item.getItemId()==android.R.id.home){
             StartActivityFunctions.getInstance().startAllEventsActivity(getApplicationContext());
             return true;
-        }else if(item.getItemId()==R.id.action_search_logout){
+        }else if(item.getItemId()==R.id.action_logout){
             LogoutDialog.getInstance().startLogoutDialog(getFragmentManager());
         }
         return super.onOptionsItemSelected(item);

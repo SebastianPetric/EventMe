@@ -16,7 +16,7 @@ import thesis.hfu.eventmy.database.DBfunctions;
 import thesis.hfu.eventmy.functions.CheckSharedPreferences;
 import thesis.hfu.eventmy.functions.StartActivityFunctions;
 import thesis.hfu.eventmy.list_decoration.DividerItemDecoration;
-import thesis.hfu.eventmy.objects.LogoutDialog;
+import thesis.hfu.eventmy.dialogs.LogoutDialog;
 
 public class AllEventsActivity extends ActionBarActivity{
 
@@ -46,11 +46,10 @@ public class AllEventsActivity extends ActionBarActivity{
         }else{
             CheckSharedPreferences.getInstance().endSession(getApplicationContext());
         }
-
     }
 
     //----------------------------------------------------------------------
-    //-----------------CUSTOM LICKLISTENER-------------------------------------
+    //-----------------CUSTOM LISTENER-------------------------------------
     //----------------------------------------------------------------------
 
     public class CustomClickListener implements View.OnClickListener{
@@ -82,7 +81,7 @@ public class AllEventsActivity extends ActionBarActivity{
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_all_events, menu);
+        inflater.inflate(R.menu.menu, menu);
         return true;
     }
 
@@ -98,7 +97,7 @@ public class AllEventsActivity extends ActionBarActivity{
                 CheckSharedPreferences.getInstance().endSession(getApplicationContext());
                 StartActivityFunctions.getInstance().startLoginActivity(getApplicationContext());
                 return true;
-        }else if(item.getItemId()==R.id.action_all_events_logout){
+        }else if(item.getItemId()==R.id.action_logout){
             LogoutDialog.getInstance().startLogoutDialog(getFragmentManager());
         }
         return super.onOptionsItemSelected(item);

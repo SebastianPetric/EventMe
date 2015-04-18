@@ -1,4 +1,4 @@
-package thesis.hfu.eventmy.objects;
+package thesis.hfu.eventmy.dialogs;
 
 import android.app.AlertDialog;
 import android.app.Dialog;

@@ -17,7 +17,7 @@ import thesis.hfu.eventmy.database.DBfunctions;
 import thesis.hfu.eventmy.functions.CheckSharedPreferences;
 import thesis.hfu.eventmy.functions.StartActivityFunctions;
 import thesis.hfu.eventmy.list_decoration.DividerItemDecoration;
-import thesis.hfu.eventmy.objects.LogoutDialog;
+import thesis.hfu.eventmy.dialogs.LogoutDialog;
 
 public class EventOrganizersActivity extends ActionBarActivity {
 
@@ -33,7 +33,7 @@ public class EventOrganizersActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_event_organizers);
+        setContentView(R.layout.activity_event_task_organizers);
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
@@ -56,10 +56,8 @@ public class EventOrganizersActivity extends ActionBarActivity {
         }
     }
 
-
-
     //----------------------------------------------------------------------
-    //-----------------CUSTOM LICKLISTENER-------------------------------------
+    //-----------------CUSTOM LISTENER-------------------------------------
     //----------------------------------------------------------------------
 
     public class CustomClickListener implements View.OnClickListener{
@@ -91,7 +89,7 @@ public class EventOrganizersActivity extends ActionBarActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_event_organizers, menu);
+        inflater.inflate(R.menu.menu, menu);
         return true;
     }
 
@@ -104,9 +102,9 @@ public class EventOrganizersActivity extends ActionBarActivity {
             StartActivityFunctions.getInstance().startFriendsListActivity(getApplicationContext());
             return true;
         }else if(item.getItemId()==android.R.id.home){
-            StartActivityFunctions.getInstance().startAllEventsActivity(getApplicationContext());
+            StartActivityFunctions.getInstance().startAllTasksActivity(getApplicationContext(),getEvent_id());
             return true;
-        }else if(item.getItemId()==R.id.action_event_organizers_logout){
+        }else if(item.getItemId()==R.id.action_logout){
             LogoutDialog.getInstance().startLogoutDialog(getFragmentManager());
         }
         return super.onOptionsItemSelected(item);

@@ -1,4 +1,4 @@
-package thesis.hfu.eventmy.objects;
+package thesis.hfu.eventmy.adapter;
 
 
 import android.content.Context;
@@ -18,11 +18,12 @@ import thesis.hfu.eventmy.R;
 import thesis.hfu.eventmy.database.DBconnection;
 import thesis.hfu.eventmy.functions.BuildJSON;
 import thesis.hfu.eventmy.functions.CheckSharedPreferences;
+import thesis.hfu.eventmy.objects.User;
 
 import java.util.ArrayList;
 
-public class FriendsListAdapter extends
-        RecyclerView.Adapter<FriendsListAdapter.MyViewHolder> {
+public class SearchListAdapter extends
+        RecyclerView.Adapter<SearchListAdapter.MyViewHolder> {
 
     private ArrayList<User> users;
     private Context context;
@@ -32,13 +33,12 @@ public class FriendsListAdapter extends
     private int position;
 
     //Remove Friend
-    private static final String URL_REMOVE_FRIEND_FROM_FRIENDSLIST = "remove_friend_from_friendslist.php";
+    private static final String URL_REMOVE_FRIEND = "remove_friend.php";
 
-    //Add Friend
-    private static final String URL_ADD_FRIEND_TO_FRIENDSLIST = "friend_request.php";
+    //Friend Request
+    private static final String URL_FRIEND_REQUEST= "friend_request.php";
 
-
-    public FriendsListAdapter(Context context,ArrayList<User> list) {
+    public SearchListAdapter(Context context,ArrayList<User> list) {
         this.users = list;
         this.context=context;
     }
@@ -56,31 +56,44 @@ public class FriendsListAdapter extends
         viewHolder.email.setText(user_b.getEmail());
 
         if(user_b.getStatus()==0){
+            //Request is open
             viewHolder.addButton.setVisibility(View.GONE);
             viewHolder.removeButton.setVisibility(View.GONE);
-            viewHolder.openButton.setVisibility(View.VISIBLE);
+            viewHolder.openRequest.setVisibility(View.VISIBLE);
+
+        }else if(user_b.getStatus()==1){
+            //No Request
+            viewHolder.addButton.setVisibility(View.VISIBLE);
+            viewHolder.removeButton.setVisibility(View.GONE);
+            viewHolder.openRequest.setVisibility(View.GONE);
+
         }else if(user_b.getStatus()==2){
+            //Friended
             viewHolder.addButton.setVisibility(View.GONE);
             viewHolder.removeButton.setVisibility(View.VISIBLE);
-            viewHolder.openButton.setVisibility(View.GONE);
-        }else if(user_b.getStatus()==3){
+            viewHolder.openRequest.setVisibility(View.GONE);
+
+        }else if(user_b.getStatus()==3) {
+            //You have to answer request
             viewHolder.addButton.setVisibility(View.VISIBLE);
             viewHolder.removeButton.setVisibility(View.VISIBLE);
-            viewHolder.openButton.setVisibility(View.GONE);
+            viewHolder.openRequest.setVisibility(View.GONE);
+
         }
+
         viewHolder.addButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
-                setPosition(position);
-                setViewHolder(viewHolder);
+                    setPosition(position);
+                    setViewHolder(viewHolder);
 
-                if(CheckSharedPreferences.getInstance().isLoggedIn(context)){
-                    addFriendToFriendslist(CheckSharedPreferences.getInstance().getAdmin_id(), getUserList().get(getPosition()).getUser_id());
-                }else {
-                    CheckSharedPreferences.getInstance().endSession(context);
-                }
-            }
+                    if(CheckSharedPreferences.getInstance().isLoggedIn(context)){
+                        friendRequest(CheckSharedPreferences.getInstance().getAdmin_id(),user_b.getUser_id());
+                    }else {
+                        CheckSharedPreferences.getInstance().endSession(context);
+                    }
+             }
         });
 
         viewHolder.removeButton.setOnClickListener(new View.OnClickListener() {
@@ -91,8 +104,8 @@ public class FriendsListAdapter extends
                 setViewHolder(viewHolder);
 
                 if(CheckSharedPreferences.getInstance().isLoggedIn(context)){
-                    removeFriendFromFriendsList(CheckSharedPreferences.getInstance().getAdmin_id(),getUserList().get(getPosition()).getUser_id());
-                }else {
+                    removeFriend(CheckSharedPreferences.getInstance().getAdmin_id(), user_b.getUser_id());
+                    }else {
                     CheckSharedPreferences.getInstance().endSession(context);
                 }
             }
@@ -102,26 +115,26 @@ public class FriendsListAdapter extends
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup arg0, int arg1) {
         View itemView = LayoutInflater.from(arg0.getContext()).inflate(
-                R.layout.list_friendslist_row, arg0, false);
+                R.layout.list_search_row, arg0, false);
         return new MyViewHolder(itemView);
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder implements
             View.OnClickListener {
 
-        TextView name;
-        TextView prename;
-        TextView email;
-        ImageButton removeButton,addButton,openButton;
+         TextView name;
+         TextView prename;
+         TextView email;
+         ImageButton addButton, removeButton, openRequest;
 
         public MyViewHolder(View itemView) {
             super(itemView);
-            name = (TextView) itemView.findViewById(R.id.textViewFriendsListRowName);
-            prename = (TextView) itemView.findViewById(R.id.textViewFriendsListRowPrename);
-            email= (TextView) itemView.findViewById(R.id.textViewFriendsListRowEmail);
-            removeButton= (ImageButton) itemView.findViewById(R.id.imageButtonDeleteFromFriendsList);
-            addButton= (ImageButton) itemView.findViewById(R.id.imageButtonAddToFriendsList);
-            openButton= (ImageButton) itemView.findViewById(R.id.imageButtonOpenRequestFriendsList);
+            name = (TextView) itemView.findViewById(R.id.textViewListSearchRowName);
+            prename = (TextView) itemView.findViewById(R.id.textViewListSearchRowPreName);
+            email= (TextView) itemView.findViewById(R.id.textViewListSearchRowEmail);
+            addButton= (ImageButton) itemView.findViewById(R.id.imageButtonAddFriend);
+            removeButton= (ImageButton) itemView.findViewById(R.id.imageButtonDeleteFriend);
+            openRequest= (ImageButton) itemView.findViewById(R.id.imageButtonOpenRequest);
             itemView.setOnClickListener(this);
         }
 
@@ -138,18 +151,27 @@ public class FriendsListAdapter extends
     //-----------------Functions-------------------------------------
     //----------------------------------------------------------------------
 
-    public void removeFriendFromFriendsList(String admin_id,int user_id) {
+    public void friendRequest(String user1_id,int user2_id){
 
-        RequestParams params = BuildJSON.getInstance().addRemoveFriendJSON(admin_id, user_id);
-        DBconnection.post(URL_REMOVE_FRIEND_FROM_FRIENDSLIST, params, new JsonHttpResponseHandler() {
+        RequestParams params = BuildJSON.getInstance().addRemoveFriendJSON(user1_id, user2_id);
+        DBconnection.post(URL_FRIEND_REQUEST, params, new JsonHttpResponseHandler() {
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 try {
                     Toast.makeText(context.getApplicationContext(), response.getString(MESSAGE), Toast.LENGTH_SHORT).show();
                     if (response.getInt(STATUS) == 200) {
-                        getUserList().remove(getPosition());
-                        notifyDataSetChanged();
+                        final User user_b = getUserList().get(getPosition());
+
+                        //Users become friends
+                        if (user_b.getStatus() == 3) {
+                            user_b.setStatus(2);
+                            notifyDataSetChanged();
+                            //Request is open and has to be answered by the other user
+                        } else if (user_b.getStatus() == 1) {
+                            user_b.setStatus(0);
+                            notifyDataSetChanged();
+                        }
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -158,32 +180,21 @@ public class FriendsListAdapter extends
         });
     }
 
-    public void addFriendToFriendslist(String admin_id,int user_id) {
+    public void removeFriend(String usera_id, int userb_id) {
 
-        RequestParams params = BuildJSON.getInstance().addRemoveFriendJSON(admin_id, user_id);
-        DBconnection.post(URL_ADD_FRIEND_TO_FRIENDSLIST, params, new JsonHttpResponseHandler() {
+        RequestParams params = BuildJSON.getInstance().addRemoveFriendJSON(usera_id, userb_id);
+        DBconnection.post(URL_REMOVE_FRIEND, params, new JsonHttpResponseHandler() {
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 try {
-                    Toast.makeText(context.getApplicationContext(),response.getString(MESSAGE),Toast.LENGTH_SHORT).show();
-                    if(response.getInt(STATUS)==200){
+                    Toast.makeText(context.getApplicationContext(), response.getString(MESSAGE), Toast.LENGTH_SHORT).show();
+                    if(response.getInt(STATUS)==200) {
+
+                        //Friend deleted
                         final User user_b = getUserList().get(getPosition());
-
-                        //Users become friends
-                        if(user_b.getStatus()==3){
-                            user_b.setStatus(2);
-                            getViewHolder().addButton.setVisibility(View.GONE);
-                            getViewHolder().removeButton.setVisibility(View.VISIBLE);
-                            getViewHolder().openButton.setVisibility(View.GONE);
-
-                            //Request is open and has to be answered by the other user
-                        }else if(user_b.getStatus()==1){
-                            user_b.setStatus(0);
-                            getViewHolder().addButton.setVisibility(View.GONE);
-                            getViewHolder().removeButton.setVisibility(View.GONE);
-                            getViewHolder().openButton.setVisibility(View.VISIBLE);
-                        }
+                        user_b.setStatus(1);
+                        notifyDataSetChanged();
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();

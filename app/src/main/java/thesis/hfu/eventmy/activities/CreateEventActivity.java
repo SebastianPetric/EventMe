@@ -16,7 +16,7 @@ import thesis.hfu.eventmy.R;
 import thesis.hfu.eventmy.database.DBfunctions;
 import thesis.hfu.eventmy.functions.CheckSharedPreferences;
 import thesis.hfu.eventmy.functions.StartActivityFunctions;
-import thesis.hfu.eventmy.objects.LogoutDialog;
+import thesis.hfu.eventmy.dialogs.LogoutDialog;
 
 import java.sql.Date;
 import java.util.Calendar;
@@ -55,7 +55,7 @@ public class CreateEventActivity extends ActionBarActivity {
     }
 
     //----------------------------------------------------------------------
-    //-----------------CUSTOM ONCLICKLISTENER-------------------------------------
+    //-----------------CUSTOM LISTENER-------------------------------------
     //----------------------------------------------------------------------
 
     public class CustomClickListener implements View.OnClickListener{
@@ -84,7 +84,7 @@ public class CreateEventActivity extends ActionBarActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_create_event, menu);
+        inflater.inflate(R.menu.menu, menu);
         return true;
     }
 
@@ -99,7 +99,7 @@ public class CreateEventActivity extends ActionBarActivity {
         }else if(item.getItemId()==android.R.id.home){
             StartActivityFunctions.getInstance().startAllEventsActivity(getApplicationContext());
             return true;
-        }else if(item.getItemId()==R.id.action_create_event_logout){
+        }else if(item.getItemId()==R.id.action_logout){
             LogoutDialog.getInstance().startLogoutDialog(getFragmentManager());
         }
         return super.onOptionsItemSelected(item);

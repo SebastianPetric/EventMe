@@ -1,4 +1,4 @@
-package thesis.hfu.eventmy.objects;
+package thesis.hfu.eventmy.adapter;
 
 
 import android.app.AlertDialog;
@@ -19,10 +19,12 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import thesis.hfu.eventmy.R;
 import thesis.hfu.eventmy.database.DBconnection;
+import thesis.hfu.eventmy.database.DBfunctions;
 import thesis.hfu.eventmy.functions.BuildJSON;
 import thesis.hfu.eventmy.functions.Calculation;
 import thesis.hfu.eventmy.functions.CheckIf;
 import thesis.hfu.eventmy.functions.CheckSharedPreferences;
+import thesis.hfu.eventmy.objects.Task;
 
 import java.util.ArrayList;
 
@@ -43,13 +45,20 @@ public class AllTasksOfEventListAdapter extends
     private ArrayList<Task> tasks;
     private Context context;
     private MyViewHolder viewHolder;
-    private int position,percentageValue;
+    private int position,percentageValue,type_of_update;
     private double costsValue;
-    private int type_of_update;
+    private TextView eventName,eventDate,eventTotalOrganizers,eventTotalCosts,eventTotalPercentage;
+    private int event_id;
 
-    public AllTasksOfEventListAdapter(Context context,ArrayList<Task> list) {
+    public AllTasksOfEventListAdapter(Context context,ArrayList<Task> list,int event_id,TextView eventName,TextView eventDate,TextView eventTotalOrganizers,TextView eventTotalCosts,TextView eventTotalPercentage) {
         this.tasks = list;
         this.context=context;
+        this.eventName=eventName;
+        this.event_id=event_id;
+        this.eventDate=eventDate;
+        this.eventTotalCosts=eventTotalCosts;
+        this.eventTotalOrganizers=eventTotalOrganizers;
+        this.eventTotalPercentage=eventTotalPercentage;
     }
     @Override
     public int getItemCount() {
@@ -179,6 +188,54 @@ public class AllTasksOfEventListAdapter extends
         return new MyViewHolder(itemView);
     }
 
+    public TextView getEventName() {
+        return eventName;
+    }
+
+    public void setEventName(TextView eventName) {
+        this.eventName = eventName;
+    }
+
+    public TextView getEventDate() {
+        return eventDate;
+    }
+
+    public void setEventDate(TextView eventDate) {
+        this.eventDate = eventDate;
+    }
+
+    public TextView getEventTotalOrganizers() {
+        return eventTotalOrganizers;
+    }
+
+    public void setEventTotalOrganizers(TextView eventTotalOrganizers) {
+        this.eventTotalOrganizers = eventTotalOrganizers;
+    }
+
+    public TextView getEventTotalCosts() {
+        return eventTotalCosts;
+    }
+
+    public void setEventTotalCosts(TextView eventTotalCosts) {
+        this.eventTotalCosts = eventTotalCosts;
+    }
+
+    public TextView getEventTotalPercentage() {
+        return eventTotalPercentage;
+    }
+
+    public void setEventTotalPercentage(TextView eventTotalPercentage) {
+        this.eventTotalPercentage = eventTotalPercentage;
+    }
+
+    public int getEvent_id() {
+        return event_id;
+    }
+
+    public void setEvent_id(int event_id) {
+        this.event_id = event_id;
+    }
+
     public class MyViewHolder extends RecyclerView.ViewHolder implements
             View.OnClickListener {
 
@@ -224,6 +281,7 @@ public class AllTasksOfEventListAdapter extends
                         Task task = getTasks().get(getPosition());
                         task.setPercentage(percentage);
                         getViewHolder().percentageField.setText(String.valueOf(task.getPercentage()));
+                        DBfunctions.getInstance().updateEventDetails(null, CheckSharedPreferences.getInstance().getAdmin_id(), getEvent_id(), getEventTotalOrganizers(), getEventTotalPercentage(), getEventTotalCosts(), getEventName(), getEventDate());
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -249,8 +307,8 @@ public class AllTasksOfEventListAdapter extends
                         }else if(status==1){
                             task.setCostOfTask(task.getCostOfTask()+costs);
                             getViewHolder().costField.setText(String.valueOf(task.getCostOfTask()));
+                            DBfunctions.getInstance().updateEventDetails(null, CheckSharedPreferences.getInstance().getAdmin_id(), getEvent_id(), getEventTotalOrganizers(), getEventTotalPercentage(), getEventTotalCosts(), getEventName(), getEventDate());
                         }
-
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
