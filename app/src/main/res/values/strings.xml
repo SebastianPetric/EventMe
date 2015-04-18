@@ -4,6 +4,7 @@
     <string name="action_settings">Settings</string>
     <string name="action_search">Suche</string>
     <string name="action_friends">Freundesliste</string>
+    <string name="action_logout">Abmeldung</string>
 
     <!-- LOGIN SCREEN -->
     <string name="login_header">Login</string>
@@ -85,6 +86,11 @@
     <string name="dialog_costs_new">Neu</string>
     <string name="dialog_costs_add">Hinzufuegen</string>
     <string name="dialog_costs_cancel">Abbrechen</string>
+
+    <!-- DIALOG SCREEN LOGOUT -->
+    <string name="dialog_logout_message">Wollen Sie sich wirklich abmelden?</string>
+    <string name="dialog_logout_ok">Ja</string>
+    <string name="dialog_logout_cancel">Abbrechen</string>
 
 
 </resources>
