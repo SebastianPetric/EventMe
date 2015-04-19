@@ -22,13 +22,6 @@
     <string name="registration_button">Registrieren</string>
     <string name="registration_cancel_button">Abbrechen</string>
 
-    <!-- TASKS OF EVENT SCREEN -->
-    <string name="tasks_of_event_eventName">Event XY</string>
-    <string name="tasks_of_event_date">Datum</string>
-    <string name="tasks_of_event_total_organisators">12</string>
-    <string name="tasks_of_event_total_costs">12</string>
-    <string name="tasks_of_event_total_percentage">12</string>
-
     <!-- EDITOR LIST ROW TASK OF EVENT -->
     <string name="tasks_of_event_row_editor">Inaktiv</string>
 
@@ -48,7 +41,6 @@
 
     <!-- NEW EVENT SCREEN -->
     <string name="new_event_date">Datum:</string>
-    <string name="new_event_date_field"></string>
     <string name="new_event_name">Event</string>
     <string name="new_event_location">Location</string>
     <string name="new_event_finish_button">Erstellen</string>
@@ -77,6 +69,4 @@
     <string name="dialog_logout_message">Wollen Sie sich wirklich abmelden?</string>
     <string name="dialog_logout_ok">Ja</string>
     <string name="dialog_logout_cancel">Abbrechen</string>
-
-
 </resources>
