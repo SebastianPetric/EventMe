@@ -1,5 +1,9 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
       xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item android:id="@+id/action_events"
+          android:icon="@drawable/events"
+          android:title="@string/action_events"
+          app:showAsAction="always" />
     <item android:id="@+id/action_friends"
           android:icon="@drawable/friends"
           android:title="@string/action_friends"

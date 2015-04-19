@@ -106,6 +106,10 @@ public class FriendslistActivity extends ActionBarActivity {
             return true;
         }else if(item.getItemId()==R.id.action_logout){
             LogoutDialog.getInstance().startLogoutDialog(getFragmentManager());
+            return true;
+        }else if(item.getItemId()==R.id.action_events){
+            StartActivityFunctions.getInstance().startAllEventsActivity(getApplicationContext());
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }

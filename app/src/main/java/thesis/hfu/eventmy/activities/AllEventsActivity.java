@@ -98,11 +98,13 @@ public class AllEventsActivity extends ActionBarActivity{
                 StartActivityFunctions.getInstance().startFriendsListActivity(getApplicationContext());
                 return true;
         }else if(item.getItemId()==android.R.id.home){
-                CheckSharedPreferences.getInstance().endSession(getApplicationContext());
-                StartActivityFunctions.getInstance().startLoginActivity(getApplicationContext());
+                LogoutDialog.getInstance().startLogoutDialog(getFragmentManager());
                 return true;
         }else if(item.getItemId()==R.id.action_logout){
             LogoutDialog.getInstance().startLogoutDialog(getFragmentManager());
+            return true;
+        }else if(item.getItemId()==R.id.action_events){
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }

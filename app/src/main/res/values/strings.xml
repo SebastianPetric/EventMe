@@ -4,6 +4,7 @@
     <string name="action_settings">Settings</string>
     <string name="action_search">Suche</string>
     <string name="action_friends">Freundesliste</string>
+    <string name="action_events">Alle Events</string>
     <string name="action_logout">Abmelden</string>
 
     <!-- LOGIN SCREEN -->
