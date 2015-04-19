@@ -33,7 +33,7 @@ public class FriendsListAdapter extends
     private int position;
 
     //Remove Friend
-    private static final String URL_REMOVE_FRIEND_FROM_FRIENDSLIST = "remove_friend_from_friendslist.php";
+    private static final String URL_REMOVE_FRIEND_FROM_FRIENDSLIST = "remove_friend.php";
 
     //Add Friend
     private static final String URL_ADD_FRIEND_TO_FRIENDSLIST = "friend_request.php";

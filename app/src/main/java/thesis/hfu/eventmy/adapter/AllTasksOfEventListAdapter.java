@@ -74,6 +74,7 @@ public class AllTasksOfEventListAdapter extends
         viewHolder.costField.setText(String.valueOf(task.getCostOfTask()));
         viewHolder.percentageField.setText(String.valueOf(task.getPercentage()));
         viewHolder.editorField.setText(task.getEditor_name());
+
         viewHolder.editorButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -86,6 +87,7 @@ public class AllTasksOfEventListAdapter extends
                 }
             }
         });
+
         viewHolder.percentageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -123,6 +125,7 @@ public class AllTasksOfEventListAdapter extends
                 builder.show();
             }
         });
+
         viewHolder.costButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -181,6 +184,7 @@ public class AllTasksOfEventListAdapter extends
             }
         });
     }
+
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup arg0, int arg1) {
         View itemView = LayoutInflater.from(arg0.getContext()).inflate(

@@ -167,7 +167,7 @@ public class DBfunctions {
                         Event event = BuildJSON.getInstance().getEventJSON(response.getJSONArray(EVENTS));
                         event_name.setText(event.getName());
                         event_date.setText(event.getDate().getDate()+"."+(event.getDate().getMonth()+1)+"."+event.getDate().getYear());
-                        totalOrg.setText(event.getNumOrganizers() + "");
+                        totalOrg.setText(String.valueOf(event.getNumOrganizers()));
                         totalCosts.setText(String.valueOf(event.getCosts()));
                         totalPercentage.setText(String.valueOf(event.getPercentage_of_event()));
                         if(swipeRefreshLayout!=null){

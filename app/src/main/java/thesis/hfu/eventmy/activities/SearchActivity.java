@@ -25,8 +25,9 @@ public class SearchActivity extends ActionBarActivity {
     private EditText searchField;
     private Button searchButton;
     private RecyclerView recyclerView;
-    private static final String EMPTY_STRING = "";
     private SwipeRefreshLayout syncRefresh;
+    private static final String EMPTY_STRING = "";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

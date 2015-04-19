@@ -30,7 +30,6 @@ import java.util.ArrayList;
         private Context context;
         private static final String MESSAGE = "message";
         private static final String STATUS = "status";
-        private MyViewHolder viewHolder;
         private int position,event_id;
 
         //Remove Friend
@@ -73,7 +72,7 @@ import java.util.ArrayList;
                 @Override
                 public void onClick(View v) {
                     setPosition(position);
-                    setViewHolder(viewHolder);
+
 
                     if(CheckSharedPreferences.getInstance().isLoggedIn(context)){
                         addFriendToEvent(getUserList().get(getPosition()).getUser_id(),getEvent_id());
@@ -88,7 +87,6 @@ import java.util.ArrayList;
                 @Override
                 public void onClick(View v) {
                     setPosition(position);
-                    setViewHolder(viewHolder);
 
                     if(CheckSharedPreferences.getInstance().isLoggedIn(context)){
                        removeFriendFromEvent(getUserList().get(getPosition()).getUser_id(),getEvent_id());
@@ -171,7 +169,7 @@ import java.util.ArrayList;
                         if (response.getInt(STATUS) == 200) {
                             final User user_b = getUserList().get(getPosition());
 
-                                //User wird entfernt
+                            //User wird entfernt
                             user_b.setStatus(0);
                             notifyDataSetChanged();
                         }
@@ -186,12 +184,6 @@ import java.util.ArrayList;
         //-----------------Getter and Setter-------------------------------------
         //----------------------------------------------------------------------
 
-        public MyViewHolder getViewHolder() {
-            return viewHolder;
-        }
-        public void setViewHolder(MyViewHolder viewHolder) {
-            this.viewHolder = viewHolder;
-        }
         public int getPosition() {
             return position;
         }
