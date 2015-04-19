@@ -30,7 +30,7 @@ public class AllEventsActivity extends ActionBarActivity{
         setContentView(R.layout.activity_all_events);
 
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setDisplayHomeAsUpEnabled(false);
 
         if(CheckSharedPreferences.getInstance().isLoggedIn(getApplicationContext())){
             setAddEvent(R.id.imageButtonAddNewEvent);
