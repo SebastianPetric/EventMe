@@ -13,10 +13,10 @@ import android.view.View;
 import android.widget.ImageButton;
 import thesis.hfu.eventmy.R;
 import thesis.hfu.eventmy.database.DBfunctions;
+import thesis.hfu.eventmy.dialogs.LogoutDialog;
 import thesis.hfu.eventmy.functions.CheckSharedPreferences;
 import thesis.hfu.eventmy.functions.StartActivityFunctions;
 import thesis.hfu.eventmy.list_decoration.DividerItemDecoration;
-import thesis.hfu.eventmy.dialogs.LogoutDialog;
 
 public class AllEventsActivity extends ActionBarActivity{
 
@@ -31,6 +31,7 @@ public class AllEventsActivity extends ActionBarActivity{
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(false);
+
 
         if(CheckSharedPreferences.getInstance().isLoggedIn(getApplicationContext())){
             setAddEvent(R.id.imageButtonAddNewEvent);

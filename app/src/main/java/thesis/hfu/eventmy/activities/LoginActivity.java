@@ -49,7 +49,8 @@ public class LoginActivity extends ActionBarActivity {
                }else if(v.getId()==R.id.loginButton){
                    if(!getEmailField().equals(EMPTY_STRING)&&!getPasswordField().equals(EMPTY_STRING)) {
                        if (CheckIf.EmailIsValid(getEmailField())) {
-                            DBfunctions.getInstance().login(getApplicationContext(),getEmailField(),getPasswordField());
+                           DBfunctions.getInstance().login(getApplicationContext(), getEmailField(), getPasswordField());
+
                        }else{
                            Toast.makeText(getApplicationContext(),ERROR_EMAIL,Toast.LENGTH_SHORT).show();
                        }
@@ -59,6 +60,7 @@ public class LoginActivity extends ActionBarActivity {
                }
         }
     }
+
 
     //----------------------------------------------------------------------
     //-----------------Getter and Setter-------------------------------------

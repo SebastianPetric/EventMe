@@ -9,7 +9,7 @@ public class DBconnection {
 
     private static DBconnection instance;
     public AsyncHttpClient client;
-    private static final String URL = "http://10.0.3.2/eventmyDB/";
+    private static final String URL = "http://eventmy.net84.net/";
     private static final String ACCEPT = "Accept";
     private static final String MIME_TYPE = "application/json";
 
