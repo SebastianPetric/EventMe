@@ -119,9 +119,9 @@ public class DBfunctions {
                         ArrayList<Event> eventList = BuildJSON.getInstance().getAllEventsJSON(response.getJSONArray(EVENTS));
                         RecyclerView.Adapter<AllEventsListAdapter.MyViewHolder> recAdapter = new AllEventsListAdapter(context.getApplicationContext(), eventList);
                         recyclerView.setAdapter(recAdapter);
-                        if(swipeRefreshLayout!=null){
-                            swipeRefreshLayout.setRefreshing(false);
-                        }
+                    }
+                    if(swipeRefreshLayout!=null){
+                        swipeRefreshLayout.setRefreshing(false);
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -144,9 +144,9 @@ public class DBfunctions {
                                 ArrayList<Task> taskList = BuildJSON.getInstance().getAllTasksOfEventJSON(response.getJSONArray(TASKS));
                                 RecyclerView.Adapter<AllTasksOfEventListAdapter.MyViewHolder> recAdapter = new AllTasksOfEventListAdapter(context.getApplicationContext(), taskList,event_id, name, date, totalOrg, totalCos, totalPerc);
                                 recyclerView.setAdapter(recAdapter);
-                                if (swipeRefreshLayout != null) {
-                                    swipeRefreshLayout.setRefreshing(false);
-                                }
+                            }
+                            if (swipeRefreshLayout != null) {
+                                swipeRefreshLayout.setRefreshing(false);
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -171,9 +171,9 @@ public class DBfunctions {
                         totalOrg.setText(String.valueOf(event.getNumOrganizers()));
                         totalCosts.setText(String.valueOf(event.getCosts()));
                         totalPercentage.setText(String.valueOf(event.getPercentage_of_event()));
-                        if(swipeRefreshLayout!=null){
-                            swipeRefreshLayout.setRefreshing(false);
-                        }
+                    }
+                    if(swipeRefreshLayout!=null){
+                        swipeRefreshLayout.setRefreshing(false);
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -229,9 +229,9 @@ public class DBfunctions {
                         ArrayList<User> userList = BuildJSON.getInstance().getAllUsersJSON(response.getJSONArray(USERS));
                         RecyclerView.Adapter<SearchListAdapter.MyViewHolder> recAdapter = new SearchListAdapter(context.getApplicationContext(), userList);
                         recyclerView.setAdapter(recAdapter);
-                        if(swipeRefreshLayout!=null){
-                            swipeRefreshLayout.setRefreshing(false);
-                        }
+                    }
+                    if(swipeRefreshLayout!=null){
+                        swipeRefreshLayout.setRefreshing(false);
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -253,9 +253,9 @@ public class DBfunctions {
                         ArrayList<User> userList = BuildJSON.getInstance().getAllUsersJSON(response.getJSONArray(USERS));
                         RecyclerView.Adapter<EventOrganizersListAdapter.MyViewHolder> recAdapter = new EventOrganizersListAdapter(context.getApplicationContext(), userList,event_id);
                         recyclerView.setAdapter(recAdapter);
-                        if(swipeRefreshLayout!=null){
-                            swipeRefreshLayout.setRefreshing(false);
-                        }
+                    }
+                    if(swipeRefreshLayout!=null){
+                        swipeRefreshLayout.setRefreshing(false);
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -277,9 +277,9 @@ public class DBfunctions {
                         ArrayList<User> userList = BuildJSON.getInstance().getAllUsersJSON(response.getJSONArray(USERS));
                         RecyclerView.Adapter<FriendsListAdapter.MyViewHolder> recAdapter = new FriendsListAdapter(context.getApplicationContext(), userList);
                         recyclerView.setAdapter(recAdapter);
-                        if(swipeRefreshLayout!=null){
-                            swipeRefreshLayout.setRefreshing(false);
-                        }
+                    }
+                    if(swipeRefreshLayout!=null){
+                        swipeRefreshLayout.setRefreshing(false);
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();

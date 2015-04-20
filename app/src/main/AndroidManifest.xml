@@ -28,22 +28,22 @@
 
         <activity
             android:name=".activities.CreateEventActivity"
-            android:label="Event erstellen" >
+            android:label="Neu" >
         </activity>
 
         <activity
             android:name=".activities.AllEventsActivity"
-            android:label="Alle Events" >
+            android:label="Events" >
         </activity>
 
         <activity
                 android:name=".activities.CreateTaskActivity"
-                android:label="Aufgabe erstellen" >
+                android:label="Neu" >
         </activity>
 
         <activity
                 android:name=".activities.AllTasksOfEventActivity"
-                android:label="Alle Aufgaben" >
+                android:label="Aufgaben" >
         </activity>
 
         <activity
