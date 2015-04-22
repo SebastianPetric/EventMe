@@ -27,11 +27,12 @@
     <string name="tasks_of_event_row_editor">Inaktiv</string>
 
     <!-- EDIT TASK SCREEN -->
-    <string name="edit_task_quantity">Menge:</string>
-    <string name="edit_task_note">Anmerkung:</string>
-    <string name="edit_task_previous_note_header">Bisherige Anmerkungen:</string>
+    <string name="edit_task_quantity">Menge ändern</string>
+    <string name="edit_task_note">Kommentar</string>
+    <string name="edit_task_previous_note_header">Verlauf:</string>
     <string name="edit_task_editor">Bearbeiter:</string>
     <string name="edit_task_finish_button">Aktualisieren</string>
+    <string name="edit_task_delete_task_button">Aufgabe löschen</string>
 
     <!-- NEW TASK SCREEN -->
     <string name="new_task_quantity">Menge:</string>
