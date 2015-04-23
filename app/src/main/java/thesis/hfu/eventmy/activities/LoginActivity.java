@@ -67,7 +67,7 @@ public class LoginActivity extends ActionBarActivity {
     //----------------------------------------------------------------------
 
     public String getEmailField() {
-        return emailField.getText().toString();
+        return emailField.getText().toString().trim();
     }
     public void setEmailField(int res) {
         this.emailField = (EditText) findViewById(res);
