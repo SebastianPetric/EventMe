@@ -23,8 +23,7 @@ public class LogoutDialog extends DialogFragment {
     }
 
     public void startLogoutDialog(FragmentManager manager) {
-        LogoutDialog dialog = new LogoutDialog();
-        dialog.show(manager, "logoutDialog");
+        this.show(manager, "logoutDialog");
     }
 
     @Override

@@ -61,7 +61,14 @@ public class DBfunctions {
     //UPDATE EVENT DETAILS
     private static final String URL_UPDATE_EVENT_DETAILS = "update_event_details.php";
 
+    //DELETE TASK
+    private static final String URL_DELETE_TASK = "delete_task.php";
 
+    //COMMENT
+    private static final String URL_COMMENT_ON_TASK = "comment_on_task.php";
+
+    //GET TASK DETAILS
+    private static final String URL_GET_TASK_DETAILS = "get_task_details.php";
 
 
     public static DBfunctions getInstance() {
@@ -266,7 +273,7 @@ public class DBfunctions {
 
     public void searchFriendsList(final Context context, final SwipeRefreshLayout swipeRefreshLayout, final RecyclerView recyclerView, String search, String admin_id) {
 
-        RequestParams params = BuildJSON.getInstance().getFriendsListJSON(search,admin_id);
+        RequestParams params = BuildJSON.getInstance().getFriendsListJSON(search, admin_id);
         DBconnection.post(URL_GET_FRIENDSLIST, params, new JsonHttpResponseHandler() {
 
             @Override
@@ -281,6 +288,67 @@ public class DBfunctions {
                     if(swipeRefreshLayout!=null){
                         swipeRefreshLayout.setRefreshing(false);
                     }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+    public void deleteTask(final Context context, int task_id, String admin_id, final int event_id){
+
+        RequestParams params = BuildJSON.getInstance().deleteTaskJSON(task_id, admin_id);
+        DBconnection.post(URL_DELETE_TASK,params,new JsonHttpResponseHandler(){
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                try {
+                    Toast.makeText(context.getApplicationContext(), response.getString(MESSAGE), Toast.LENGTH_SHORT).show();
+                    if(response.getInt(STATUS)==200){
+                        StartActivityFunctions.getInstance().startAllTasksActivity(context, event_id);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+
+    public void commentOnTask(final Context context, int task_id, int admin_id, String comment){
+
+        RequestParams params = BuildJSON.getInstance().commentJSON(task_id, admin_id, comment);
+        DBconnection.post(URL_COMMENT_ON_TASK,params,new JsonHttpResponseHandler(){
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                try {
+                    Toast.makeText(context.getApplicationContext(), response.getString(MESSAGE), Toast.LENGTH_SHORT).show();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+    public void updateTaskDetails(final TextView eventName, final TextView taskField, final TextView quantity, final TextView cost, final TextView percentageField, final TextView editor, final TextView history,final int task_id){
+
+        RequestParams params= BuildJSON.getInstance().getTaskDetailsJSON(task_id);
+        DBconnection.post(URL_GET_TASK_DETAILS,params,new JsonHttpResponseHandler(){
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                try {
+
+                    Task task= BuildJSON.getInstance().getTaskDetailsJSON(response, task_id);
+
+                    percentageField.setText(String.valueOf(task.getPercentage()));
+                    eventName.setText(task.getEvent_name());
+                    taskField.setText(task.getTask());
+                    quantity.setText(task.getQuantity());
+                    cost.setText(String.valueOf(task.getCostOfTask()));
+                    quantity.setText(String.valueOf(task.getPercentage()));
+                    history.setText(task.getDescription());
+                    editor.setText(task.getEditor_name());
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

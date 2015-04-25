@@ -28,6 +28,8 @@
 
     <!-- EDIT TASK SCREEN -->
     <string name="edit_task_quantity">Menge ändern</string>
+    <string name="edit_task_quantity_text">Menge:</string>
+    <string name="edit_task_comment_button">Kommentieren</string>
     <string name="edit_task_note">Kommentar</string>
     <string name="edit_task_previous_note_header">Verlauf:</string>
     <string name="edit_task_editor">Bearbeiter:</string>
@@ -71,4 +73,14 @@
     <string name="dialog_logout_message">Wollen Sie sich wirklich abmelden?</string>
     <string name="dialog_logout_ok">Ja</string>
     <string name="dialog_logout_cancel">Abbrechen</string>
+
+    <!-- DIALOG DELETE TASK -->
+    <string name="dialog_delete_task_message">Wollen Sie die Aufgabe wirklich löschen?</string>
+    <string name="dialog_delete_task_ok">Ja</string>
+    <string name="dialog_delete_task_cancel">Abbrechen</string>
+
+    <!-- DIALOG COMMENT -->
+    <string name="dialog_comment_message">Kommentar</string>
+    <string name="dialog_comment_ok">Posten</string>
+    <string name="dialog_comment_cancel">Abbrechen</string>
 </resources>

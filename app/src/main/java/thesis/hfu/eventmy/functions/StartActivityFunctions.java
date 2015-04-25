@@ -9,6 +9,7 @@ public class StartActivityFunctions {
 
     private static StartActivityFunctions instance;
     private static final String EVENT_ID="event_id";
+    private static final String TASK_ID="task_id";
 
     public static StartActivityFunctions getInstance(){
 
@@ -71,6 +72,14 @@ public class StartActivityFunctions {
 
     public void startFriendsListActivity(Context context){
         Intent intent = new Intent(context.getApplicationContext(), FriendslistActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.getApplicationContext().startActivity(intent);
+    }
+
+    public void startEditTaskActivity(Context context,int task_id,final int event_id){
+        Intent intent = new Intent(context.getApplicationContext(), EditTaskActivity.class);
+        intent.putExtra(TASK_ID, task_id);
+        intent.putExtra(EVENT_ID, event_id);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.getApplicationContext().startActivity(intent);
     }

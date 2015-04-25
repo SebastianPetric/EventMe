@@ -3,6 +3,7 @@ package thesis.hfu.eventmy.functions;
 import com.loopj.android.http.RequestParams;
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 import thesis.hfu.eventmy.objects.Event;
 import thesis.hfu.eventmy.objects.Task;
 import thesis.hfu.eventmy.objects.User;
@@ -34,6 +35,7 @@ public class BuildJSON {
     private static final String EDITOR_ID="editor_id";
     private static final String TASK="task";
     private static final String DESCRIPTION="description";
+    private static final String HISTORY="history";
     private static final String QUANTITY="quantity";
     private static final String TASK_ID="task_id";
     private static final String COSTS_OF_TASK="costs_of_task";
@@ -42,6 +44,9 @@ public class BuildJSON {
     private static final String EDITOR_NAME="editor_name";
     private static final String TYPE_OF_UPDATE="type_of_update";
     private static final String ADMIN_ID="admin_id";
+    private static final String EVENT_NAME="event_name";
+    private static final String EMPTY_STRING="";
+    private static final String COMMENT="comment";
 
 
     public static BuildJSON getInstance(){
@@ -260,10 +265,53 @@ public class BuildJSON {
             String editor_name=jsonArray.getJSONObject(i).getString(EDITOR_NAME);
             int editor_id=jsonArray.getJSONObject(i).getInt(EDITOR_ID);
 
-            Task newTask= new Task(task_id,event_id,percentage_of_task,editor_id,costs_of_task,task, quantity,description,editor_name);
+            Task newTask= new Task(task_id,event_id,percentage_of_task,editor_id,costs_of_task,task, quantity,description,editor_name,EMPTY_STRING);
             taskList.add(newTask);
         }
         return taskList;
+    }
+
+    public RequestParams getTaskDetailsJSON(int task_id) {
+
+        RequestParams params= new RequestParams();
+        params.put(TASK_ID, task_id);
+        return params;
+    }
+
+
+
+    public Task getTaskDetailsJSON(JSONObject jsonObject,int taskID) throws JSONException {
+
+            int task_id=taskID;
+            int event_id=jsonObject.getInt(EVENT_ID);
+            String task=jsonObject.getString(TASK);
+            String quantity=jsonObject.getString(QUANTITY);
+            String history=jsonObject.getString(HISTORY);
+            Double costs_of_task=jsonObject.getDouble(COSTS_OF_TASK);
+            int percentage_of_task=jsonObject.getInt(PERCENTAGE_OF_TASK);
+            String editor_name=jsonObject.getString(EDITOR_NAME);
+            int editor_id=jsonObject.getInt(EDITOR_ID);
+            String event_name=jsonObject.getString(EVENT_NAME);
+            Task newTask= new Task(task_id,event_id,percentage_of_task,editor_id,costs_of_task,task, quantity,history,editor_name,event_name);
+
+        return newTask;
+    }
+
+    public RequestParams deleteTaskJSON(int task_id, String admin_id) {
+
+        RequestParams params= new RequestParams();
+        params.put(TASK_ID, task_id);
+        params.put(ADMIN_ID,Integer.parseInt(admin_id));
+        return params;
+    }
+
+    public RequestParams commentJSON(int task_id, int admin_id, String comment) {
+
+        RequestParams params= new RequestParams();
+        params.put(TASK_ID, task_id);
+        params.put(ADMIN_ID,admin_id);
+        params.put(COMMENT,comment);
+        return params;
     }
 }
 

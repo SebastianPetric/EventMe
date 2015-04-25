@@ -20,10 +20,7 @@ import org.json.JSONObject;
 import thesis.hfu.eventmy.R;
 import thesis.hfu.eventmy.database.DBconnection;
 import thesis.hfu.eventmy.database.DBfunctions;
-import thesis.hfu.eventmy.functions.BuildJSON;
-import thesis.hfu.eventmy.functions.Calculation;
-import thesis.hfu.eventmy.functions.CheckIf;
-import thesis.hfu.eventmy.functions.CheckSharedPreferences;
+import thesis.hfu.eventmy.functions.*;
 import thesis.hfu.eventmy.objects.Task;
 
 import java.util.ArrayList;
@@ -49,6 +46,7 @@ public class AllTasksOfEventListAdapter extends
     private double costsValue;
     private TextView eventName,eventDate,eventTotalOrganizers,eventTotalCosts,eventTotalPercentage;
     private int event_id;
+
 
     public AllTasksOfEventListAdapter(Context context,ArrayList<Task> list,int event_id,TextView eventName,TextView eventDate,TextView eventTotalOrganizers,TextView eventTotalCosts,TextView eventTotalPercentage) {
         this.tasks = list;
@@ -214,9 +212,7 @@ public class AllTasksOfEventListAdapter extends
 
         @Override
         public void onClick(View v) {
-           // Intent intent= new Intent(v.getContext(), CreateTaskActivity.class);
-           // intent.putExtra(EVENT_ID,events.get(getPosition()).getEvent_id());
-           // v.getContext().startActivity(intent);
+            StartActivityFunctions.getInstance().startEditTaskActivity(context.getApplicationContext(),getTasks().get(getPosition()).getTask_id(),getEvent_id());
         }
     }
 
