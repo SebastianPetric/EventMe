@@ -136,7 +136,6 @@ public class AllTasksOfEventListAdapter extends
 
                 final EditText userInput = (EditText) promptsView.findViewById(R.id.editTextDialogUserInput);
                 builder.setView(promptsView);
-                builder.setTitle(R.string.dialog_costs_header);
                 builder.setCancelable(false)
                         .setNeutralButton(R.string.dialog_costs_new,
                                 new DialogInterface.OnClickListener() {

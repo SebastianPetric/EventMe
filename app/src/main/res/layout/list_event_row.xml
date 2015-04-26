@@ -19,7 +19,7 @@
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="EventName"
                     android:id="@+id/textViewListRowEventName" android:layout_marginLeft="12dp"
-                    android:layout_marginTop="5dp"/>
+                    android:layout_marginTop="5dp" android:textColor="#ffffffff"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -28,7 +28,7 @@
                 android:text="Location"
                 android:id="@+id/textViewListRowEventLocation"
                 android:layout_marginLeft="12dp"
-                android:layout_marginTop="5dp" />
+                android:layout_marginTop="5dp" android:textColor="#ffffffff"/>
 
             <TextView
                     android:layout_width="wrap_content"
@@ -36,7 +36,7 @@
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:text="Datum"
                     android:id="@+id/textViewListRowEventDate" android:layout_marginTop="5dp" android:layout_marginLeft="12dp"
-                    android:layout_marginBottom="5dp"/>
+                    android:layout_marginBottom="5dp" android:textColor="#ffffffff"/>
         </LinearLayout>
         <LinearLayout
                 android:orientation="horizontal"
@@ -61,7 +61,8 @@
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:text="0"
                         android:id="@+id/textViewListRowEventOrganizer" android:layout_marginTop="5dp"
-                        android:layout_gravity="center_horizontal" android:layout_marginBottom="5dp"/>
+                        android:layout_gravity="center_horizontal" android:layout_marginBottom="5dp"
+                        android:textColor="#ffffffff"/>
             </LinearLayout>
             <LinearLayout
                     android:orientation="vertical"
@@ -80,7 +81,8 @@
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:text="0"
                         android:id="@+id/textViewListRowEventCosts" android:layout_marginTop="5dp"
-                        android:layout_gravity="center_horizontal" android:layout_marginBottom="5dp"/>
+                        android:layout_gravity="center_horizontal" android:layout_marginBottom="5dp"
+                        android:textColor="#ffffffff"/>
             </LinearLayout>
             <LinearLayout
                     android:orientation="vertical"
@@ -100,7 +102,8 @@
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:text="0"
                         android:id="@+id/textViewlistRowEventPercentage" android:layout_marginTop="5dp"
-                        android:layout_gravity="center_horizontal" android:layout_marginBottom="5dp"/>
+                        android:layout_gravity="center_horizontal" android:layout_marginBottom="5dp"
+                        android:textColor="#ffffffff"/>
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

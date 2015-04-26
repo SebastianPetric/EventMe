@@ -38,9 +38,9 @@
     <string name="edit_task_delete_task_button">Aufgabe löschen</string>
 
     <!-- NEW TASK SCREEN -->
-    <string name="new_task_quantity">Menge:</string>
-    <string name="new_task_note">Anmerkung:</string>
-    <string name="new_task_name">Aufgabe:</string>
+    <string name="new_task_quantity">Menge</string>
+    <string name="new_task_note">Kommentar</string>
+    <string name="new_task_name">Aufgabe</string>
     <string name="new_task_editor">Bearbeiter:</string>
     <string name="new_task_finish_button">Erstellen</string>
 

@@ -1,7 +1,9 @@
 package thesis.hfu.eventmy.activities;
 
-import android.app.Activity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarActivity;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -11,7 +13,7 @@ import thesis.hfu.eventmy.database.DBfunctions;
 import thesis.hfu.eventmy.functions.CheckIf;
 import thesis.hfu.eventmy.functions.StartActivityFunctions;
 
-public class RegistrationActivity extends Activity {
+public class RegistrationActivity extends ActionBarActivity {
 
     private EditText nameField,prenameField,emailField,passwordField,passwordRepeatField;
     private Button finishRegistrationButton,cancelButton;
@@ -25,6 +27,9 @@ public class RegistrationActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration);
+
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
 
         setNameField(R.id.registrationNameField);
         setPrenameField(R.id.registrationPrenameField);
@@ -65,6 +70,20 @@ public class RegistrationActivity extends Activity {
             }
         }
     }
+
+    //----------------------------------------------------------------------
+    //-----------------ACTION BAR MENU-------------------------------------
+    //----------------------------------------------------------------------
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            StartActivityFunctions.getInstance().startLoginActivity(getApplicationContext());
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
 
 
     //----------------------------------------------------------------------

@@ -9,18 +9,18 @@
         <dex dex="C:\Development\studio-workspace\EventMe\app\build\intermediates\pre-dexed\debug\classes-93258de729ef6da89cc0cc348eb1143dbd82edc1.jar" />
     </item>
     <item
-        jar="C:\Users\Sebastian Petric\AppData\Local\Android\Sdk\extras\android\m2repository\com\android\support\support-annotations\22.0.0\support-annotations-22.0.0.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="685d0b2c590447e85284ed84712cb363ba04eff8">
-        <dex dex="C:\Development\studio-workspace\EventMe\app\build\intermediates\pre-dexed\debug\support-annotations-22.0.0-5677167138fd1d3d70dcb35ce29aaa2bba49d023.jar" />
-    </item>
-    <item
         jar="C:\Development\studio-workspace\EventMe\app\build\intermediates\exploded-aar\com.android.support\support-v4\22.0.0\libs\internal_impl-22.0.0.jar"
         jumboMode="false"
         revision="21.1.2"
         sha1="b5b92f469d515a13d778900f6d50c03d12f35504">
         <dex dex="C:\Development\studio-workspace\EventMe\app\build\intermediates\pre-dexed\debug\internal_impl-22.0.0-cca105b5de19d988bb96977335148104afa2d6c2.jar" />
+    </item>
+    <item
+        jar="C:\Users\Sebastian Petric\AppData\Local\Android\Sdk\extras\android\m2repository\com\android\support\support-annotations\22.0.0\support-annotations-22.0.0.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="685d0b2c590447e85284ed84712cb363ba04eff8">
+        <dex dex="C:\Development\studio-workspace\EventMe\app\build\intermediates\pre-dexed\debug\support-annotations-22.0.0-5677167138fd1d3d70dcb35ce29aaa2bba49d023.jar" />
     </item>
     <item
         jar="C:\Development\studio-workspace\EventMe\app\libs\android-async-http-1.4.6.jar"

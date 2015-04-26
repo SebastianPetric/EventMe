@@ -4,7 +4,7 @@
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
     android:fillViewport="false"
-    android:id="@+id/scrollViewNewEvent">
+    android:id="@+id/scrollViewNewEvent" android:background="#151515">
 
     <LinearLayout android:orientation="vertical"
                   android:layout_width="match_parent"
@@ -20,7 +20,8 @@
                     android:layout_height="wrap_content"
 
                     android:id="@+id/editTextNewEventNameField"
-                android:hint="@string/new_event_name" />
+                android:hint="@string/new_event_name" android:backgroundTint="#ffffff" android:textColor="#ffffff"
+                    android:textColorHint="#ffffff"/>
         </LinearLayout>
 
         <LinearLayout
@@ -35,7 +36,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/editTextNewEventLocationField"
-                android:hint="@string/new_event_location" />
+                android:hint="@string/new_event_location" android:textColorHint="#ffffff" android:textColor="#ffffff"
+                android:backgroundTint="#ffffff"/>
         </LinearLayout>
 
         <LinearLayout
@@ -49,12 +51,13 @@
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:text="@string/new_event_date"
                     android:layout_weight="0.18"
-                    android:id="@+id/textView17" android:layout_gravity="bottom"/>
+                    android:id="@+id/textView17" android:layout_gravity="bottom" android:textColor="#ffffff"/>
             <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:id="@+id/textViewNewEventDateField" android:layout_gravity="left|bottom" android:layout_weight="0.4"/>
+                    android:id="@+id/textViewNewEventDateField" android:layout_gravity="left|bottom" android:layout_weight="0.4"
+                    android:textColor="#ffffff"/>
             <ImageButton
                     android:layout_width="50dp"
                     android:layout_height="50dp"

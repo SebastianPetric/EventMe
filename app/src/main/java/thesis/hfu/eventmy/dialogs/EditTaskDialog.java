@@ -48,7 +48,6 @@ public class EditTaskDialog extends DialogFragment {
         final EditText changeQuantity = (EditText) promptsView.findViewById(R.id.editTextEditTaskChangeQuantityField);
 
         builder.setView(promptsView);
-        builder.setTitle(R.string.dialog_edit_task_message);
         builder.setCancelable(false)
                 .setPositiveButton(R.string.dialog_edit_task_ok, new DialogInterface.OnClickListener() {
                     @Override

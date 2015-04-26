@@ -50,7 +50,6 @@ public class CommentDialog extends DialogFragment {
 
         final EditText userInput = (EditText) promptsView.findViewById(R.id.editTextCommentUserInput);
         builder.setView(promptsView);
-        builder.setTitle(R.string.dialog_comment_message);
         builder.setCancelable(false)
                 .setPositiveButton(R.string.dialog_comment_ok, new DialogInterface.OnClickListener() {
                     @Override

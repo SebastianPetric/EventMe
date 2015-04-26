@@ -17,13 +17,15 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:text="Large Text"
-                android:id="@+id/textViewListSearchRowName" android:layout_marginLeft="23dp"/>
+                android:id="@+id/textViewListSearchRowName" android:layout_marginLeft="23dp"
+                android:textColor="#ffffff"/>
         <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:text="Large Text"
-                android:id="@+id/textViewListSearchRowPreName" android:layout_marginLeft="10dp"/>
+                android:id="@+id/textViewListSearchRowPreName" android:layout_marginLeft="10dp"
+                android:textColor="#ffffff"/>
         </LinearLayout>
         <LinearLayout
                 android:orientation="vertical"
@@ -35,7 +37,7 @@
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:text="Small Text"
                     android:id="@+id/textViewListSearchRowEmail" android:layout_weight="0.25"
-                    android:layout_marginLeft="23dp"/>
+                    android:layout_marginLeft="23dp" android:textColor="#ffffff"/>
         </LinearLayout>
     </LinearLayout>
 

@@ -3,7 +3,7 @@
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/swipe_refresh_all_tasks"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent" android:background="#151515">
 <RelativeLayout android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
@@ -30,7 +30,7 @@
                             android:text=""
                             android:id="@+id/textViewTaskOfEventEventName" android:layout_alignParentTop="true" android:layout_alignParentLeft="true"
                             android:layout_alignParentStart="true" android:layout_marginLeft="23dp" android:layout_marginStart="34dp"
-                            android:layout_marginTop="24dp"/>
+                            android:layout_marginTop="24dp" android:textColor="#ffffff"/>
                     <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -38,7 +38,7 @@
                             android:id="@+id/textViewTaskOfEventDate"
                             android:layout_below="@+id/textViewTaskOfEventEventLocation" android:layout_alignLeft="@+id/textViewTaskOfEventEventLocation"
                             android:layout_alignStart="@+id/textViewTaskOfEventEventLocation" android:layout_marginTop="8dp"
-                            android:layout_marginLeft="23dp"/>
+                            android:layout_marginLeft="23dp" android:textColor="#ffffff"/>
                 </LinearLayout>
             </LinearLayout>
             <LinearLayout
@@ -65,7 +65,7 @@
                             android:layout_alignLeft="@+id/imageViewTasksOfEventTotalOrganizers"
                             android:layout_alignStart="@+id/imageViewTasksOfEventTotalOrganizers"
                             android:layout_marginTop="10dp"
-                            android:layout_gravity="center_horizontal"/>
+                            android:layout_gravity="center_horizontal" android:textColor="#ffffff"/>
                 </LinearLayout>
                 <LinearLayout
                         android:orientation="vertical"
@@ -82,7 +82,8 @@
                             android:layout_height="wrap_content"
                             android:textAppearance="?android:attr/textAppearanceMedium"
                             android:id="@+id/textViewTaskOfEventTotalCosts"
-                            android:layout_marginTop="10dp" android:layout_gravity="center_horizontal"/>
+                            android:layout_marginTop="10dp" android:layout_gravity="center_horizontal"
+                            android:textColor="#ffffff"/>
                 </LinearLayout>
                 <LinearLayout
                         android:orientation="vertical"
@@ -102,7 +103,8 @@
                             android:layout_alignTop="@+id/textViewTaskOfEventTotalCosts"
                             android:layout_alignLeft="@+id/imageViewTasksOfEventTotalPercentage"
                             android:layout_alignStart="@+id/imageViewTasksOfEventTotalPercentage"
-                            android:layout_marginTop="10dp" android:layout_gravity="center_horizontal"/>
+                            android:layout_marginTop="10dp" android:layout_gravity="center_horizontal"
+                            android:textColor="#ffffff"/>
                 </LinearLayout>
 
 
