@@ -16,7 +16,6 @@ public class DeleteTaskDialog extends DialogFragment {
     private static DeleteTaskDialog instance;
     int task_id,event_id;
 
-
     public static DeleteTaskDialog getInstance() {
 
         if (DeleteTaskDialog.instance == null) {
@@ -50,7 +49,6 @@ public class DeleteTaskDialog extends DialogFragment {
                 });
         return builder.create();
     }
-
 
     //----------------------------------------------------------------------
     //-----------------Getter and Setter-------------------------------------

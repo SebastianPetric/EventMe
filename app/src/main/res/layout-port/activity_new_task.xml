@@ -93,7 +93,7 @@
                         android:layout_height="50dp"
                         android:layout_alignParentRight="true"
                         android:layout_alignParentEnd="true"
-                        android:src="@drawable/fab_ic_add"
+                        android:src="@drawable/add_button"
                         android:id="@+id/imageButtonNewTaskAddButton" android:background="@drawable/add_button_shape"
                         android:layout_marginRight="23dp"/>
             </RelativeLayout>

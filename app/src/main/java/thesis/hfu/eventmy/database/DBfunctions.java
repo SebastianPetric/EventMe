@@ -1,8 +1,10 @@
 package thesis.hfu.eventmy.database;
 
+import android.app.Activity;
 import android.content.Context;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -83,6 +85,9 @@ public class DBfunctions {
     private static final String URL_UPDATE_TASK_QUANTITY_NAME = "update_task_quantity_name.php";
     private static final String EDITOR_NAME = "editor_name";
     private static final String EMPTY_STRING = "";
+
+    //SEARCH FRIEND FOR TASK
+    private static final String URL_SEARCH_FRIENDS_TASK="search_friends_for_task.php";
 
 
     public static DBfunctions getInstance() {
@@ -234,6 +239,11 @@ public class DBfunctions {
                     e.printStackTrace();
                 }
             }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                Log.d("schlecht",responseString);
+            }
         });
     }
 
@@ -273,6 +283,30 @@ public class DBfunctions {
                     if (response.getInt(STATUS) == 200) {
                         ArrayList<User> userList = BuildJSON.getInstance().getAllUsersJSON(response.getJSONArray(USERS));
                         RecyclerView.Adapter<EventOrganizersListAdapter.MyViewHolder> recAdapter = new EventOrganizersListAdapter(context.getApplicationContext(), userList,event_id);
+                        recyclerView.setAdapter(recAdapter);
+                    }
+                    if(swipeRefreshLayout!=null){
+                        swipeRefreshLayout.setRefreshing(false);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+    public void searchFriendsForTask(final Activity activity,final Context context,final SwipeRefreshLayout swipeRefreshLayout, final RecyclerView recyclerView, final String search, String admin_id, final int event_id) {
+
+        RequestParams params = BuildJSON.getInstance().searchFriendsForTaskJSON(admin_id, search);
+        DBconnection.post(URL_SEARCH_FRIENDS_TASK, params, new JsonHttpResponseHandler() {
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                try {
+                    Toast.makeText(context.getApplicationContext(), response.getString(MESSAGE), Toast.LENGTH_SHORT).show();
+                    if (response.getInt(STATUS) == 200) {
+                        ArrayList<User> userList = BuildJSON.getInstance().getAllUsersJSON(response.getJSONArray(USERS));
+                        RecyclerView.Adapter<TaskOrganizersListAdapter.MyViewHolder> recAdapter = new TaskOrganizersListAdapter(activity,context.getApplicationContext(),userList,event_id);
                         recyclerView.setAdapter(recAdapter);
                     }
                     if(swipeRefreshLayout!=null){
@@ -328,7 +362,6 @@ public class DBfunctions {
         });
     }
 
-
     public void commentOnTask(final Context context, int task_id, int admin_id, String comment){
 
         RequestParams params = BuildJSON.getInstance().commentJSON(task_id, admin_id, comment);
@@ -368,7 +401,6 @@ public class DBfunctions {
             }
         });
     }
-
 
     public void updatePercentage(final Context context,final TextView percentageField,int task_id, int editor_id, final int percentage){
 
@@ -434,7 +466,7 @@ public class DBfunctions {
 
     public void updateTaskNameQuantity(final Context context,final TextView taskNameField, final TextView quantityField,int task_id, String editor_id, final String quantity, final String task_name){
 
-        RequestParams params = BuildJSON.getInstance().updateTaskNameQuantityJSON(editor_id,task_id,quantity,task_name);
+        RequestParams params = BuildJSON.getInstance().updateTaskNameQuantityJSON(editor_id, task_id, quantity, task_name);
         DBconnection.post(URL_UPDATE_TASK_QUANTITY_NAME,params,new JsonHttpResponseHandler(){
 
             @Override
@@ -456,5 +488,4 @@ public class DBfunctions {
             }
         });
     }
-
 }

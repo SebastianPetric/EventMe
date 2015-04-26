@@ -21,8 +21,6 @@ public class CommentDialog extends DialogFragment {
     private Context context;
     private TextView taskName, eventName, taskQuantity, costsField,percentageField,editorField, historyField;
 
-
-
     public static CommentDialog getInstance() {
 
         if (CommentDialog.instance == null) {

@@ -100,6 +100,14 @@ public class BuildJSON {
         return params;
     }
 
+    public RequestParams searchFriendsForTaskJSON(String admin_id,String search) {
+
+        RequestParams params= new RequestParams();
+        params.put(ADMIN_ID, Integer.parseInt(admin_id));
+        params.put(SEARCH,search);
+        return params;
+    }
+
     public RequestParams addRemoveFriendEventJSON(int user_id, int event_id) {
 
         RequestParams params= new RequestParams();
@@ -160,11 +168,11 @@ public class BuildJSON {
         return params;
     }
 
-    public RequestParams updatePercentageOfTaskJSON(int task_id,int editor_id,int percentage) {
+    public RequestParams updatePercentageOfTaskJSON(int task_id,int admin_id,int percentage) {
 
         RequestParams params= new RequestParams();
         params.put(TASK_ID,task_id);
-        params.put(EDITOR_ID,editor_id);
+        params.put(ADMIN_ID,admin_id);
         params.put(PERCENTAGE_OF_TASK,percentage);
         return params;
     }
@@ -277,8 +285,6 @@ public class BuildJSON {
         params.put(TASK_ID, task_id);
         return params;
     }
-
-
 
     public Task getTaskDetailsJSON(JSONObject jsonObject,int taskID) throws JSONException {
 

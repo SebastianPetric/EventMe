@@ -224,9 +224,9 @@ public class AllTasksOfEventListAdapter extends
     //-----------------Functions-------------------------------------
     //----------------------------------------------------------------------
 
-    public void updatePercentage(int task_id, int editor_id, final int percentage){
+    public void updatePercentage(int task_id, int admin_id, final int percentage){
 
-        RequestParams params = BuildJSON.getInstance().updatePercentageOfTaskJSON(task_id, editor_id, percentage);
+        RequestParams params = BuildJSON.getInstance().updatePercentageOfTaskJSON(task_id, admin_id, percentage);
         DBconnection.post(URL_UPDATE_PERCENTAGE_OF_TASK,params,new JsonHttpResponseHandler(){
 
             @Override

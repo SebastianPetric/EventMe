@@ -4,13 +4,16 @@ package thesis.hfu.eventmy.functions;
 import android.content.Context;
 import android.content.Intent;
 import thesis.hfu.eventmy.activities.*;
+import thesis.hfu.eventmy.objects.Global;
 
 public class StartActivityFunctions {
 
     private static StartActivityFunctions instance;
     private static final String EVENT_ID="event_id";
     private static final String TASK_ID="task_id";
-    private static final String EDITOR_ID="editor_id";
+    private static final String INACTIVE_TASK="";
+    private static final int NO_EDITOR=-1;
+
 
     public static StartActivityFunctions getInstance(){
 
@@ -41,9 +44,20 @@ public class StartActivityFunctions {
     public void startCreateTaskActivity(Context context, int event_id){
         Intent intent= new Intent(context.getApplicationContext(),CreateTaskActivity.class);
         intent.putExtra(EVENT_ID, event_id);
+        Global global = ((Global)context.getApplicationContext());
+        global.setEditor_id(NO_EDITOR);
+        global.setEditorName(INACTIVE_TASK);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.getApplicationContext().startActivity(intent);
     }
+
+    public void startCreateTaskFromFriendsActivity(Context context, int event_id){
+        Intent intent= new Intent(context.getApplicationContext(),CreateTaskActivity.class);
+        intent.putExtra(EVENT_ID, event_id);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.getApplicationContext().startActivity(intent);
+    }
+
 
     public void startAllEventsActivity(Context context){
         Intent intent = new Intent(context.getApplicationContext(), AllEventsActivity.class);
@@ -80,6 +94,13 @@ public class StartActivityFunctions {
     public void startEditTaskActivity(Context context,int task_id,final int event_id){
         Intent intent = new Intent(context.getApplicationContext(), EditTaskActivity.class);
         intent.putExtra(TASK_ID, task_id);
+        intent.putExtra(EVENT_ID, event_id);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.getApplicationContext().startActivity(intent);
+    }
+
+    public void startFriendsForTaskActivity(Context context,int event_id){
+        Intent intent = new Intent(context.getApplicationContext(), TaskOrganizersActivity.class);
         intent.putExtra(EVENT_ID, event_id);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.getApplicationContext().startActivity(intent);

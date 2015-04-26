@@ -14,6 +14,7 @@ import thesis.hfu.eventmy.database.DBfunctions;
 import thesis.hfu.eventmy.functions.CheckSharedPreferences;
 import thesis.hfu.eventmy.functions.StartActivityFunctions;
 import thesis.hfu.eventmy.dialogs.LogoutDialog;
+import thesis.hfu.eventmy.objects.Global;
 
 public class CreateTaskActivity extends ActionBarActivity {
 
@@ -22,7 +23,8 @@ public class CreateTaskActivity extends ActionBarActivity {
     private Button createTaskButton;
     private ImageView addEditorButton;
     private int event_id;
-    private String editorValue;
+    private int editorID;
+    private String editorName;
 
 
     private static final String EMPTY_STRING= "";
@@ -46,10 +48,25 @@ public class CreateTaskActivity extends ActionBarActivity {
             setDescription(R.id.editTextNewTaskNoteField);
             setAddEditorButton(R.id.imageButtonNewTaskAddButton);
             setCreateTaskButton(R.id.buttonNewTaskFinishButton);
+            Global appState = ((Global)getApplicationContext());
+
+            setEditorID(appState.getEditor_id());
+            setEditorName(appState.getEditorName());
+
+            setEditorField(getEditorName());
             getCreateTaskButton().setOnClickListener(new CustomClickListener());
+            getAddEditorButton().setOnClickListener(new CustomClickListener());
         }else{
             CheckSharedPreferences.getInstance().endSession(getApplicationContext());
         }
+    }
+
+    public String getEditorName() {
+        return editorName;
+    }
+
+    public void setEditorName(String editorName) {
+        this.editorName = editorName;
     }
 
     //----------------------------------------------------------------------
@@ -63,16 +80,18 @@ public class CreateTaskActivity extends ActionBarActivity {
             if(v.getId()==R.id.buttonNewTaskFinishButton){
                 if(!getTaskField().matches(EMPTY_STRING)){
                     if(getEditorField().matches(EMPTY_STRING)){
-                        setEditorValue(DEFAULT_EDITOR);
+                        setEditorName(DEFAULT_EDITOR);
                     }
                     if(CheckSharedPreferences.getInstance().isLoggedIn(getApplicationContext())){
-                        DBfunctions.getInstance().createTask(getApplicationContext(),getEvent_id(),-1,getTaskField(),getDescriptionField(),getQuantityField());
+                        DBfunctions.getInstance().createTask(getApplicationContext(),getEvent_id(),getEditorID(),getTaskField(),getDescriptionField(),getQuantityField());
                     }else{
                         CheckSharedPreferences.getInstance().endSession(getApplicationContext());
                     }
                 }else{
                     Toast.makeText(getApplicationContext(), ERROR_TASK, Toast.LENGTH_SHORT).show();
                 }
+            }else if(v.getId()==R.id.imageButtonNewTaskAddButton){
+                StartActivityFunctions.getInstance().startFriendsForTaskActivity(getApplicationContext(),getEvent_id());
             }
         }
     }
@@ -158,7 +177,10 @@ public class CreateTaskActivity extends ActionBarActivity {
     public void setEvent_id(int event_id) {
         this.event_id = event_id;
     }
-    public void setEditorValue(String editorValue) {
-        this.editorValue = editorValue;
+    public void setEditorID(int editorValue) {
+        this.editorID = editorValue;
+    }
+    public int getEditorID() {
+        return editorID;
     }
 }

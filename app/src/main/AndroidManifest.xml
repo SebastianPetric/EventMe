@@ -3,6 +3,7 @@
     package="thesis.hfu.eventmy" >
 
     <application
+            android:name=".objects.Global"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -59,6 +60,11 @@
         <activity
                 android:name=".activities.EditTaskActivity"
                 android:label="Bearbeiten" >
+        </activity>
+
+        <activity
+                android:name=".activities.TaskOrganizersActivity"
+                android:label="Bearbeiter" >
         </activity>
     </application>
 
