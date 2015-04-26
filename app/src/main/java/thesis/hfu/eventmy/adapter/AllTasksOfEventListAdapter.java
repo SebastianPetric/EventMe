@@ -212,7 +212,11 @@ public class AllTasksOfEventListAdapter extends
 
         @Override
         public void onClick(View v) {
+            if(CheckSharedPreferences.getInstance().isLoggedIn(context.getApplicationContext())){
             StartActivityFunctions.getInstance().startEditTaskActivity(context.getApplicationContext(),getTasks().get(getPosition()).getTask_id(),getEvent_id());
+            }else{
+                CheckSharedPreferences.getInstance().endSession(context.getApplicationContext());
+            }
         }
     }
 

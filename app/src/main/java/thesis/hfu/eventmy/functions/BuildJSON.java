@@ -313,5 +313,15 @@ public class BuildJSON {
         params.put(COMMENT,comment);
         return params;
     }
+
+    public RequestParams updateTaskNameQuantityJSON(String admin_id,int task_id,String quantity, String task) {
+
+        RequestParams params= new RequestParams();
+        params.put(ADMIN_ID, Integer.parseInt(admin_id));
+        params.put(TASK_ID, task_id);
+        params.put(QUANTITY, quantity);
+        params.put(TASK, task);
+        return params;
+    }
 }
 

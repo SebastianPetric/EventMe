@@ -10,6 +10,7 @@ public class StartActivityFunctions {
     private static StartActivityFunctions instance;
     private static final String EVENT_ID="event_id";
     private static final String TASK_ID="task_id";
+    private static final String EDITOR_ID="editor_id";
 
     public static StartActivityFunctions getInstance(){
 

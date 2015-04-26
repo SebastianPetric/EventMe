@@ -28,12 +28,13 @@
 
     <!-- EDIT TASK SCREEN -->
     <string name="edit_task_quantity">Menge ändern</string>
+    <string name="edit_task_name">Name ändern</string>
     <string name="edit_task_quantity_text">Menge:</string>
     <string name="edit_task_comment_button">Kommentieren</string>
     <string name="edit_task_note">Kommentar</string>
-    <string name="edit_task_previous_note_header">Verlauf:</string>
+    <string name="edit_task_previous_note_header">Kommentare:</string>
     <string name="edit_task_editor">Bearbeiter:</string>
-    <string name="edit_task_finish_button">Aktualisieren</string>
+    <string name="edit_task_finish_button">Bearbeiten</string>
     <string name="edit_task_delete_task_button">Aufgabe löschen</string>
 
     <!-- NEW TASK SCREEN -->
@@ -83,4 +84,9 @@
     <string name="dialog_comment_message">Kommentar</string>
     <string name="dialog_comment_ok">Posten</string>
     <string name="dialog_comment_cancel">Abbrechen</string>
+
+    <!-- DIALOG EDIT TASK -->
+    <string name="dialog_edit_task_message">Bearbeiten</string>
+    <string name="dialog_edit_task_ok">Aktualisieren</string>
+    <string name="dialog_edit_task_cancel">Abbrechen</string>
 </resources>

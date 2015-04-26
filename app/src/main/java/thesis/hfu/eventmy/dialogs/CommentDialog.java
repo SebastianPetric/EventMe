@@ -31,7 +31,7 @@ public class CommentDialog extends DialogFragment {
         return CommentDialog.instance;
     }
 
-    public void startCommentDialog(FragmentManager manager,Context context,String admin_id,final TextView eventName,final TextView taskField, final TextView quantity, final TextView cost, final TextView percentage, final TextView editor, final TextView history, int task_id) {
+    public void startCommentDialog(FragmentManager manager,Context context, int task_id,String admin_id,final TextView eventName,final TextView taskField, final TextView quantity, final TextView cost, TextView percentage, final TextView editor, final TextView history) {
         setTask_id(task_id);
         setAdmin_id(Integer.valueOf(admin_id));
         setContext(context);
@@ -59,7 +59,7 @@ public class CommentDialog extends DialogFragment {
                     public void onClick(DialogInterface dialog, int id) {
                         String comment = userInput.getText().toString().trim();
                         DBfunctions.getInstance().commentOnTask(getContext(),getTask_id(),getAdmin_id(),comment);
-                        DBfunctions.getInstance().updateTaskDetails(getEventNameTextView(),getTaskTextView(),getQuantityTextView(),getCostsTextView(),getPercentageTextView(),getEditorTextView(),getHistoryTextView(),getTask_id());
+                        DBfunctions.getInstance().updateTaskDetails(getContext(),getEventNameTextView(),getTaskTextView(),getQuantityTextView(),getCostsTextView(),getPercentageTextView(),getEditorTextView(),getHistoryTextView(),getTask_id());
                         dialog.cancel();
                     }
                 })
@@ -114,31 +114,24 @@ public class CommentDialog extends DialogFragment {
     public TextView getHistoryTextView(){
         return this.historyField;
     }
-
     public void setTaskName(TextView taskName) {
         this.taskName = taskName;
     }
-
     public void setEventName(TextView eventName) {
         this.eventName = eventName;
     }
-
     public void setTaskQuantity(TextView taskQuantity) {
         this.taskQuantity = taskQuantity;
     }
-
     public void setCostsField(TextView costsField) {
         this.costsField = costsField;
     }
-
     public void setPercentageField(TextView percentageField) {
         this.percentageField = percentageField;
     }
-
     public void setEditorField(TextView editorField) {
         this.editorField = editorField;
     }
-
     public void setHistoryField(TextView historyField) {
         this.historyField = historyField;
     }

@@ -70,6 +70,20 @@ public class DBfunctions {
     //GET TASK DETAILS
     private static final String URL_GET_TASK_DETAILS = "get_task_details.php";
 
+    //BECOME EDITOR OF TASK
+    private static final String URL_BECOME_EDITOR_OF_TASK= "become_editor_of_task.php";
+
+    //UPDATE PERCENTAGE OF TASK
+    private static final String URL_UPDATE_PERCENTAGE_OF_TASK= "update_percentage_of_task.php";
+
+    //UPDATE COSTS OF TASK
+    private static final String URL_UPDATE_COSTS_OF_TASK = "update_costs_of_task.php";
+
+    //EDIT TASK DETAILS
+    private static final String URL_UPDATE_TASK_QUANTITY_NAME = "update_task_quantity_name.php";
+    private static final String EDITOR_NAME = "editor_name";
+    private static final String EMPTY_STRING = "";
+
 
     public static DBfunctions getInstance() {
         if (DBfunctions.instance == null) {
@@ -331,7 +345,7 @@ public class DBfunctions {
         });
     }
 
-    public void updateTaskDetails(final TextView eventName, final TextView taskField, final TextView quantity, final TextView cost, final TextView percentageField, final TextView editor, final TextView history,final int task_id){
+    public void updateTaskDetails(Context context,final TextView eventName, final TextView taskField, final TextView quantity, final TextView cost, final TextView percentageField, final TextView editor, final TextView history,final int task_id){
 
         RequestParams params= BuildJSON.getInstance().getTaskDetailsJSON(task_id);
         DBconnection.post(URL_GET_TASK_DETAILS,params,new JsonHttpResponseHandler(){
@@ -346,7 +360,6 @@ public class DBfunctions {
                     taskField.setText(task.getTask());
                     quantity.setText(task.getQuantity());
                     cost.setText(String.valueOf(task.getCostOfTask()));
-                    quantity.setText(String.valueOf(task.getPercentage()));
                     history.setText(task.getDescription());
                     editor.setText(task.getEditor_name());
                 } catch (JSONException e) {
@@ -355,4 +368,93 @@ public class DBfunctions {
             }
         });
     }
+
+
+    public void updatePercentage(final Context context,final TextView percentageField,int task_id, int editor_id, final int percentage){
+
+        RequestParams params = BuildJSON.getInstance().updatePercentageOfTaskJSON(task_id, editor_id, percentage);
+        DBconnection.post(URL_UPDATE_PERCENTAGE_OF_TASK, params, new JsonHttpResponseHandler() {
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                try {
+                    Toast.makeText(context.getApplicationContext(), response.getString(MESSAGE), Toast.LENGTH_SHORT).show();
+                    if (response.getInt(STATUS) == 200) {
+                        percentageField.setText(String.valueOf(percentage));
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+    public void changeEditorOfTask(final Context context,final TextView editorField,final String editor_id, int task_id){
+
+        RequestParams params= BuildJSON.getInstance().becomeEditorOfTaskJSON(Integer.parseInt(editor_id), task_id);
+        DBconnection.post(URL_BECOME_EDITOR_OF_TASK, params, new JsonHttpResponseHandler() {
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                try {
+                    Toast.makeText(context, response.getString(MESSAGE), Toast.LENGTH_SHORT).show();
+                    if (response.getInt(STATUS) == 200) {
+                       editorField.setText(response.getString(EDITOR_NAME));
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+    public void updateCosts(final Context context,final TextView costsField,int task_id, int editor_id, final double costs, final int status){
+
+        RequestParams params = BuildJSON.getInstance().updateCostsOfTaskJSON(task_id, editor_id, costs, status);
+        DBconnection.post(URL_UPDATE_COSTS_OF_TASK,params,new JsonHttpResponseHandler(){
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                try {
+                    Toast.makeText(context.getApplicationContext(),response.getString(MESSAGE),Toast.LENGTH_SHORT).show();
+                    if(response.getInt(STATUS)==200){
+
+                        if(status==0) {
+                            costsField.setText(String.valueOf(costs));
+                        }else if(status==1){
+                           costsField.setText(String.valueOf((Double.parseDouble(costsField.getText().toString())+ costs)));
+                        }
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+    public void updateTaskNameQuantity(final Context context,final TextView taskNameField, final TextView quantityField,int task_id, String editor_id, final String quantity, final String task_name){
+
+        RequestParams params = BuildJSON.getInstance().updateTaskNameQuantityJSON(editor_id,task_id,quantity,task_name);
+        DBconnection.post(URL_UPDATE_TASK_QUANTITY_NAME,params,new JsonHttpResponseHandler(){
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                try {
+                    Toast.makeText(context.getApplicationContext(),response.getString(MESSAGE),Toast.LENGTH_SHORT).show();
+                    if(response.getInt(STATUS)==200){
+
+                        if(!quantity.equals(EMPTY_STRING)){
+                            quantityField.setText(quantity);
+                        }
+                        if(!task_name.equals(EMPTY_STRING)){
+                            taskNameField.setText(task_name);
+                        }
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
 }
