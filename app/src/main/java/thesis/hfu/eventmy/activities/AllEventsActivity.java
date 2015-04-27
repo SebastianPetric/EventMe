@@ -41,7 +41,7 @@ public class AllEventsActivity extends ActionBarActivity{
             getAllEventsRecycler().setLayoutManager(layoutManager);
             getAllEventsRecycler().addItemDecoration(new DividerItemDecoration(this));
             getAddEventButton().setOnClickListener(new CustomClickListener());
-            getSyncRefresh().setOnRefreshListener(new CustomSwipeListener());
+            //getSyncRefresh().setOnRefreshListener(new CustomSwipeListener());
             DBfunctions.getInstance().getAllEvents(getApplicationContext(), null, getAllEventsRecycler(), CheckSharedPreferences.getInstance().getAdmin_id());
         }else{
             CheckSharedPreferences.getInstance().endSession(getApplicationContext());

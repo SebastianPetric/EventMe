@@ -51,7 +51,6 @@ public class TaskOrganizersActivity extends ActionBarActivity {
             getRecyclerView().setLayoutManager(layoutManager);
             getRecyclerView().addItemDecoration(new DividerItemDecoration(this));
             getSyncRefresh().setOnRefreshListener(new CustomSwipeListener());
-
             DBfunctions.getInstance().searchFriendsForTask(this,getApplicationContext(), null, getRecyclerView(), EMPTY_STRING, CheckSharedPreferences.getInstance().getAdmin_id(),getEvent_id());
         }else{
             CheckSharedPreferences.getInstance().endSession(getApplicationContext());
