@@ -91,31 +91,31 @@ public class RegistrationActivity extends ActionBarActivity {
     //----------------------------------------------------------------------
 
     public String getNameField() {
-        return nameField.getText().toString();
+        return nameField.getText().toString().trim();
     }
     public void setNameField(int res) {
         this.nameField= (EditText) findViewById(res);
     }
     public String getPrenameField() {
-        return prenameField.getText().toString();
+        return prenameField.getText().toString().trim();
     }
     public void setPrenameField(int res) {
         this.prenameField = (EditText) findViewById(res);
     }
     public String getEmailField() {
-        return emailField.getText().toString();
+        return emailField.getText().toString().trim();
     }
     public void setEmailField(int res) {
         this.emailField = (EditText) findViewById(res);
     }
     public String getPasswordField() {
-        return passwordField.getText().toString();
+        return passwordField.getText().toString().trim();
     }
     public void setPasswordField(int res) {
         this.passwordField = (EditText) findViewById(res);
     }
     public String getPasswordRepeatField() {
-        return passwordRepeatField.getText().toString();
+        return passwordRepeatField.getText().toString().trim();
     }
     public void setPasswordRepeatField(int res) {
         this.passwordRepeatField = (EditText) findViewById(res);

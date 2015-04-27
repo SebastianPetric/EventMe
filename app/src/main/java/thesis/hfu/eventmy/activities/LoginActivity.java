@@ -73,7 +73,7 @@ public class LoginActivity extends ActionBarActivity {
         this.emailField = (EditText) findViewById(res);
     }
     public String getPasswordField() {
-        return passwordField.getText().toString();
+        return passwordField.getText().toString().trim();
     }
     public void setPasswordField(int res) {
         this.passwordField = (EditText) findViewById(res);

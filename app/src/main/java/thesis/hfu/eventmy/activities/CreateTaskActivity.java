@@ -22,10 +22,8 @@ public class CreateTaskActivity extends ActionBarActivity {
     private TextView editor;
     private Button createTaskButton;
     private ImageView addEditorButton;
-    private int event_id;
-    private int editorID;
+    private int event_id,editor_id;
     private String editorName;
-
 
     private static final String EMPTY_STRING= "";
     private static final String DEFAULT_EDITOR= "offen";
@@ -50,7 +48,7 @@ public class CreateTaskActivity extends ActionBarActivity {
             setCreateTaskButton(R.id.buttonNewTaskFinishButton);
             Global appState = ((Global)getApplicationContext());
 
-            setEditorID(appState.getEditor_id());
+            setEditor_id(appState.getEditor_id());
             setEditorName(appState.getEditorName());
 
             setEditorField(getEditorName());
@@ -59,14 +57,6 @@ public class CreateTaskActivity extends ActionBarActivity {
         }else{
             CheckSharedPreferences.getInstance().endSession(getApplicationContext());
         }
-    }
-
-    public String getEditorName() {
-        return editorName;
-    }
-
-    public void setEditorName(String editorName) {
-        this.editorName = editorName;
     }
 
     //----------------------------------------------------------------------
@@ -83,7 +73,7 @@ public class CreateTaskActivity extends ActionBarActivity {
                         setEditorName(DEFAULT_EDITOR);
                     }
                     if(CheckSharedPreferences.getInstance().isLoggedIn(getApplicationContext())){
-                        DBfunctions.getInstance().createTask(getApplicationContext(),getEvent_id(),getEditorID(),getTaskField(),getDescriptionField(),getQuantityField());
+                        DBfunctions.getInstance().createTask(getApplicationContext(),getEvent_id(), getEditor_id(),getTaskField(),getDescriptionField(),getQuantityField());
                     }else{
                         CheckSharedPreferences.getInstance().endSession(getApplicationContext());
                     }
@@ -133,19 +123,19 @@ public class CreateTaskActivity extends ActionBarActivity {
     //----------------------------------------------------------------------
 
     public String getTaskField() {
-        return task.getText().toString();
+        return task.getText().toString().trim();
     }
     public void setTask(int res) {
         this.task = (EditText) findViewById(res);
     }
     public String getQuantityField() {
-        return quantity.getText().toString();
+        return quantity.getText().toString().trim();
     }
     public void setQuantity(int res) {
         this.quantity = (EditText) findViewById(res);
     }
     public String getDescriptionField() {
-        return description.getText().toString();
+        return description.getText().toString().trim();
     }
     public void setDescription(int res) {
         this.description= (EditText) findViewById(res);
@@ -177,10 +167,15 @@ public class CreateTaskActivity extends ActionBarActivity {
     public void setEvent_id(int event_id) {
         this.event_id = event_id;
     }
-    public void setEditorID(int editorValue) {
-        this.editorID = editorValue;
+    public void setEditor_id(int editorValue) {
+        this.editor_id = editorValue;
     }
-    public int getEditorID() {
-        return editorID;
+    public int getEditor_id() {
+        return editor_id;
+    }public String getEditorName() {
+        return editorName;
+    }
+    public void setEditorName(String editorName) {
+        this.editorName = editorName;
     }
 }

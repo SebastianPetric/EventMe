@@ -116,7 +116,7 @@ public class SearchActivity extends ActionBarActivity {
     //----------------------------------------------------------------------
 
     public String getSearchField() {
-        return searchField.getText().toString();
+        return searchField.getText().toString().trim();
     }
     public void setSearchField(int res) {
         this.searchField = (EditText) findViewById(res);

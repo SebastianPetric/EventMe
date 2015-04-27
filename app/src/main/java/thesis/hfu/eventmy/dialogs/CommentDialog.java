@@ -7,6 +7,7 @@ import android.app.FragmentManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
@@ -20,6 +21,7 @@ public class CommentDialog extends DialogFragment {
     private int task_id,admin_id;
     private Context context;
     private TextView taskName, eventName, taskQuantity, costsField,percentageField,editorField, historyField;
+    private SwipeRefreshLayout swipeRefreshLayout;
 
     public static CommentDialog getInstance() {
 
@@ -29,7 +31,7 @@ public class CommentDialog extends DialogFragment {
         return CommentDialog.instance;
     }
 
-    public void startCommentDialog(FragmentManager manager,Context context, int task_id,String admin_id,final TextView eventName,final TextView taskField, final TextView quantity, final TextView cost, TextView percentage, final TextView editor, final TextView history) {
+    public void startCommentDialog(FragmentManager manager,final SwipeRefreshLayout swipeRefreshLayout,Context context, int task_id,String admin_id,final TextView eventName,final TextView taskField, final TextView quantity, final TextView cost, TextView percentage, final TextView editor, final TextView history) {
         setTask_id(task_id);
         setAdmin_id(Integer.valueOf(admin_id));
         setContext(context);
@@ -40,6 +42,7 @@ public class CommentDialog extends DialogFragment {
         setPercentageField(percentage);
         setEditorField(editor);
         setHistoryField(history);
+        setSwipeRefreshLayout(swipeRefreshLayout);
         this.show(manager, "commentDialog");
     }
 
@@ -56,7 +59,7 @@ public class CommentDialog extends DialogFragment {
                     public void onClick(DialogInterface dialog, int id) {
                         String comment = userInput.getText().toString().trim();
                         DBfunctions.getInstance().commentOnTask(getContext(),getTask_id(),getAdmin_id(),comment);
-                        DBfunctions.getInstance().updateTaskDetails(getContext(),getEventNameTextView(),getTaskTextView(),getQuantityTextView(),getCostsTextView(),getPercentageTextView(),getEditorTextView(),getHistoryTextView(),getTask_id());
+                        DBfunctions.getInstance().updateTaskDetails(getContext(),getSwipeRefreshLayout(),getEventNameTextView(),getTaskTextView(),getQuantityTextView(),getCostsTextView(),getPercentageTextView(),getEditorTextView(),getHistoryTextView(),getTask_id());
                         dialog.cancel();
                     }
                 })
@@ -131,5 +134,12 @@ public class CommentDialog extends DialogFragment {
     }
     public void setHistoryField(TextView historyField) {
         this.historyField = historyField;
+    }
+
+    public void setSwipeRefreshLayout(SwipeRefreshLayout swipeRefreshLayout) {
+        this.swipeRefreshLayout = swipeRefreshLayout;
+    }
+    public SwipeRefreshLayout getSwipeRefreshLayout() {
+       return this.swipeRefreshLayout;
     }
 }

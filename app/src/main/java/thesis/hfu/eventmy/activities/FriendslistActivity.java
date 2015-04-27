@@ -25,7 +25,6 @@ public class FriendslistActivity extends ActionBarActivity {
     private SwipeRefreshLayout syncRefresh;
     private EditText searchField;
     private Button searchButton;
-
     private String EMPTY_STRING="";
 
     @Override
@@ -131,7 +130,7 @@ public class FriendslistActivity extends ActionBarActivity {
         this.syncRefresh = (SwipeRefreshLayout) findViewById(res);
     }
     public String getSearchFieldValue() {
-        return searchField.getText().toString();
+        return searchField.getText().toString().trim();
     }
     public void setSearchField(int res) {
         this.searchField = (EditText) findViewById(res);

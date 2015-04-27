@@ -3,6 +3,7 @@ package thesis.hfu.eventmy.activities;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.view.*;
@@ -23,16 +24,13 @@ public class EditTaskActivity extends ActionBarActivity {
     private TextView taskName, eventName, taskQuantity, costsField,percentageField,editorField, historyField;
     private Button finishButton, deleteButton,commentButton;
     private ImageButton costsButton, percentageButton,editorButton;
-    private int event_id,task_id,percentageV,type_of_update;
-    private double costsV;
+    private SwipeRefreshLayout syncRefresh;
+    private int event_id,task_id, percentageValue, typeOfUpdate;
+    private double costValue;
 
     private static final String EVENT_ID="event_id";
     private static final String TASK_ID="task_id";
-    private static final String EDITOR_ID="editor_id";
     private static final String ERROR_NUMERIC= "Sie haben keine Zahlen eingegeben!";
-
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +44,7 @@ public class EditTaskActivity extends ActionBarActivity {
             setEvent_id(getIntent().getExtras().getInt(EVENT_ID));
             setTask_id(getIntent().getExtras().getInt(TASK_ID));
 
+            setSyncRefresh(R.id.swipe_refresh_edit_task);
             setTaskNameField(R.id.textViewEditTaskTaskName);
             setEventNameField(R.id.textViewEditTaskEventName);
             setCostsField(R.id.textViewEditTaskCostsField);
@@ -59,10 +58,10 @@ public class EditTaskActivity extends ActionBarActivity {
             setFinishButton(R.id.buttonEditTaskFinishButton);
             setPercentageButton(R.id.imageButtonEditTaskPercentage);
             setHistoryField(R.id.textViewEditTaskRecentReview);
-            DBfunctions.getInstance().updateTaskDetails(getApplicationContext(), getEventNameTextView(), getTaskTextView(), getQuantityTextView(), getCostsTextView(), getPercentageTextView(), getEditorTextView(), getHistoryTextView(), getTask_id());
+            DBfunctions.getInstance().updateTaskDetails(getApplicationContext(),getSyncRefresh(), getEventNameTextView(), getTaskTextView(), getQuantityTextView(), getCostsTextView(), getPercentageTextView(), getEditorTextView(), getHistoryTextView(), getTask_id());
             getDeleteButton().setOnClickListener(new CustomClickListener());
             getCommentButton().setOnClickListener(new CustomClickListener());
-
+            getSyncRefresh().setOnRefreshListener(new CustomSwipeListener());
             getCostsButton().setOnClickListener(new CustomClickListener());
             getPercentageButton().setOnClickListener(new CustomClickListener());
             getEditorButton().setOnClickListener(new CustomClickListener());
@@ -71,8 +70,6 @@ public class EditTaskActivity extends ActionBarActivity {
             CheckSharedPreferences.getInstance().endSession(getApplicationContext());
         }
     }
-
-
 
     //----------------------------------------------------------------------
     //-----------------CUSTOM LISTENER-------------------------------------
@@ -85,7 +82,7 @@ public class EditTaskActivity extends ActionBarActivity {
             if(v.getId()==R.id.buttonEditTaskDeleteTaskButton){
                 DeleteTaskDialog.getInstance().startDeleteTaskDialog(getFragmentManager(),getTask_id(),getEvent_id());
             }else if(v.getId()==R.id.buttonEditTaskComment){
-                CommentDialog.getInstance().startCommentDialog(getFragmentManager(),getApplicationContext(),getTask_id(),CheckSharedPreferences.getInstance().getAdmin_id(),getEventNameTextView(),getTaskTextView(),getQuantityTextView(),getCostsTextView(),getPercentageTextView(),getEditorTextView(),getHistoryTextView());
+                CommentDialog.getInstance().startCommentDialog(getFragmentManager(),getSyncRefresh(),getApplicationContext(),getTask_id(),CheckSharedPreferences.getInstance().getAdmin_id(),getEventNameTextView(),getTaskTextView(),getQuantityTextView(),getCostsTextView(),getPercentageTextView(),getEditorTextView(),getHistoryTextView());
             }else if(v.getId()==R.id.imageButtonEditTaskCosts){
                 LayoutInflater li = LayoutInflater.from(v.getContext());
                 View promptsView = li.inflate(R.layout.dialog_add_costs, null);
@@ -100,10 +97,10 @@ public class EditTaskActivity extends ActionBarActivity {
                                     public void onClick(DialogInterface dialog, int id) {
                                         if (CheckIf.isNumeric(userInput.getText().toString())) {
                                             dialog.cancel();
-                                            setCostsV(Calculation.getInstance().round(Double.parseDouble(userInput.getText().toString())));
-                                            setType_of_update(0);
+                                            setCostValue(Calculation.getInstance().round(Double.parseDouble(userInput.getText().toString())));
+                                            setTypeOfUpdate(0);
                                             if (CheckSharedPreferences.getInstance().isLoggedIn(getApplicationContext())) {
-                                                DBfunctions.getInstance().updateCosts(getApplicationContext(),getCostsTextView(),getTask_id(), Integer.parseInt(CheckSharedPreferences.getInstance().getAdmin_id()), getCostsV(), getType_of_update());
+                                                DBfunctions.getInstance().updateCosts(getApplicationContext(),getCostsTextView(),getTask_id(), Integer.parseInt(CheckSharedPreferences.getInstance().getAdmin_id()), getCostValue(), getTypeOfUpdate());
                                             }else{
                                                 CheckSharedPreferences.getInstance().endSession(getApplicationContext());
                                             }
@@ -122,10 +119,10 @@ public class EditTaskActivity extends ActionBarActivity {
                             public void onClick(DialogInterface dialog, int id) {
                                 if (CheckIf.isNumeric(userInput.getText().toString())) {
                                     dialog.cancel();
-                                    setCostsV(Calculation.getInstance().round(Double.parseDouble(userInput.getText().toString())));
-                                    setType_of_update(1);
+                                    setCostValue(Calculation.getInstance().round(Double.parseDouble(userInput.getText().toString())));
+                                    setTypeOfUpdate(1);
                                     if(CheckSharedPreferences.getInstance().isLoggedIn(getApplicationContext())) {
-                                        DBfunctions.getInstance().updateCosts(getApplicationContext(), getCostsTextView(), getTask_id(), Integer.parseInt(CheckSharedPreferences.getInstance().getAdmin_id()), getCostsV(), getType_of_update());
+                                        DBfunctions.getInstance().updateCosts(getApplicationContext(), getCostsTextView(), getTask_id(), Integer.parseInt(CheckSharedPreferences.getInstance().getAdmin_id()), getCostValue(), getTypeOfUpdate());
                                     }else{
                                         CheckSharedPreferences.getInstance().endSession(getApplicationContext());
                                     }
@@ -145,23 +142,23 @@ public class EditTaskActivity extends ActionBarActivity {
                             public void onClick(DialogInterface dialog, int position) {
                                 switch (position) {
                                     case 0:
-                                        setPercentageV(0);
+                                        setPercentageValue(0);
                                         break;
                                     case 1:
-                                        setPercentageV(25);
+                                        setPercentageValue(25);
                                         break;
                                     case 2:
-                                        setPercentageV(50);
+                                        setPercentageValue(50);
                                         break;
                                     case 3:
-                                        setPercentageV(75);
+                                        setPercentageValue(75);
                                         break;
                                     case 4:
-                                        setPercentageV(100);
+                                        setPercentageValue(100);
                                         break;
                                 }
                                 if (CheckSharedPreferences.getInstance().isLoggedIn(getApplicationContext())) {
-                                    DBfunctions.getInstance().updatePercentage(getApplicationContext(),getPercentageTextView(),getTask_id(), Integer.parseInt(CheckSharedPreferences.getInstance().getAdmin_id()), getPercentageV());
+                                    DBfunctions.getInstance().updatePercentage(getApplicationContext(),getPercentageTextView(),getTask_id(), Integer.parseInt(CheckSharedPreferences.getInstance().getAdmin_id()), getPercentageValue());
                                 } else {
                                     CheckSharedPreferences.getInstance().endSession(getApplicationContext());
                                 }
@@ -177,6 +174,18 @@ public class EditTaskActivity extends ActionBarActivity {
                 }
             }else if(v.getId()==R.id.buttonEditTaskFinishButton) {
                 EditTaskDialog.getInstance().startEditTaskDialog(getFragmentManager(),getApplicationContext(),getTaskTextView(),getQuantityTextView(),getTask_id(),CheckSharedPreferences.getInstance().getAdmin_id());
+            }
+        }
+    }
+
+    public class CustomSwipeListener implements SwipeRefreshLayout.OnRefreshListener{
+
+        @Override
+        public void onRefresh() {
+            if(CheckSharedPreferences.getInstance().isLoggedIn(getApplicationContext())){
+                DBfunctions.getInstance().updateTaskDetails(getApplicationContext(),getSyncRefresh(), getEventNameTextView(), getTaskTextView(), getQuantityTextView(), getCostsTextView(), getPercentageTextView(), getEditorTextView(), getHistoryTextView(), getTask_id());
+            }else{
+                CheckSharedPreferences.getInstance().endSession(getApplicationContext());
             }
         }
     }
@@ -227,9 +236,6 @@ public class EditTaskActivity extends ActionBarActivity {
     }
     public void setTaskQuantityField(int res) {
         this.taskQuantity= (TextView) findViewById(res);
-    }
-    public void setCostsValue(String s) {
-        this.costsField.setText(s);
     }
     public void setCostsField(int res) {
         this.costsField= (TextView) findViewById(res);
@@ -312,24 +318,31 @@ public class EditTaskActivity extends ActionBarActivity {
     public TextView getHistoryTextView(){
         return this.historyField;
     }
-    public int getPercentageV() {
-        return percentageV;
+    public int getPercentageValue() {
+        return percentageValue;
     }
-    public void setPercentageV(int percentageV) {
-        this.percentageV = percentageV;
+    public void setPercentageValue(int percentageValue) {
+        this.percentageValue = percentageValue;
     }
-    public int getType_of_update() {
-        return type_of_update;
+    public int getTypeOfUpdate() {
+        return typeOfUpdate;
     }
-    public void setType_of_update(int type_of_update) {
-        this.type_of_update = type_of_update;
+    public void setTypeOfUpdate(int typeOfUpdate) {
+        this.typeOfUpdate = typeOfUpdate;
     }
-    public double getCostsV() {
-        return costsV;
+    public double getCostValue() {
+        return costValue;
     }
-    public void setCostsV(double costsV) {
-        this.costsV = costsV;
+    public void setCostValue(double costValue) {
+        this.costValue = costValue;
     }
+    public SwipeRefreshLayout getSyncRefresh() {
+        return syncRefresh;
+    }
+    public void setSyncRefresh(int res) {
+        this.syncRefresh = (SwipeRefreshLayout) findViewById(res);
+    }
+
 
 
 }

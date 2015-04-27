@@ -137,7 +137,7 @@ public class CreateEventActivity extends ActionBarActivity {
     //----------------------------------------------------------------------
 
     public String getEventNameField() {
-        return eventNameField.getText().toString();
+        return eventNameField.getText().toString().trim();
     }
     public String getEventDateField() {
         return eventDateField.getText().toString();
@@ -164,7 +164,7 @@ public class CreateEventActivity extends ActionBarActivity {
         this.finishButton= (Button) findViewById(res);
     }
     public String getEventLocationField() {
-        return eventLocationField.getText().toString();
+        return eventLocationField.getText().toString().trim();
     }
     public void setEventLocationField(int res) {
         this.eventLocationField = (EditText) findViewById(res);

@@ -129,7 +129,7 @@ public class EventOrganizersActivity extends ActionBarActivity {
         this.searchButton = (Button) findViewById(res);
     }
     public String getSearchFieldValue() {
-        return searchField.getText().toString();
+        return searchField.getText().toString().trim();
     }
     public void setSearchField(int res) {
         this.searchField = (EditText) findViewById(res);
