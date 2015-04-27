@@ -31,7 +31,7 @@
                 android:id="@+id/loginEmailEditText"
                 android:layout_marginRight="23dp"
             android:hint="@string/login_email" android:textColorHint="#ffffffff" android:backgroundTint="#ffffffff"
-                android:textColor="#ffffffff"/>
+                android:textColor="#ffffffff" android:singleLine="false" android:shadowColor="#ffffffff"/>
     </LinearLayout>
     <LinearLayout
             android:orientation="horizontal"

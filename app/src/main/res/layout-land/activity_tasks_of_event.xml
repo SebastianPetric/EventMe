@@ -55,7 +55,7 @@
                     <ImageButton android:layout_width="wrap_content" android:layout_height="wrap_content"
                                  android:layout_alignParentRight="true" android:layout_alignParentEnd="true"
                                  android:layout_alignParentBottom="true" android:src="@drawable/organizers_icon"
-                                 android:id="@+id/imageButton2" android:background="@drawable/icons_shape"
+                                 android:id="@+id/imageButtonTasksOfEventOrganizers" android:background="@drawable/icons_shape"
                                  android:layout_gravity="center_horizontal"/>
                     <TextView
                             android:layout_width="wrap_content"
