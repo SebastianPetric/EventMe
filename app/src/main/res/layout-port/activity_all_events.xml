@@ -7,10 +7,6 @@
 <RelativeLayout android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
-    <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent">
         <android.support.v7.widget.RecyclerView
                 xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:tools="http://schemas.android.com/tools"
@@ -19,7 +15,6 @@
                 android:layout_height="match_parent"
                 tools:context=".MainActivity"
                 />
-    </LinearLayout>
     <ImageButton
             android:layout_width="80dp"
             android:layout_height="80dp"

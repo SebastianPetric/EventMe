@@ -87,6 +87,7 @@ public class DBfunctions {
 
     //SEARCH FRIEND FOR TASK
     private static final String URL_SEARCH_FRIENDS_TASK="search_friends_for_task.php";
+    private int overallYScroll = 0;
 
 
     public static DBfunctions getInstance() {
@@ -131,7 +132,7 @@ public class DBfunctions {
         });
     }
 
-    public void getAllEvents(final Context context, final SwipeRefreshLayout swipeRefreshLayout, final RecyclerView recyclerView, String admin_id) {
+    public void getAllEvents(final Context context,  final SwipeRefreshLayout swipeRefreshLayout, final RecyclerView recyclerView, String admin_id) {
 
         RequestParams params = BuildJSON.getInstance().getAllEventsJSON(admin_id);
         DBconnection.post(URL_GET_ALL_EVENTS, params, new JsonHttpResponseHandler() {
@@ -144,10 +145,30 @@ public class DBfunctions {
                         final ArrayList<Event> eventList = BuildJSON.getInstance().getAllEventsJSON(response.getJSONArray(EVENTS));
                         RecyclerView.Adapter<AllEventsListAdapter.MyViewHolder> recAdapter = new AllEventsListAdapter(context.getApplicationContext(), eventList);
                         recyclerView.setAdapter(recAdapter);
-                    }
+
+
+                        recyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
+
+
+                            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                                super.onScrolled(recyclerView, dx, dy);
+
+                                overallYScroll = overallYScroll + dy;
+
+                                if (overallYScroll <= 0) {
+                                    //enable swipeRefreshLayout
+                                    swipeRefreshLayout.setEnabled(true);
+                                } else {
+                                    //disable
+                                    swipeRefreshLayout.setEnabled(false);
+                                }
+
+                            }
+                        });
+                    }/*
                     if(swipeRefreshLayout!=null){
                         swipeRefreshLayout.setRefreshing(false);
-                    }
+                    }*/
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -169,6 +190,19 @@ public class DBfunctions {
                                 ArrayList<Task> taskList = BuildJSON.getInstance().getAllTasksOfEventJSON(response.getJSONArray(TASKS));
                                 RecyclerView.Adapter<AllTasksOfEventListAdapter.MyViewHolder> recAdapter = new AllTasksOfEventListAdapter(context.getApplicationContext(), taskList,event_id, name, date, totalOrg, totalCos, totalPerc);
                                 recyclerView.setAdapter(recAdapter);
+                                recyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
+                                    @Override
+                                    public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                                        super.onScrolled(recyclerView, dx, dy);
+                                        if(recyclerView.getChildAt(0).getTop()==0) {
+                                            if(swipeRefreshLayout!=null) {
+                                                swipeRefreshLayout.setEnabled(true);
+                                            }
+                                        }else if(swipeRefreshLayout!=null) {
+                                            swipeRefreshLayout.setEnabled(false);
+                                        }
+                                    }
+                                });
                             }
                             if (swipeRefreshLayout != null) {
                                 swipeRefreshLayout.setRefreshing(false);
