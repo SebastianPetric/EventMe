@@ -26,7 +26,6 @@ public class CreateTaskActivity extends ActionBarActivity {
     private String editorName;
 
     private static final String EMPTY_STRING= "";
-    private static final String DEFAULT_EDITOR= "offen";
     private static final String EVENT_ID= "event_id";
     private static final String ERROR_TASK= "Geben Sie eine Aufgabe an!";
 
