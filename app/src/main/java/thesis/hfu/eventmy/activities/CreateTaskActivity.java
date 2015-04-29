@@ -47,11 +47,7 @@ public class CreateTaskActivity extends ActionBarActivity {
             setAddEditorButton(R.id.imageButtonNewTaskAddButton);
             setCreateTaskButton(R.id.buttonNewTaskFinishButton);
             Global appState = ((Global)getApplicationContext());
-            if(appState.getEditor_id()==-1){
-                setEditor_id(Integer.parseInt(CheckSharedPreferences.getInstance().getAdmin_id()));
-            }else{
-                setEditor_id(appState.getEditor_id());
-            }
+            setEditor_id(appState.getEditor_id());
             setEditorName(appState.getEditorName());
             setEditorField(getEditorName());
             getCreateTaskButton().setOnClickListener(new CustomClickListener());
@@ -138,9 +134,6 @@ public class CreateTaskActivity extends ActionBarActivity {
     }
     public void setDescription(int res) {
         this.description= (EditText) findViewById(res);
-    }
-    public String getEditorField() {
-        return editor.getText().toString();
     }
     public void setEditorField(String value){
         this.editor.setText(String.valueOf(value));

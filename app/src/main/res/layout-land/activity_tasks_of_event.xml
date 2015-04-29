@@ -126,14 +126,5 @@
     </LinearLayout>
 
 
-    <ImageButton
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentBottom="true"
-            android:src="@drawable/fab_ic_add"
-            android:id="@+id/imageButtonAddNewTask" android:background="@drawable/add_button_shape"
-            android:layout_marginRight="10dp" android:layout_marginBottom="10dp"/>
 </RelativeLayout>
 </android.support.v4.widget.SwipeRefreshLayout>

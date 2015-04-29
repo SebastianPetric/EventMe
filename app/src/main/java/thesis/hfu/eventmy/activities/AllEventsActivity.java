@@ -21,9 +21,9 @@ import thesis.hfu.eventmy.list_decoration.DividerItemDecoration;
 
 public class AllEventsActivity extends ActionBarActivity{
 
-    //private ImageButton addEventButton;
     private RecyclerView allEventsRecycler;
     private SwipeRefreshLayout syncRefresh;
+    private final static String FLOATING_BUTTON="floating_button";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,25 +34,13 @@ public class AllEventsActivity extends ActionBarActivity{
         actionBar.setDisplayHomeAsUpEnabled(false);
 
         if(CheckSharedPreferences.getInstance().isLoggedIn(getApplicationContext())){
-           // setAddEvent(R.id.imageButtonAddNewEvent);
-            ImageView icon = new ImageView(this); // Create an icon
-            icon.setImageDrawable(getResources().getDrawable(R.drawable.add_button));
-
-            FloatingActionButton actionButton = new FloatingActionButton.Builder(this)
-                    .setContentView(icon)
-                    .setBackgroundDrawable(R.drawable.add_button_shape)
-                    .build();
-            actionButton.setTag("hallo");
-            actionButton.setOnClickListener(new CustomClickListener());
-
-
+            setFloatingButton();
             setSyncRefresh(R.id.swipe_refresh_all_events);
             setAllEventsRecycler(R.id.recyclerViewAllEvents);
             getAllEventsRecycler().setHasFixedSize(true);
             LinearLayoutManager layoutManager= new LinearLayoutManager(this);
             getAllEventsRecycler().setLayoutManager(layoutManager);
             getAllEventsRecycler().addItemDecoration(new DividerItemDecoration(this));
-            //getAddEventButton().setOnClickListener(new CustomClickListener());
             getSyncRefresh().setOnRefreshListener(new CustomSwipeListener());
             DBfunctions.getInstance().getAllEvents(getApplicationContext(), getSyncRefresh(), getAllEventsRecycler(), CheckSharedPreferences.getInstance().getAdmin_id());
         }else{
@@ -68,7 +56,7 @@ public class AllEventsActivity extends ActionBarActivity{
 
         @Override
         public void onClick(View v) {
-            if(v.getTag().equals("hallo")){
+            if(v.getTag().equals(FLOATING_BUTTON)){
                 if(CheckSharedPreferences.getInstance().isLoggedIn(getApplicationContext())){
                     StartActivityFunctions.getInstance().startCreateEventActivity(getApplicationContext());
                 }else{
@@ -142,5 +130,16 @@ public class AllEventsActivity extends ActionBarActivity{
     }
     public void setSyncRefresh(int res) {
         this.syncRefresh = (SwipeRefreshLayout) findViewById(res);
+    }
+    public void setFloatingButton(){
+        ImageView icon = new ImageView(this); // Create an icon
+        icon.setImageDrawable(getResources().getDrawable(R.drawable.add_button));
+
+        FloatingActionButton actionButton = new FloatingActionButton.Builder(this)
+                .setContentView(icon)
+                .setBackgroundDrawable(R.drawable.add_button_shape)
+                .build();
+        actionButton.setTag(FLOATING_BUTTON);
+        actionButton.setOnClickListener(new CustomClickListener());
     }
 }
