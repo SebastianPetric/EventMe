@@ -8,6 +8,9 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.view.*;
 import android.widget.*;
+import com.oguzdev.circularfloatingactionmenu.library.FloatingActionButton;
+import com.oguzdev.circularfloatingactionmenu.library.FloatingActionMenu;
+import com.oguzdev.circularfloatingactionmenu.library.SubActionButton;
 import thesis.hfu.eventmy.R;
 import thesis.hfu.eventmy.database.DBfunctions;
 import thesis.hfu.eventmy.dialogs.CommentDialog;
@@ -22,7 +25,6 @@ import thesis.hfu.eventmy.functions.StartActivityFunctions;
 public class EditTaskActivity extends ActionBarActivity {
 
     private TextView taskName, eventName, taskQuantity, costsField,percentageField,editorField, historyField;
-    private Button finishButton, deleteButton,commentButton;
     private ImageButton costsButton, percentageButton,editorButton;
     private SwipeRefreshLayout syncRefresh;
     private int event_id,task_id, percentageValue, typeOfUpdate;
@@ -31,6 +33,13 @@ public class EditTaskActivity extends ActionBarActivity {
     private static final String EVENT_ID="event_id";
     private static final String TASK_ID="task_id";
     private static final String ERROR_NUMERIC= "Sie haben keine Zahlen eingegeben!";
+
+    private static final String DELETE_TASK="delete_task";
+    private static final String EDIT_TASK="edit_task";
+    private static final String COMMENT_TASK="comment_task";
+
+    private FloatingActionMenu actionMenu;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,22 +59,17 @@ public class EditTaskActivity extends ActionBarActivity {
             setCostsField(R.id.textViewEditTaskCostsField);
             setPercentageField(R.id.textViewEditTaskPercentageField);
             setEditorField(R.id.textViewEditTaskEditorField);
-            setCommentButton(R.id.buttonEditTaskComment);
             setTaskQuantityField(R.id.textViewEditTaskQuantity);
             setCostsButton(R.id.imageButtonEditTaskCosts);
-            setDeleteButton(R.id.buttonEditTaskDeleteTaskButton);
             setEditorButton(R.id.imageButtonEditTaskEditor);
-            setFinishButton(R.id.buttonEditTaskFinishButton);
             setPercentageButton(R.id.imageButtonEditTaskPercentage);
             setHistoryField(R.id.textViewEditTaskRecentReview);
-            DBfunctions.getInstance().updateTaskDetails(getApplicationContext(),getSyncRefresh(), getEventNameTextView(), getTaskTextView(), getQuantityTextView(), getCostsTextView(), getPercentageTextView(), getEditorTextView(), getHistoryTextView(), getTask_id());
-            getDeleteButton().setOnClickListener(new CustomClickListener());
-            getCommentButton().setOnClickListener(new CustomClickListener());
+            DBfunctions.getInstance().updateTaskDetails(getApplicationContext(), getSyncRefresh(), getEventNameTextView(), getTaskTextView(), getQuantityTextView(), getCostsTextView(), getPercentageTextView(), getEditorTextView(), getHistoryTextView(), getTask_id());
             getSyncRefresh().setOnRefreshListener(new CustomSwipeListener());
             getCostsButton().setOnClickListener(new CustomClickListener());
             getPercentageButton().setOnClickListener(new CustomClickListener());
             getEditorButton().setOnClickListener(new CustomClickListener());
-            getFinishButton().setOnClickListener(new CustomClickListener());
+            setFloatingActionMenu();
         }else{
             CheckSharedPreferences.getInstance().endSession(getApplicationContext());
         }
@@ -75,15 +79,11 @@ public class EditTaskActivity extends ActionBarActivity {
     //-----------------CUSTOM LISTENER-------------------------------------
     //----------------------------------------------------------------------
 
-    public class CustomClickListener implements View.OnClickListener{
+    public class CustomClickListener implements View.OnClickListener {
 
         @Override
         public void onClick(View v) {
-            if(v.getId()==R.id.buttonEditTaskDeleteTaskButton){
-                DeleteTaskDialog.getInstance().startDeleteTaskDialog(getFragmentManager(),getTask_id(),getEvent_id());
-            }else if(v.getId()==R.id.buttonEditTaskComment){
-                CommentDialog.getInstance().startCommentDialog(getFragmentManager(),getSyncRefresh(),getApplicationContext(),getTask_id(),CheckSharedPreferences.getInstance().getAdmin_id(),getEventNameTextView(),getTaskTextView(),getQuantityTextView(),getCostsTextView(),getPercentageTextView(),getEditorTextView(),getHistoryTextView());
-            }else if(v.getId()==R.id.imageButtonEditTaskCosts){
+            if(v.getId()==R.id.imageButtonEditTaskCosts){
                 LayoutInflater li = LayoutInflater.from(v.getContext());
                 View promptsView = li.inflate(R.layout.dialog_add_costs, null);
                 AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
@@ -120,13 +120,13 @@ public class EditTaskActivity extends ActionBarActivity {
                                     dialog.cancel();
                                     setCostValue(Calculation.getInstance().round(Double.parseDouble(userInput.getText().toString())));
                                     setTypeOfUpdate(1);
-                                    if(CheckSharedPreferences.getInstance().isLoggedIn(getApplicationContext())) {
+                                    if (CheckSharedPreferences.getInstance().isLoggedIn(getApplicationContext())) {
                                         DBfunctions.getInstance().updateCosts(getApplicationContext(), getCostsTextView(), getTask_id(), Integer.parseInt(CheckSharedPreferences.getInstance().getAdmin_id()), getCostValue(), getTypeOfUpdate());
-                                    }else{
+                                    } else {
                                         CheckSharedPreferences.getInstance().endSession(getApplicationContext());
                                     }
                                 } else {
-                                    Toast.makeText(getApplicationContext(),ERROR_NUMERIC, Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(getApplicationContext(), ERROR_NUMERIC, Toast.LENGTH_SHORT).show();
                                 }
                             }
                         });
@@ -157,7 +157,7 @@ public class EditTaskActivity extends ActionBarActivity {
                                         break;
                                 }
                                 if (CheckSharedPreferences.getInstance().isLoggedIn(getApplicationContext())) {
-                                    DBfunctions.getInstance().updatePercentage(getApplicationContext(),getPercentageTextView(),getTask_id(), Integer.parseInt(CheckSharedPreferences.getInstance().getAdmin_id()), getPercentageValue());
+                                    DBfunctions.getInstance().updatePercentage(getApplicationContext(), getPercentageTextView(), getTask_id(), Integer.parseInt(CheckSharedPreferences.getInstance().getAdmin_id()), getPercentageValue());
                                 } else {
                                     CheckSharedPreferences.getInstance().endSession(getApplicationContext());
                                 }
@@ -171,7 +171,22 @@ public class EditTaskActivity extends ActionBarActivity {
                 } else {
                     CheckSharedPreferences.getInstance().endSession(getApplicationContext());
                 }
-            }else if(v.getId()==R.id.buttonEditTaskFinishButton) {
+            }
+        }
+    }
+
+    public class FloatingMenuCustomClickListener implements View.OnClickListener{
+
+        @Override
+        public void onClick(View v) {
+            if(v.getTag().equals(DELETE_TASK)){
+                DeleteTaskDialog.getInstance().startDeleteTaskDialog(getFragmentManager(),getTask_id(),getEvent_id());
+                actionMenu.close(true);
+            }else if(v.getTag().equals(COMMENT_TASK)){
+                actionMenu.close(true);
+                CommentDialog.getInstance().startCommentDialog(getFragmentManager(),getSyncRefresh(),getApplicationContext(),getTask_id(),CheckSharedPreferences.getInstance().getAdmin_id(),getEventNameTextView(),getTaskTextView(),getQuantityTextView(),getCostsTextView(),getPercentageTextView(),getEditorTextView(),getHistoryTextView());
+            }else if(v.getTag().equals(EDIT_TASK)) {
+                actionMenu.close(true);
                 EditTaskDialog.getInstance().startEditTaskDialog(getFragmentManager(),getApplicationContext(),getTaskTextView(),getQuantityTextView(),getTask_id(),CheckSharedPreferences.getInstance().getAdmin_id());
             }
         }
@@ -248,18 +263,6 @@ public class EditTaskActivity extends ActionBarActivity {
     public void setHistoryField(int res) {
         this.historyField= (TextView) findViewById(res);
     }
-    public Button getFinishButton() {
-        return finishButton;
-    }
-    public void setFinishButton(int res) {
-        this.finishButton = (Button) findViewById(res);
-    }
-    public Button getDeleteButton() {
-        return deleteButton;
-    }
-    public void setDeleteButton(int res) {
-        this.deleteButton = (Button) findViewById(res);
-    }
     public ImageButton getCostsButton() {
         return costsButton;
     }
@@ -289,12 +292,6 @@ public class EditTaskActivity extends ActionBarActivity {
     }
     public void setTask_id(int task_id) {
         this.task_id = task_id;
-    }
-    public Button getCommentButton() {
-        return commentButton;
-    }
-    public void setCommentButton(int res) {
-        this.commentButton = (Button) findViewById(res);
     }
     public TextView getEventNameTextView(){
         return this.eventName;
@@ -341,7 +338,45 @@ public class EditTaskActivity extends ActionBarActivity {
     public void setSyncRefresh(int res) {
         this.syncRefresh = (SwipeRefreshLayout) findViewById(res);
     }
+    public void setFloatingActionMenu(){
+        ImageView icon = new ImageView(this); // Create an icon
+        icon.setImageDrawable(getResources().getDrawable(R.drawable.editiconbig));
 
+        FloatingActionButton actionButton = new FloatingActionButton.Builder(this)
+                .setContentView(icon)
+                .setBackgroundDrawable(R.drawable.add_button_shape)
+                .build();
 
+        ImageView deleteFloatButton= new ImageButton(this);
+        deleteFloatButton.setImageResource(R.drawable.deleteicon);
+        deleteFloatButton.setBackgroundDrawable(getResources().getDrawable(R.drawable.icons_shape));
+        ImageView commentFloatButton= new ImageButton(this);
+        commentFloatButton.setImageResource(R.drawable.commenticon);
+        commentFloatButton.setBackgroundDrawable(getResources().getDrawable(R.drawable.icons_shape));
+        ImageView editFloatButton= new ImageButton(this);
+        editFloatButton.setImageResource(R.drawable.editicon);
+        editFloatButton.setBackgroundDrawable(getResources().getDrawable(R.drawable.icons_shape));
 
+        SubActionButton.Builder itemBuilder = new SubActionButton.Builder(this);
+
+        SubActionButton buttonEditText = itemBuilder.setContentView(editFloatButton).build();
+        SubActionButton buttonDeleteTask = itemBuilder.setContentView(deleteFloatButton).build();
+        SubActionButton buttonCommentTask = itemBuilder.setContentView(commentFloatButton).build();
+
+        buttonEditText.setTag(EDIT_TASK);
+        buttonDeleteTask.setTag(DELETE_TASK);
+        buttonCommentTask.setTag(COMMENT_TASK);
+
+        this.actionMenu = new FloatingActionMenu.Builder(this)
+                .addSubActionView(buttonDeleteTask)
+                .addSubActionView(buttonEditText)
+                .addSubActionView(buttonCommentTask)
+                .attachTo(actionButton)
+                .build();
+
+        buttonEditText.setOnClickListener(new FloatingMenuCustomClickListener());
+        buttonDeleteTask.setOnClickListener(new FloatingMenuCustomClickListener());
+        buttonCommentTask.setOnClickListener(new FloatingMenuCustomClickListener());
+
+    }
 }

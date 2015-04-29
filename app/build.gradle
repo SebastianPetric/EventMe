@@ -2,11 +2,11 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 21
-    buildToolsVersion "21.1.2"
+    buildToolsVersion '21.1.2'
     compileOptions.encoding = 'ISO-8859-1'
     defaultConfig {
         applicationId "thesis.hfu.eventme"
-        minSdkVersion 11
+        minSdkVersion 15
         targetSdkVersion 21
         versionCode 1
         versionName "1.0"
@@ -24,4 +24,5 @@ dependencies {
     compile 'com.android.support:appcompat-v7:21.0.3'
     compile files('libs/android-async-http-1.4.6.jar')
     compile 'com.android.support:recyclerview-v7:22.0.0'
+    compile 'com.oguzdev:CircularFloatingActionMenu:1.0.2'
 }

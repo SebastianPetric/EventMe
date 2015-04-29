@@ -87,7 +87,6 @@ public class DBfunctions {
 
     //SEARCH FRIEND FOR TASK
     private static final String URL_SEARCH_FRIENDS_TASK="search_friends_for_task.php";
-    private int overallYScroll = 0;
 
 
     public static DBfunctions getInstance() {
@@ -145,30 +144,10 @@ public class DBfunctions {
                         final ArrayList<Event> eventList = BuildJSON.getInstance().getAllEventsJSON(response.getJSONArray(EVENTS));
                         RecyclerView.Adapter<AllEventsListAdapter.MyViewHolder> recAdapter = new AllEventsListAdapter(context.getApplicationContext(), eventList);
                         recyclerView.setAdapter(recAdapter);
-
-
-                        recyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
-
-
-                            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                                super.onScrolled(recyclerView, dx, dy);
-
-                                overallYScroll = overallYScroll + dy;
-
-                                if (overallYScroll <= 0) {
-                                    //enable swipeRefreshLayout
-                                    swipeRefreshLayout.setEnabled(true);
-                                } else {
-                                    //disable
-                                    swipeRefreshLayout.setEnabled(false);
-                                }
-
-                            }
-                        });
-                    }/*
+                    }
                     if(swipeRefreshLayout!=null){
                         swipeRefreshLayout.setRefreshing(false);
-                    }*/
+                    }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

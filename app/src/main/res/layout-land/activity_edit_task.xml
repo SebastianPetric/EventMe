@@ -116,29 +116,6 @@
                     android:id="@+id/textViewEditTaskRecentReview" android:layout_marginTop="10dp"
                     android:textColor="#ffffff"/>
         </LinearLayout>
-        <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" android:layout_marginTop="10dp">
-
-            <Button
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:text="@string/edit_task_comment_button"
-                    android:id="@+id/buttonEditTaskComment" android:layout_weight="0.5"/>
-            <Button
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:text="@string/edit_task_finish_button"
-                    android:id="@+id/buttonEditTaskFinishButton"
-                    android:layout_weight="0.5"/>
-        </LinearLayout>
-        <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/edit_task_delete_task_button"
-                android:id="@+id/buttonEditTaskDeleteTaskButton" android:layout_weight="0.3333333333333333333"
-                android:layout_gravity="center"/>
 
     </LinearLayout>
 </ScrollView>

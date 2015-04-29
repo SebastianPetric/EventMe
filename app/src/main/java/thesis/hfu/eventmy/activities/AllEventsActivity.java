@@ -10,7 +10,8 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageButton;
+import android.widget.ImageView;
+import com.oguzdev.circularfloatingactionmenu.library.FloatingActionButton;
 import thesis.hfu.eventmy.R;
 import thesis.hfu.eventmy.database.DBfunctions;
 import thesis.hfu.eventmy.dialogs.LogoutDialog;
@@ -20,7 +21,7 @@ import thesis.hfu.eventmy.list_decoration.DividerItemDecoration;
 
 public class AllEventsActivity extends ActionBarActivity{
 
-    private ImageButton addEventButton;
+    //private ImageButton addEventButton;
     private RecyclerView allEventsRecycler;
     private SwipeRefreshLayout syncRefresh;
 
@@ -33,14 +34,25 @@ public class AllEventsActivity extends ActionBarActivity{
         actionBar.setDisplayHomeAsUpEnabled(false);
 
         if(CheckSharedPreferences.getInstance().isLoggedIn(getApplicationContext())){
-            setAddEvent(R.id.imageButtonAddNewEvent);
+           // setAddEvent(R.id.imageButtonAddNewEvent);
+            ImageView icon = new ImageView(this); // Create an icon
+            icon.setImageDrawable(getResources().getDrawable(R.drawable.add_button));
+
+            FloatingActionButton actionButton = new FloatingActionButton.Builder(this)
+                    .setContentView(icon)
+                    .setBackgroundDrawable(R.drawable.add_button_shape)
+                    .build();
+            actionButton.setTag("hallo");
+            actionButton.setOnClickListener(new CustomClickListener());
+
+
             setSyncRefresh(R.id.swipe_refresh_all_events);
             setAllEventsRecycler(R.id.recyclerViewAllEvents);
             getAllEventsRecycler().setHasFixedSize(true);
             LinearLayoutManager layoutManager= new LinearLayoutManager(this);
             getAllEventsRecycler().setLayoutManager(layoutManager);
             getAllEventsRecycler().addItemDecoration(new DividerItemDecoration(this));
-            getAddEventButton().setOnClickListener(new CustomClickListener());
+            //getAddEventButton().setOnClickListener(new CustomClickListener());
             getSyncRefresh().setOnRefreshListener(new CustomSwipeListener());
             DBfunctions.getInstance().getAllEvents(getApplicationContext(), getSyncRefresh(), getAllEventsRecycler(), CheckSharedPreferences.getInstance().getAdmin_id());
         }else{
@@ -56,7 +68,7 @@ public class AllEventsActivity extends ActionBarActivity{
 
         @Override
         public void onClick(View v) {
-            if(v.getId()==R.id.imageButtonAddNewEvent){
+            if(v.getTag().equals("hallo")){
                 if(CheckSharedPreferences.getInstance().isLoggedIn(getApplicationContext())){
                     StartActivityFunctions.getInstance().startCreateEventActivity(getApplicationContext());
                 }else{
@@ -113,12 +125,12 @@ public class AllEventsActivity extends ActionBarActivity{
     //-----------------Getter and Setter-------------------------------------
     //----------------------------------------------------------------------
 
-    public ImageButton getAddEventButton() {
+   /* public ImageButton getAddEventButton() {
         return addEventButton;
     }
     public void setAddEvent(int res) {
         this.addEventButton= (ImageButton) findViewById(res);
-    }
+    }*/
     public RecyclerView getAllEventsRecycler() {
         return allEventsRecycler;
     }
