@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -40,6 +39,9 @@ public class DBfunctions {
     private static final String EVENTS = "events";
     private static final String URL_GET_ALL_EVENTS = "get_all_events.php";
 
+    //All ARCHIV EVENTS
+    private static final String URL_GET_ALL_ARCHIV_EVENTS = "get_all_archiv_events.php";
+
     //Create Event
     private static final String URL_CREATE_EVENT = "create_event.php";
 
@@ -60,39 +62,39 @@ public class DBfunctions {
     //Get FriendsList
     private static final String URL_GET_FRIENDSLIST = "get_friendlist.php";
 
-    //UPDATE EVENT DETAILS
+    //Update Event Details
     private static final String URL_UPDATE_EVENT_DETAILS = "update_event_details.php";
 
-    //DELETE TASK
+    //Delete Task
     private static final String URL_DELETE_TASK = "delete_task.php";
 
-    //DELETE EVENT
+    //Delete Event
     private static final String URL_DELETE_EVENT = "delete_event.php";
 
-    //ARCHIV EVENT
+    //Archiv Event
     private static final String URL_ARCHIV_EVENT = "archiv_event.php";
 
-    //COMMENT
+    //Comment on task
     private static final String URL_COMMENT_ON_TASK = "comment_on_task.php";
 
-    //GET TASK DETAILS
+    //Get task details
     private static final String URL_GET_TASK_DETAILS = "get_task_details.php";
 
-    //BECOME EDITOR OF TASK
+    //Become editor of task
     private static final String URL_BECOME_EDITOR_OF_TASK= "become_editor_of_task.php";
 
-    //UPDATE PERCENTAGE OF TASK
+    //Update percentage of task
     private static final String URL_UPDATE_PERCENTAGE_OF_TASK= "update_percentage_of_task.php";
 
-    //UPDATE COSTS OF TASK
+    //Update costs of task
     private static final String URL_UPDATE_COSTS_OF_TASK = "update_costs_of_task.php";
 
-    //EDIT TASK DETAILS
+    //Edit task details
     private static final String URL_UPDATE_TASK_QUANTITY_NAME = "update_task_quantity_name.php";
     private static final String EDITOR_NAME = "editor_name";
     private static final String EMPTY_STRING = "";
 
-    //SEARCH FRIEND FOR TASK
+    //Search friend for task
     private static final String URL_SEARCH_FRIENDS_TASK="search_friends_for_task.php";
     private int overallYScroll = 0;
 
@@ -119,12 +121,6 @@ public class DBfunctions {
                     e.printStackTrace();
                 }
             }
-
-            @Override
-            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-                Log.d("schlecht",responseString);
-                Log.d("schlecht",throwable.toString());
-            }
         });
     }
 
@@ -149,6 +145,29 @@ public class DBfunctions {
 
         RequestParams params = BuildJSON.getInstance().getAllEventsJSON(admin_id);
         DBconnection.post(URL_GET_ALL_EVENTS, params, new JsonHttpResponseHandler() {
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                try {
+                    Toast.makeText(context.getApplicationContext(), response.getString(MESSAGE), Toast.LENGTH_SHORT).show();
+                    if (response.getInt(STATUS) == 200) {
+                        final ArrayList<Event> eventList = BuildJSON.getInstance().getAllEventsJSON(response.getJSONArray(EVENTS));
+                        RecyclerView.Adapter<AllEventsListAdapter.MyViewHolder> recAdapter = new AllEventsListAdapter(context.getApplicationContext(), eventList);
+                        recyclerView.setAdapter(recAdapter);
+                    }
+                    swipeRefreshLayout.setRefreshing(false);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+        });
+    }
+
+    public void getAllArchivEvents(final Context context,  final SwipeRefreshLayout swipeRefreshLayout, final RecyclerView recyclerView, String admin_id) {
+
+        RequestParams params = BuildJSON.getInstance().getAllEventsJSON(admin_id);
+        DBconnection.post(URL_GET_ALL_ARCHIV_EVENTS, params, new JsonHttpResponseHandler() {
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {

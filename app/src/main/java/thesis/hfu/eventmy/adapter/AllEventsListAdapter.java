@@ -85,7 +85,7 @@ public class AllEventsListAdapter extends
         @Override
         public boolean onLongClick(View v) {
             AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
-            builder.setMessage(R.string.dialog_delete_task_message)
+            builder.setMessage(R.string.dialog_edit_event_message)
                     .setNeutralButton(R.string.dialog_edit_event_archiv, new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
