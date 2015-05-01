@@ -4,8 +4,6 @@ import android.app.Application;
 
 public class Global extends Application
 {
-
-
     private int editor_id=-1;
     private String editor_name="";
 

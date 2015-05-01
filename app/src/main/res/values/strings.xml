@@ -23,16 +23,12 @@
     <string name="registration_button">Registrieren</string>
     <string name="registration_cancel_button">Abbrechen</string>
 
-    <!-- EDITOR LIST ROW TASK OF EVENT -->
-    <string name="tasks_of_event_row_editor">Inaktiv</string>
-
     <!-- EDIT TASK SCREEN -->
     <string name="edit_task_quantity">Menge ändern</string>
     <string name="edit_task_name">Name ändern</string>
     <string name="edit_task_quantity_text">Menge:</string>
     <string name="edit_task_note">Kommentar</string>
     <string name="edit_task_previous_note_header">Kommentare:</string>
-    <string name="edit_task_editor">Bearbeiter:</string>
 
     <!-- NEW TASK SCREEN -->
     <string name="new_task_quantity">Menge</string>
@@ -52,11 +48,7 @@
 
     <!-- SEARCH SCREEN -->
     <string name="search_header">Suchen</string>
-    <string name="search_finishbutton">Aktualisieren</string>
     <string name="search_search_button">Suchen</string>
-
-    <!-- ORGANIZERS SCREEN -->
-    <string name="organizers_finishbutton">Aktualisieren</string>
 
     <!-- DIALOG SCREEN PERCENTAGE -->
     <string name="dialog_percentage_header">Erledigt (%)</string>
@@ -64,18 +56,18 @@
     <!-- DIALOG SCREEN COSTS -->
     <string name="dialog_costs_header">Kosten</string>
     <string name="dialog_costs_new">Neu</string>
-    <string name="dialog_costs_add">Hinzufuegen</string>
+    <string name="dialog_costs_add">Hinzufügen</string>
     <string name="dialog_costs_cancel">Abbrechen</string>
 
     <!-- DIALOG SCREEN LOGOUT -->
     <string name="dialog_logout_message">Wollen Sie sich wirklich abmelden?</string>
     <string name="dialog_logout_ok">Ja</string>
-    <string name="dialog_logout_cancel">Abbrechen</string>
+    <string name="dialog_logout_cancel">Nein</string>
 
     <!-- DIALOG DELETE TASK -->
     <string name="dialog_delete_task_message">Wollen Sie die Aufgabe wirklich löschen?</string>
     <string name="dialog_delete_task_ok">Ja</string>
-    <string name="dialog_delete_task_cancel">Abbrechen</string>
+    <string name="dialog_delete_task_cancel">Nein</string>
 
     <!-- DIALOG COMMENT -->
     <string name="dialog_comment_message">Kommentar</string>
@@ -86,4 +78,12 @@
     <string name="dialog_edit_task_message">Bearbeiten</string>
     <string name="dialog_edit_task_ok">Aktualisieren</string>
     <string name="dialog_edit_task_cancel">Abbrechen</string>
+
+
+    <!-- DIALOG EDIT TASK -->
+    <string name="dialog_edit_event_message">Was wollen Sie mit dem Event machen?</string>
+    <string name="dialog_edit_event_delete">Löschen</string>
+    <string name="dialog_edit_event_cancel">Abbrechen</string>
+    <string name="dialog_edit_event_archiv">Archivieren</string>
+
 </resources>

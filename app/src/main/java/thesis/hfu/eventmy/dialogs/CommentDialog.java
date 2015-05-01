@@ -59,7 +59,7 @@ public class CommentDialog extends DialogFragment {
                     public void onClick(DialogInterface dialog, int id) {
                         String comment = userInput.getText().toString().trim();
                         DBfunctions.getInstance().commentOnTask(getContext(),getTask_id(),getAdmin_id(),comment);
-                        DBfunctions.getInstance().updateTaskDetails(getContext(),getSwipeRefreshLayout(),getEventNameTextView(),getTaskTextView(),getQuantityTextView(),getCostsTextView(),getPercentageTextView(),getEditorTextView(),getHistoryTextView(),getTask_id());
+                        DBfunctions.getInstance().updateTaskDetails(getSwipeRefreshLayout(),getEventNameTextView(),getTaskTextView(),getQuantityTextView(),getCostsTextView(),getPercentageTextView(),getEditorTextView(),getHistoryTextView(),getTask_id());
                         dialog.cancel();
                     }
                 })

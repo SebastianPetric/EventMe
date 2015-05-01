@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -65,6 +66,12 @@ public class DBfunctions {
     //DELETE TASK
     private static final String URL_DELETE_TASK = "delete_task.php";
 
+    //DELETE EVENT
+    private static final String URL_DELETE_EVENT = "delete_event.php";
+
+    //ARCHIV EVENT
+    private static final String URL_ARCHIV_EVENT = "archiv_event.php";
+
     //COMMENT
     private static final String URL_COMMENT_ON_TASK = "comment_on_task.php";
 
@@ -111,6 +118,12 @@ public class DBfunctions {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                Log.d("schlecht",responseString);
+                Log.d("schlecht",throwable.toString());
             }
         });
     }
@@ -233,9 +246,9 @@ public class DBfunctions {
         });
     }
 
-    public void createTask(final Context context, final int event_id, int editor_id, String task, String description, String quantity) {
+    public void createTask(final Context context, final int event_id, String admin_id, int editor_id, String task, String description, String quantity) {
 
-        RequestParams params = BuildJSON.getInstance().createTaskJSON(event_id, editor_id, task, description, quantity);
+        RequestParams params = BuildJSON.getInstance().createTaskJSON(event_id, admin_id, editor_id, task, description, quantity);
         DBconnection.post(URL_CREATE_TASK, params, new JsonHttpResponseHandler() {
 
             @Override
@@ -365,6 +378,46 @@ public class DBfunctions {
         });
     }
 
+    public void deleteEvent(final Context context, final ArrayList<Event> eventList, final RecyclerView.Adapter<AllEventsListAdapter.MyViewHolder> adapter, final int position,String admin_id, final int event_id){
+
+        RequestParams params = BuildJSON.getInstance().deleteArchivEventJSON(event_id, admin_id);
+        DBconnection.post(URL_DELETE_EVENT,params,new JsonHttpResponseHandler(){
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                try {
+                    Toast.makeText(context.getApplicationContext(), response.getString(MESSAGE), Toast.LENGTH_SHORT).show();
+                    if(response.getInt(STATUS)==200){
+                        eventList.remove(position);
+                        adapter.notifyItemRemoved(position);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+    public void archivEvent(final Context context, final ArrayList<Event> eventList, final RecyclerView.Adapter<AllEventsListAdapter.MyViewHolder> adapter, final int position,String admin_id, final int event_id){
+
+        RequestParams params = BuildJSON.getInstance().deleteArchivEventJSON(event_id, admin_id);
+        DBconnection.post(URL_ARCHIV_EVENT,params,new JsonHttpResponseHandler(){
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                try {
+                    Toast.makeText(context.getApplicationContext(), response.getString(MESSAGE), Toast.LENGTH_SHORT).show();
+                    if(response.getInt(STATUS)==200){
+                        eventList.remove(position);
+                        adapter.notifyItemRemoved(position);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
     public void commentOnTask(final Context context, int task_id, int admin_id, String comment){
 
         RequestParams params = BuildJSON.getInstance().commentJSON(task_id, admin_id, comment);
@@ -381,7 +434,7 @@ public class DBfunctions {
         });
     }
 
-    public void updateTaskDetails(Context context,final SwipeRefreshLayout swipeRefreshLayout,final TextView eventName, final TextView taskField, final TextView quantity, final TextView cost, final TextView percentageField, final TextView editor, final TextView history,final int task_id){
+    public void updateTaskDetails(final SwipeRefreshLayout swipeRefreshLayout,final TextView eventName, final TextView taskField, final TextView quantity, final TextView cost, final TextView percentageField, final TextView editor, final TextView history,final int task_id){
 
         RequestParams params= BuildJSON.getInstance().getTaskDetailsJSON(task_id);
         DBconnection.post(URL_GET_TASK_DETAILS,params,new JsonHttpResponseHandler(){

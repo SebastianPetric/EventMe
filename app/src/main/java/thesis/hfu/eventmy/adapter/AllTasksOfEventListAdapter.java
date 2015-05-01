@@ -27,7 +27,7 @@ import java.util.ArrayList;
 
 
 public class AllTasksOfEventListAdapter extends
-        RecyclerView.Adapter<AllTasksOfEventListAdapter.MyViewHolder> {
+        RecyclerView.Adapter<AllTasksOfEventListAdapter.MyViewHolder>  {
 
     private static final String MESSAGE= "message";
     private static final String STATUS= "status";
@@ -190,7 +190,7 @@ public class AllTasksOfEventListAdapter extends
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder implements
-            View.OnClickListener {
+            View.OnClickListener{
 
         ImageButton costButton,percentageButton,editorButton;
         TextView costField,percentageField,editorField,task,quantity;

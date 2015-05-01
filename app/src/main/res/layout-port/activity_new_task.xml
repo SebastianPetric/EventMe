@@ -10,6 +10,44 @@
         <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="fill_parent"
+                android:layout_height="wrap_content" android:layout_marginTop="23dp">
+            <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent" android:layout_marginLeft="23dp" android:layout_marginRight="23dp"
+                    android:layout_weight="0.5">
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:text="@string/new_task_editor"
+                        android:id="@+id/textView20" android:layout_gravity="center_vertical"
+                        android:textColor="#ffffff"/>
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:id="@+id/textViewNewTaskEditorField" android:layout_marginLeft="10dp"
+                        android:layout_gravity="center_vertical" android:textColor="#ffffff"/>
+            </LinearLayout>
+            <RelativeLayout
+
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content" android:layout_gravity="center_horizontal|right"
+                    android:layout_weight="0.25">
+                <ImageButton
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="true"
+                        android:src="@drawable/add_button"
+                        android:id="@+id/imageButtonNewTaskAddButton" android:background="@drawable/add_button_shape"
+                        android:layout_marginRight="23dp"/>
+            </RelativeLayout>
+        </LinearLayout>
+        <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content" android:layout_marginTop="23dp" android:layout_marginLeft="23dp"
                 android:layout_marginRight="23dp">
             <EditText
@@ -42,44 +80,6 @@
                     android:id="@+id/editTextNewTaskNoteField" android:layout_weight="0.70"
                     android:hint="@string/new_task_note" android:backgroundTint="#ffffff"
                     android:textColorHint="#ffffff" android:textColor="#ffffff"/>
-        </LinearLayout>
-        <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content" android:layout_marginTop="23dp">
-            <LinearLayout
-                    android:orientation="horizontal"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent" android:layout_marginLeft="23dp" android:layout_marginRight="23dp"
-                    android:layout_weight="0.5">
-                <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:text="@string/edit_task_editor"
-                        android:id="@+id/textView20" android:layout_gravity="center_vertical"
-                        android:textColor="#ffffff"/>
-                <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:id="@+id/textViewNewTaskEditorField" android:layout_marginLeft="10dp"
-                        android:layout_gravity="center_vertical" android:textColor="#ffffff"/>
-            </LinearLayout>
-            <RelativeLayout
-
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content" android:layout_gravity="center_horizontal|right"
-                    android:layout_weight="0.25">
-                <ImageButton
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:layout_alignParentRight="true"
-                        android:layout_alignParentEnd="true"
-                        android:src="@drawable/add_button"
-                        android:id="@+id/imageButtonNewTaskAddButton" android:background="@drawable/add_button_shape"
-                        android:layout_marginRight="23dp"/>
-            </RelativeLayout>
         </LinearLayout>
         <Button
                 android:layout_width="wrap_content"

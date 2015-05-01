@@ -17,14 +17,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:text="AufgabenName"
                     android:id="@+id/textViewListRowTaskOfEventName" android:layout_marginLeft="0dp"
                     android:layout_marginTop="5dp" android:textColor="#ffffffff"/>
             <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:text="Menge"
                     android:id="@+id/textViewListRowTaskOfEventDate" android:layout_marginTop="10dp" android:layout_marginLeft="0dp"
                     android:layout_marginBottom="5dp" android:textColor="#ffffffff"/>
         </LinearLayout>
@@ -47,7 +45,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:text="12"
                         android:id="@+id/textViewListRowTaskOfEventCosts" android:layout_marginTop="10dp"
                         android:layout_gravity="center_horizontal" android:layout_marginBottom="5dp"
                         android:textColor="#ffffffff"/>
@@ -67,7 +64,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:text="23"
                         android:id="@+id/textViewListRowTaskOfEventPercentage" android:layout_marginTop="10dp"
                         android:layout_gravity="center_horizontal" android:layout_marginBottom="5dp"
                         android:textColor="#ffffffff"/>
@@ -87,7 +83,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:text="@string/tasks_of_event_row_editor"
                         android:id="@+id/textViewlistRowTaskOfEventOrganizer" android:layout_marginTop="10dp"
                         android:layout_gravity="center_horizontal" android:layout_marginBottom="5dp"
                         android:textColor="#ffffffff"/>

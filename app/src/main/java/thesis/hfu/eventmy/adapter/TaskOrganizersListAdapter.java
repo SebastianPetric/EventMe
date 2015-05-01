@@ -109,7 +109,7 @@ public class TaskOrganizersListAdapter extends
         Global global = ((Global)context.getApplicationContext());
         global.setEditor_id(user_b.getUser_id());
         global.setEditorName(user_b.getName());
-        StartActivityFunctions.getInstance().startCreateTaskFromFriendsActivity(context.getApplicationContext(),getEvent_id());
+        StartActivityFunctions.getInstance().startCreateTaskFromFriendsActivity(context.getApplicationContext(), getEvent_id());
         activity.finish();
     }
 

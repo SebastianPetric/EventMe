@@ -135,10 +135,11 @@ public class BuildJSON {
         return params;
     }
 
-    public RequestParams createTaskJSON(int event_id,int editor_id,String task,String description,String quantity) {
+    public RequestParams createTaskJSON(int event_id,String admin_id,int editor_id,String task,String description,String quantity) {
 
         RequestParams params= new RequestParams();
         params.put(EVENT_ID, event_id);
+        params.put(ADMIN_ID,admin_id);
         params.put(EDITOR_ID,editor_id);
         params.put(TASK,task);
         params.put(DESCRIPTION,description);
@@ -307,6 +308,14 @@ public class BuildJSON {
 
         RequestParams params= new RequestParams();
         params.put(TASK_ID, task_id);
+        params.put(ADMIN_ID,Integer.parseInt(admin_id));
+        return params;
+    }
+
+    public RequestParams deleteArchivEventJSON(int event_id, String admin_id) {
+
+        RequestParams params= new RequestParams();
+        params.put(EVENT_ID, event_id);
         params.put(ADMIN_ID,Integer.parseInt(admin_id));
         return params;
     }

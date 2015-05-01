@@ -84,8 +84,6 @@ public class RegistrationActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-
-
     //----------------------------------------------------------------------
     //-----------------Getter and Setter-------------------------------------
     //----------------------------------------------------------------------

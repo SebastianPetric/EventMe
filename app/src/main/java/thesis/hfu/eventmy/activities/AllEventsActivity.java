@@ -23,6 +23,8 @@ public class AllEventsActivity extends ActionBarActivity{
 
     private RecyclerView allEventsRecycler;
     private SwipeRefreshLayout syncRefresh;
+    private FloatingActionButton createEventButton;
+
     private final static String FLOATING_BUTTON="floating_button";
 
     @Override
@@ -34,7 +36,7 @@ public class AllEventsActivity extends ActionBarActivity{
         actionBar.setDisplayHomeAsUpEnabled(false);
 
         if(CheckSharedPreferences.getInstance().isLoggedIn(getApplicationContext())){
-            setFloatingButton();
+            setCreateEventButton();
             setSyncRefresh(R.id.swipe_refresh_all_events);
             setAllEventsRecycler(R.id.recyclerViewAllEvents);
             getAllEventsRecycler().setHasFixedSize(true);
@@ -42,6 +44,7 @@ public class AllEventsActivity extends ActionBarActivity{
             getAllEventsRecycler().setLayoutManager(layoutManager);
             getAllEventsRecycler().addItemDecoration(new DividerItemDecoration(this));
             getSyncRefresh().setOnRefreshListener(new CustomSwipeListener());
+            getCreateEventButton().setOnClickListener(new FloatingButtonCustomClickListener());
             DBfunctions.getInstance().getAllEvents(getApplicationContext(), getSyncRefresh(), getAllEventsRecycler(), CheckSharedPreferences.getInstance().getAdmin_id());
         }else{
             CheckSharedPreferences.getInstance().endSession(getApplicationContext());
@@ -52,7 +55,7 @@ public class AllEventsActivity extends ActionBarActivity{
     //-----------------CUSTOM LISTENER-------------------------------------
     //----------------------------------------------------------------------
 
-    public class CustomClickListener implements View.OnClickListener{
+    public class FloatingButtonCustomClickListener implements View.OnClickListener{
 
         @Override
         public void onClick(View v) {
@@ -113,12 +116,6 @@ public class AllEventsActivity extends ActionBarActivity{
     //-----------------Getter and Setter-------------------------------------
     //----------------------------------------------------------------------
 
-   /* public ImageButton getAddEventButton() {
-        return addEventButton;
-    }
-    public void setAddEvent(int res) {
-        this.addEventButton= (ImageButton) findViewById(res);
-    }*/
     public RecyclerView getAllEventsRecycler() {
         return allEventsRecycler;
     }
@@ -131,15 +128,17 @@ public class AllEventsActivity extends ActionBarActivity{
     public void setSyncRefresh(int res) {
         this.syncRefresh = (SwipeRefreshLayout) findViewById(res);
     }
-    public void setFloatingButton(){
-        ImageView icon = new ImageView(this); // Create an icon
+    public void setCreateEventButton(){
+        ImageView icon = new ImageView(this);
         icon.setImageDrawable(getResources().getDrawable(R.drawable.add_button));
 
-        FloatingActionButton actionButton = new FloatingActionButton.Builder(this)
+        this.createEventButton = new FloatingActionButton.Builder(this)
                 .setContentView(icon)
                 .setBackgroundDrawable(R.drawable.add_button_shape)
                 .build();
-        actionButton.setTag(FLOATING_BUTTON);
-        actionButton.setOnClickListener(new CustomClickListener());
+        createEventButton.setTag(FLOATING_BUTTON);
+    }
+    public FloatingActionButton getCreateEventButton() {
+        return createEventButton;
     }
 }

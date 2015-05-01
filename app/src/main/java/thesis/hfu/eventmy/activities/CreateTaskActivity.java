@@ -25,6 +25,7 @@ public class CreateTaskActivity extends ActionBarActivity {
     private int event_id,editor_id;
     private String editorName;
 
+
     private static final String EMPTY_STRING= "";
     private static final String EVENT_ID= "event_id";
     private static final String ERROR_TASK= "Geben Sie eine Aufgabe an!";
@@ -67,7 +68,7 @@ public class CreateTaskActivity extends ActionBarActivity {
             if(v.getId()==R.id.buttonNewTaskFinishButton){
                 if(!getTaskField().matches(EMPTY_STRING)){
                     if(CheckSharedPreferences.getInstance().isLoggedIn(getApplicationContext())){
-                        DBfunctions.getInstance().createTask(getApplicationContext(),getEvent_id(), getEditor_id(),getTaskField(),getDescriptionField(),getQuantityField());
+                        DBfunctions.getInstance().createTask(getApplicationContext(),getEvent_id(),CheckSharedPreferences.getInstance().getAdmin_id(), getEditor_id(),getTaskField(),getDescriptionField(),getQuantityField());
                     }else{
                         CheckSharedPreferences.getInstance().endSession(getApplicationContext());
                     }
