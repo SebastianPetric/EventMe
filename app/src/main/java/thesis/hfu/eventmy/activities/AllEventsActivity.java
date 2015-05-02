@@ -28,11 +28,9 @@ public class AllEventsActivity extends ActionBarActivity {
     private SwipeRefreshLayout syncRefresh;
     private FloatingActionMenu actionMenu;
 
-
     private final static String ADD_BUTTON = "add_button";
     private final static String ARCHIV_BUTTON = "archiv_button";
     private final static String TOPIC_EVENTS_BUTTON = "topic_events_button";
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,14 +53,6 @@ public class AllEventsActivity extends ActionBarActivity {
         } else {
             CheckSharedPreferences.getInstance().endSession(getApplicationContext());
         }
-    }
-
-    public FloatingActionMenu getActionMenu() {
-        return actionMenu;
-    }
-
-    public void setActionMenu(FloatingActionMenu actionMenu) {
-        this.actionMenu = actionMenu;
     }
 
     //----------------------------------------------------------------------
@@ -158,7 +148,7 @@ public class AllEventsActivity extends ActionBarActivity {
         this.syncRefresh = (SwipeRefreshLayout) findViewById(res);
     }
     public void setFloatingActionMenu(){
-        ImageView icon = new ImageView(this); // Create an icon
+        ImageView icon = new ImageView(this);
         icon.setImageDrawable(getResources().getDrawable(R.drawable.editiconbig));
 
         FloatingActionButton actionButton = new FloatingActionButton.Builder(this)

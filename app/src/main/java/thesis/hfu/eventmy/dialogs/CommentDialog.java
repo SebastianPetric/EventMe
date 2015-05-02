@@ -135,7 +135,6 @@ public class CommentDialog extends DialogFragment {
     public void setHistoryField(TextView historyField) {
         this.historyField = historyField;
     }
-
     public void setSwipeRefreshLayout(SwipeRefreshLayout swipeRefreshLayout) {
         this.swipeRefreshLayout = swipeRefreshLayout;
     }

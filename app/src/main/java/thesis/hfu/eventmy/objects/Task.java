@@ -7,7 +7,6 @@ public class Task {
     private double costOfTask;
     private String task,quantity,description,editor_name,event_name;
 
-
     public Task(int task_id,int event_id,int percentage,int editor_id,double costOfTask, String task, String quantity,String description,String editor_name,String event_name){
 
         this.task_id=task_id;
@@ -21,7 +20,6 @@ public class Task {
         this.editor_name=editor_name;
         this.event_name=event_name;
     }
-
 
     //----------------------------------------------------------------------
     //-----------------Getter and Setter-------------------------------------

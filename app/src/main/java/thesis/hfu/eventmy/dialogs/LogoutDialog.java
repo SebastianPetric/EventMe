@@ -9,7 +9,6 @@ import android.os.Bundle;
 import thesis.hfu.eventmy.R;
 import thesis.hfu.eventmy.functions.CheckSharedPreferences;
 
-
 public class LogoutDialog extends DialogFragment {
 
     private static LogoutDialog instance;

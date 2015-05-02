@@ -31,7 +31,7 @@ public class AllTasksOfEventActivity extends ActionBarActivity {
     private FloatingActionButton createTaskButton;
     private int event_id;
 
-    private final static String FLOATING_BUTTON="floating_button";
+    private final static String ADD_TASK_BUTTON ="add_task_button";
     private static final String EVENT_ID="event_id";
 
     @Override
@@ -89,7 +89,7 @@ public class AllTasksOfEventActivity extends ActionBarActivity {
 
         @Override
         public void onClick(View v) {
-            if(v.getTag().equals(FLOATING_BUTTON)){
+            if(v.getTag().equals(ADD_TASK_BUTTON)){
                 if(CheckSharedPreferences.getInstance().isLoggedIn(getApplicationContext())){
                     setEvent_id(getIntent().getExtras().getInt(EVENT_ID));
                     StartActivityFunctions.getInstance().startCreateTaskActivity(getApplicationContext(),getEvent_id());
@@ -204,14 +204,14 @@ public class AllTasksOfEventActivity extends ActionBarActivity {
         return this.totalPercentageTextView;
     }
     public void setCreateTaskBttuon(){
-        ImageView icon = new ImageView(this); // Create an icon
+        ImageView icon = new ImageView(this);
         icon.setImageDrawable(getResources().getDrawable(R.drawable.add_button));
 
         this.createTaskButton = new FloatingActionButton.Builder(this)
                 .setContentView(icon)
                 .setBackgroundDrawable(R.drawable.add_button_shape)
                 .build();
-        createTaskButton.setTag(FLOATING_BUTTON);
+        createTaskButton.setTag(ADD_TASK_BUTTON);
     }
     public FloatingActionButton getCreateTaskBttuon(){
         return this.createTaskButton;
