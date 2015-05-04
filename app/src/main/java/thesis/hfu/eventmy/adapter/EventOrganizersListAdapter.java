@@ -73,7 +73,6 @@ import java.util.ArrayList;
                 public void onClick(View v) {
                     setPosition(position);
 
-
                     if(CheckSharedPreferences.getInstance().isLoggedIn(context)){
                         addFriendToEvent(getUserList().get(getPosition()).getUser_id(),getEvent_id());
                     }else {
@@ -124,9 +123,6 @@ import java.util.ArrayList;
 
             @Override
             public void onClick(View v) {
-            /*Toast.makeText(v.getContext(),
-                    "Klick " + users.get(getPosition()).getName(),
-                    Toast.LENGTH_SHORT).show();*/
             }
         }
 

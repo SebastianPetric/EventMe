@@ -140,9 +140,6 @@ public class SearchListAdapter extends
 
         @Override
         public void onClick(View v) {
-            /*Toast.makeText(v.getContext(),
-                    "Klick " + users.get(getPosition()).getName(),
-                    Toast.LENGTH_SHORT).show();*/
         }
     }
 
@@ -207,9 +204,6 @@ public class SearchListAdapter extends
     //-----------------Getter and Setter-------------------------------------
     //----------------------------------------------------------------------
 
-    public MyViewHolder getViewHolder() {
-        return viewHolder;
-    }
     public void setViewHolder(MyViewHolder viewHolder) {
         this.viewHolder = viewHolder;
     }

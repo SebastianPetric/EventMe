@@ -8,7 +8,6 @@ public class Task {
     private String task,quantity,description,editor_name,event_name;
 
     public Task(int task_id,int event_id,int percentage,int editor_id,double costOfTask, String task, String quantity,String description,String editor_name,String event_name){
-
         this.task_id=task_id;
         this.event_id=event_id;
         this.percentage=percentage;

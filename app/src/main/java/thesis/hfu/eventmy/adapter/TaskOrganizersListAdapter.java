@@ -45,13 +45,11 @@ public class TaskOrganizersListAdapter extends
         viewHolder.email.setText(user_b.getEmail());
         viewHolder.addButton.setVisibility(View.VISIBLE);
         viewHolder.removeButton.setVisibility(View.GONE);
-
         viewHolder.addButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
                 setPosition(position);
-
                 if(CheckSharedPreferences.getInstance().isLoggedIn(context)){
                     addFriendToTask(getPosition());
                 }else {
@@ -67,15 +65,6 @@ public class TaskOrganizersListAdapter extends
                 R.layout.list_event_task_organizers_row, arg0, false);
         return new MyViewHolder(itemView);
     }
-
-    public int getEvent_id() {
-        return event_id;
-    }
-
-    public void setEvent_id(int event_id) {
-        this.event_id = event_id;
-    }
-
     public class MyViewHolder extends RecyclerView.ViewHolder implements
             View.OnClickListener {
 
@@ -125,5 +114,11 @@ public class TaskOrganizersListAdapter extends
     }
     public ArrayList<User> getUserList(){
         return this.users;
+    }
+    public int getEvent_id() {
+        return event_id;
+    }
+    public void setEvent_id(int event_id) {
+        this.event_id = event_id;
     }
 }

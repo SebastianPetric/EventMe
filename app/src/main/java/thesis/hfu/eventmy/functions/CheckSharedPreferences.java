@@ -13,7 +13,6 @@ public class CheckSharedPreferences {
     private String admin_id;
 
     public static CheckSharedPreferences getInstance(){
-
         if (CheckSharedPreferences.instance == null){
             CheckSharedPreferences.instance = new CheckSharedPreferences();
         }
@@ -27,7 +26,6 @@ public class CheckSharedPreferences {
     }
 
     public boolean isLoggedIn(Context context){
-
         this.admin_id =null;
         SharedPreferences sharedPreferences= context.getSharedPreferences(SAVED_PROFILE, context.MODE_PRIVATE);
         this.admin_id =sharedPreferences.getString(SAVED_UID, DEFAULT);

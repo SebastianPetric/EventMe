@@ -50,7 +50,6 @@ public class BuildJSON {
 
 
     public static BuildJSON getInstance(){
-
         if (BuildJSON.instance == null){
             BuildJSON.instance = new BuildJSON();
         }

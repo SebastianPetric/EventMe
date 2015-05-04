@@ -50,7 +50,6 @@ public class LoginActivity extends ActionBarActivity {
                    if(!getEmailField().equals(EMPTY_STRING)&&!getPasswordField().equals(EMPTY_STRING)) {
                        if (CheckIf.EmailIsValid(getEmailField())) {
                            DBfunctions.getInstance().login(getApplicationContext(), getEmailField(), getPasswordField());
-
                        }else{
                            Toast.makeText(getApplicationContext(),ERROR_EMAIL,Toast.LENGTH_SHORT).show();
                        }

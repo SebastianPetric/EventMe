@@ -14,7 +14,6 @@ public class LogoutDialog extends DialogFragment {
     private static LogoutDialog instance;
 
     public static LogoutDialog getInstance() {
-
         if (LogoutDialog.instance == null) {
             LogoutDialog.instance = new LogoutDialog();
         }

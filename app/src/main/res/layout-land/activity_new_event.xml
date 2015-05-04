@@ -66,15 +66,8 @@
                     android:src="@drawable/calendar_icon"
                     android:id="@+id/imageButtonNewEventDate" android:background="@drawable/add_button_shape"
                     />
-
         </LinearLayout>
 
-        <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/new_event_finish_button"
-                android:id="@+id/buttonNewEventFinishButton" android:layout_gravity="right" android:layout_marginRight="23dp"
-                android:layout_marginTop="23dp"/>
     </LinearLayout>
 
     </ScrollView>

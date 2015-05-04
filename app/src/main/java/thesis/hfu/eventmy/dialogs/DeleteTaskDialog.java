@@ -17,7 +17,6 @@ public class DeleteTaskDialog extends DialogFragment {
     int task_id,event_id;
 
     public static DeleteTaskDialog getInstance() {
-
         if (DeleteTaskDialog.instance == null) {
             DeleteTaskDialog.instance = new DeleteTaskDialog();
         }

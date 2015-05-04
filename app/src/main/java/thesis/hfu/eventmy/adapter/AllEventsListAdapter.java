@@ -121,6 +121,11 @@ public class AllEventsListAdapter extends
                         return false;
                     }
         }
+
+    //----------------------------------------------------------------------
+    //-----------------Getter and Setter-------------------------------------
+    //----------------------------------------------------------------------
+
     public ArrayList<Event> getEventList(){
         return this.eventList;
     }

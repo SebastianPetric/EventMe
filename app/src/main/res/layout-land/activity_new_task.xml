@@ -81,12 +81,6 @@
                     android:hint="@string/new_task_note" android:backgroundTint="#ffffff" android:textColor="#ffffff"
                     android:textColorHint="#ffffff"/>
         </LinearLayout>
-        <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/new_task_finish_button"
-                android:id="@+id/buttonNewTaskFinishButton" android:layout_gravity="right" android:layout_marginRight="23dp"
-                android:layout_marginTop="23dp"/>
     </LinearLayout>
 
 </ScrollView>

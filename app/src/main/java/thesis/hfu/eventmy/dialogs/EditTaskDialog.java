@@ -23,7 +23,6 @@ public class EditTaskDialog extends DialogFragment {
     private int task_id;
 
     public static EditTaskDialog getInstance() {
-
         if (EditTaskDialog.instance == null) {
             EditTaskDialog.instance = new EditTaskDialog();
         }
@@ -43,7 +42,6 @@ public class EditTaskDialog extends DialogFragment {
         LayoutInflater li = LayoutInflater.from(getActivity());
         View promptsView = li.inflate(R.layout.dialog_edit_task, null);
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-
         final EditText changeName = (EditText) promptsView.findViewById(R.id.editTextEditTaskChangeTaskNameField);
         final EditText changeQuantity = (EditText) promptsView.findViewById(R.id.editTextEditTaskChangeQuantityField);
 

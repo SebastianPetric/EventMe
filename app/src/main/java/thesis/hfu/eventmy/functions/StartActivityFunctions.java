@@ -14,9 +14,7 @@ public class StartActivityFunctions {
     private static final String INACTIVE_TASK="";
     private static final int NO_EDITOR=-1;
 
-
     public static StartActivityFunctions getInstance(){
-
         if (StartActivityFunctions.instance == null){
             StartActivityFunctions.instance = new StartActivityFunctions();
         }
@@ -57,7 +55,6 @@ public class StartActivityFunctions {
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.getApplicationContext().startActivity(intent);
     }
-
 
     public void startAllEventsActivity(Context context){
         Intent intent = new Intent(context.getApplicationContext(), AllEventsActivity.class);

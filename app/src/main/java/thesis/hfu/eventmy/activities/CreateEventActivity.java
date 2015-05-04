@@ -12,6 +12,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.*;
+import com.oguzdev.circularfloatingactionmenu.library.FloatingActionButton;
 import thesis.hfu.eventmy.R;
 import thesis.hfu.eventmy.database.DBfunctions;
 import thesis.hfu.eventmy.functions.CheckSharedPreferences;
@@ -26,12 +27,13 @@ public class CreateEventActivity extends ActionBarActivity {
     private EditText eventNameField,eventLocationField;
     private TextView eventDateField;
     private ImageButton addDateButton;
-    private Button finishButton;
     private Date eventDate;
+    private FloatingActionButton createEventButton;
 
     private static final String EMPTY_STRING = "";
     private static final String DATE_PICKER = "datepicker";
     private static final String ERROR_EMPTY_FIELD = "Bitte füllen Sie alle Felder aus!";
+    private final static String CREATE_EVENT_BUTTON = "create_event_button";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,12 +44,12 @@ public class CreateEventActivity extends ActionBarActivity {
         actionBar.setDisplayHomeAsUpEnabled(true);
 
         if(CheckSharedPreferences.getInstance().isLoggedIn(getApplicationContext())){
+            setCreateEventBttuon();
             setEventLocationField(R.id.editTextNewEventLocationField);
             setButtonDate(R.id.imageButtonNewEventDate);
             setEditTextName(R.id.editTextNewEventNameField);
             setTextViewDate(R.id.textViewNewEventDateField);
-            setFinishButton(R.id.buttonNewEventFinishButton);
-            getFinishButton().setOnClickListener(new CustomClickListener());
+            getCreateEventButton().setOnClickListener(new FloatingButtonCustomClickListener());
             getAddDateButton().setOnClickListener(new CustomClickListener());
         }else{
             CheckSharedPreferences.getInstance().endSession(getApplicationContext());
@@ -62,17 +64,25 @@ public class CreateEventActivity extends ActionBarActivity {
 
         @Override
         public void onClick(View v) {
-            if(v.getId()==R.id.buttonNewEventFinishButton){
+           if(v.getId()==R.id.imageButtonNewEventDate){
+                DialogFragment newFragment = new DatePickerFragment();
+                newFragment.show(getFragmentManager(), DATE_PICKER);
+            }
+        }
+    }
+
+    public class FloatingButtonCustomClickListener implements View.OnClickListener{
+
+        @Override
+        public void onClick(View v) {
+            if(v.getTag().equals(CREATE_EVENT_BUTTON)){
                 if(!getEventNameField().equals(EMPTY_STRING)&&!getEventLocationField().equals(EMPTY_STRING)&&!getEventDateField().equals(EMPTY_STRING)){
                     if(CheckSharedPreferences.getInstance().isLoggedIn(getApplicationContext())) {
                         DBfunctions.getInstance().createEvent(getApplicationContext(), getEventNameField(), getEventLocationField(), getEventDate(), CheckSharedPreferences.getInstance().getAdmin_id());
                     }else CheckSharedPreferences.getInstance().endSession(getApplicationContext());
                 }else{
-                    Toast.makeText(getApplicationContext(),ERROR_EMPTY_FIELD,Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), ERROR_EMPTY_FIELD, Toast.LENGTH_SHORT).show();
                 }
-            }else if(v.getId()==R.id.imageButtonNewEventDate){
-                DialogFragment newFragment = new DatePickerFragment();
-                newFragment.show(getFragmentManager(), DATE_PICKER);
             }
         }
     }
@@ -157,12 +167,6 @@ public class CreateEventActivity extends ActionBarActivity {
     public void setButtonDate(int res){
         this.addDateButton=  (ImageButton)findViewById(res);
     }
-    public Button getFinishButton() {
-        return finishButton;
-    }
-    public void setFinishButton(int res) {
-        this.finishButton= (Button) findViewById(res);
-    }
     public String getEventLocationField() {
         return eventLocationField.getText().toString().trim();
     }
@@ -174,5 +178,18 @@ public class CreateEventActivity extends ActionBarActivity {
     }
     public void setEventDate(Date eventDate) {
         this.eventDate = eventDate;
+    }
+    public void setCreateEventBttuon(){
+        ImageView icon = new ImageView(this);
+        icon.setImageDrawable(getResources().getDrawable(R.drawable.checkedicon));
+
+        this.createEventButton = new FloatingActionButton.Builder(this)
+                .setContentView(icon)
+                .setBackgroundDrawable(R.drawable.add_button_shape)
+                .build();
+        createEventButton.setTag(CREATE_EVENT_BUTTON);
+    }
+    public FloatingActionButton getCreateEventButton(){
+        return this.createEventButton;
     }
 }

@@ -6,7 +6,6 @@ public class Calculation {
     private static Calculation instance;
 
     public static Calculation getInstance(){
-
         if (Calculation.instance == null){
             Calculation.instance = new Calculation();
         }

@@ -24,7 +24,6 @@ public class CommentDialog extends DialogFragment {
     private SwipeRefreshLayout swipeRefreshLayout;
 
     public static CommentDialog getInstance() {
-
         if (CommentDialog.instance == null) {
             CommentDialog.instance = new CommentDialog();
         }
@@ -50,8 +49,8 @@ public class CommentDialog extends DialogFragment {
         LayoutInflater li = LayoutInflater.from(getActivity());
         View promptsView = li.inflate(R.layout.dialog_comment, null);
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-
         final EditText userInput = (EditText) promptsView.findViewById(R.id.editTextCommentUserInput);
+
         builder.setView(promptsView);
         builder.setCancelable(false)
                 .setPositiveButton(R.string.dialog_comment_ok, new DialogInterface.OnClickListener() {

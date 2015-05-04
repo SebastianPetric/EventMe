@@ -29,16 +29,6 @@ import java.util.ArrayList;
 public class AllTasksOfEventListAdapter extends
         RecyclerView.Adapter<AllTasksOfEventListAdapter.MyViewHolder>  {
 
-    private static final String MESSAGE= "message";
-    private static final String STATUS= "status";
-    private static final String EDITOR_NAME= "editor_name";
-    private static final String ERROR_NUMERIC= "Sie haben keine Zahlen eingegeben!";
-
-    private static final String URL_BECOME_EDITOR_OF_TASK= "become_editor_of_task.php";
-    private static final String URL_UPDATE_PERCENTAGE_OF_TASK= "update_percentage_of_task.php";
-    private static final String URL_UPDATE_COSTS_OF_TASK = "update_costs_of_task.php";
-
-
     private ArrayList<Task> tasks;
     private Context context;
     private MyViewHolder viewHolder;
@@ -47,6 +37,14 @@ public class AllTasksOfEventListAdapter extends
     private TextView eventName,eventDate,eventTotalOrganizers,eventTotalCosts,eventTotalPercentage;
     private int event_id;
 
+    private static final String MESSAGE= "message";
+    private static final String STATUS= "status";
+    private static final String EDITOR_NAME= "editor_name";
+    private static final String ERROR_NUMERIC= "Sie haben keine Zahlen eingegeben!";
+
+    private static final String URL_BECOME_EDITOR_OF_TASK= "become_editor_of_task.php";
+    private static final String URL_UPDATE_PERCENTAGE_OF_TASK= "update_percentage_of_task.php";
+    private static final String URL_UPDATE_COSTS_OF_TASK = "update_costs_of_task.php";
 
     public AllTasksOfEventListAdapter(Context context,ArrayList<Task> list,int event_id,TextView eventName,TextView eventDate,TextView eventTotalOrganizers,TextView eventTotalCosts,TextView eventTotalPercentage) {
         this.tasks = list;
