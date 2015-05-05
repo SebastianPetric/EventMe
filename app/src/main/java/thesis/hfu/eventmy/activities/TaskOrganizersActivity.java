@@ -80,7 +80,7 @@ public class TaskOrganizersActivity extends ActionBarActivity {
         @Override
         public void onRefresh() {
             if(CheckSharedPreferences.getInstance().isLoggedIn(getApplicationContext())){
-                DBfunctions.getInstance().searchFriendsForTask(TaskOrganizersActivity.this,getApplicationContext(), null, getRecyclerView(), EMPTY_STRING, CheckSharedPreferences.getInstance().getAdmin_id(),getEvent_id());
+                DBfunctions.getInstance().searchFriendsForTask(TaskOrganizersActivity.this,getApplicationContext(), getSyncRefresh(), getRecyclerView(), EMPTY_STRING, CheckSharedPreferences.getInstance().getAdmin_id(),getEvent_id());
             }else{
                 CheckSharedPreferences.getInstance().endSession(getApplicationContext());
             }

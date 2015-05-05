@@ -14,6 +14,8 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import com.oguzdev.circularfloatingactionmenu.library.FloatingActionButton;
+import com.oguzdev.circularfloatingactionmenu.library.FloatingActionMenu;
+import com.oguzdev.circularfloatingactionmenu.library.SubActionButton;
 import thesis.hfu.eventmy.R;
 import thesis.hfu.eventmy.database.DBfunctions;
 import thesis.hfu.eventmy.dialogs.LogoutDialog;
@@ -28,11 +30,11 @@ public class AllTasksOfEventActivity extends ActionBarActivity {
     private TextView totalOrganizersTextView, totalCostsTextView, totalPercentageTextView, eventNameTextView, eventDateTextView;
     private RecyclerView allTasksOfEventRecycler;
     private SwipeRefreshLayout syncRefresh;
-    private FloatingActionButton createTaskButton;
     private int event_id;
 
     private final static String ADD_TASK_BUTTON ="add_task_button";
     private static final String EVENT_ID="event_id";
+    private final static String COMMENT_ON_EVENT = "comment_on_event";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +46,7 @@ public class AllTasksOfEventActivity extends ActionBarActivity {
 
         if(CheckSharedPreferences.getInstance().isLoggedIn(getApplicationContext())){
             setEvent_id(getIntent().getExtras().getInt(EVENT_ID));
-            setCreateTaskBttuon();
+            setFloatingActionMenu();
             setTotalOrganizersTextView(R.id.textViewTaskOfEventTotalOrganizers);
             setTotalCostsTextView(R.id.textViewTaskOfEventTotalCosts);
             setTotalPercentageTextView(R.id.textViewTaskOfEventTotalPercentage);
@@ -59,7 +61,6 @@ public class AllTasksOfEventActivity extends ActionBarActivity {
             getAllTasksOfEventRecycler().addItemDecoration(new DividerItemDecoration(this));
             getSyncRefresh().setOnRefreshListener(new CustomSwipeListener());
             getAddOrganizersButton().setOnClickListener(new CustomClickListener());
-            getCreateTaskBttuon().setOnClickListener(new FloatingButtonCustomClickListener());
             DBfunctions.getInstance().updateEventDetails(null, CheckSharedPreferences.getInstance().getAdmin_id(), getEvent_id(),getEventTotalOrganizersTextView(), getEventTotalPercentageTextView(), getEventTotalCostsTextView(), getEventNameTextView(), getEventDateTextView());
             DBfunctions.getInstance().getAllTasks(getApplicationContext(), getSyncRefresh(), getAllTasksOfEventRecycler(), getEvent_id(), getEventTotalOrganizersTextView(), getEventTotalPercentageTextView(), getEventTotalCostsTextView(), getEventNameTextView(), getEventDateTextView());
         }else{
@@ -93,6 +94,13 @@ public class AllTasksOfEventActivity extends ActionBarActivity {
                 if(CheckSharedPreferences.getInstance().isLoggedIn(getApplicationContext())){
                     setEvent_id(getIntent().getExtras().getInt(EVENT_ID));
                     StartActivityFunctions.getInstance().startCreateTaskActivity(getApplicationContext(),getEvent_id());
+                }else{
+                    CheckSharedPreferences.getInstance().endSession(getApplicationContext());
+                }
+            }else if(v.getTag().equals(COMMENT_ON_EVENT)){
+                if(CheckSharedPreferences.getInstance().isLoggedIn(getApplicationContext())){
+                    setEvent_id(getIntent().getExtras().getInt(EVENT_ID));
+                    StartActivityFunctions.getInstance().startCommentOnEventActivity(getApplicationContext(),getEvent_id());
                 }else{
                     CheckSharedPreferences.getInstance().endSession(getApplicationContext());
                 }
@@ -203,17 +211,38 @@ public class AllTasksOfEventActivity extends ActionBarActivity {
     public TextView getEventTotalPercentageTextView(){
         return this.totalPercentageTextView;
     }
-    public void setCreateTaskBttuon(){
+    public void setFloatingActionMenu(){
         ImageView icon = new ImageView(this);
-        icon.setImageDrawable(getResources().getDrawable(R.drawable.add_button));
+        icon.setImageDrawable(getResources().getDrawable(R.drawable.editiconbig));
 
-        this.createTaskButton = new FloatingActionButton.Builder(this)
+        FloatingActionButton actionButton = new FloatingActionButton.Builder(this)
                 .setContentView(icon)
                 .setBackgroundDrawable(R.drawable.add_button_shape)
                 .build();
-        createTaskButton.setTag(ADD_TASK_BUTTON);
-    }
-    public FloatingActionButton getCreateTaskBttuon(){
-        return this.createTaskButton;
+
+
+        ImageView addTaskFloatButton = new ImageButton(this);
+        addTaskFloatButton.setImageResource(R.drawable.add_button);
+        addTaskFloatButton.setBackgroundDrawable(getResources().getDrawable(R.drawable.icons_shape));
+        ImageView commentOnEventFloatButton = new ImageButton(this);
+        commentOnEventFloatButton.setImageResource(R.drawable.commenticon);
+        commentOnEventFloatButton.setBackgroundDrawable(getResources().getDrawable(R.drawable.icons_shape));
+
+        SubActionButton.Builder itemBuilder = new SubActionButton.Builder(this);
+
+        SubActionButton addTask = itemBuilder.setContentView(addTaskFloatButton).build();
+        SubActionButton commentOnEvent = itemBuilder.setContentView(commentOnEventFloatButton).build();
+
+        addTask.setTag(ADD_TASK_BUTTON);
+        commentOnEvent.setTag(COMMENT_ON_EVENT);
+
+        FloatingActionMenu actionMenu = new FloatingActionMenu.Builder(this)
+                .addSubActionView(commentOnEvent)
+                .addSubActionView(addTask)
+                .attachTo(actionButton)
+                .build();
+
+        addTask.setOnClickListener(new FloatingButtonCustomClickListener());
+        commentOnEvent.setOnClickListener(new FloatingButtonCustomClickListener());
     }
 }

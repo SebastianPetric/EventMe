@@ -66,6 +66,11 @@
                 android:name=".activities.TaskOrganizersActivity"
                 android:label="Bearbeiter" >
         </activity>
+
+        <activity
+                android:name=".activities.CommentOnEventActivity"
+                android:label="Kommentare" >
+        </activity>
     </application>
 
     <!--  Internet Permissions -->

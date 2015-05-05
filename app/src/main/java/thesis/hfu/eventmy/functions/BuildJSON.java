@@ -319,12 +319,28 @@ public class BuildJSON {
         return params;
     }
 
-    public RequestParams commentJSON(int task_id, int admin_id, String comment) {
+    public RequestParams commentTaskJSON(int task_id, int admin_id, String comment) {
 
         RequestParams params= new RequestParams();
         params.put(TASK_ID, task_id);
         params.put(ADMIN_ID,admin_id);
         params.put(COMMENT,comment);
+        return params;
+    }
+
+    public RequestParams commentEventJSON(int event_id, int admin_id, String comment) {
+
+        RequestParams params= new RequestParams();
+        params.put(EVENT_ID, event_id);
+        params.put(ADMIN_ID,admin_id);
+        params.put(COMMENT,comment);
+        return params;
+    }
+
+    public RequestParams getEventCommentsJSON(int event_id) {
+
+        RequestParams params= new RequestParams();
+        params.put(EVENT_ID, event_id);
         return params;
     }
 

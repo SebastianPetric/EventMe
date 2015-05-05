@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.SwipeRefreshLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/swipe_refresh_event_comments"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" android:background="#151515">
+<LinearLayout android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+    <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text=""
+                android:id="@+id/textViewTaskOfEventEventName" android:layout_alignParentTop="true" android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginTop="10dp" android:layout_gravity="center_horizontal"
+                android:textColor="#ffffff"/>
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:id="@+id/textViewTaskOfEventDate"
+                android:layout_below="@+id/textViewTaskOfEventEventLocation" android:layout_alignLeft="@+id/textViewTaskOfEventEventLocation"
+                android:layout_alignStart="@+id/textViewTaskOfEventEventLocation" android:layout_marginTop="8dp"
+                android:layout_gravity="center" android:textColor="#ffffff"/>
+    </LinearLayout>
+    <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true" android:layout_marginTop="12dp">
+        <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.333333333">
+            <ImageButton android:layout_width="wrap_content" android:layout_height="wrap_content"
+                         android:layout_alignParentRight="true" android:layout_alignParentEnd="true"
+                         android:layout_alignParentBottom="true" android:src="@drawable/organizers_icon"
+                         android:id="@+id/imageButtonTasksOfEventOrganizers" android:background="@drawable/icons_shape"
+                         android:layout_gravity="center_horizontal"/>
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:id="@+id/textViewTaskOfEventTotalOrganizers"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignLeft="@+id/imageViewTasksOfEventTotalOrganizers"
+                    android:layout_alignStart="@+id/imageViewTasksOfEventTotalOrganizers"
+                    android:layout_marginTop="10dp"
+                    android:layout_gravity="center_horizontal" android:textColor="#ffffff"/>
+        </LinearLayout>
+        <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.333333333">
+            <ImageButton android:layout_width="wrap_content" android:layout_height="wrap_content"
+                         android:layout_alignParentRight="true" android:layout_alignParentEnd="true"
+                         android:layout_alignParentBottom="true" android:src="@drawable/euro_icon"
+                         android:id="@+id/imageButton3" android:background="@drawable/icons_shape"
+                         android:layout_gravity="center_horizontal" android:clickable="false"/>
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:id="@+id/textViewTaskOfEventTotalCosts"
+                    android:layout_marginTop="10dp" android:layout_gravity="center_horizontal"
+                    android:textColor="#ffffff"/>
+        </LinearLayout>
+        <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.333333333">
+            <ImageButton android:layout_width="wrap_content" android:layout_height="wrap_content"
+                         android:layout_alignParentRight="true" android:layout_alignParentEnd="true"
+                         android:layout_alignParentBottom="true" android:src="@drawable/percentage_icon"
+                         android:id="@+id/imageButton4" android:background="@drawable/icons_shape"
+                         android:layout_gravity="center_horizontal"/>
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:id="@+id/textViewTaskOfEventTotalPercentage"
+                    android:layout_alignTop="@+id/textViewTaskOfEventTotalCosts"
+                    android:layout_alignLeft="@+id/imageViewTasksOfEventTotalPercentage"
+                    android:layout_alignStart="@+id/imageViewTasksOfEventTotalPercentage"
+                    android:layout_marginTop="10dp" android:layout_gravity="center_horizontal"
+                    android:textColor="#ffffff"/>
+        </LinearLayout>
+    </LinearLayout>
+    <ScrollView android:layout_width="fill_parent"
+                android:layout_height="fill_parent">
+    <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:layout_marginLeft="23dp" android:layout_marginRight="23dp"
+            android:layout_marginTop="24dp">
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:id="@+id/CommentOnEventField" android:textColor="#FFFFFF"/>
+    </LinearLayout>
+    </ScrollView>
+</LinearLayout>
+</android.support.v4.widget.SwipeRefreshLayout>

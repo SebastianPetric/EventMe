@@ -102,4 +102,11 @@ public class StartActivityFunctions {
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.getApplicationContext().startActivity(intent);
     }
+
+    public void startCommentOnEventActivity(Context context,int event_id){
+        Intent intent = new Intent(context.getApplicationContext(), CommentOnEventActivity.class);
+        intent.putExtra(EVENT_ID, event_id);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.getApplicationContext().startActivity(intent);
+    }
 }
