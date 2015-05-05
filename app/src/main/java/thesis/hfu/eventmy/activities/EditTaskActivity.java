@@ -28,12 +28,10 @@ public class EditTaskActivity extends ActionBarActivity {
     private ImageButton costsButton, percentageButton,editorButton;
     private SwipeRefreshLayout syncRefresh;
     private FloatingActionMenu actionMenu;
-    private int event_id,task_id, percentageValue, typeOfUpdate;
-    private double costValue;
+    private int event_id,task_id, percentageValue;
 
     private static final String EVENT_ID="event_id";
     private static final String TASK_ID="task_id";
-    private static final String ERROR_NUMERIC= "Sie haben keine Zahlen eingegeben!";
     private static final String DELETE_TASK="delete_task";
     private static final String EDIT_TASK="edit_task";
     private static final String COMMENT_TASK="comment_task";
