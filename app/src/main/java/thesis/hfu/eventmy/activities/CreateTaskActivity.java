@@ -19,8 +19,8 @@ import thesis.hfu.eventmy.objects.Global;
 
 public class CreateTaskActivity extends ActionBarActivity {
 
-    private EditText task,quantity,description;
-    private TextView editor;
+    private EditText taskEditText, quantityEditText, descriptionEditText;
+    private TextView editorTextView;
     private ImageView addEditorButton;
     private int event_id,editor_id;
     private String editorName;
@@ -42,10 +42,10 @@ public class CreateTaskActivity extends ActionBarActivity {
         if(CheckSharedPreferences.getInstance().isLoggedIn(getApplicationContext())){
             setCreateTaskBttuon();
             setEvent_id(getIntent().getExtras().getInt(EVENT_ID));
-            setEditor(R.id.textViewNewTaskEditorField);
-            setTask(R.id.editTextNewTaskNameField);
-            setQuantity(R.id.editTextNewTaskQuantityField);
-            setDescription(R.id.editTextNewTaskNoteField);
+            setEditorTextView(R.id.textViewNewTaskEditorField);
+            setTaskEditText(R.id.editTextNewTaskNameField);
+            setQuantityEditText(R.id.editTextNewTaskQuantityField);
+            setDescriptionEditText(R.id.editTextNewTaskNoteField);
             setAddEditorButton(R.id.imageButtonNewTaskAddButton);
             Global appState = ((Global)getApplicationContext());
             setEditor_id(appState.getEditor_id());
@@ -127,28 +127,28 @@ public class CreateTaskActivity extends ActionBarActivity {
     //----------------------------------------------------------------------
 
     public String getTaskField() {
-        return task.getText().toString().trim();
+        return taskEditText.getText().toString().trim();
     }
-    public void setTask(int res) {
-        this.task = (EditText) findViewById(res);
+    public void setTaskEditText(int res) {
+        this.taskEditText = (EditText) findViewById(res);
     }
     public String getQuantityField() {
-        return quantity.getText().toString().trim();
+        return quantityEditText.getText().toString().trim();
     }
-    public void setQuantity(int res) {
-        this.quantity = (EditText) findViewById(res);
+    public void setQuantityEditText(int res) {
+        this.quantityEditText = (EditText) findViewById(res);
     }
     public String getDescriptionField() {
-        return description.getText().toString().trim();
+        return descriptionEditText.getText().toString().trim();
     }
-    public void setDescription(int res) {
-        this.description= (EditText) findViewById(res);
+    public void setDescriptionEditText(int res) {
+        this.descriptionEditText = (EditText) findViewById(res);
     }
     public void setEditorField(String value){
-        this.editor.setText(String.valueOf(value));
+        this.editorTextView.setText(String.valueOf(value));
     }
-    public void setEditor(int res) {
-        this.editor = (TextView) findViewById(res);
+    public void setEditorTextView(int res) {
+        this.editorTextView = (TextView) findViewById(res);
     }
     public ImageView getAddEditorButton() {
         return addEditorButton;

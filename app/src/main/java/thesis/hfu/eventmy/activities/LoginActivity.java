@@ -15,7 +15,7 @@ import thesis.hfu.eventmy.functions.StartActivityFunctions;
 
 public class LoginActivity extends ActionBarActivity {
 
-    private EditText emailField,passwordField;
+    private EditText emailEditText, passwordEditText;
     private Button loginFinishButton;
     private TextView registrationTextButton;
 
@@ -28,8 +28,8 @@ public class LoginActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        setEmailField(R.id.loginEmailEditText);
-        setPasswordField(R.id.loginPasswortEditText);
+        setEmailEditText(R.id.loginEmailEditText);
+        setPasswordEditText(R.id.loginPasswortEditText);
         setLoginFinishButton(R.id.loginButton);
         setRegistrationTextButton(R.id.loginRegistrationButton);
         getLoginFinishButton().setOnClickListener(new CustomClickListener());
@@ -47,9 +47,9 @@ public class LoginActivity extends ActionBarActivity {
                if(v.getId()==R.id.loginRegistrationButton){
                    StartActivityFunctions.getInstance().startRegistrationActivity(getApplicationContext());
                }else if(v.getId()==R.id.loginButton){
-                   if(!getEmailField().equals(EMPTY_STRING)&&!getPasswordField().equals(EMPTY_STRING)) {
-                       if (CheckIf.EmailIsValid(getEmailField())) {
-                           DBfunctions.getInstance().login(getApplicationContext(), getEmailField(), getPasswordField());
+                   if(!getEmailEditText().equals(EMPTY_STRING)&&!getPasswordEditText().equals(EMPTY_STRING)) {
+                       if (CheckIf.EmailIsValid(getEmailEditText())) {
+                           DBfunctions.getInstance().login(getApplicationContext(), getEmailEditText(), getPasswordEditText());
                        }else{
                            Toast.makeText(getApplicationContext(),ERROR_EMAIL,Toast.LENGTH_SHORT).show();
                        }
@@ -64,17 +64,17 @@ public class LoginActivity extends ActionBarActivity {
     //-----------------Getter and Setter-------------------------------------
     //----------------------------------------------------------------------
 
-    public String getEmailField() {
-        return emailField.getText().toString().trim();
+    public String getEmailEditText() {
+        return emailEditText.getText().toString().trim();
     }
-    public void setEmailField(int res) {
-        this.emailField = (EditText) findViewById(res);
+    public void setEmailEditText(int res) {
+        this.emailEditText = (EditText) findViewById(res);
     }
-    public String getPasswordField() {
-        return passwordField.getText().toString().trim();
+    public String getPasswordEditText() {
+        return passwordEditText.getText().toString().trim();
     }
-    public void setPasswordField(int res) {
-        this.passwordField = (EditText) findViewById(res);
+    public void setPasswordEditText(int res) {
+        this.passwordEditText = (EditText) findViewById(res);
     }
     public void setLoginFinishButton(int res) {
         this.loginFinishButton = (Button) findViewById(res);

@@ -13,7 +13,7 @@ import thesis.hfu.eventmy.functions.CheckSharedPreferences;
 
 public class EditPercentageDialog extends DialogFragment {
 
-    private TextView percentageTextView,totalOrganizers,totalCosts,totalPercentage,eventName,eventDate;
+    private TextView percentageTextView, totalOrganizersTextView, totalCostsTextView, totalPercentageTextView, eventNameTextView, eventDateTextView;
     private int task_id,event_id, percentageValue,status_of_update;
     private static EditPercentageDialog instance;
 
@@ -24,15 +24,15 @@ public class EditPercentageDialog extends DialogFragment {
         return EditPercentageDialog.instance;
     }
 
-    public void startEditPercentageDialog(FragmentManager manager,TextView percentageTextView,TextView totalOrganizers, TextView totalCosts, TextView totalPercentage,TextView eventName,TextView eventDate,int task_id,int event_id, int status_of_update) {
+    public void startEditPercentageDialog(FragmentManager manager,TextView percentageTextView,TextView totalOrganizersTextView, TextView totalCostsTextView, TextView totalPercentageTextView,TextView eventNameTextView,TextView eventDateTextView,int task_id,int event_id, int status_of_update) {
         setTask_id(task_id);
         setPercentageTextView(percentageTextView);
-        setTotalCosts(totalCosts);
-        setTotalOrganizers(totalOrganizers);
-        setTotalPercentage(totalPercentage);
+        setTotalCostsTextView(totalCostsTextView);
+        setTotalOrganizersTextView(totalOrganizersTextView);
+        setTotalPercentageTextView(totalPercentageTextView);
         setStatus_of_update(status_of_update);
-        setEventDate(eventDate);
-        setEventName(eventName);
+        setEventDateTextView(eventDateTextView);
+        setEventNameTextView(eventNameTextView);
         setEvent_id(event_id);
         this.show(manager, "editPercentageDialog");
     }
@@ -61,7 +61,7 @@ public class EditPercentageDialog extends DialogFragment {
                                 break;
                         }
                         if (CheckSharedPreferences.getInstance().isLoggedIn(getActivity())) {
-                            DBfunctions.getInstance().updatePercentage(getActivity(), getPercentageTextView(),getTotalCosts(),getTotalPercentage(),getTotalOrganizers(),getEventName(),getEventDate(),getEvent_id(), getTask_id(), Integer.parseInt(CheckSharedPreferences.getInstance().getAdmin_id()), getPercentageValue(),getStatus_of_update());
+                            DBfunctions.getInstance().updatePercentage(getActivity(), getPercentageTextView(), getTotalCostsTextView(), getTotalPercentageTextView(), getTotalOrganizersTextView(), getEventNameTextView(), getEventDateTextView(),getEvent_id(), getTask_id(), Integer.parseInt(CheckSharedPreferences.getInstance().getAdmin_id()), getPercentageValue(),getStatus_of_update());
                         } else {
                             CheckSharedPreferences.getInstance().endSession(getActivity());
                         }
@@ -92,23 +92,23 @@ public class EditPercentageDialog extends DialogFragment {
     public void setPercentageTextView(TextView percentageTextView) {
         this.percentageTextView = percentageTextView;
     }
-    public TextView getTotalOrganizers() {
-        return totalOrganizers;
+    public TextView getTotalOrganizersTextView() {
+        return totalOrganizersTextView;
     }
-    public void setTotalOrganizers(TextView totalOrganizers) {
-        this.totalOrganizers = totalOrganizers;
+    public void setTotalOrganizersTextView(TextView totalOrganizersTextView) {
+        this.totalOrganizersTextView = totalOrganizersTextView;
     }
-    public TextView getTotalCosts() {
-        return totalCosts;
+    public TextView getTotalCostsTextView() {
+        return totalCostsTextView;
     }
-    public void setTotalCosts(TextView totalCosts) {
-        this.totalCosts = totalCosts;
+    public void setTotalCostsTextView(TextView totalCostsTextView) {
+        this.totalCostsTextView = totalCostsTextView;
     }
-    public TextView getTotalPercentage() {
-        return totalPercentage;
+    public TextView getTotalPercentageTextView() {
+        return totalPercentageTextView;
     }
-    public void setTotalPercentage(TextView totalPercentage) {
-        this.totalPercentage = totalPercentage;
+    public void setTotalPercentageTextView(TextView totalPercentageTextView) {
+        this.totalPercentageTextView = totalPercentageTextView;
     }
     public int getStatus_of_update() {
         return status_of_update;
@@ -122,17 +122,17 @@ public class EditPercentageDialog extends DialogFragment {
     public void setEvent_id(int event_id) {
         this.event_id = event_id;
     }
-    public TextView getEventName() {
-        return eventName;
+    public TextView getEventNameTextView() {
+        return eventNameTextView;
     }
-    public void setEventName(TextView eventName) {
-        this.eventName = eventName;
+    public void setEventNameTextView(TextView eventNameTextView) {
+        this.eventNameTextView = eventNameTextView;
     }
-    public TextView getEventDate() {
-        return eventDate;
+    public TextView getEventDateTextView() {
+        return eventDateTextView;
     }
-    public void setEventDate(TextView eventDate) {
-        this.eventDate = eventDate;
+    public void setEventDateTextView(TextView eventDateTextView) {
+        this.eventDateTextView = eventDateTextView;
     }
 
 }

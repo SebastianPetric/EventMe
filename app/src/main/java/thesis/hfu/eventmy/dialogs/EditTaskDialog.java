@@ -18,7 +18,7 @@ public class EditTaskDialog extends DialogFragment {
 
     private static EditTaskDialog instance;
     private Context context;
-    private TextView taskNameField,quantityField;
+    private TextView taskNameTextView, quantityTextView, eventNameTextView, costsTextView,percentageTextView,editorTextView,historyTextView;
     private String editor_id;
     private int task_id;
 
@@ -29,12 +29,17 @@ public class EditTaskDialog extends DialogFragment {
         return EditTaskDialog.instance;
     }
 
-    public void startEditTaskDialog(FragmentManager manager, Context context, TextView taskNameField, TextView quantityField,int task_id,String editor_id) {
+    public void startEditTaskDialog(FragmentManager manager, Context context, TextView taskNameTextView, TextView quantityTextView,final TextView eventNameTextView, final TextView costsTextView, final TextView percentageTextView, final TextView editorTextView, final TextView historyTextView,int task_id,String editor_id) {
         setContext(context);
-        setTaskNameField(taskNameField);
-        setQuantityField(quantityField);
+        setTaskNameTextView(taskNameTextView);
+        setQuantityTextView(quantityTextView);
         setTask_id(task_id);
         setEditor_id(editor_id);
+        setEventNameTextView(eventNameTextView);
+        setCostsTextView(costsTextView);
+        setPercentageTextView(percentageTextView);
+        setEditorTextView(editorTextView);
+        setHistoryTextView(historyTextView);
         this.show(manager, "editTaskDialog");
     }
 
@@ -52,8 +57,7 @@ public class EditTaskDialog extends DialogFragment {
                     public void onClick(DialogInterface dialog, int id) {
                         String name = changeName.getText().toString().trim();
                         String quantity = changeQuantity.getText().toString().trim();
-
-                        DBfunctions.getInstance().updateTaskNameQuantity(getContext(),getTaskNameField(),getQuantityField(),getTask_id(),getEditor_id(),quantity,name);
+                        DBfunctions.getInstance().updateTaskNameQuantity(getContext(), getTaskNameTextView(), getQuantityTextView(), getEventNameTextView(),getCostsTextView(),getPercentageTextView(),getEditorTextView(),getHistoryTextView(),getTask_id(),getEditor_id(),quantity,name);
                         dialog.cancel();
                     }
                 })
@@ -75,17 +79,17 @@ public class EditTaskDialog extends DialogFragment {
     public void setContext(Context context) {
         this.context = context;
     }
-    public TextView getTaskNameField() {
-        return taskNameField;
+    public TextView getTaskNameTextView() {
+        return taskNameTextView;
     }
-    public void setTaskNameField(TextView taskNameField) {
-        this.taskNameField = taskNameField;
+    public void setTaskNameTextView(TextView taskNameTextView) {
+        this.taskNameTextView = taskNameTextView;
     }
-    public TextView getQuantityField() {
-        return quantityField;
+    public TextView getQuantityTextView() {
+        return quantityTextView;
     }
-    public void setQuantityField(TextView quantityField) {
-        this.quantityField = quantityField;
+    public void setQuantityTextView(TextView quantityTextView) {
+        this.quantityTextView = quantityTextView;
     }
     public String getEditor_id() {
         return editor_id;
@@ -98,5 +102,35 @@ public class EditTaskDialog extends DialogFragment {
     }
     public void setTask_id(int task_id) {
         this.task_id = task_id;
+    }
+    public TextView getEventNameTextView() {
+        return eventNameTextView;
+    }
+    public void setEventNameTextView(TextView eventNameTextView) {
+        this.eventNameTextView = eventNameTextView;
+    }
+    public TextView getCostsTextView() {
+        return costsTextView;
+    }
+    public void setCostsTextView(TextView costsTextView) {
+        this.costsTextView = costsTextView;
+    }
+    public TextView getPercentageTextView() {
+        return percentageTextView;
+    }
+    public void setPercentageTextView(TextView percentageTextView) {
+        this.percentageTextView = percentageTextView;
+    }
+    public TextView getEditorTextView() {
+        return editorTextView;
+    }
+    public void setEditorTextView(TextView editorTextView) {
+        this.editorTextView = editorTextView;
+    }
+    public TextView getHistoryTextView() {
+        return historyTextView;
+    }
+    public void setHistoryTextView(TextView historyTextView) {
+        this.historyTextView = historyTextView;
     }
 }

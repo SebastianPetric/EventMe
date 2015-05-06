@@ -38,12 +38,12 @@ public class AllEventsListAdapter extends
     public void onBindViewHolder(final MyViewHolder viewHolder, final int position) {
         final Event event = this.eventList.get(position);
 
-        viewHolder.name.setText(event.getName());
-        viewHolder.location.setText(event.getLocation());
-        viewHolder.date.setText(event.getDate().getDate()+"."+(event.getDate().getMonth()+1)+"."+event.getDate().getYear());
-        viewHolder.costs.setText(String.valueOf(event.getCosts()));
-        viewHolder.numberOrganizers.setText(String.valueOf(event.getNumOrganizers()));
-        viewHolder.Percentage.setText(String.valueOf(event.getPercentage_of_event()));
+        viewHolder.nameTextView.setText(event.getName());
+        viewHolder.locationTextView.setText(event.getLocation());
+        viewHolder.dateTextView.setText(event.getDate().getDate() + "." + (event.getDate().getMonth() + 1) + "." + event.getDate().getYear());
+        viewHolder.costsTextView.setText(String.valueOf(event.getCosts()));
+        viewHolder.numberOrganizersTextView.setText(String.valueOf(event.getNumOrganizers()));
+        viewHolder.percentageTextView.setText(String.valueOf(event.getPercentage_of_event()));
         viewHolder.addOrganizersButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -62,17 +62,17 @@ public class AllEventsListAdapter extends
     public class MyViewHolder extends RecyclerView.ViewHolder implements
             View.OnClickListener,View.OnLongClickListener {
 
-        private TextView name,location,date,numberOrganizers,costs,Percentage;
+        private TextView nameTextView, locationTextView, dateTextView, numberOrganizersTextView, costsTextView, percentageTextView;
         private ImageButton addOrganizersButton;
 
         public MyViewHolder(View itemView) {
             super(itemView);
-            name = (TextView) itemView.findViewById(R.id.textViewListRowEventName);
-            location = (TextView) itemView.findViewById(R.id.textViewListRowEventLocation);
-            date= (TextView) itemView.findViewById(R.id.textViewListRowEventDate);
-            numberOrganizers= (TextView) itemView.findViewById(R.id.textViewListRowEventOrganizer);
-            costs= (TextView) itemView.findViewById(R.id.textViewListRowEventCosts);
-            Percentage= (TextView) itemView.findViewById(R.id.textViewlistRowEventPercentage);
+            nameTextView = (TextView) itemView.findViewById(R.id.textViewListRowEventName);
+            locationTextView = (TextView) itemView.findViewById(R.id.textViewListRowEventLocation);
+            dateTextView = (TextView) itemView.findViewById(R.id.textViewListRowEventDate);
+            numberOrganizersTextView = (TextView) itemView.findViewById(R.id.textViewListRowEventOrganizer);
+            costsTextView = (TextView) itemView.findViewById(R.id.textViewListRowEventCosts);
+            percentageTextView = (TextView) itemView.findViewById(R.id.textViewlistRowEventPercentage);
             addOrganizersButton= (ImageButton) itemView.findViewById(R.id.imageButtonListRowEventOrganizer);
             itemView.setOnClickListener(this);
             itemView.setOnLongClickListener(this);

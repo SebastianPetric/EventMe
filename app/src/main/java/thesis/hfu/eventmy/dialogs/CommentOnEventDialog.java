@@ -19,7 +19,7 @@ public class CommentOnEventDialog extends DialogFragment {
 
     private static CommentOnEventDialog instance;
     private int admin_id,event_id;
-    private TextView historyField;
+    private TextView historyTextView;
     private SwipeRefreshLayout syncComments;
     private Context context;
 
@@ -30,10 +30,10 @@ public class CommentOnEventDialog extends DialogFragment {
         return CommentOnEventDialog.instance;
     }
 
-    public void startCommentDialog(Context context,SwipeRefreshLayout syncComments,FragmentManager manager,int event_id,String admin_id,final TextView history) {
+    public void startCommentDialog(Context context,SwipeRefreshLayout syncComments,FragmentManager manager,int event_id,String admin_id,final TextView historyTextView) {
         setEvent_id(event_id);
         setAdmin_id(Integer.valueOf(admin_id));
-        setHistoryField(history);
+        setHistoryTextView(historyTextView);
         setContext(context);
         setSyncComments(syncComments);
         this.show(manager, "commentDialog");
@@ -75,10 +75,10 @@ public class CommentOnEventDialog extends DialogFragment {
         this.admin_id = event_id;
     }
     public TextView getHistoryTextView(){
-        return this.historyField;
+        return this.historyTextView;
     }
-    public void setHistoryField(TextView historyField) {
-        this.historyField = historyField;
+    public void setHistoryTextView(TextView historyTextView) {
+        this.historyTextView = historyTextView;
     }
     public int getEvent_id() {
         return event_id;

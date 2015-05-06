@@ -27,20 +27,20 @@ public class AllTasksOfEventListAdapter extends
     private ArrayList<Task> tasks;
     private Context context;
     private MyViewHolder viewHolder;
-    private TextView eventName,eventDate,eventTotalOrganizers,eventTotalCosts,eventTotalPercentage;
+    private TextView eventNameTextView, eventDateTextView, eventTotalOrganizersTextView, eventTotalCostsTextView, eventTotalPercentageTextView;
     private int event_id;
     private final int typeOfUpdate=1;
     private FragmentManager fragmentManager;
 
-    public AllTasksOfEventListAdapter(Activity context,ArrayList<Task> list,TextView eventName,TextView eventDate,TextView eventTotalOrganizers,TextView eventTotalCosts,TextView eventTotalPercentage,int event_id) {
+    public AllTasksOfEventListAdapter(Activity context,ArrayList<Task> list,TextView eventNameTextView,TextView eventDateTextView,TextView eventTotalOrganizersTextView,TextView eventTotalCostsTextView,TextView eventTotalPercentageTextView,int event_id) {
         this.tasks = list;
         this.context=context;
-        this.eventName=eventName;
+        this.eventNameTextView = eventNameTextView;
         this.event_id=event_id;
-        this.eventDate=eventDate;
-        this.eventTotalCosts=eventTotalCosts;
-        this.eventTotalOrganizers=eventTotalOrganizers;
-        this.eventTotalPercentage=eventTotalPercentage;
+        this.eventDateTextView = eventDateTextView;
+        this.eventTotalCostsTextView = eventTotalCostsTextView;
+        this.eventTotalOrganizersTextView = eventTotalOrganizersTextView;
+        this.eventTotalPercentageTextView = eventTotalPercentageTextView;
         this.fragmentManager=context.getFragmentManager();
     }
     @Override
@@ -52,18 +52,18 @@ public class AllTasksOfEventListAdapter extends
     public void onBindViewHolder(final MyViewHolder viewHolder, final int position) {
         final Task task = this.tasks.get(position);
 
-        viewHolder.task.setText(task.getTask());
-        viewHolder.quantity.setText(task.getQuantity());
-        viewHolder.costField.setText(String.valueOf(task.getCostOfTask()));
-        viewHolder.percentageField.setText(String.valueOf(task.getPercentage()));
-        viewHolder.editorField.setText(task.getEditor_name());
+        viewHolder.taskTextView.setText(task.getTask());
+        viewHolder.quantityTextView.setText(task.getQuantity());
+        viewHolder.costTextView.setText(String.valueOf(task.getCostOfTask()));
+        viewHolder.percentageTextView.setText(String.valueOf(task.getPercentage()));
+        viewHolder.editorTextView.setText(task.getEditor_name());
 
         viewHolder.editorButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 setViewHolder(viewHolder);
                 if (CheckSharedPreferences.getInstance().isLoggedIn(context.getApplicationContext())) {
-                    DBfunctions.getInstance().changeEditorOfTask(context.getApplicationContext(),getViewHolder().editorField,CheckSharedPreferences.getInstance().getAdmin_id(), task.getTask_id());
+                    DBfunctions.getInstance().changeEditorOfTask(context.getApplicationContext(),getViewHolder().editorTextView,CheckSharedPreferences.getInstance().getAdmin_id(), task.getTask_id());
                 } else {
                     CheckSharedPreferences.getInstance().endSession(context.getApplicationContext());
                 }
@@ -74,7 +74,7 @@ public class AllTasksOfEventListAdapter extends
             @Override
             public void onClick(View v) {
                 setViewHolder(viewHolder);
-                EditPercentageDialog.getInstance().startEditPercentageDialog(getFragmentManager(), viewHolder.percentageField,getEventTotalOrganizers(),getEventTotalCosts(),getEventTotalPercentage(),getEventName(),getEventDate(), task.getTask_id(),getEvent_id(),getTypeOfUpdate());
+                EditPercentageDialog.getInstance().startEditPercentageDialog(getFragmentManager(), viewHolder.percentageTextView, getEventTotalOrganizersTextView(), getEventTotalCostsTextView(), getEventTotalPercentageTextView(), getEventNameTextView(), getEventDateTextView(), task.getTask_id(),getEvent_id(),getTypeOfUpdate());
             }
         });
 
@@ -82,7 +82,7 @@ public class AllTasksOfEventListAdapter extends
             @Override
             public void onClick(View v) {
                 setViewHolder(viewHolder);
-                EditCostsDialog.getInstance().startEditTaskDialog(getFragmentManager(), viewHolder.costField,getEventTotalOrganizers(),getEventTotalCosts(),getEventTotalPercentage(),getEventName(),getEventDate(),getEvent_id(),task.getTask_id(),getTypeOfUpdate());
+                EditCostsDialog.getInstance().startEditTaskDialog(getFragmentManager(), viewHolder.costTextView, getEventTotalOrganizersTextView(), getEventTotalCostsTextView(), getEventTotalPercentageTextView(), getEventNameTextView(), getEventDateTextView(),getEvent_id(),task.getTask_id(),getTypeOfUpdate());
             }
         });
     }
@@ -98,7 +98,7 @@ public class AllTasksOfEventListAdapter extends
             View.OnClickListener{
 
         ImageButton costButton,percentageButton,editorButton;
-        TextView costField,percentageField,editorField,task,quantity;
+        TextView costTextView, percentageTextView, editorTextView, taskTextView, quantityTextView;
 
         public MyViewHolder(View itemView) {
             super(itemView);
@@ -106,11 +106,11 @@ public class AllTasksOfEventListAdapter extends
             costButton = (ImageButton) itemView.findViewById(R.id.imageButtonListRowTaskOfEventCosts);
             percentageButton = (ImageButton) itemView.findViewById(R.id.imageButtonListRowTaskOfEventPercentage);
             editorButton = (ImageButton) itemView.findViewById(R.id.imageButtonlistRowTaskOfEventPercentage);
-            costField = (TextView) itemView.findViewById(R.id.textViewListRowTaskOfEventCosts);
-            percentageField= (TextView) itemView.findViewById(R.id.textViewListRowTaskOfEventPercentage);
-            editorField= (TextView) itemView.findViewById(R.id.textViewlistRowTaskOfEventOrganizer);
-            task= (TextView) itemView.findViewById(R.id.textViewListRowTaskOfEventName);
-            quantity= (TextView) itemView.findViewById(R.id.textViewListRowTaskOfEventDate);
+            costTextView = (TextView) itemView.findViewById(R.id.textViewListRowTaskOfEventCosts);
+            percentageTextView = (TextView) itemView.findViewById(R.id.textViewListRowTaskOfEventPercentage);
+            editorTextView = (TextView) itemView.findViewById(R.id.textViewlistRowTaskOfEventOrganizer);
+            taskTextView = (TextView) itemView.findViewById(R.id.textViewListRowTaskOfEventName);
+            quantityTextView = (TextView) itemView.findViewById(R.id.textViewListRowTaskOfEventDate);
             itemView.setOnClickListener(this);
         }
 
@@ -137,20 +137,20 @@ public class AllTasksOfEventListAdapter extends
     public MyViewHolder getViewHolder() {
         return viewHolder;
     }
-    public TextView getEventName() {
-        return eventName;
+    public TextView getEventNameTextView() {
+        return eventNameTextView;
     }
-    public TextView getEventDate() {
-        return eventDate;
+    public TextView getEventDateTextView() {
+        return eventDateTextView;
     }
-    public TextView getEventTotalOrganizers() {
-        return eventTotalOrganizers;
+    public TextView getEventTotalOrganizersTextView() {
+        return eventTotalOrganizersTextView;
     }
-    public TextView getEventTotalCosts() {
-        return eventTotalCosts;
+    public TextView getEventTotalCostsTextView() {
+        return eventTotalCostsTextView;
     }
-    public TextView getEventTotalPercentage() {
-        return eventTotalPercentage;
+    public TextView getEventTotalPercentageTextView() {
+        return eventTotalPercentageTextView;
     }
     public int getEvent_id() {
         return event_id;
@@ -161,5 +161,4 @@ public class AllTasksOfEventListAdapter extends
     public int getTypeOfUpdate() {
         return typeOfUpdate;
     }
-
 }

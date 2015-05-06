@@ -22,7 +22,7 @@ import thesis.hfu.eventmy.dialogs.LogoutDialog;
 public class EventOrganizersActivity extends ActionBarActivity {
 
     private Button searchButton;
-    private EditText searchField;
+    private EditText searchEditText;
     private RecyclerView recyclerView;
     private SwipeRefreshLayout syncRefresh;
     private int event_id;
@@ -41,7 +41,7 @@ public class EventOrganizersActivity extends ActionBarActivity {
         if(CheckSharedPreferences.getInstance().isLoggedIn(getApplicationContext())) {
             setEvent_id(getIntent().getExtras().getInt(EVENT_ID));
             setSyncRefresh(R.id.swipe_refresh_event_organizers);
-            setSearchField(R.id.editTextEventOrganizersSearchField);
+            setSearchEditText(R.id.editTextEventOrganizersSearchField);
             setSearchButton(R.id.buttonEventOrganizersSearchButton);
             setRecyclerView(R.id.recyclerEventOrganizers);
             getSearchButton().setOnClickListener(new CustomClickListener());
@@ -129,10 +129,10 @@ public class EventOrganizersActivity extends ActionBarActivity {
         this.searchButton = (Button) findViewById(res);
     }
     public String getSearchFieldValue() {
-        return searchField.getText().toString().trim();
+        return searchEditText.getText().toString().trim();
     }
-    public void setSearchField(int res) {
-        this.searchField = (EditText) findViewById(res);
+    public void setSearchEditText(int res) {
+        this.searchEditText = (EditText) findViewById(res);
     }
     public RecyclerView getRecyclerView() {
         return recyclerView;

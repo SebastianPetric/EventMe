@@ -35,9 +35,9 @@ public class SearchListAdapter extends
     public void onBindViewHolder(final MyViewHolder viewHolder, final int position) {
         final User user_b = this.users.get(position);
 
-        viewHolder.name.setText(user_b.getName());
-        viewHolder.prename.setText(user_b.getPrename());
-        viewHolder.email.setText(user_b.getEmail());
+        viewHolder.nameTextView.setText(user_b.getName());
+        viewHolder.prenameTextView.setText(user_b.getPrename());
+        viewHolder.emailTextView.setText(user_b.getEmail());
 
         if(user_b.getStatus()==0){
             //Request is open
@@ -103,16 +103,14 @@ public class SearchListAdapter extends
     public class MyViewHolder extends RecyclerView.ViewHolder implements
             View.OnClickListener {
 
-         TextView name;
-         TextView prename;
-         TextView email;
+         TextView nameTextView, prenameTextView, emailTextView;
          ImageButton addButton, removeButton, openRequest;
 
         public MyViewHolder(View itemView) {
             super(itemView);
-            name = (TextView) itemView.findViewById(R.id.textViewListSearchRowName);
-            prename = (TextView) itemView.findViewById(R.id.textViewListSearchRowPreName);
-            email= (TextView) itemView.findViewById(R.id.textViewListSearchRowEmail);
+            nameTextView = (TextView) itemView.findViewById(R.id.textViewListSearchRowName);
+            prenameTextView = (TextView) itemView.findViewById(R.id.textViewListSearchRowPreName);
+            emailTextView = (TextView) itemView.findViewById(R.id.textViewListSearchRowEmail);
             addButton= (ImageButton) itemView.findViewById(R.id.imageButtonAddFriend);
             removeButton= (ImageButton) itemView.findViewById(R.id.imageButtonDeleteFriend);
             openRequest= (ImageButton) itemView.findViewById(R.id.imageButtonOpenRequest);

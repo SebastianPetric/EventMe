@@ -24,8 +24,8 @@ import java.util.Calendar;
 
 public class CreateEventActivity extends ActionBarActivity {
 
-    private EditText eventNameField,eventLocationField;
-    private TextView eventDateField;
+    private EditText eventNameEditText, eventLocationEditText;
+    private TextView eventDateTextView;
     private ImageButton addDateButton;
     private Date eventDate;
     private FloatingActionButton createEventButton;
@@ -45,7 +45,7 @@ public class CreateEventActivity extends ActionBarActivity {
 
         if(CheckSharedPreferences.getInstance().isLoggedIn(getApplicationContext())){
             setCreateEventBttuon();
-            setEventLocationField(R.id.editTextNewEventLocationField);
+            setEventLocationEditText(R.id.editTextNewEventLocationField);
             setButtonDate(R.id.imageButtonNewEventDate);
             setEditTextName(R.id.editTextNewEventNameField);
             setTextViewDate(R.id.textViewNewEventDateField);
@@ -76,9 +76,9 @@ public class CreateEventActivity extends ActionBarActivity {
         @Override
         public void onClick(View v) {
             if(v.getTag().equals(CREATE_EVENT_BUTTON)){
-                if(!getEventNameField().equals(EMPTY_STRING)&&!getEventLocationField().equals(EMPTY_STRING)&&!getEventDateField().equals(EMPTY_STRING)){
+                if(!getEventNameEditText().equals(EMPTY_STRING)&&!getEventLocationEditText().equals(EMPTY_STRING)&&!getEventDateTextView().equals(EMPTY_STRING)){
                     if(CheckSharedPreferences.getInstance().isLoggedIn(getApplicationContext())) {
-                        DBfunctions.getInstance().createEvent(getApplicationContext(), getEventNameField(), getEventLocationField(), getEventDate(), CheckSharedPreferences.getInstance().getAdmin_id());
+                        DBfunctions.getInstance().createEvent(getApplicationContext(), getEventNameEditText(), getEventLocationEditText(), getEventDate(), CheckSharedPreferences.getInstance().getAdmin_id());
                     }else CheckSharedPreferences.getInstance().endSession(getApplicationContext());
                 }else{
                     Toast.makeText(getApplicationContext(), ERROR_EMPTY_FIELD, Toast.LENGTH_SHORT).show();
@@ -137,7 +137,7 @@ public class CreateEventActivity extends ActionBarActivity {
 
         public void onDateSet(DatePicker view, int year, int month, int day) {
             String date=day+"."+(month+1)+"."+ (year);
-            setEventDateField(date);
+            setEventDateTextView(date);
             setEventDate(new Date((year),month,day));
         }
     }
@@ -146,32 +146,32 @@ public class CreateEventActivity extends ActionBarActivity {
     //-----------------Getter and Setter-------------------------------------
     //----------------------------------------------------------------------
 
-    public String getEventNameField() {
-        return eventNameField.getText().toString().trim();
+    public String getEventNameEditText() {
+        return eventNameEditText.getText().toString().trim();
     }
-    public String getEventDateField() {
-        return eventDateField.getText().toString();
+    public String getEventDateTextView() {
+        return eventDateTextView.getText().toString();
     }
-    public void setEventDateField(String eventDateField) {
-        this.eventDateField.setText(eventDateField);
+    public void setEventDateTextView(String eventDateTextView) {
+        this.eventDateTextView.setText(eventDateTextView);
     }
     public ImageButton getAddDateButton() {
         return addDateButton;
     }
     public void setEditTextName(int res){
-        this.eventNameField= (EditText) findViewById(res);
+        this.eventNameEditText = (EditText) findViewById(res);
     }
     public void setTextViewDate(int res){
-        this.eventDateField= (TextView) findViewById(res);
+        this.eventDateTextView = (TextView) findViewById(res);
     }
     public void setButtonDate(int res){
         this.addDateButton=  (ImageButton)findViewById(res);
     }
-    public String getEventLocationField() {
-        return eventLocationField.getText().toString().trim();
+    public String getEventLocationEditText() {
+        return eventLocationEditText.getText().toString().trim();
     }
-    public void setEventLocationField(int res) {
-        this.eventLocationField = (EditText) findViewById(res);
+    public void setEventLocationEditText(int res) {
+        this.eventLocationEditText = (EditText) findViewById(res);
     }
     public Date getEventDate() {
         return eventDate;

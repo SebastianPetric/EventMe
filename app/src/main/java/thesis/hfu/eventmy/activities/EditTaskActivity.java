@@ -22,7 +22,7 @@ import thesis.hfu.eventmy.functions.StartActivityFunctions;
 
 public class EditTaskActivity extends ActionBarActivity {
 
-    private TextView taskName, eventName, taskQuantity, costsField,percentageField,editorField, historyField;
+    private TextView taskNameTextView, eventNameTextView, taskQuantityTextView, costsTextView, percentageTextView, editorTextView, historyTextView;
     private ImageButton costsButton, percentageButton,editorButton;
     private SwipeRefreshLayout syncRefresh;
     private FloatingActionMenu actionMenu;
@@ -49,16 +49,16 @@ public class EditTaskActivity extends ActionBarActivity {
             setTask_id(getIntent().getExtras().getInt(TASK_ID));
             setFloatingActionMenu();
             setSyncRefresh(R.id.swipe_refresh_edit_task);
-            setTaskNameField(R.id.textViewEditTaskTaskName);
-            setEventNameField(R.id.textViewEditTaskEventName);
-            setCostsField(R.id.textViewEditTaskCostsField);
-            setPercentageField(R.id.textViewEditTaskPercentageField);
-            setEditorField(R.id.textViewEditTaskEditorField);
-            setTaskQuantityField(R.id.textViewEditTaskQuantity);
+            setTaskNameTextView(R.id.textViewEditTaskTaskName);
+            setEventNameTextView(R.id.textViewEditTaskEventName);
+            setCostsTextView(R.id.textViewEditTaskCostsField);
+            setPercentageTextView(R.id.textViewEditTaskPercentageField);
+            setEditorTextView(R.id.textViewEditTaskEditorField);
+            setTaskQuantityTextView(R.id.textViewEditTaskQuantity);
             setCostsButton(R.id.imageButtonEditTaskCosts);
             setEditorButton(R.id.imageButtonEditTaskEditor);
             setPercentageButton(R.id.imageButtonEditTaskPercentage);
-            setHistoryField(R.id.textViewEditTaskRecentReview);
+            setHistoryTextView(R.id.textViewEditTaskRecentReview);
             getSyncRefresh().setOnRefreshListener(new CustomSwipeListener());
             getCostsButton().setOnClickListener(new CustomClickListener());
             getPercentageButton().setOnClickListener(new CustomClickListener());
@@ -103,7 +103,7 @@ public class EditTaskActivity extends ActionBarActivity {
                 CommentOnTaskDialog.getInstance().startCommentDialog(getFragmentManager(),getSyncRefresh(),getApplicationContext(),getTask_id(),CheckSharedPreferences.getInstance().getAdmin_id(),getEventNameTextView(),getTaskTextView(),getQuantityTextView(),getCostsTextView(),getPercentageTextView(),getEditorTextView(),getHistoryTextView());
             }else if(v.getTag().equals(EDIT_TASK)) {
                 actionMenu.close(true);
-                EditTaskDialog.getInstance().startEditTaskDialog(getFragmentManager(),getApplicationContext(),getTaskTextView(),getQuantityTextView(),getTask_id(),CheckSharedPreferences.getInstance().getAdmin_id());
+                EditTaskDialog.getInstance().startEditTaskDialog(getFragmentManager(),getApplicationContext(),getTaskTextView(),getQuantityTextView(),getEventNameTextView(),getCostsTextView(),getPercentageTextView(),getEditorTextView(),getHistoryTextView(),getTask_id(),CheckSharedPreferences.getInstance().getAdmin_id());
             }
         }
     }
@@ -157,26 +157,26 @@ public class EditTaskActivity extends ActionBarActivity {
     //-----------------Getter and Setter-------------------------------------
     //----------------------------------------------------------------------
 
-    public void setTaskNameField(int res) {
-        this.taskName= (TextView) findViewById(res);
+    public void setTaskNameTextView(int res) {
+        this.taskNameTextView = (TextView) findViewById(res);
     }
-    public void setEventNameField(int res) {
-        this.eventName= (TextView) findViewById(res);
+    public void setEventNameTextView(int res) {
+        this.eventNameTextView = (TextView) findViewById(res);
     }
-    public void setTaskQuantityField(int res) {
-        this.taskQuantity= (TextView) findViewById(res);
+    public void setTaskQuantityTextView(int res) {
+        this.taskQuantityTextView = (TextView) findViewById(res);
     }
-    public void setCostsField(int res) {
-        this.costsField= (TextView) findViewById(res);
+    public void setCostsTextView(int res) {
+        this.costsTextView = (TextView) findViewById(res);
     }
-    public void setPercentageField(int res) {
-        this.percentageField= (TextView) findViewById(res);
+    public void setPercentageTextView(int res) {
+        this.percentageTextView = (TextView) findViewById(res);
     }
-    public void setEditorField(int res) {
-        this.editorField= (TextView) findViewById(res);
+    public void setEditorTextView(int res) {
+        this.editorTextView = (TextView) findViewById(res);
     }
-    public void setHistoryField(int res) {
-        this.historyField= (TextView) findViewById(res);
+    public void setHistoryTextView(int res) {
+        this.historyTextView = (TextView) findViewById(res);
     }
     public ImageButton getCostsButton() {
         return costsButton;
@@ -209,25 +209,25 @@ public class EditTaskActivity extends ActionBarActivity {
         this.task_id = task_id;
     }
     public TextView getEventNameTextView(){
-        return this.eventName;
+        return this.eventNameTextView;
     }
     public TextView getTaskTextView(){
-        return this.taskName;
+        return this.taskNameTextView;
     }
     public TextView getQuantityTextView(){
-        return this.taskQuantity;
+        return this.taskQuantityTextView;
     }
     public TextView getCostsTextView(){
-        return this.costsField;
+        return this.costsTextView;
     }
     public TextView getPercentageTextView(){
-        return this.percentageField;
+        return this.percentageTextView;
     }
     public TextView getEditorTextView(){
-        return this.editorField;
+        return this.editorTextView;
     }
     public TextView getHistoryTextView(){
-        return this.historyField;
+        return this.historyTextView;
     }
     public SwipeRefreshLayout getSyncRefresh() {
         return syncRefresh;

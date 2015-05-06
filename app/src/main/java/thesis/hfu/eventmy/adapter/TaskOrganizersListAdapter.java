@@ -36,9 +36,9 @@ public class TaskOrganizersListAdapter extends
     public void onBindViewHolder(final MyViewHolder viewHolder, final int position) {
         final User user_b = this.users.get(position);
 
-        viewHolder.name.setText(user_b.getName());
-        viewHolder.prename.setText(user_b.getPrename());
-        viewHolder.email.setText(user_b.getEmail());
+        viewHolder.nameTextView.setText(user_b.getName());
+        viewHolder.prenameTextView.setText(user_b.getPrename());
+        viewHolder.emailTextView.setText(user_b.getEmail());
         viewHolder.addButton.setVisibility(View.VISIBLE);
         viewHolder.removeButton.setVisibility(View.GONE);
         viewHolder.addButton.setOnClickListener(new View.OnClickListener() {
@@ -64,16 +64,14 @@ public class TaskOrganizersListAdapter extends
     public class MyViewHolder extends RecyclerView.ViewHolder implements
             View.OnClickListener {
 
-        TextView name;
-        TextView prename;
-        TextView email;
+        TextView nameTextView, prenameTextView, emailTextView;
         ImageButton addButton, removeButton;
 
         public MyViewHolder(View itemView) {
             super(itemView);
-            name = (TextView) itemView.findViewById(R.id.textViewListEventOrganizersRowName);
-            prename = (TextView) itemView.findViewById(R.id.textViewListEventOrganizersRowPrename);
-            email= (TextView) itemView.findViewById(R.id.textViewListEventOrganizersRowEmail);
+            nameTextView = (TextView) itemView.findViewById(R.id.textViewListEventOrganizersRowName);
+            prenameTextView = (TextView) itemView.findViewById(R.id.textViewListEventOrganizersRowPrename);
+            emailTextView = (TextView) itemView.findViewById(R.id.textViewListEventOrganizersRowEmail);
             addButton= (ImageButton) itemView.findViewById(R.id.imageButtonAddToEvent);
             removeButton= (ImageButton) itemView.findViewById(R.id.imageButtonDeleteFromEvent);
             itemView.setOnClickListener(this);

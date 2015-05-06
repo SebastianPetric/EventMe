@@ -19,7 +19,7 @@ import thesis.hfu.eventmy.functions.CheckSharedPreferences;
 
 public class EditCostsDialog extends DialogFragment {
 
-    private TextView taskCostField,toalCosts,totalPercentage,totalOrganizers,eventName,eventDate;
+    private TextView taskCostTextView, toalCostsTextView, totalPercentageTextView, totalOrganizersTextView, eventNameTextView, eventDateTextView;
     private int event_id,task_id, typeOfCalculation, typeOfUpdate;
     private double costValue;
     private static EditCostsDialog instance;
@@ -33,15 +33,15 @@ public class EditCostsDialog extends DialogFragment {
         return EditCostsDialog.instance;
     }
 
-    public void startEditTaskDialog(FragmentManager manager,TextView taskCostField,TextView totalOrganizers,TextView totalCosts, TextView totalPercentage,TextView eventName, TextView eventDate,int event_id,int task_id,int typeOfUpdate) {
+    public void startEditTaskDialog(FragmentManager manager,TextView taskCostTextView,TextView totalOrganizersTextView,TextView totalCostsTextView, TextView totalPercentageTextView,TextView eventNameTextView, TextView eventDateTextView,int event_id,int task_id,int typeOfUpdate) {
         setTask_id(task_id);
-        setTaskCostField(taskCostField);
+        setTaskCostTextView(taskCostTextView);
         setEvent_id(event_id);
-        setTotalOrganizers(totalOrganizers);
-        setToalCosts(totalCosts);
-        setTotalPercentage(totalPercentage);
-        setEventName(eventName);
-        setEventDate(eventDate);
+        setTotalOrganizersTextView(totalOrganizersTextView);
+        setToalCostsTextView(totalCostsTextView);
+        setTotalPercentageTextView(totalPercentageTextView);
+        setEventNameTextView(eventNameTextView);
+        setEventDateTextView(eventDateTextView);
         setTypeOfUpdate(typeOfUpdate);
         this.show(manager, "editCostsDialog");
     }
@@ -61,7 +61,7 @@ public class EditCostsDialog extends DialogFragment {
                                     setCostValue(Calculation.getInstance().round(Double.parseDouble(userInput.getText().toString())));
                                     setTypeOfCalculation(0);
                                     if (CheckSharedPreferences.getInstance().isLoggedIn(getActivity())) {
-                                        DBfunctions.getInstance().updateCosts(getActivity(),getTaskCostField(),getTotalOrganizers(),getTotalPercentage(),getToalCosts(),getEventName(),getEventDate(),getEvent_id(),getTask_id(), Integer.parseInt(CheckSharedPreferences.getInstance().getAdmin_id()), getCostValue(), getTypeOfCalculation(), getTypeOfUpdate());
+                                        DBfunctions.getInstance().updateCosts(getActivity(), getTaskCostTextView(), getTotalOrganizersTextView(), getTotalPercentageTextView(), getToalCostsTextView(), getEventNameTextView(), getEventDateTextView(),getEvent_id(),getTask_id(), Integer.parseInt(CheckSharedPreferences.getInstance().getAdmin_id()), getCostValue(), getTypeOfCalculation(), getTypeOfUpdate());
                                     }else{
                                         CheckSharedPreferences.getInstance().endSession(getActivity());
                                     }
@@ -83,7 +83,7 @@ public class EditCostsDialog extends DialogFragment {
                             setCostValue(Calculation.getInstance().round(Double.parseDouble(userInput.getText().toString())));
                             setTypeOfCalculation(1);
                             if (CheckSharedPreferences.getInstance().isLoggedIn(getActivity())) {
-                                DBfunctions.getInstance().updateCosts(getActivity(),getTaskCostField(),getTotalOrganizers(),getTotalPercentage(),getToalCosts(),getEventName(),getEventDate(),getEvent_id(),getTask_id(), Integer.parseInt(CheckSharedPreferences.getInstance().getAdmin_id()), getCostValue(), getTypeOfCalculation(), getTypeOfUpdate());
+                                DBfunctions.getInstance().updateCosts(getActivity(), getTaskCostTextView(), getTotalOrganizersTextView(), getTotalPercentageTextView(), getToalCostsTextView(), getEventNameTextView(), getEventDateTextView(),getEvent_id(),getTask_id(), Integer.parseInt(CheckSharedPreferences.getInstance().getAdmin_id()), getCostValue(), getTypeOfCalculation(), getTypeOfUpdate());
                             } else {
                                 CheckSharedPreferences.getInstance().endSession(getActivity());
                             }
@@ -117,41 +117,41 @@ public class EditCostsDialog extends DialogFragment {
     public void setCostValue(double costValue) {
         this.costValue = costValue;
     }
-    public TextView getTaskCostField() {
-        return taskCostField;
+    public TextView getTaskCostTextView() {
+        return taskCostTextView;
     }
-    public void setTaskCostField(TextView taskCostField) {
-        this.taskCostField = taskCostField;
+    public void setTaskCostTextView(TextView taskCostTextView) {
+        this.taskCostTextView = taskCostTextView;
     }
-    public TextView getToalCosts() {
-        return toalCosts;
+    public TextView getToalCostsTextView() {
+        return toalCostsTextView;
     }
-    public void setToalCosts(TextView toalCosts) {
-        this.toalCosts = toalCosts;
+    public void setToalCostsTextView(TextView toalCostsTextView) {
+        this.toalCostsTextView = toalCostsTextView;
     }
-    public TextView getTotalPercentage() {
-        return totalPercentage;
+    public TextView getTotalPercentageTextView() {
+        return totalPercentageTextView;
     }
-    public void setTotalPercentage(TextView totalPercentage) {
-        this.totalPercentage = totalPercentage;
+    public void setTotalPercentageTextView(TextView totalPercentageTextView) {
+        this.totalPercentageTextView = totalPercentageTextView;
     }
-    public TextView getTotalOrganizers() {
-        return totalOrganizers;
+    public TextView getTotalOrganizersTextView() {
+        return totalOrganizersTextView;
     }
-    public void setTotalOrganizers(TextView totalOrganizers) {
-        this.totalOrganizers = totalOrganizers;
+    public void setTotalOrganizersTextView(TextView totalOrganizersTextView) {
+        this.totalOrganizersTextView = totalOrganizersTextView;
     }
-    public TextView getEventName() {
-        return eventName;
+    public TextView getEventNameTextView() {
+        return eventNameTextView;
     }
-    public void setEventName(TextView eventName) {
-        this.eventName = eventName;
+    public void setEventNameTextView(TextView eventNameTextView) {
+        this.eventNameTextView = eventNameTextView;
     }
-    public TextView getEventDate() {
-        return eventDate;
+    public TextView getEventDateTextView() {
+        return eventDateTextView;
     }
-    public void setEventDate(TextView eventDate) {
-        this.eventDate = eventDate;
+    public void setEventDateTextView(TextView eventDateTextView) {
+        this.eventDateTextView = eventDateTextView;
     }
     public int getEvent_id() {
         return event_id;

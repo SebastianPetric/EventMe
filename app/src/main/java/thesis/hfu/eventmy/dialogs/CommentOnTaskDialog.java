@@ -20,7 +20,7 @@ public class CommentOnTaskDialog extends DialogFragment {
     private static CommentOnTaskDialog instance;
     private int task_id,admin_id;
     private Context context;
-    private TextView taskName, eventName, taskQuantity, costsField,percentageField,editorField, historyField;
+    private TextView taskNameTextView, eventNameTextView, taskQuantityTextView, costsTextView, percentageTextView, editorTextView, historyTextView;
     private SwipeRefreshLayout swipeRefreshLayout;
 
     public static CommentOnTaskDialog getInstance() {
@@ -30,17 +30,17 @@ public class CommentOnTaskDialog extends DialogFragment {
         return CommentOnTaskDialog.instance;
     }
 
-    public void startCommentDialog(FragmentManager manager,final SwipeRefreshLayout swipeRefreshLayout,Context context, int task_id,String admin_id,final TextView eventName,final TextView taskField, final TextView quantity, final TextView cost, TextView percentage, final TextView editor, final TextView history) {
+    public void startCommentDialog(FragmentManager manager,final SwipeRefreshLayout swipeRefreshLayout,Context context, int task_id,String admin_id,final TextView eventNameTextView,final TextView taskFieldTextView, final TextView quantityTextView, final TextView costTextView, TextView percentageTextView, final TextView editorTextView, final TextView historyTextView) {
         setTask_id(task_id);
         setAdmin_id(Integer.valueOf(admin_id));
         setContext(context);
-        setEventName(eventName);
-        setTaskName(taskField);
-        setTaskQuantity(quantity);
-        setCostsField(cost);
-        setPercentageField(percentage);
-        setEditorField(editor);
-        setHistoryField(history);
+        setEventNameTextView(eventNameTextView);
+        setTaskNameTextView(taskFieldTextView);
+        setTaskQuantityTextView(quantityTextView);
+        setCostsTextView(costTextView);
+        setPercentageTextView(percentageTextView);
+        setEditorTextView(editorTextView);
+        setHistoryTextView(historyTextView);
         setSwipeRefreshLayout(swipeRefreshLayout);
         this.show(manager, "commentDialog");
     }
@@ -92,46 +92,46 @@ public class CommentOnTaskDialog extends DialogFragment {
         this.context = context;
     }
     public TextView getEventNameTextView(){
-        return this.eventName;
+        return this.eventNameTextView;
     }
     public TextView getTaskTextView(){
-        return this.taskName;
+        return this.taskNameTextView;
     }
     public TextView getQuantityTextView(){
-        return this.taskQuantity;
+        return this.taskQuantityTextView;
     }
     public TextView getCostsTextView(){
-        return this.costsField;
+        return this.costsTextView;
     }
     public TextView getPercentageTextView(){
-        return this.percentageField;
+        return this.percentageTextView;
     }
     public TextView getEditorTextView(){
-        return this.editorField;
+        return this.editorTextView;
     }
     public TextView getHistoryTextView(){
-        return this.historyField;
+        return this.historyTextView;
     }
-    public void setTaskName(TextView taskName) {
-        this.taskName = taskName;
+    public void setTaskNameTextView(TextView taskNameTextView) {
+        this.taskNameTextView = taskNameTextView;
     }
-    public void setEventName(TextView eventName) {
-        this.eventName = eventName;
+    public void setEventNameTextView(TextView eventNameTextView) {
+        this.eventNameTextView = eventNameTextView;
     }
-    public void setTaskQuantity(TextView taskQuantity) {
-        this.taskQuantity = taskQuantity;
+    public void setTaskQuantityTextView(TextView taskQuantityTextView) {
+        this.taskQuantityTextView = taskQuantityTextView;
     }
-    public void setCostsField(TextView costsField) {
-        this.costsField = costsField;
+    public void setCostsTextView(TextView costsTextView) {
+        this.costsTextView = costsTextView;
     }
-    public void setPercentageField(TextView percentageField) {
-        this.percentageField = percentageField;
+    public void setPercentageTextView(TextView percentageTextView) {
+        this.percentageTextView = percentageTextView;
     }
-    public void setEditorField(TextView editorField) {
-        this.editorField = editorField;
+    public void setEditorTextView(TextView editorTextView) {
+        this.editorTextView = editorTextView;
     }
-    public void setHistoryField(TextView historyField) {
-        this.historyField = historyField;
+    public void setHistoryTextView(TextView historyTextView) {
+        this.historyTextView = historyTextView;
     }
     public void setSwipeRefreshLayout(SwipeRefreshLayout swipeRefreshLayout) {
         this.swipeRefreshLayout = swipeRefreshLayout;

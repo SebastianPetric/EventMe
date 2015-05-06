@@ -213,7 +213,7 @@ public class DBfunctions {
         });
     }
 
-    public void getAllTasks(final Activity context, final SwipeRefreshLayout swipeRefreshLayout, final RecyclerView recyclerView, final int event_id, final TextView totalOrg, final TextView totalPerc, final TextView totalCos, final TextView name, final TextView date) {
+    public void getAllTasks(final Activity context, final SwipeRefreshLayout swipeRefreshLayout, final RecyclerView recyclerView, final int event_id, final TextView totalOrganizersTextView, final TextView totalPercentageTextView, final TextView totalCostsTextView, final TextView nameTextView, final TextView dateTextView) {
 
         RequestParams params = BuildJSON.getInstance().getAllTasksJSON(event_id);
         DBconnection.post(URL_GET_ALL_TASKS_OF_EVENT, params, new JsonHttpResponseHandler() {
@@ -224,7 +224,7 @@ public class DBfunctions {
                             Toast.makeText(context.getApplicationContext(), response.getString(MESSAGE), Toast.LENGTH_SHORT).show();
                             if (response.getInt(STATUS) == 200) {
                                 ArrayList<Task> taskList = BuildJSON.getInstance().getAllTasksOfEventJSON(response.getJSONArray(TASKS));
-                                RecyclerView.Adapter<AllTasksOfEventListAdapter.MyViewHolder> recAdapter = new AllTasksOfEventListAdapter(context, taskList, name, date, totalOrg, totalCos, totalPerc,event_id);
+                                RecyclerView.Adapter<AllTasksOfEventListAdapter.MyViewHolder> recAdapter = new AllTasksOfEventListAdapter(context, taskList, nameTextView, dateTextView, totalOrganizersTextView, totalCostsTextView, totalPercentageTextView,event_id);
                                 recyclerView.setAdapter(recAdapter);
                                 recyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
                                     public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
@@ -436,7 +436,7 @@ public class DBfunctions {
         });
     }
 
-    public void commentOnTask(final Context context, final TextView eventName, final TextView taskName, final TextView quantity, final TextView costs, final TextView percentage, final TextView editor, final TextView history, final int task_id, int admin_id, String comment){
+    public void commentOnTask(final Context context, final TextView eventNameTextView, final TextView taskNameTextView, final TextView quantityTextView, final TextView costsTextView, final TextView percentageTextView, final TextView editorTextView, final TextView historyTextView, final int task_id, int admin_id, String comment){
 
         RequestParams params = BuildJSON.getInstance().commentTaskJSON(task_id, admin_id, comment);
         DBconnection.post(URL_COMMENT_ON_TASK,params,new JsonHttpResponseHandler(){
@@ -446,8 +446,7 @@ public class DBfunctions {
                 try {
                     Toast.makeText(context.getApplicationContext(), response.getString(MESSAGE), Toast.LENGTH_SHORT).show();
                     if(response.getInt(STATUS)==200){
-                        DBfunctions.getInstance().updateTaskDetails(context, null, eventName, taskName, quantity, costs, percentage, editor, history, task_id);
-
+                        DBfunctions.getInstance().updateTaskDetails(context, null, eventNameTextView, taskNameTextView, quantityTextView, costsTextView, percentageTextView, editorTextView, historyTextView, task_id);
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -456,78 +455,23 @@ public class DBfunctions {
         });
     }
 
-    public void getEventComments(final Context context, final SwipeRefreshLayout syncComments,final TextView history, int event_id){
+    public void updateTaskNameQuantity(final Context context,final TextView taskNameTextView, final TextView quantityTextView,final TextView eventNameTextView, final TextView costsTextView, final TextView percentageTextView, final TextView editorTextView, final TextView historyTextView, final int task_id, String editor_id, final String quantity, final String task_name){
 
-        RequestParams params= BuildJSON.getInstance().getEventCommentsJSON(event_id);
-        DBconnection.post(URL_GET_EVENT_COMMENTS,params,new JsonHttpResponseHandler(){
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                try {
-                    Toast.makeText(context.getApplicationContext(), response.getString(MESSAGE), Toast.LENGTH_SHORT).show();
-                    if(response.getInt(STATUS)==200) {
-                        String comments = response.getString(HISTORY);
-                        history.setText(comments);
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                if(syncComments!=null){
-                    syncComments.setRefreshing(false);
-                }
-            }
-        });
-    }
-
-    public void updatePercentage(final Context context,final TextView percentageField,final TextView totalCosts,final TextView totalPercentage,final TextView totalOrganizers, final TextView eventName, final TextView eventDate, final int event_id,int task_id, int editor_id, final int percentage,final int status_of_update){
-
-        RequestParams params = BuildJSON.getInstance().updatePercentageOfTaskJSON(task_id, editor_id, percentage);
-        DBconnection.post(URL_UPDATE_PERCENTAGE_OF_TASK, params, new JsonHttpResponseHandler() {
-
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                try {
-                    Toast.makeText(context.getApplicationContext(), response.getString(MESSAGE), Toast.LENGTH_SHORT).show();
-                    if (response.getInt(STATUS) == 200) {
-                        percentageField.setText(String.valueOf(percentage));
-                        //If there aren't the fields totalOrganizers etc than this won't happen
-                        if(status_of_update==1){
-                            if(CheckSharedPreferences.getInstance().isLoggedIn(context.getApplicationContext())){
-                               updateEventDetails(null, CheckSharedPreferences.getInstance().getAdmin_id(), event_id, totalOrganizers, totalPercentage, totalCosts,eventName,eventDate);
-                            }else{
-                                CheckSharedPreferences.getInstance().endSession(context.getApplicationContext());
-                            }
-                        }
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-    }
-
-    public void updateCosts(final Context context,final TextView costsField, final TextView totalOrganizers, final TextView totalPercentage, final TextView totalCosts, final TextView eventName, final TextView eventDate, final int event_id,int task_id, int editor_id, final double costs, final int type_of_calculation, final int status_of_update){
-
-        RequestParams params = BuildJSON.getInstance().updateCostsOfTaskJSON(task_id, editor_id, costs, type_of_calculation);
-        DBconnection.post(URL_UPDATE_COSTS_OF_TASK,params,new JsonHttpResponseHandler(){
+        RequestParams params = BuildJSON.getInstance().updateTaskNameQuantityJSON(editor_id, task_id, quantity, task_name);
+        DBconnection.post(URL_UPDATE_TASK_QUANTITY_NAME,params,new JsonHttpResponseHandler(){
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 try {
                     Toast.makeText(context.getApplicationContext(),response.getString(MESSAGE),Toast.LENGTH_SHORT).show();
                     if(response.getInt(STATUS)==200){
-                        if(type_of_calculation==0) {
-                            costsField.setText(String.valueOf(costs));
-                        }else if(type_of_calculation==1){
-                            costsField.setText(String.valueOf((Double.parseDouble(costsField.getText().toString())+ costs)));
+                        if(!quantity.equals(EMPTY_STRING)){
+                            quantityTextView.setText(quantity);
                         }
-                        //If there aren't the fields totalOrganizers etc than this won't happen
-                        if(status_of_update==1){
-                            if(CheckSharedPreferences.getInstance().isLoggedIn(context.getApplicationContext())){
-                                updateEventDetails(null, CheckSharedPreferences.getInstance().getAdmin_id(), event_id, totalOrganizers, totalPercentage, totalCosts,eventName,eventDate);
-                            }else{
-                                CheckSharedPreferences.getInstance().endSession(context.getApplicationContext());
-                            }
+                        if(!task_name.equals(EMPTY_STRING)){
+                            taskNameTextView.setText(task_name);
                         }
+                        DBfunctions.getInstance().updateTaskDetails(context, null, eventNameTextView, taskNameTextView, quantityTextView, costsTextView, percentageTextView, editorTextView, historyTextView, task_id);
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -536,33 +480,7 @@ public class DBfunctions {
         });
     }
 
-    public void updateEventDetails(final SwipeRefreshLayout swipeRefreshLayout,String admin_id,int event_id, final TextView totalOrg, final TextView totalPercentage, final TextView totalCosts, final TextView event_name, final TextView event_date) {
-
-        RequestParams params = BuildJSON.getInstance().updateEventDetailsJSON(admin_id, event_id);
-        DBconnection.post(URL_UPDATE_EVENT_DETAILS, params, new JsonHttpResponseHandler() {
-
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                try {
-                    if (response.getInt(STATUS) == 200) {
-                        Event event = BuildJSON.getInstance().getEventJSON(response.getJSONArray(EVENTS));
-                        event_name.setText(event.getName());
-                        event_date.setText(event.getDate().getDate()+"."+(event.getDate().getMonth()+1)+"."+event.getDate().getYear());
-                        totalOrg.setText(String.valueOf(event.getNumOrganizers()));
-                        totalCosts.setText(String.valueOf(event.getCosts()));
-                        totalPercentage.setText(String.valueOf(event.getPercentage_of_event()));
-                    }
-                    if(swipeRefreshLayout!=null){
-                        swipeRefreshLayout.setRefreshing(false);
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-    }
-
-    public void updateTaskDetails(final Context context,final SwipeRefreshLayout swipeRefreshLayout,final TextView eventName, final TextView taskField, final TextView quantity, final TextView cost, final TextView percentageField, final TextView editor, final TextView history,final int task_id){
+    public void updateTaskDetails(final Context context,final SwipeRefreshLayout swipeRefreshLayout,final TextView eventNameTextView, final TextView taskFieldTextView, final TextView quantityTextView, final TextView costsTextView, final TextView percentageFieldTextView, final TextView editorTextView, final TextView historyTextView,final int task_id){
 
         RequestParams params= BuildJSON.getInstance().getTaskDetailsJSON(task_id);
         DBconnection.post(URL_GET_TASK_DETAILS,params,new JsonHttpResponseHandler(){
@@ -573,13 +491,13 @@ public class DBfunctions {
                     Toast.makeText(context.getApplicationContext(), response.getString(MESSAGE), Toast.LENGTH_SHORT).show();
                     if(response.getInt(STATUS)==200) {
                         Task task = BuildJSON.getInstance().getTaskDetailsJSON(response, task_id);
-                        percentageField.setText(String.valueOf(task.getPercentage()));
-                        eventName.setText(task.getEvent_name());
-                        taskField.setText(task.getTask());
-                        quantity.setText(task.getQuantity());
-                        cost.setText(String.valueOf(task.getCostOfTask()));
-                        history.setText(task.getDescription());
-                        editor.setText(task.getEditor_name());
+                        percentageFieldTextView.setText(String.valueOf(task.getPercentage()));
+                        eventNameTextView.setText(task.getEvent_name());
+                        taskFieldTextView.setText(task.getTask());
+                        quantityTextView.setText(task.getQuantity());
+                        costsTextView.setText(String.valueOf(task.getCostOfTask()));
+                        historyTextView.setText(task.getDescription());
+                        editorTextView.setText(task.getEditor_name());
                     }
                     if (swipeRefreshLayout != null) {
                         swipeRefreshLayout.setRefreshing(false);
@@ -592,16 +510,47 @@ public class DBfunctions {
         });
     }
 
-    public void commentOnEvent(final Context context, final SwipeRefreshLayout syncComments,final TextView history, final int event_id,int admin_id,String comment){
+    public void getEventComments(final Context context, final SwipeRefreshLayout syncComments,final TextView historyTextView, int event_id){
 
-        RequestParams params= BuildJSON.getInstance().commentEventJSON(event_id, admin_id, comment);
-        DBconnection.post(URL_COMMENT_ON_EVENT,params,new JsonHttpResponseHandler(){
+        RequestParams params= BuildJSON.getInstance().getEventCommentsJSON(event_id);
+        DBconnection.post(URL_GET_EVENT_COMMENTS,params,new JsonHttpResponseHandler(){
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 try {
                     Toast.makeText(context.getApplicationContext(), response.getString(MESSAGE), Toast.LENGTH_SHORT).show();
-                    if(response.getInt(STATUS)==200){
-                        getEventComments(context, syncComments, history, event_id);
+                    if(response.getInt(STATUS)==200) {
+                        String comments = response.getString(HISTORY);
+                        historyTextView.setText(comments);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                if(syncComments!=null){
+                    syncComments.setRefreshing(false);
+                }
+            }
+        });
+    }
+
+    public void updatePercentage(final Context context,final TextView percentageTextView,final TextView totalCostsTextView,final TextView totalPercentageTextView,final TextView totalOrganizersTextView, final TextView eventNameTextView, final TextView eventDateTextView, final int event_id,int task_id, int editor_id, final int percentage,final int status_of_update){
+
+        RequestParams params = BuildJSON.getInstance().updatePercentageOfTaskJSON(task_id, editor_id, percentage);
+        DBconnection.post(URL_UPDATE_PERCENTAGE_OF_TASK, params, new JsonHttpResponseHandler() {
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                try {
+                    Toast.makeText(context.getApplicationContext(), response.getString(MESSAGE), Toast.LENGTH_SHORT).show();
+                    if (response.getInt(STATUS) == 200) {
+                        percentageTextView.setText(String.valueOf(percentage));
+                        //If there aren't the fields totalOrganizers etc than this won't happen
+                        if(status_of_update==1){
+                            if(CheckSharedPreferences.getInstance().isLoggedIn(context.getApplicationContext())){
+                               updateEventDetails(null, CheckSharedPreferences.getInstance().getAdmin_id(), event_id, totalOrganizersTextView, totalPercentageTextView, totalCostsTextView,eventNameTextView,eventDateTextView);
+                            }else{
+                                CheckSharedPreferences.getInstance().endSession(context.getApplicationContext());
+                            }
+                        }
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -610,7 +559,82 @@ public class DBfunctions {
         });
     }
 
-    public void changeEditorOfTask(final Context context,final TextView editorField,final String editor_id, int task_id){
+    public void updateCosts(final Context context,final TextView costsFieldTextView, final TextView totalOrganizersTextView, final TextView totalPercentageTextView, final TextView totalCostsTextView, final TextView eventNameTextView, final TextView eventDateTextView, final int event_id,int task_id, int editor_id, final double costs, final int type_of_calculation, final int status_of_update){
+
+        RequestParams params = BuildJSON.getInstance().updateCostsOfTaskJSON(task_id, editor_id, costs, type_of_calculation);
+        DBconnection.post(URL_UPDATE_COSTS_OF_TASK,params,new JsonHttpResponseHandler(){
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                try {
+                    Toast.makeText(context.getApplicationContext(),response.getString(MESSAGE),Toast.LENGTH_SHORT).show();
+                    if(response.getInt(STATUS)==200){
+                        if(type_of_calculation==0) {
+                            costsFieldTextView.setText(String.valueOf(costs));
+                        }else if(type_of_calculation==1){
+                            costsFieldTextView.setText(String.valueOf((Double.parseDouble(costsFieldTextView.getText().toString()) + costs)));
+                        }
+                        //If there aren't the fields totalOrganizers etc than this won't happen
+                        if(status_of_update==1){
+                            if(CheckSharedPreferences.getInstance().isLoggedIn(context.getApplicationContext())){
+                                updateEventDetails(null, CheckSharedPreferences.getInstance().getAdmin_id(), event_id, totalOrganizersTextView, totalPercentageTextView, totalCostsTextView,eventNameTextView,eventDateTextView);
+                            }else{
+                                CheckSharedPreferences.getInstance().endSession(context.getApplicationContext());
+                            }
+                        }
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+    public void updateEventDetails(final SwipeRefreshLayout swipeRefreshLayout,String admin_id,int event_id, final TextView totalOrganizersTextView, final TextView totalPercentageTextView, final TextView totalCostsTextView, final TextView eventNameTextView, final TextView eventDateTextView) {
+
+        RequestParams params = BuildJSON.getInstance().updateEventDetailsJSON(admin_id, event_id);
+        DBconnection.post(URL_UPDATE_EVENT_DETAILS, params, new JsonHttpResponseHandler() {
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                try {
+                    if (response.getInt(STATUS) == 200) {
+                        Event event = BuildJSON.getInstance().getEventJSON(response.getJSONArray(EVENTS));
+                        eventNameTextView.setText(event.getName());
+                        eventDateTextView.setText(event.getDate().getDate() + "." + (event.getDate().getMonth() + 1) + "." + event.getDate().getYear());
+                        totalOrganizersTextView.setText(String.valueOf(event.getNumOrganizers()));
+                        totalCostsTextView.setText(String.valueOf(event.getCosts()));
+                        totalPercentageTextView.setText(String.valueOf(event.getPercentage_of_event()));
+                    }
+                    if(swipeRefreshLayout!=null){
+                        swipeRefreshLayout.setRefreshing(false);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+    public void commentOnEvent(final Context context, final SwipeRefreshLayout syncComments,final TextView historyTextView, final int event_id,int admin_id,String comment){
+
+        RequestParams params= BuildJSON.getInstance().commentEventJSON(event_id, admin_id, comment);
+        DBconnection.post(URL_COMMENT_ON_EVENT,params,new JsonHttpResponseHandler(){
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                try {
+                    Toast.makeText(context.getApplicationContext(), response.getString(MESSAGE), Toast.LENGTH_SHORT).show();
+                    if(response.getInt(STATUS)==200){
+                        getEventComments(context, syncComments, historyTextView, event_id);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+    public void changeEditorOfTask(final Context context,final TextView editorTextView,final String editor_id, int task_id){
 
         RequestParams params= BuildJSON.getInstance().becomeEditorOfTaskJSON(Integer.parseInt(editor_id), task_id);
         DBconnection.post(URL_BECOME_EDITOR_OF_TASK, params, new JsonHttpResponseHandler() {
@@ -620,32 +644,7 @@ public class DBfunctions {
                 try {
                     Toast.makeText(context, response.getString(MESSAGE), Toast.LENGTH_SHORT).show();
                     if (response.getInt(STATUS) == 200) {
-                       editorField.setText(response.getString(EDITOR_NAME));
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-    }
-
-    public void updateTaskNameQuantity(final Context context,final TextView taskNameField, final TextView quantityField,int task_id, String editor_id, final String quantity, final String task_name){
-
-        RequestParams params = BuildJSON.getInstance().updateTaskNameQuantityJSON(editor_id, task_id, quantity, task_name);
-        DBconnection.post(URL_UPDATE_TASK_QUANTITY_NAME,params,new JsonHttpResponseHandler(){
-
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                try {
-                    Toast.makeText(context.getApplicationContext(),response.getString(MESSAGE),Toast.LENGTH_SHORT).show();
-                    if(response.getInt(STATUS)==200){
-
-                        if(!quantity.equals(EMPTY_STRING)){
-                            quantityField.setText(quantity);
-                        }
-                        if(!task_name.equals(EMPTY_STRING)){
-                            taskNameField.setText(task_name);
-                        }
+                       editorTextView.setText(response.getString(EDITOR_NAME));
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();

@@ -15,7 +15,7 @@ import thesis.hfu.eventmy.functions.StartActivityFunctions;
 
 public class RegistrationActivity extends ActionBarActivity {
 
-    private EditText nameField,prenameField,emailField,passwordField,passwordRepeatField;
+    private EditText nameEditText, prenameEditText, emailEditText, passwordEditText, passwordRepeatEditText;
     private Button finishRegistrationButton,cancelButton;
 
     private static final String EMPTY_STRING = "";
@@ -31,11 +31,11 @@ public class RegistrationActivity extends ActionBarActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
 
-        setNameField(R.id.registrationNameField);
-        setPrenameField(R.id.registrationPrenameField);
-        setEmailField(R.id.registrationEmailField);
-        setPasswordField(R.id.registrationPasswordField);
-        setPasswordRepeatField(R.id.registrationPasswordRepeatField);
+        setNameEditText(R.id.registrationNameField);
+        setPrenameEditText(R.id.registrationPrenameField);
+        setEmailEditText(R.id.registrationEmailField);
+        setPasswordEditText(R.id.registrationPasswordField);
+        setPasswordRepeatEditText(R.id.registrationPasswordRepeatField);
         setFinishRegistrationButton(R.id.registrationButton);
         setCancelButton(R.id.registrationCancelButton);
         getFinishRegistrationButton().setOnClickListener(new CustomClickListener());
@@ -51,11 +51,11 @@ public class RegistrationActivity extends ActionBarActivity {
         @Override
         public void onClick(View v) {
             if(v.getId()==R.id.registrationButton) {
-                if (!getNameField().equals(EMPTY_STRING) && !getPrenameField().equals(EMPTY_STRING) && !getEmailField().equals(EMPTY_STRING)
-                        && !getPasswordField().equals(EMPTY_STRING) && !getPasswordRepeatField().equals(EMPTY_STRING)) {
-                    if (CheckIf.EmailIsValid(getEmailField())) {
-                        if (getPasswordField().equals(getPasswordRepeatField())) {
-                            DBfunctions.getInstance().registration(getApplicationContext(), getNameField(), getPrenameField(), getEmailField(), getPasswordField());
+                if (!getNameEditText().equals(EMPTY_STRING) && !getPrenameEditText().equals(EMPTY_STRING) && !getEmailEditText().equals(EMPTY_STRING)
+                        && !getPasswordEditText().equals(EMPTY_STRING) && !getPasswordRepeatEditText().equals(EMPTY_STRING)) {
+                    if (CheckIf.EmailIsValid(getEmailEditText())) {
+                        if (getPasswordEditText().equals(getPasswordRepeatEditText())) {
+                            DBfunctions.getInstance().registration(getApplicationContext(), getNameEditText(), getPrenameEditText(), getEmailEditText(), getPasswordEditText());
                         } else {
                             Toast.makeText(getApplicationContext(), ERROR_PASSWORD, Toast.LENGTH_SHORT).show();
                         }
@@ -88,35 +88,35 @@ public class RegistrationActivity extends ActionBarActivity {
     //-----------------Getter and Setter-------------------------------------
     //----------------------------------------------------------------------
 
-    public String getNameField() {
-        return nameField.getText().toString().trim();
+    public String getNameEditText() {
+        return nameEditText.getText().toString().trim();
     }
-    public void setNameField(int res) {
-        this.nameField= (EditText) findViewById(res);
+    public void setNameEditText(int res) {
+        this.nameEditText = (EditText) findViewById(res);
     }
-    public String getPrenameField() {
-        return prenameField.getText().toString().trim();
+    public String getPrenameEditText() {
+        return prenameEditText.getText().toString().trim();
     }
-    public void setPrenameField(int res) {
-        this.prenameField = (EditText) findViewById(res);
+    public void setPrenameEditText(int res) {
+        this.prenameEditText = (EditText) findViewById(res);
     }
-    public String getEmailField() {
-        return emailField.getText().toString().trim();
+    public String getEmailEditText() {
+        return emailEditText.getText().toString().trim();
     }
-    public void setEmailField(int res) {
-        this.emailField = (EditText) findViewById(res);
+    public void setEmailEditText(int res) {
+        this.emailEditText = (EditText) findViewById(res);
     }
-    public String getPasswordField() {
-        return passwordField.getText().toString().trim();
+    public String getPasswordEditText() {
+        return passwordEditText.getText().toString().trim();
     }
-    public void setPasswordField(int res) {
-        this.passwordField = (EditText) findViewById(res);
+    public void setPasswordEditText(int res) {
+        this.passwordEditText = (EditText) findViewById(res);
     }
-    public String getPasswordRepeatField() {
-        return passwordRepeatField.getText().toString().trim();
+    public String getPasswordRepeatEditText() {
+        return passwordRepeatEditText.getText().toString().trim();
     }
-    public void setPasswordRepeatField(int res) {
-        this.passwordRepeatField = (EditText) findViewById(res);
+    public void setPasswordRepeatEditText(int res) {
+        this.passwordRepeatEditText = (EditText) findViewById(res);
     }
     public Button getFinishRegistrationButton() {
         return finishRegistrationButton;

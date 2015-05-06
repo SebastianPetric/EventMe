@@ -23,7 +23,7 @@ public class FriendslistActivity extends ActionBarActivity {
 
     private RecyclerView FriendsListRecycler;
     private SwipeRefreshLayout syncRefresh;
-    private EditText searchField;
+    private EditText searchEditText;
     private Button searchButton;
     private String EMPTY_STRING="";
 
@@ -39,7 +39,7 @@ public class FriendslistActivity extends ActionBarActivity {
             setFriendsListRecycler(R.id.recyclerViewFriendsList);
             setSyncRefresh(R.id.swipe_refresh_friendslist);
             setSearchButton(R.id.buttonFriendsListSearchButton);
-            setSearchField(R.id.editTextFriendsListSearchField);
+            setSearchEditText(R.id.editTextFriendsListSearchField);
             getFriendsListRecycler().setHasFixedSize(true);
             LinearLayoutManager layoutManager= new LinearLayoutManager(this);
             getFriendsListRecycler().setLayoutManager(layoutManager);
@@ -130,10 +130,10 @@ public class FriendslistActivity extends ActionBarActivity {
         this.syncRefresh = (SwipeRefreshLayout) findViewById(res);
     }
     public String getSearchFieldValue() {
-        return searchField.getText().toString().trim();
+        return searchEditText.getText().toString().trim();
     }
-    public void setSearchField(int res) {
-        this.searchField = (EditText) findViewById(res);
+    public void setSearchEditText(int res) {
+        this.searchEditText = (EditText) findViewById(res);
     }
     public Button getSearchButton() {
         return searchButton;

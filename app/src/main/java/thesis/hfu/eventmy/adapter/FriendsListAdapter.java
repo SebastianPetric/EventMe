@@ -35,9 +35,9 @@ public class FriendsListAdapter extends
     public void onBindViewHolder(final MyViewHolder viewHolder, final int position) {
         final User user_b = this.users.get(position);
 
-        viewHolder.name.setText(user_b.getName());
-        viewHolder.prename.setText(user_b.getPrename());
-        viewHolder.email.setText(user_b.getEmail());
+        viewHolder.nameTextView.setText(user_b.getName());
+        viewHolder.prenameTextView.setText(user_b.getPrename());
+        viewHolder.emailTextView.setText(user_b.getEmail());
 
         if(user_b.getStatus()==0){
             viewHolder.addButton.setVisibility(View.GONE);
@@ -89,16 +89,14 @@ public class FriendsListAdapter extends
     public class MyViewHolder extends RecyclerView.ViewHolder implements
             View.OnClickListener {
 
-        TextView name;
-        TextView prename;
-        TextView email;
+        TextView nameTextView, prenameTextView, emailTextView;
         ImageButton removeButton,addButton,openButton;
 
         public MyViewHolder(View itemView) {
             super(itemView);
-            name = (TextView) itemView.findViewById(R.id.textViewFriendsListRowName);
-            prename = (TextView) itemView.findViewById(R.id.textViewFriendsListRowPrename);
-            email= (TextView) itemView.findViewById(R.id.textViewFriendsListRowEmail);
+            nameTextView = (TextView) itemView.findViewById(R.id.textViewFriendsListRowName);
+            prenameTextView = (TextView) itemView.findViewById(R.id.textViewFriendsListRowPrename);
+            emailTextView = (TextView) itemView.findViewById(R.id.textViewFriendsListRowEmail);
             removeButton= (ImageButton) itemView.findViewById(R.id.imageButtonDeleteFromFriendsList);
             addButton= (ImageButton) itemView.findViewById(R.id.imageButtonAddToFriendsList);
             openButton= (ImageButton) itemView.findViewById(R.id.imageButtonOpenRequestFriendsList);

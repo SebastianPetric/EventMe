@@ -22,7 +22,7 @@ import thesis.hfu.eventmy.dialogs.LogoutDialog;
 
 public class SearchActivity extends ActionBarActivity {
 
-    private EditText searchField;
+    private EditText searchEditText;
     private Button searchButton;
     private RecyclerView recyclerView;
     private SwipeRefreshLayout syncRefresh;
@@ -37,7 +37,7 @@ public class SearchActivity extends ActionBarActivity {
         actionBar.setDisplayHomeAsUpEnabled(true);
 
         if(CheckSharedPreferences.getInstance().isLoggedIn(getApplicationContext())){
-            setSearchField(R.id.editTextSearchField);
+            setSearchEditText(R.id.editTextSearchField);
             setSearchButton(R.id.buttonSearchButton);
             setSyncRefresh(R.id.swipe_refresh_search);
             getSearchButton().setOnClickListener(new CustomClickListener());
@@ -63,7 +63,7 @@ public class SearchActivity extends ActionBarActivity {
         public void onClick(View v) {
             if(v.getId()==R.id.buttonSearchButton){
                 if(CheckSharedPreferences.getInstance().isLoggedIn(getApplicationContext())){
-                    DBfunctions.getInstance().searchAllUsers(getApplicationContext(), null, getRecyclerView(), getSearchField(), CheckSharedPreferences.getInstance().getAdmin_id());
+                    DBfunctions.getInstance().searchAllUsers(getApplicationContext(), null, getRecyclerView(), getSearchEditText(), CheckSharedPreferences.getInstance().getAdmin_id());
                     }else{
                     CheckSharedPreferences.getInstance().endSession(getApplicationContext());
                 }
@@ -114,11 +114,11 @@ public class SearchActivity extends ActionBarActivity {
     //-----------------Getter and Setter-------------------------------------
     //----------------------------------------------------------------------
 
-    public String getSearchField() {
-        return searchField.getText().toString().trim();
+    public String getSearchEditText() {
+        return searchEditText.getText().toString().trim();
     }
-    public void setSearchField(int res) {
-        this.searchField = (EditText) findViewById(res);
+    public void setSearchEditText(int res) {
+        this.searchEditText = (EditText) findViewById(res);
     }
     public Button getSearchButton() {
         return searchButton;
