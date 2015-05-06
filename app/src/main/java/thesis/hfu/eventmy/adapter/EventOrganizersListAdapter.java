@@ -1,6 +1,5 @@
 package thesis.hfu.eventmy.adapter;
 
-
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -8,41 +7,26 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
-import com.loopj.android.http.JsonHttpResponseHandler;
-import com.loopj.android.http.RequestParams;
-import org.apache.http.Header;
-import org.json.JSONException;
-import org.json.JSONObject;
 import thesis.hfu.eventmy.R;
-import thesis.hfu.eventmy.database.DBconnection;
-import thesis.hfu.eventmy.functions.BuildJSON;
+import thesis.hfu.eventmy.database.DBfunctions;
 import thesis.hfu.eventmy.functions.CheckSharedPreferences;
 import thesis.hfu.eventmy.objects.User;
 
 import java.util.ArrayList;
-
 
     public class EventOrganizersListAdapter extends
             RecyclerView.Adapter<EventOrganizersListAdapter.MyViewHolder> {
 
         private ArrayList<User> users;
         private Context context;
-        private static final String MESSAGE = "message";
-        private static final String STATUS = "status";
         private int position,event_id;
-
-        //Remove Friend
-        private static final String URL_REMOVE_FRIEND_FROM_EVENT = "remove_friend_from_event.php";
-
-        //Friend Request
-        private static final String URL_FRIEND_TO_EVENT = "add_friend_to_event.php";
 
         public EventOrganizersListAdapter(Context context,ArrayList<User> list,int event_id) {
             this.users = list;
             this.context=context;
             this.event_id=event_id;
         }
+
         @Override
         public int getItemCount() {
             return users.size();
@@ -72,9 +56,8 @@ import java.util.ArrayList;
                 @Override
                 public void onClick(View v) {
                     setPosition(position);
-
                     if(CheckSharedPreferences.getInstance().isLoggedIn(context)){
-                        addFriendToEvent(getUserList().get(getPosition()).getUser_id(),getEvent_id());
+                        DBfunctions.getInstance().addFriendToEvent(context, EventOrganizersListAdapter.this, getUserList(),getPosition(),getUserList().get(getPosition()).getUser_id(), getEvent_id());
                     }else {
                         CheckSharedPreferences.getInstance().endSession(context);
                     }
@@ -86,9 +69,9 @@ import java.util.ArrayList;
                 @Override
                 public void onClick(View v) {
                     setPosition(position);
-
                     if(CheckSharedPreferences.getInstance().isLoggedIn(context)){
-                       removeFriendFromEvent(getUserList().get(getPosition()).getUser_id(),getEvent_id());
+                        DBfunctions.getInstance().removeFriendFromEvent(context, EventOrganizersListAdapter.this, getUserList(), getPosition(), getUserList().get(getPosition()).getUser_id(), getEvent_id());
+
                     }else {
                         CheckSharedPreferences.getInstance().endSession(context);
                     }
@@ -124,56 +107,6 @@ import java.util.ArrayList;
             @Override
             public void onClick(View v) {
             }
-        }
-
-        //----------------------------------------------------------------------
-        //-----------------Functions-------------------------------------
-        //----------------------------------------------------------------------
-
-        public void addFriendToEvent(int user_id,int event_id){
-
-            RequestParams params = BuildJSON.getInstance().addRemoveFriendEventJSON(user_id, event_id);
-            DBconnection.post(URL_FRIEND_TO_EVENT, params, new JsonHttpResponseHandler() {
-
-                @Override
-                public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                    try {
-                        Toast.makeText(context.getApplicationContext(), response.getString(MESSAGE), Toast.LENGTH_SHORT).show();
-                        if (response.getInt(STATUS) == 200) {
-                            final User user_b = getUserList().get(getPosition());
-
-                                // User wird hinzugefügt
-                                user_b.setStatus(1);
-                                notifyDataSetChanged();
-                        }
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
-            });
-        }
-
-        public void removeFriendFromEvent(int user_id,int event_id) {
-
-            RequestParams params = BuildJSON.getInstance().addRemoveFriendEventJSON(user_id, event_id);
-            DBconnection.post(URL_REMOVE_FRIEND_FROM_EVENT, params, new JsonHttpResponseHandler() {
-
-                @Override
-                public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                    try {
-                        Toast.makeText(context.getApplicationContext(), response.getString(MESSAGE), Toast.LENGTH_SHORT).show();
-                        if (response.getInt(STATUS) == 200) {
-                            final User user_b = getUserList().get(getPosition());
-
-                            //User wird entfernt
-                            user_b.setStatus(0);
-                            notifyDataSetChanged();
-                        }
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
-            });
         }
 
         //----------------------------------------------------------------------

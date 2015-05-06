@@ -57,8 +57,7 @@ public class CommentOnTaskDialog extends DialogFragment {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
                         String comment = userInput.getText().toString().trim();
-                        DBfunctions.getInstance().commentOnTask(getContext(),getTask_id(),getAdmin_id(),comment);
-                        DBfunctions.getInstance().updateTaskDetails(getContext(),getSwipeRefreshLayout(),getEventNameTextView(),getTaskTextView(),getQuantityTextView(),getCostsTextView(),getPercentageTextView(),getEditorTextView(),getHistoryTextView(),getTask_id());
+                        DBfunctions.getInstance().commentOnTask(getContext(), getEventNameTextView(), getTaskTextView(),getQuantityTextView(),getCostsTextView(),getPercentageTextView(),getEditorTextView(),getHistoryTextView(),getTask_id(),getAdmin_id(),comment);
                         dialog.cancel();
                     }
                 })

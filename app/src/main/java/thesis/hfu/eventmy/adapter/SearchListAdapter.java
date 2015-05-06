@@ -1,6 +1,5 @@
 package thesis.hfu.eventmy.adapter;
 
-
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -8,15 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
-import com.loopj.android.http.JsonHttpResponseHandler;
-import com.loopj.android.http.RequestParams;
-import org.apache.http.Header;
-import org.json.JSONException;
-import org.json.JSONObject;
 import thesis.hfu.eventmy.R;
-import thesis.hfu.eventmy.database.DBconnection;
-import thesis.hfu.eventmy.functions.BuildJSON;
+import thesis.hfu.eventmy.database.DBfunctions;
 import thesis.hfu.eventmy.functions.CheckSharedPreferences;
 import thesis.hfu.eventmy.objects.User;
 
@@ -27,21 +19,13 @@ public class SearchListAdapter extends
 
     private ArrayList<User> users;
     private Context context;
-    private static final String MESSAGE = "message";
-    private static final String STATUS = "status";
-    private MyViewHolder viewHolder;
     private int position;
-
-    //Remove Friend
-    private static final String URL_REMOVE_FRIEND = "remove_friend.php";
-
-    //Friend Request
-    private static final String URL_FRIEND_REQUEST= "friend_request.php";
 
     public SearchListAdapter(Context context,ArrayList<User> list) {
         this.users = list;
         this.context=context;
     }
+
     @Override
     public int getItemCount() {
         return users.size();
@@ -78,7 +62,6 @@ public class SearchListAdapter extends
             viewHolder.addButton.setVisibility(View.VISIBLE);
             viewHolder.removeButton.setVisibility(View.VISIBLE);
             viewHolder.openRequest.setVisibility(View.GONE);
-
         }
 
         viewHolder.addButton.setOnClickListener(new View.OnClickListener() {
@@ -86,10 +69,9 @@ public class SearchListAdapter extends
             @Override
             public void onClick(View v) {
                     setPosition(position);
-                    setViewHolder(viewHolder);
 
                     if(CheckSharedPreferences.getInstance().isLoggedIn(context)){
-                        friendRequest(CheckSharedPreferences.getInstance().getAdmin_id(),user_b.getUser_id());
+                        DBfunctions.getInstance().friendRequest(context, SearchListAdapter.this, getUserList(), getPosition(), getUserList().get(getPosition()).getUser_id(), CheckSharedPreferences.getInstance().getAdmin_id());
                     }else {
                         CheckSharedPreferences.getInstance().endSession(context);
                     }
@@ -101,10 +83,9 @@ public class SearchListAdapter extends
             @Override
             public void onClick(View v) {
                 setPosition(position);
-                setViewHolder(viewHolder);
 
                 if(CheckSharedPreferences.getInstance().isLoggedIn(context)){
-                    removeFriend(CheckSharedPreferences.getInstance().getAdmin_id(), user_b.getUser_id());
+                    DBfunctions.getInstance().removeFriend(context, SearchListAdapter.this, getUserList(), getPosition(), getUserList().get(getPosition()).getUser_id(), CheckSharedPreferences.getInstance().getAdmin_id());
                     }else {
                     CheckSharedPreferences.getInstance().endSession(context);
                 }
@@ -137,76 +118,15 @@ public class SearchListAdapter extends
             openRequest= (ImageButton) itemView.findViewById(R.id.imageButtonOpenRequest);
             itemView.setOnClickListener(this);
         }
-
         @Override
         public void onClick(View v) {
         }
-    }
-
-
-    //----------------------------------------------------------------------
-    //-----------------Functions-------------------------------------
-    //----------------------------------------------------------------------
-
-    public void friendRequest(String user1_id,int user2_id){
-
-        RequestParams params = BuildJSON.getInstance().addRemoveFriendJSON(user1_id, user2_id);
-        DBconnection.post(URL_FRIEND_REQUEST, params, new JsonHttpResponseHandler() {
-
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                try {
-                    Toast.makeText(context.getApplicationContext(), response.getString(MESSAGE), Toast.LENGTH_SHORT).show();
-                    if (response.getInt(STATUS) == 200) {
-                        final User user_b = getUserList().get(getPosition());
-
-                        //Users become friends
-                        if (user_b.getStatus() == 3) {
-                            user_b.setStatus(2);
-                            notifyDataSetChanged();
-                            //Request is open and has to be answered by the other user
-                        } else if (user_b.getStatus() == 1) {
-                            user_b.setStatus(0);
-                            notifyDataSetChanged();
-                        }
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-    }
-
-    public void removeFriend(String usera_id, int userb_id) {
-
-        RequestParams params = BuildJSON.getInstance().addRemoveFriendJSON(usera_id, userb_id);
-        DBconnection.post(URL_REMOVE_FRIEND, params, new JsonHttpResponseHandler() {
-
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                try {
-                    Toast.makeText(context.getApplicationContext(), response.getString(MESSAGE), Toast.LENGTH_SHORT).show();
-                    if(response.getInt(STATUS)==200) {
-
-                        //Friend deleted
-                        final User user_b = getUserList().get(getPosition());
-                        user_b.setStatus(1);
-                        notifyDataSetChanged();
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
     }
 
     //----------------------------------------------------------------------
     //-----------------Getter and Setter-------------------------------------
     //----------------------------------------------------------------------
 
-    public void setViewHolder(MyViewHolder viewHolder) {
-        this.viewHolder = viewHolder;
-    }
     public int getPosition() {
         return position;
     }

@@ -16,6 +16,7 @@ import thesis.hfu.eventmy.functions.BuildJSON;
 import thesis.hfu.eventmy.functions.CheckSharedPreferences;
 import thesis.hfu.eventmy.functions.StartActivityFunctions;
 import thesis.hfu.eventmy.objects.Event;
+import thesis.hfu.eventmy.objects.Global;
 import thesis.hfu.eventmy.objects.Task;
 import thesis.hfu.eventmy.objects.User;
 
@@ -105,6 +106,23 @@ public class DBfunctions {
     //Comment on Event
     private static final String URL_COMMENT_ON_EVENT="comment_on_event.php";
 
+    //Add Friend to Event
+    private static final String URL_FRIEND_TO_EVENT = "add_friend_to_event.php";
+
+    //Remove Friend from Event
+    private static final String URL_REMOVE_FRIEND_FROM_EVENT = "remove_friend_from_event.php";
+
+    //Remove Friend from Friendslist
+    private static final String URL_REMOVE_FRIEND_FROM_FRIENDSLIST = "remove_friend.php";
+
+    //Add Friend to Friendlist
+    private static final String URL_ADD_FRIEND_TO_FRIENDSLIST = "friend_request.php";
+
+    //Friend Request
+    private static final String URL_FRIEND_REQUEST= "friend_request.php";
+
+    //Remove Friend
+    private static final String URL_REMOVE_FRIEND = "remove_friend.php";
 
 
     public static DBfunctions getInstance() {
@@ -149,7 +167,7 @@ public class DBfunctions {
         });
     }
 
-    public void getAllEvents(final Context context,  final SwipeRefreshLayout swipeRefreshLayout, final RecyclerView recyclerView, String admin_id) {
+    public void getAllEvents(final Activity context,  final SwipeRefreshLayout swipeRefreshLayout, final RecyclerView recyclerView, String admin_id) {
 
         RequestParams params = BuildJSON.getInstance().getAllEventsJSON(admin_id);
         DBconnection.post(URL_GET_ALL_EVENTS, params, new JsonHttpResponseHandler() {
@@ -160,7 +178,7 @@ public class DBfunctions {
                     Toast.makeText(context.getApplicationContext(), response.getString(MESSAGE), Toast.LENGTH_SHORT).show();
                     if (response.getInt(STATUS) == 200) {
                         final ArrayList<Event> eventList = BuildJSON.getInstance().getAllEventsJSON(response.getJSONArray(EVENTS));
-                        RecyclerView.Adapter<AllEventsListAdapter.MyViewHolder> recAdapter = new AllEventsListAdapter(context.getApplicationContext(), eventList);
+                        RecyclerView.Adapter<AllEventsListAdapter.MyViewHolder> recAdapter = new AllEventsListAdapter(context, eventList);
                         recyclerView.setAdapter(recAdapter);
                     }
                     swipeRefreshLayout.setRefreshing(false);
@@ -172,7 +190,7 @@ public class DBfunctions {
         });
     }
 
-    public void getAllArchivEvents(final Context context,  final SwipeRefreshLayout swipeRefreshLayout, final RecyclerView recyclerView, String admin_id) {
+    public void getAllArchivEvents(final Activity context,  final SwipeRefreshLayout swipeRefreshLayout, final RecyclerView recyclerView, String admin_id) {
 
         RequestParams params = BuildJSON.getInstance().getAllEventsJSON(admin_id);
         DBconnection.post(URL_GET_ALL_ARCHIV_EVENTS, params, new JsonHttpResponseHandler() {
@@ -183,7 +201,7 @@ public class DBfunctions {
                     Toast.makeText(context.getApplicationContext(), response.getString(MESSAGE), Toast.LENGTH_SHORT).show();
                     if (response.getInt(STATUS) == 200) {
                         final ArrayList<Event> eventList = BuildJSON.getInstance().getAllEventsJSON(response.getJSONArray(EVENTS));
-                        RecyclerView.Adapter<AllEventsListAdapter.MyViewHolder> recAdapter = new AllEventsListAdapter(context.getApplicationContext(), eventList);
+                        RecyclerView.Adapter<AllEventsListAdapter.MyViewHolder> recAdapter = new AllEventsListAdapter(context, eventList);
                         recyclerView.setAdapter(recAdapter);
                     }
                     swipeRefreshLayout.setRefreshing(false);
@@ -195,7 +213,7 @@ public class DBfunctions {
         });
     }
 
-    public void getAllTasks(final Context context, final SwipeRefreshLayout swipeRefreshLayout, final RecyclerView recyclerView, final int event_id, final TextView totalOrg, final TextView totalPerc, final TextView totalCos, final TextView name, final TextView date) {
+    public void getAllTasks(final Activity context, final SwipeRefreshLayout swipeRefreshLayout, final RecyclerView recyclerView, final int event_id, final TextView totalOrg, final TextView totalPerc, final TextView totalCos, final TextView name, final TextView date) {
 
         RequestParams params = BuildJSON.getInstance().getAllTasksJSON(event_id);
         DBconnection.post(URL_GET_ALL_TASKS_OF_EVENT, params, new JsonHttpResponseHandler() {
@@ -206,7 +224,7 @@ public class DBfunctions {
                             Toast.makeText(context.getApplicationContext(), response.getString(MESSAGE), Toast.LENGTH_SHORT).show();
                             if (response.getInt(STATUS) == 200) {
                                 ArrayList<Task> taskList = BuildJSON.getInstance().getAllTasksOfEventJSON(response.getJSONArray(TASKS));
-                                RecyclerView.Adapter<AllTasksOfEventListAdapter.MyViewHolder> recAdapter = new AllTasksOfEventListAdapter(context.getApplicationContext(), taskList,event_id, name, date, totalOrg, totalCos, totalPerc);
+                                RecyclerView.Adapter<AllTasksOfEventListAdapter.MyViewHolder> recAdapter = new AllTasksOfEventListAdapter(context, taskList, name, date, totalOrg, totalCos, totalPerc,event_id);
                                 recyclerView.setAdapter(recAdapter);
                                 recyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
                                     public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
@@ -217,7 +235,6 @@ public class DBfunctions {
                                         } else {
                                             swipeRefreshLayout.setEnabled(false);
                                         }
-
                                     }
                                 });
                             }
@@ -228,32 +245,6 @@ public class DBfunctions {
                     }
                 }
         );
-    }
-
-    public void updateEventDetails(final SwipeRefreshLayout swipeRefreshLayout,String admin_id,int event_id, final TextView totalOrg, final TextView totalPercentage, final TextView totalCosts, final TextView event_name, final TextView event_date) {
-
-        RequestParams params = BuildJSON.getInstance().updateEventDetailsJSON(admin_id, event_id);
-        DBconnection.post(URL_UPDATE_EVENT_DETAILS, params, new JsonHttpResponseHandler() {
-
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                try {
-                    if (response.getInt(STATUS) == 200) {
-                        Event event = BuildJSON.getInstance().getEventJSON(response.getJSONArray(EVENTS));
-                        event_name.setText(event.getName());
-                        event_date.setText(event.getDate().getDate()+"."+(event.getDate().getMonth()+1)+"."+event.getDate().getYear());
-                        totalOrg.setText(String.valueOf(event.getNumOrganizers()));
-                        totalCosts.setText(String.valueOf(event.getCosts()));
-                        totalPercentage.setText(String.valueOf(event.getPercentage_of_event()));
-                    }
-                    if(swipeRefreshLayout!=null){
-                        swipeRefreshLayout.setRefreshing(false);
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
     }
 
     public void createEvent(final Context context, String eventName, String location, Date date, String admin_id) {
@@ -349,7 +340,7 @@ public class DBfunctions {
                     Toast.makeText(context.getApplicationContext(), response.getString(MESSAGE), Toast.LENGTH_SHORT).show();
                     if (response.getInt(STATUS) == 200) {
                         ArrayList<User> userList = BuildJSON.getInstance().getAllUsersJSON(response.getJSONArray(USERS));
-                        RecyclerView.Adapter<TaskOrganizersListAdapter.MyViewHolder> recAdapter = new TaskOrganizersListAdapter(activity,context.getApplicationContext(),userList,event_id);
+                        RecyclerView.Adapter<TaskOrganizersListAdapter.MyViewHolder> recAdapter = new TaskOrganizersListAdapter(activity,userList,event_id);
                         recyclerView.setAdapter(recAdapter);
                     }
                     if(swipeRefreshLayout!=null){
@@ -445,7 +436,7 @@ public class DBfunctions {
         });
     }
 
-    public void commentOnTask(final Context context, int task_id, int admin_id, String comment){
+    public void commentOnTask(final Context context, final TextView eventName, final TextView taskName, final TextView quantity, final TextView costs, final TextView percentage, final TextView editor, final TextView history, final int task_id, int admin_id, String comment){
 
         RequestParams params = BuildJSON.getInstance().commentTaskJSON(task_id, admin_id, comment);
         DBconnection.post(URL_COMMENT_ON_TASK,params,new JsonHttpResponseHandler(){
@@ -454,51 +445,9 @@ public class DBfunctions {
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 try {
                     Toast.makeText(context.getApplicationContext(), response.getString(MESSAGE), Toast.LENGTH_SHORT).show();
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-    }
-
-    public void updateTaskDetails(final Context context,final SwipeRefreshLayout swipeRefreshLayout,final TextView eventName, final TextView taskField, final TextView quantity, final TextView cost, final TextView percentageField, final TextView editor, final TextView history,final int task_id){
-
-        RequestParams params= BuildJSON.getInstance().getTaskDetailsJSON(task_id);
-        DBconnection.post(URL_GET_TASK_DETAILS,params,new JsonHttpResponseHandler(){
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                try {
-                    Toast.makeText(context.getApplicationContext(), response.getString(MESSAGE), Toast.LENGTH_SHORT).show();
-                    if(response.getInt(STATUS)==200) {
-                        Task task = BuildJSON.getInstance().getTaskDetailsJSON(response, task_id);
-                        percentageField.setText(String.valueOf(task.getPercentage()));
-                        eventName.setText(task.getEvent_name());
-                        taskField.setText(task.getTask());
-                        quantity.setText(task.getQuantity());
-                        cost.setText(String.valueOf(task.getCostOfTask()));
-                        history.setText(task.getDescription());
-                        editor.setText(task.getEditor_name());
-                    }
-                    if (swipeRefreshLayout != null) {
-                        swipeRefreshLayout.setRefreshing(false);
-                    }
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-    }
-    public void commentOnEvent(final Context context, final SwipeRefreshLayout syncComments,final TextView history, final int event_id,int admin_id,String comment){
-
-        RequestParams params= BuildJSON.getInstance().commentEventJSON(event_id, admin_id, comment);
-        DBconnection.post(URL_COMMENT_ON_EVENT,params,new JsonHttpResponseHandler(){
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                try {
-                    Toast.makeText(context.getApplicationContext(), response.getString(MESSAGE), Toast.LENGTH_SHORT).show();
                     if(response.getInt(STATUS)==200){
-                        getEventComments(context,syncComments,history, event_id);
+                        DBfunctions.getInstance().updateTaskDetails(context, null, eventName, taskName, quantity, costs, percentage, editor, history, task_id);
+
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -529,8 +478,7 @@ public class DBfunctions {
         });
     }
 
-
-    public void updatePercentage(final Context context,final TextView percentageField,int task_id, int editor_id, final int percentage){
+    public void updatePercentage(final Context context,final TextView percentageField,final TextView totalCosts,final TextView totalPercentage,final TextView totalOrganizers, final TextView eventName, final TextView eventDate, final int event_id,int task_id, int editor_id, final int percentage,final int status_of_update){
 
         RequestParams params = BuildJSON.getInstance().updatePercentageOfTaskJSON(task_id, editor_id, percentage);
         DBconnection.post(URL_UPDATE_PERCENTAGE_OF_TASK, params, new JsonHttpResponseHandler() {
@@ -541,6 +489,119 @@ public class DBfunctions {
                     Toast.makeText(context.getApplicationContext(), response.getString(MESSAGE), Toast.LENGTH_SHORT).show();
                     if (response.getInt(STATUS) == 200) {
                         percentageField.setText(String.valueOf(percentage));
+                        //If there aren't the fields totalOrganizers etc than this won't happen
+                        if(status_of_update==1){
+                            if(CheckSharedPreferences.getInstance().isLoggedIn(context.getApplicationContext())){
+                               updateEventDetails(null, CheckSharedPreferences.getInstance().getAdmin_id(), event_id, totalOrganizers, totalPercentage, totalCosts,eventName,eventDate);
+                            }else{
+                                CheckSharedPreferences.getInstance().endSession(context.getApplicationContext());
+                            }
+                        }
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+    public void updateCosts(final Context context,final TextView costsField, final TextView totalOrganizers, final TextView totalPercentage, final TextView totalCosts, final TextView eventName, final TextView eventDate, final int event_id,int task_id, int editor_id, final double costs, final int type_of_calculation, final int status_of_update){
+
+        RequestParams params = BuildJSON.getInstance().updateCostsOfTaskJSON(task_id, editor_id, costs, type_of_calculation);
+        DBconnection.post(URL_UPDATE_COSTS_OF_TASK,params,new JsonHttpResponseHandler(){
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                try {
+                    Toast.makeText(context.getApplicationContext(),response.getString(MESSAGE),Toast.LENGTH_SHORT).show();
+                    if(response.getInt(STATUS)==200){
+                        if(type_of_calculation==0) {
+                            costsField.setText(String.valueOf(costs));
+                        }else if(type_of_calculation==1){
+                            costsField.setText(String.valueOf((Double.parseDouble(costsField.getText().toString())+ costs)));
+                        }
+                        //If there aren't the fields totalOrganizers etc than this won't happen
+                        if(status_of_update==1){
+                            if(CheckSharedPreferences.getInstance().isLoggedIn(context.getApplicationContext())){
+                                updateEventDetails(null, CheckSharedPreferences.getInstance().getAdmin_id(), event_id, totalOrganizers, totalPercentage, totalCosts,eventName,eventDate);
+                            }else{
+                                CheckSharedPreferences.getInstance().endSession(context.getApplicationContext());
+                            }
+                        }
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+    public void updateEventDetails(final SwipeRefreshLayout swipeRefreshLayout,String admin_id,int event_id, final TextView totalOrg, final TextView totalPercentage, final TextView totalCosts, final TextView event_name, final TextView event_date) {
+
+        RequestParams params = BuildJSON.getInstance().updateEventDetailsJSON(admin_id, event_id);
+        DBconnection.post(URL_UPDATE_EVENT_DETAILS, params, new JsonHttpResponseHandler() {
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                try {
+                    if (response.getInt(STATUS) == 200) {
+                        Event event = BuildJSON.getInstance().getEventJSON(response.getJSONArray(EVENTS));
+                        event_name.setText(event.getName());
+                        event_date.setText(event.getDate().getDate()+"."+(event.getDate().getMonth()+1)+"."+event.getDate().getYear());
+                        totalOrg.setText(String.valueOf(event.getNumOrganizers()));
+                        totalCosts.setText(String.valueOf(event.getCosts()));
+                        totalPercentage.setText(String.valueOf(event.getPercentage_of_event()));
+                    }
+                    if(swipeRefreshLayout!=null){
+                        swipeRefreshLayout.setRefreshing(false);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+    public void updateTaskDetails(final Context context,final SwipeRefreshLayout swipeRefreshLayout,final TextView eventName, final TextView taskField, final TextView quantity, final TextView cost, final TextView percentageField, final TextView editor, final TextView history,final int task_id){
+
+        RequestParams params= BuildJSON.getInstance().getTaskDetailsJSON(task_id);
+        DBconnection.post(URL_GET_TASK_DETAILS,params,new JsonHttpResponseHandler(){
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                try {
+                    Toast.makeText(context.getApplicationContext(), response.getString(MESSAGE), Toast.LENGTH_SHORT).show();
+                    if(response.getInt(STATUS)==200) {
+                        Task task = BuildJSON.getInstance().getTaskDetailsJSON(response, task_id);
+                        percentageField.setText(String.valueOf(task.getPercentage()));
+                        eventName.setText(task.getEvent_name());
+                        taskField.setText(task.getTask());
+                        quantity.setText(task.getQuantity());
+                        cost.setText(String.valueOf(task.getCostOfTask()));
+                        history.setText(task.getDescription());
+                        editor.setText(task.getEditor_name());
+                    }
+                    if (swipeRefreshLayout != null) {
+                        swipeRefreshLayout.setRefreshing(false);
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+    public void commentOnEvent(final Context context, final SwipeRefreshLayout syncComments,final TextView history, final int event_id,int admin_id,String comment){
+
+        RequestParams params= BuildJSON.getInstance().commentEventJSON(event_id, admin_id, comment);
+        DBconnection.post(URL_COMMENT_ON_EVENT,params,new JsonHttpResponseHandler(){
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                try {
+                    Toast.makeText(context.getApplicationContext(), response.getString(MESSAGE), Toast.LENGTH_SHORT).show();
+                    if(response.getInt(STATUS)==200){
+                        getEventComments(context, syncComments, history, event_id);
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -560,30 +621,6 @@ public class DBfunctions {
                     Toast.makeText(context, response.getString(MESSAGE), Toast.LENGTH_SHORT).show();
                     if (response.getInt(STATUS) == 200) {
                        editorField.setText(response.getString(EDITOR_NAME));
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-    }
-
-    public void updateCosts(final Context context,final TextView costsField,int task_id, int editor_id, final double costs, final int status){
-
-        RequestParams params = BuildJSON.getInstance().updateCostsOfTaskJSON(task_id, editor_id, costs, status);
-        DBconnection.post(URL_UPDATE_COSTS_OF_TASK,params,new JsonHttpResponseHandler(){
-
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                try {
-                    Toast.makeText(context.getApplicationContext(),response.getString(MESSAGE),Toast.LENGTH_SHORT).show();
-                    if(response.getInt(STATUS)==200){
-
-                        if(status==0) {
-                            costsField.setText(String.valueOf(costs));
-                        }else if(status==1){
-                           costsField.setText(String.valueOf((Double.parseDouble(costsField.getText().toString())+ costs)));
-                        }
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -616,4 +653,165 @@ public class DBfunctions {
             }
         });
     }
+
+    public void addFriendToEvent(final Context context, final RecyclerView.Adapter<EventOrganizersListAdapter.MyViewHolder> adapter, final ArrayList<User> userList, final int position,int user_id,int event_id){
+
+        RequestParams params = BuildJSON.getInstance().addRemoveFriendEventJSON(user_id, event_id);
+        DBconnection.post(URL_FRIEND_TO_EVENT, params, new JsonHttpResponseHandler() {
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                try {
+                    Toast.makeText(context.getApplicationContext(), response.getString(MESSAGE), Toast.LENGTH_SHORT).show();
+                    if (response.getInt(STATUS) == 200) {
+                        final User user_b = userList.get(position);
+
+                        // User wird hinzugefügt
+                        user_b.setStatus(1);
+                        adapter.notifyDataSetChanged();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+    public void removeFriendFromEvent(final Context context, final RecyclerView.Adapter<EventOrganizersListAdapter.MyViewHolder> adapter, final ArrayList<User> userList, final int position,int user_id,int event_id) {
+
+        RequestParams params = BuildJSON.getInstance().addRemoveFriendEventJSON(user_id, event_id);
+        DBconnection.post(URL_REMOVE_FRIEND_FROM_EVENT, params, new JsonHttpResponseHandler() {
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                try {
+                    Toast.makeText(context.getApplicationContext(), response.getString(MESSAGE), Toast.LENGTH_SHORT).show();
+                    if (response.getInt(STATUS) == 200) {
+                        final User user_b = userList.get(position);
+
+                        //User wird entfernt
+                        user_b.setStatus(0);
+                        adapter.notifyDataSetChanged();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+    public void removeFriendFromFriendsList(final Context context, final RecyclerView.Adapter<FriendsListAdapter.MyViewHolder> adapter, final ArrayList<User> userList, final int position,int user_id,String admin_id) {
+
+        RequestParams params = BuildJSON.getInstance().addRemoveFriendJSON(admin_id, user_id);
+        DBconnection.post(URL_REMOVE_FRIEND_FROM_FRIENDSLIST, params, new JsonHttpResponseHandler() {
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                try {
+                    Toast.makeText(context.getApplicationContext(), response.getString(MESSAGE), Toast.LENGTH_SHORT).show();
+                    if (response.getInt(STATUS) == 200) {
+                        userList.remove(position);
+                        adapter.notifyDataSetChanged();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+    public void addFriendToFriendslist(final Context context, final RecyclerView.Adapter<FriendsListAdapter.MyViewHolder> adapter, final ArrayList<User> userList, final int position,int user_id,String admin_id) {
+
+        RequestParams params = BuildJSON.getInstance().addRemoveFriendJSON(admin_id, user_id);
+        DBconnection.post(URL_ADD_FRIEND_TO_FRIENDSLIST, params, new JsonHttpResponseHandler() {
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                try {
+                    Toast.makeText(context.getApplicationContext(),response.getString(MESSAGE),Toast.LENGTH_SHORT).show();
+                    if(response.getInt(STATUS)==200){
+                        final User user_b = userList.get(position);
+
+                        //Users become friends
+                        if(user_b.getStatus()==3){
+                            user_b.setStatus(2);
+                            adapter.notifyDataSetChanged();
+
+                            //Request is open and has to be answered by the other user
+                        }else if(user_b.getStatus()==1){
+                            user_b.setStatus(0);
+                            adapter.notifyDataSetChanged();
+                        }
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+    public void friendRequest(final Context context, final RecyclerView.Adapter<SearchListAdapter.MyViewHolder> adapter, final ArrayList<User> userList, final int position,int user_id,String admin_id){
+
+        RequestParams params = BuildJSON.getInstance().addRemoveFriendJSON(admin_id, user_id);
+        DBconnection.post(URL_FRIEND_REQUEST, params, new JsonHttpResponseHandler() {
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                try {
+                    Toast.makeText(context.getApplicationContext(), response.getString(MESSAGE), Toast.LENGTH_SHORT).show();
+                    if (response.getInt(STATUS) == 200) {
+                        final User user_b = userList.get(position);
+
+                        //Users become friends
+                        if (user_b.getStatus() == 3) {
+                            user_b.setStatus(2);
+                            adapter.notifyDataSetChanged();
+                            //Request is open and has to be answered by the other user
+                        } else if (user_b.getStatus() == 1) {
+                            user_b.setStatus(0);
+                            adapter.notifyDataSetChanged();
+                        }
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+    public void removeFriend(final Context context, final RecyclerView.Adapter<SearchListAdapter.MyViewHolder> adapter, final ArrayList<User> userList, final int position,int user_id,String admin_id) {
+
+        RequestParams params = BuildJSON.getInstance().addRemoveFriendJSON(admin_id, user_id);
+        DBconnection.post(URL_REMOVE_FRIEND, params, new JsonHttpResponseHandler() {
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                try {
+                    Toast.makeText(context.getApplicationContext(), response.getString(MESSAGE), Toast.LENGTH_SHORT).show();
+                    if (response.getInt(STATUS) == 200) {
+
+                        //Friend deleted
+                        final User user_b = userList.get(position);
+                        user_b.setStatus(1);
+                        adapter.notifyDataSetChanged();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+    public void addFriendToTask(Activity context, ArrayList<User> userList,int position, int event_id){
+
+        final User user_b = userList.get(position);
+        Global global = ((Global)context.getApplicationContext());
+        global.setEditor_id(user_b.getUser_id());
+        global.setEditorName(user_b.getName());
+        StartActivityFunctions.getInstance().startCreateTaskFromFriendsActivity(context.getApplicationContext(), event_id);
+        context.finish();
+    }
+
+
+
 }

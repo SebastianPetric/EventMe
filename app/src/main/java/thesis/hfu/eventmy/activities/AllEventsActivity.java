@@ -49,7 +49,7 @@ public class AllEventsActivity extends ActionBarActivity {
             getAllEventsRecycler().setLayoutManager(layoutManager);
             getAllEventsRecycler().addItemDecoration(new DividerItemDecoration(this));
             getSyncRefresh().setOnRefreshListener(new CustomSwipeListener());
-            DBfunctions.getInstance().getAllEvents(getApplicationContext(), getSyncRefresh(), getAllEventsRecycler(), CheckSharedPreferences.getInstance().getAdmin_id());
+            DBfunctions.getInstance().getAllEvents(this, getSyncRefresh(), getAllEventsRecycler(), CheckSharedPreferences.getInstance().getAdmin_id());
         } else {
             CheckSharedPreferences.getInstance().endSession(getApplicationContext());
         }
@@ -73,14 +73,14 @@ public class AllEventsActivity extends ActionBarActivity {
             }else if(v.getTag().equals(TOPIC_EVENTS_BUTTON)){
                 getFloatingMenu().close(true);
                 if(CheckSharedPreferences.getInstance().isLoggedIn(getApplicationContext())) {
-                    DBfunctions.getInstance().getAllEvents(getApplicationContext(), getSyncRefresh(), getAllEventsRecycler(), CheckSharedPreferences.getInstance().getAdmin_id());
+                    DBfunctions.getInstance().getAllEvents(AllEventsActivity.this, getSyncRefresh(), getAllEventsRecycler(), CheckSharedPreferences.getInstance().getAdmin_id());
                 }else{
                     CheckSharedPreferences.getInstance().endSession(getApplicationContext());
                 }
             }else if(v.getTag().equals(ARCHIV_BUTTON)){
                 getFloatingMenu().close(true);
                 if(CheckSharedPreferences.getInstance().isLoggedIn(getApplicationContext())) {
-                    DBfunctions.getInstance().getAllArchivEvents(getApplicationContext(), getSyncRefresh(), getAllEventsRecycler(), CheckSharedPreferences.getInstance().getAdmin_id());
+                    DBfunctions.getInstance().getAllArchivEvents(AllEventsActivity.this, getSyncRefresh(), getAllEventsRecycler(), CheckSharedPreferences.getInstance().getAdmin_id());
                 }else{
                     CheckSharedPreferences.getInstance().endSession(getApplicationContext());
                 }
@@ -93,7 +93,7 @@ public class AllEventsActivity extends ActionBarActivity {
         @Override
         public void onRefresh() {
             if (CheckSharedPreferences.getInstance().isLoggedIn(getApplicationContext())) {
-                DBfunctions.getInstance().getAllEvents(getApplicationContext(), getSyncRefresh(), getAllEventsRecycler(), CheckSharedPreferences.getInstance().getAdmin_id());
+                DBfunctions.getInstance().getAllEvents(AllEventsActivity.this, getSyncRefresh(), getAllEventsRecycler(), CheckSharedPreferences.getInstance().getAdmin_id());
             } else {
                 CheckSharedPreferences.getInstance().endSession(getApplicationContext());
             }

@@ -1,8 +1,6 @@
 package thesis.hfu.eventmy.adapter;
 
-
 import android.app.Activity;
-import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,9 +8,8 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import thesis.hfu.eventmy.R;
+import thesis.hfu.eventmy.database.DBfunctions;
 import thesis.hfu.eventmy.functions.CheckSharedPreferences;
-import thesis.hfu.eventmy.functions.StartActivityFunctions;
-import thesis.hfu.eventmy.objects.Global;
 import thesis.hfu.eventmy.objects.User;
 
 import java.util.ArrayList;
@@ -21,16 +18,15 @@ public class TaskOrganizersListAdapter extends
         RecyclerView.Adapter<TaskOrganizersListAdapter.MyViewHolder> {
 
     private ArrayList<User> users;
-    private Context context;
+    private Activity context;
     private int position, event_id;
-    private Activity activity;
 
-    public TaskOrganizersListAdapter(Activity activity,Context context,ArrayList<User> list, int event_id) {
+    public TaskOrganizersListAdapter(Activity context,ArrayList<User> list, int event_id) {
         this.users = list;
         this.context=context;
-        this.activity=activity;
         this.event_id=event_id;
     }
+
     @Override
     public int getItemCount() {
         return users.size();
@@ -51,7 +47,7 @@ public class TaskOrganizersListAdapter extends
             public void onClick(View v) {
                 setPosition(position);
                 if(CheckSharedPreferences.getInstance().isLoggedIn(context)){
-                    addFriendToTask(getPosition());
+                    DBfunctions.getInstance().addFriendToTask(context, getUserList(), getPosition(), getEvent_id());
                 }else {
                     CheckSharedPreferences.getInstance().endSession(context);
                 }
@@ -86,20 +82,6 @@ public class TaskOrganizersListAdapter extends
         @Override
         public void onClick(View v) {
         }
-    }
-
-    //----------------------------------------------------------------------
-    //-----------------Functions-------------------------------------
-    //----------------------------------------------------------------------
-
-    public void addFriendToTask(int position){
-
-        final User user_b = getUserList().get(position);
-        Global global = ((Global)context.getApplicationContext());
-        global.setEditor_id(user_b.getUser_id());
-        global.setEditorName(user_b.getName());
-        StartActivityFunctions.getInstance().startCreateTaskFromFriendsActivity(context.getApplicationContext(), getEvent_id());
-        activity.finish();
     }
 
     //----------------------------------------------------------------------

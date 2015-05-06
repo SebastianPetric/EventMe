@@ -1,7 +1,5 @@
 package thesis.hfu.eventmy.activities;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
@@ -28,7 +26,9 @@ public class EditTaskActivity extends ActionBarActivity {
     private ImageButton costsButton, percentageButton,editorButton;
     private SwipeRefreshLayout syncRefresh;
     private FloatingActionMenu actionMenu;
-    private int event_id,task_id, percentageValue;
+    private int event_id,task_id;
+    // No Event Updates necessary in this activity
+    private final int typeOfUpdate=0;
 
     private static final String EVENT_ID="event_id";
     private static final String TASK_ID="task_id";
@@ -47,7 +47,7 @@ public class EditTaskActivity extends ActionBarActivity {
         if(CheckSharedPreferences.getInstance().isLoggedIn(getApplicationContext())){
             setEvent_id(getIntent().getExtras().getInt(EVENT_ID));
             setTask_id(getIntent().getExtras().getInt(TASK_ID));
-
+            setFloatingActionMenu();
             setSyncRefresh(R.id.swipe_refresh_edit_task);
             setTaskNameField(R.id.textViewEditTaskTaskName);
             setEventNameField(R.id.textViewEditTaskEventName);
@@ -59,12 +59,11 @@ public class EditTaskActivity extends ActionBarActivity {
             setEditorButton(R.id.imageButtonEditTaskEditor);
             setPercentageButton(R.id.imageButtonEditTaskPercentage);
             setHistoryField(R.id.textViewEditTaskRecentReview);
-            DBfunctions.getInstance().updateTaskDetails(getApplicationContext(),getSyncRefresh(), getEventNameTextView(), getTaskTextView(), getQuantityTextView(), getCostsTextView(), getPercentageTextView(), getEditorTextView(), getHistoryTextView(), getTask_id());
             getSyncRefresh().setOnRefreshListener(new CustomSwipeListener());
             getCostsButton().setOnClickListener(new CustomClickListener());
             getPercentageButton().setOnClickListener(new CustomClickListener());
             getEditorButton().setOnClickListener(new CustomClickListener());
-            setFloatingActionMenu();
+            DBfunctions.getInstance().updateTaskDetails(getApplicationContext(), getSyncRefresh(), getEventNameTextView(), getTaskTextView(), getQuantityTextView(), getCostsTextView(), getPercentageTextView(), getEditorTextView(), getHistoryTextView(), getTask_id());
         }else{
             CheckSharedPreferences.getInstance().endSession(getApplicationContext());
         }
@@ -79,39 +78,9 @@ public class EditTaskActivity extends ActionBarActivity {
         @Override
         public void onClick(View v) {
             if(v.getId()==R.id.imageButtonEditTaskCosts){
-                EditCostsDialog.getInstance().startEditTaskDialog(getFragmentManager(),getCostsTextView(),getTask_id());
+                EditCostsDialog.getInstance().startEditTaskDialog(getFragmentManager(), getCostsTextView(),null,null,null,null,null,getEvent_id(),getTask_id(),getTypeOfUpdate());
             }else if(v.getId()==R.id.imageButtonEditTaskPercentage){
-                AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
-                String[] percentageValues={"0","25","50","75","100"};
-                builder.setTitle(R.string.dialog_percentage_header)
-                        .setItems(percentageValues, new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int position) {
-                                switch (position) {
-                                    case 0:
-                                        setPercentageValue(0);
-                                        break;
-                                    case 1:
-                                        setPercentageValue(25);
-                                        break;
-                                    case 2:
-                                        setPercentageValue(50);
-                                        break;
-                                    case 3:
-                                        setPercentageValue(75);
-                                        break;
-                                    case 4:
-                                        setPercentageValue(100);
-                                        break;
-                                }
-                                if (CheckSharedPreferences.getInstance().isLoggedIn(getApplicationContext())) {
-                                    DBfunctions.getInstance().updatePercentage(getApplicationContext(), getPercentageTextView(), getTask_id(), Integer.parseInt(CheckSharedPreferences.getInstance().getAdmin_id()), getPercentageValue());
-                                } else {
-                                    CheckSharedPreferences.getInstance().endSession(getApplicationContext());
-                                }
-                            }
-                        });
-                builder.show();
-
+                EditPercentageDialog.getInstance().startEditPercentageDialog(getFragmentManager(),getPercentageTextView(),null,null,null,null,null,getTask_id(),getEvent_id(),getTypeOfUpdate());
             }else if(v.getId()==R.id.imageButtonEditTaskEditor){
                 if (CheckSharedPreferences.getInstance().isLoggedIn(getApplicationContext())) {
                     DBfunctions.getInstance().changeEditorOfTask(getApplicationContext(), getEditorTextView(), CheckSharedPreferences.getInstance().getAdmin_id(),getTask_id());
@@ -150,7 +119,6 @@ public class EditTaskActivity extends ActionBarActivity {
             }
         }
     }
-
 
     //----------------------------------------------------------------------
     //-----------------ACTION BAR MENU-------------------------------------
@@ -261,14 +229,11 @@ public class EditTaskActivity extends ActionBarActivity {
     public TextView getHistoryTextView(){
         return this.historyField;
     }
-    public int getPercentageValue() {
-        return percentageValue;
-    }
-    public void setPercentageValue(int percentageValue) {
-        this.percentageValue = percentageValue;
-    }
     public SwipeRefreshLayout getSyncRefresh() {
         return syncRefresh;
+    }
+    public int getTypeOfUpdate() {
+        return typeOfUpdate;
     }
     public void setSyncRefresh(int res) {
         this.syncRefresh = (SwipeRefreshLayout) findViewById(res);

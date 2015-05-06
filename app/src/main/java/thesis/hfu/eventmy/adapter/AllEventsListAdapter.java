@@ -1,9 +1,8 @@
 package thesis.hfu.eventmy.adapter;
 
-
-import android.app.AlertDialog;
+import android.app.Activity;
+import android.app.FragmentManager;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,8 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import thesis.hfu.eventmy.R;
-import thesis.hfu.eventmy.database.DBfunctions;
-import thesis.hfu.eventmy.functions.CheckSharedPreferences;
+import thesis.hfu.eventmy.dialogs.LongClickEventDialog;
 import thesis.hfu.eventmy.functions.StartActivityFunctions;
 import thesis.hfu.eventmy.objects.Event;
 
@@ -23,11 +21,14 @@ public class AllEventsListAdapter extends
 
     private ArrayList<Event> eventList;
     private Context context;
+    private FragmentManager fragmentManager;
 
-    public AllEventsListAdapter(Context context,ArrayList<Event> list) {
+    public AllEventsListAdapter(Activity context,ArrayList<Event> list) {
         this.eventList = list;
         this.context=context;
+        this.fragmentManager=context.getFragmentManager();
     }
+
     @Override
     public int getItemCount() {
         return eventList.size();
@@ -84,42 +85,9 @@ public class AllEventsListAdapter extends
 
         @Override
         public boolean onLongClick(View v) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
-            builder.setMessage(R.string.dialog_edit_event_message)
-                    .setNeutralButton(R.string.dialog_edit_event_archiv, new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    if (CheckSharedPreferences.getInstance().isLoggedIn(context)) {
-                                        DBfunctions.getInstance().archivEvent(context, getEventList(), AllEventsListAdapter.this, getPosition(), CheckSharedPreferences.getInstance().getAdmin_id(), eventList.get(getPosition()).getEvent_id());
-                                    } else {
-                                        CheckSharedPreferences.getInstance().endSession(context);
-                                    }
-                                }
-                            }
-                        )
-                        .setNegativeButton(R.string.dialog_edit_event_cancel, new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int id) {
-                                        dialog.cancel();
-                                    }
-                                }
-                        )
-                        .setPositiveButton(R.string.dialog_edit_event_delete, new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int id) {
-                                        if (CheckSharedPreferences.getInstance().isLoggedIn(context)) {
-                                            DBfunctions.getInstance().deleteEvent(context, getEventList(), AllEventsListAdapter.this, getPosition(), CheckSharedPreferences.getInstance().getAdmin_id(), eventList.get(getPosition()).getEvent_id());
-                                        } else {
-                                            CheckSharedPreferences.getInstance().endSession(context);
-                                        }
-                                    }
-                                }
-
-                        );
-                        AlertDialog alertDialog = builder.create();
-                        alertDialog.show();
-
-
-                        return false;
-                    }
+            LongClickEventDialog.getInstance().startLongClickEventDialog(getFragmentManager(),getEventList(),AllEventsListAdapter.this,getEventList().get(getPosition()).getEvent_id(),getPosition());
+            return false;
+            }
         }
 
     //----------------------------------------------------------------------
@@ -128,5 +96,8 @@ public class AllEventsListAdapter extends
 
     public ArrayList<Event> getEventList(){
         return this.eventList;
+    }
+    public FragmentManager getFragmentManager() {
+        return fragmentManager;
     }
 }

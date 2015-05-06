@@ -1,26 +1,21 @@
 package thesis.hfu.eventmy.adapter;
 
 
-import android.app.AlertDialog;
+import android.app.Activity;
+import android.app.FragmentManager;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
-import com.loopj.android.http.JsonHttpResponseHandler;
-import com.loopj.android.http.RequestParams;
-import org.apache.http.Header;
-import org.json.JSONException;
-import org.json.JSONObject;
 import thesis.hfu.eventmy.R;
-import thesis.hfu.eventmy.database.DBconnection;
 import thesis.hfu.eventmy.database.DBfunctions;
-import thesis.hfu.eventmy.functions.*;
+import thesis.hfu.eventmy.dialogs.EditCostsDialog;
+import thesis.hfu.eventmy.dialogs.EditPercentageDialog;
+import thesis.hfu.eventmy.functions.CheckSharedPreferences;
+import thesis.hfu.eventmy.functions.StartActivityFunctions;
 import thesis.hfu.eventmy.objects.Task;
 
 import java.util.ArrayList;
@@ -32,21 +27,12 @@ public class AllTasksOfEventListAdapter extends
     private ArrayList<Task> tasks;
     private Context context;
     private MyViewHolder viewHolder;
-    private int position,percentageValue,type_of_update;
-    private double costsValue;
     private TextView eventName,eventDate,eventTotalOrganizers,eventTotalCosts,eventTotalPercentage;
     private int event_id;
+    private final int typeOfUpdate=1;
+    private FragmentManager fragmentManager;
 
-    private static final String MESSAGE= "message";
-    private static final String STATUS= "status";
-    private static final String EDITOR_NAME= "editor_name";
-    private static final String ERROR_NUMERIC= "Sie haben keine Zahlen eingegeben!";
-
-    private static final String URL_BECOME_EDITOR_OF_TASK= "become_editor_of_task.php";
-    private static final String URL_UPDATE_PERCENTAGE_OF_TASK= "update_percentage_of_task.php";
-    private static final String URL_UPDATE_COSTS_OF_TASK = "update_costs_of_task.php";
-
-    public AllTasksOfEventListAdapter(Context context,ArrayList<Task> list,int event_id,TextView eventName,TextView eventDate,TextView eventTotalOrganizers,TextView eventTotalCosts,TextView eventTotalPercentage) {
+    public AllTasksOfEventListAdapter(Activity context,ArrayList<Task> list,TextView eventName,TextView eventDate,TextView eventTotalOrganizers,TextView eventTotalCosts,TextView eventTotalPercentage,int event_id) {
         this.tasks = list;
         this.context=context;
         this.eventName=eventName;
@@ -55,6 +41,7 @@ public class AllTasksOfEventListAdapter extends
         this.eventTotalCosts=eventTotalCosts;
         this.eventTotalOrganizers=eventTotalOrganizers;
         this.eventTotalPercentage=eventTotalPercentage;
+        this.fragmentManager=context.getFragmentManager();
     }
     @Override
     public int getItemCount() {
@@ -75,9 +62,8 @@ public class AllTasksOfEventListAdapter extends
             @Override
             public void onClick(View v) {
                 setViewHolder(viewHolder);
-                setPosition(position);
                 if (CheckSharedPreferences.getInstance().isLoggedIn(context.getApplicationContext())) {
-                    changeEditorOfTask(Integer.parseInt(CheckSharedPreferences.getInstance().getAdmin_id()), task.getTask_id());
+                    DBfunctions.getInstance().changeEditorOfTask(context.getApplicationContext(),getViewHolder().editorField,CheckSharedPreferences.getInstance().getAdmin_id(), task.getTask_id());
                 } else {
                     CheckSharedPreferences.getInstance().endSession(context.getApplicationContext());
                 }
@@ -88,37 +74,7 @@ public class AllTasksOfEventListAdapter extends
             @Override
             public void onClick(View v) {
                 setViewHolder(viewHolder);
-                setPosition(position);
-                AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
-                String[] percentageValues={"0","25","50","75","100"};
-                builder.setTitle(R.string.dialog_percentage_header)
-                        .setItems(percentageValues, new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int position) {
-                                switch (position) {
-                                    case 0:
-                                        setPercentageValue(0);
-                                        break;
-                                    case 1:
-                                        setPercentageValue(25);
-                                        break;
-                                    case 2:
-                                        setPercentageValue(50);
-                                        break;
-                                    case 3:
-                                        setPercentageValue(75);
-                                        break;
-                                    case 4:
-                                        setPercentageValue(100);
-                                        break;
-                                }
-                                if (CheckSharedPreferences.getInstance().isLoggedIn(context.getApplicationContext())) {
-                                    updatePercentage(task.getTask_id(), Integer.parseInt(CheckSharedPreferences.getInstance().getAdmin_id()), getPercentageValue());
-                                } else {
-                                    CheckSharedPreferences.getInstance().endSession(context.getApplicationContext());
-                                }
-                            }
-                        });
-                builder.show();
+                EditPercentageDialog.getInstance().startEditPercentageDialog(getFragmentManager(), viewHolder.percentageField,getEventTotalOrganizers(),getEventTotalCosts(),getEventTotalPercentage(),getEventName(),getEventDate(), task.getTask_id(),getEvent_id(),getTypeOfUpdate());
             }
         });
 
@@ -126,56 +82,7 @@ public class AllTasksOfEventListAdapter extends
             @Override
             public void onClick(View v) {
                 setViewHolder(viewHolder);
-                setPosition(position);
-
-                LayoutInflater li = LayoutInflater.from(v.getContext());
-                View promptsView = li.inflate(R.layout.dialog_add_costs, null);
-                AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
-
-                final EditText userInput = (EditText) promptsView.findViewById(R.id.editTextDialogUserInput);
-                builder.setView(promptsView);
-                builder.setCancelable(false)
-                        .setNeutralButton(R.string.dialog_costs_new,
-                                new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int id) {
-                                        if (CheckIf.isNumeric(userInput.getText().toString())) {
-                                            dialog.cancel();
-                                            setCostsValue(Calculation.getInstance().round(Double.parseDouble(userInput.getText().toString())));
-                                            setType_of_update(0);
-                                            if (CheckSharedPreferences.getInstance().isLoggedIn(context)) {
-                                                updateCosts(task.getTask_id(), Integer.parseInt(CheckSharedPreferences.getInstance().getAdmin_id()), getCostsValue(), getType_of_update());
-                                            }else{
-                                                CheckSharedPreferences.getInstance().endSession(context);
-                                            }
-                                            } else {
-                                            Toast.makeText(context.getApplicationContext(),ERROR_NUMERIC, Toast.LENGTH_SHORT).show();
-                                        }
-                                    }
-                                })
-                        .setNegativeButton(R.string.dialog_costs_cancel,
-                                new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int id) {
-                                        dialog.cancel();
-                                    }
-                                })
-                        .setPositiveButton(R.string.dialog_costs_add, new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                if (CheckIf.isNumeric(userInput.getText().toString())) {
-                                    dialog.cancel();
-                                    setCostsValue(Calculation.getInstance().round(Double.parseDouble(userInput.getText().toString())));
-                                    setType_of_update(1);
-                                    if(CheckSharedPreferences.getInstance().isLoggedIn(context)) {
-                                        updateCosts(task.getTask_id(), Integer.parseInt(CheckSharedPreferences.getInstance().getAdmin_id()), getCostsValue(), getType_of_update());
-                                    }else{
-                                        CheckSharedPreferences.getInstance().endSession(context);
-                                    }
-                                    } else {
-                                    Toast.makeText(context.getApplicationContext(),ERROR_NUMERIC, Toast.LENGTH_SHORT).show();
-                                }
-                            }
-                        });
-                AlertDialog alertDialog = builder.create();
-                alertDialog.show();
+                EditCostsDialog.getInstance().startEditTaskDialog(getFragmentManager(), viewHolder.costField,getEventTotalOrganizers(),getEventTotalCosts(),getEventTotalPercentage(),getEventName(),getEventDate(),getEvent_id(),task.getTask_id(),getTypeOfUpdate());
             }
         });
     }
@@ -218,120 +125,14 @@ public class AllTasksOfEventListAdapter extends
     }
 
     //----------------------------------------------------------------------
-    //-----------------Functions-------------------------------------
-    //----------------------------------------------------------------------
-
-    public void updatePercentage(int task_id, int admin_id, final int percentage){
-
-        RequestParams params = BuildJSON.getInstance().updatePercentageOfTaskJSON(task_id, admin_id, percentage);
-        DBconnection.post(URL_UPDATE_PERCENTAGE_OF_TASK,params,new JsonHttpResponseHandler(){
-
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                try {
-                    Toast.makeText(context.getApplicationContext(),response.getString(MESSAGE),Toast.LENGTH_SHORT).show();
-                    if(response.getInt(STATUS)==200){
-                        Task task = getTasks().get(getPosition());
-                        task.setPercentage(percentage);
-                        getViewHolder().percentageField.setText(String.valueOf(task.getPercentage()));
-                        if(CheckSharedPreferences.getInstance().isLoggedIn(context)) {
-                            DBfunctions.getInstance().updateEventDetails(null, CheckSharedPreferences.getInstance().getAdmin_id(), getEvent_id(), getEventTotalOrganizers(), getEventTotalPercentage(), getEventTotalCosts(), getEventName(), getEventDate());
-                        }else{
-                            CheckSharedPreferences.getInstance().endSession(context);
-                        }
-                        }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-    }
-
-    public void updateCosts(int task_id, int editor_id, final double costs, final int status){
-
-        RequestParams params = BuildJSON.getInstance().updateCostsOfTaskJSON(task_id, editor_id, costs, status);
-        DBconnection.post(URL_UPDATE_COSTS_OF_TASK,params,new JsonHttpResponseHandler(){
-
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                try {
-                    Toast.makeText(context.getApplicationContext(),response.getString(MESSAGE),Toast.LENGTH_SHORT).show();
-                    if(response.getInt(STATUS)==200){
-                        Task task = getTasks().get(getPosition());
-                        if(status==0) {
-                            task.setCostOfTask(costs);
-                            getViewHolder().costField.setText((String.valueOf(task.getCostOfTask())));
-                        }else if(status==1){
-                            task.setCostOfTask(task.getCostOfTask() + costs);
-                            getViewHolder().costField.setText(String.valueOf(task.getCostOfTask()));
-                        }
-                        if(CheckSharedPreferences.getInstance().isLoggedIn(context)) {
-                            DBfunctions.getInstance().updateEventDetails(null, CheckSharedPreferences.getInstance().getAdmin_id(), getEvent_id(), getEventTotalOrganizers(), getEventTotalPercentage(), getEventTotalCosts(), getEventName(), getEventDate());
-                        }else{
-                            CheckSharedPreferences.getInstance().endSession(context);
-                        }
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-    }
-    public void changeEditorOfTask(final int editor_id, int task_id){
-
-        RequestParams params= BuildJSON.getInstance().becomeEditorOfTaskJSON(editor_id, task_id);
-        DBconnection.post(URL_BECOME_EDITOR_OF_TASK, params, new JsonHttpResponseHandler() {
-
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                try {
-                    Toast.makeText(context, response.getString(MESSAGE), Toast.LENGTH_SHORT).show();
-                    if (response.getInt(STATUS) == 200) {
-                        Task task = getTasks().get(getPosition());
-                        task.setEditor_id(editor_id);
-                        task.setEditor_name(response.getString(EDITOR_NAME));
-                        getViewHolder().editorField.setText(task.getEditor_name());
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-    }
-
-    //----------------------------------------------------------------------
     //-----------------Getter and Setter-------------------------------------
     //----------------------------------------------------------------------
 
     public void setViewHolder(MyViewHolder viewHolder) {
         this.viewHolder = viewHolder;
     }
-    public int getPosition() {
-        return position;
-    }
-    public void setPosition(int position) {
-        this.position = position;
-    }
     public ArrayList<Task> getTasks(){
         return this.tasks;
-    }
-    public int getPercentageValue() {
-        return percentageValue;
-    }
-    public void setPercentageValue(int percentageValue) {
-        this.percentageValue = percentageValue;
-    }
-    public double getCostsValue() {
-        return costsValue;
-    }
-    public void setCostsValue(Double costsValue) {
-        this.costsValue = costsValue;
-    }
-    public int getType_of_update() {
-        return type_of_update;
-    }
-    public void setType_of_update(int type_of_update) {
-        this.type_of_update = type_of_update;
     }
     public MyViewHolder getViewHolder() {
         return viewHolder;
@@ -354,4 +155,11 @@ public class AllTasksOfEventListAdapter extends
     public int getEvent_id() {
         return event_id;
     }
+    public FragmentManager getFragmentManager() {
+        return fragmentManager;
+    }
+    public int getTypeOfUpdate() {
+        return typeOfUpdate;
+    }
+
 }

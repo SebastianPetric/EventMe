@@ -1,6 +1,5 @@
 package thesis.hfu.eventmy.adapter;
 
-
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -8,15 +7,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
-import com.loopj.android.http.JsonHttpResponseHandler;
-import com.loopj.android.http.RequestParams;
-import org.apache.http.Header;
-import org.json.JSONException;
-import org.json.JSONObject;
 import thesis.hfu.eventmy.R;
-import thesis.hfu.eventmy.database.DBconnection;
-import thesis.hfu.eventmy.functions.BuildJSON;
+import thesis.hfu.eventmy.database.DBfunctions;
 import thesis.hfu.eventmy.functions.CheckSharedPreferences;
 import thesis.hfu.eventmy.objects.User;
 
@@ -27,22 +19,13 @@ public class FriendsListAdapter extends
 
     private ArrayList<User> users;
     private Context context;
-    private static final String MESSAGE = "message";
-    private static final String STATUS = "status";
-    private MyViewHolder viewHolder;
     private int position;
-
-    //Remove Friend
-    private static final String URL_REMOVE_FRIEND_FROM_FRIENDSLIST = "remove_friend.php";
-
-    //Add Friend
-    private static final String URL_ADD_FRIEND_TO_FRIENDSLIST = "friend_request.php";
-
 
     public FriendsListAdapter(Context context,ArrayList<User> list) {
         this.users = list;
-        this.context=context;
+        this.context = context;
     }
+
     @Override
     public int getItemCount() {
         return users.size();
@@ -74,10 +57,8 @@ public class FriendsListAdapter extends
             @Override
             public void onClick(View v) {
                 setPosition(position);
-                setViewHolder(viewHolder);
-
                 if(CheckSharedPreferences.getInstance().isLoggedIn(context)){
-                    addFriendToFriendslist(CheckSharedPreferences.getInstance().getAdmin_id(), getUserList().get(getPosition()).getUser_id());
+                    DBfunctions.getInstance().addFriendToFriendslist(context, FriendsListAdapter.this, getUserList(), getPosition(), getUserList().get(getPosition()).getUser_id(), CheckSharedPreferences.getInstance().getAdmin_id());
                 }else {
                     CheckSharedPreferences.getInstance().endSession(context);
                 }
@@ -89,10 +70,8 @@ public class FriendsListAdapter extends
             @Override
             public void onClick(View v) {
                 setPosition(position);
-                setViewHolder(viewHolder);
-
                 if(CheckSharedPreferences.getInstance().isLoggedIn(context)){
-                    removeFriendFromFriendsList(CheckSharedPreferences.getInstance().getAdmin_id(),getUserList().get(getPosition()).getUser_id());
+                    DBfunctions.getInstance().removeFriendFromFriendsList(context, FriendsListAdapter.this, getUserList(), getPosition(), getUserList().get(getPosition()).getUser_id(), CheckSharedPreferences.getInstance().getAdmin_id());
                 }else {
                     CheckSharedPreferences.getInstance().endSession(context);
                 }
@@ -131,68 +110,10 @@ public class FriendsListAdapter extends
         }
     }
 
-
-    //----------------------------------------------------------------------
-    //-----------------Functions-------------------------------------
-    //----------------------------------------------------------------------
-
-    public void removeFriendFromFriendsList(String admin_id,int user_id) {
-
-        RequestParams params = BuildJSON.getInstance().addRemoveFriendJSON(admin_id, user_id);
-        DBconnection.post(URL_REMOVE_FRIEND_FROM_FRIENDSLIST, params, new JsonHttpResponseHandler() {
-
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                try {
-                    Toast.makeText(context.getApplicationContext(), response.getString(MESSAGE), Toast.LENGTH_SHORT).show();
-                    if (response.getInt(STATUS) == 200) {
-                        getUserList().remove(getPosition());
-                        notifyDataSetChanged();
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-    }
-
-    public void addFriendToFriendslist(String admin_id,int user_id) {
-
-        RequestParams params = BuildJSON.getInstance().addRemoveFriendJSON(admin_id, user_id);
-        DBconnection.post(URL_ADD_FRIEND_TO_FRIENDSLIST, params, new JsonHttpResponseHandler() {
-
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                try {
-                    Toast.makeText(context.getApplicationContext(),response.getString(MESSAGE),Toast.LENGTH_SHORT).show();
-                    if(response.getInt(STATUS)==200){
-                        final User user_b = getUserList().get(getPosition());
-
-                        //Users become friends
-                        if(user_b.getStatus()==3){
-                            user_b.setStatus(2);
-                            notifyDataSetChanged();
-
-                            //Request is open and has to be answered by the other user
-                        }else if(user_b.getStatus()==1){
-                            user_b.setStatus(0);
-                            notifyDataSetChanged();
-                        }
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-    }
-
     //----------------------------------------------------------------------
     //-----------------Getter and Setter-------------------------------------
     //----------------------------------------------------------------------
 
-    public void setViewHolder(MyViewHolder viewHolder) {
-        this.viewHolder = viewHolder;
-    }
     public int getPosition() {
         return position;
     }
