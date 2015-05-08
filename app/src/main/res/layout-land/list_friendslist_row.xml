@@ -52,7 +52,7 @@
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentBottom="true"
                 android:src="@drawable/add_button"
-                android:id="@+id/imageButtonAddToFriendsList" android:background="@drawable/add_button_shape"
+                android:id="@+id/imageButtonAddToFriendsList" android:background="@drawable/icons_shape_blue"
                 />
         <ImageButton
                 android:layout_width="45dp"
@@ -61,7 +61,7 @@
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentBottom="true"
                 android:src="@drawable/decline_button"
-                android:id="@+id/imageButtonDeleteFromFriendsList" android:background="@drawable/add_button_shape"
+                android:id="@+id/imageButtonDeleteFromFriendsList" android:background="@drawable/icons_shape_blue"
                 />
         <ImageButton
                 android:layout_width="45dp"
@@ -70,7 +70,7 @@
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentBottom="true"
                 android:src="@drawable/questionmark"
-                android:id="@+id/imageButtonOpenRequestFriendsList" android:background="@drawable/add_button_shape"
+                android:id="@+id/imageButtonOpenRequestFriendsList" android:background="@drawable/icons_shape_blue"
                 android:layout_marginRight="23dp"/>
     </LinearLayout>
 

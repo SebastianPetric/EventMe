@@ -59,7 +59,7 @@
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
             android:src="@drawable/calendar_icon"
-            android:id="@+id/imageButtonNewEventDate" android:background="@drawable/add_button_shape"
+            android:id="@+id/imageButtonNewEventDate" android:background="@drawable/icons_shape_blue"
             />
     </LinearLayout>
 </LinearLayout>

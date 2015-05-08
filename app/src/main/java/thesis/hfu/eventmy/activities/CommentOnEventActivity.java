@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import com.oguzdev.circularfloatingactionmenu.library.FloatingActionButton;
 import thesis.hfu.eventmy.R;
@@ -30,6 +31,7 @@ public class CommentOnEventActivity extends ActionBarActivity {
     private FloatingActionButton commentOnEventButton;
     private SwipeRefreshLayout syncComments;
     private RecyclerView recyclerComments;
+    private ProgressBar progressBarEvent;
 
     private static final String EVENT_ID="event_id";
     private final static String COMMENT_ON_EVENT = "comment_on_event";
@@ -53,6 +55,7 @@ public class CommentOnEventActivity extends ActionBarActivity {
             setEventDateTextView(R.id.textViewTaskOfEventDate);
             setEventLocationTextView(R.id.textViewTaskOfEventLocation);
             setAddOrganizersButton(R.id.imageButtonTasksOfEventOrganizers);
+            setProgressBarEvent(R.id.progressBarAllTasks);
             setCommentOnEventBttuon();
             LinearLayoutManager layoutManager = new LinearLayoutManager(this);
             getRecyclerComments().setLayoutManager(layoutManager);
@@ -61,7 +64,7 @@ public class CommentOnEventActivity extends ActionBarActivity {
             getSyncComments().setOnRefreshListener(new CustomSwipeListener());
             getCommentButton().setOnClickListener(new FloatingButtonCustomClickListener());
             DBfunctions.getInstance().getEventComments(getApplicationContext(), getSyncComments(),getRecyclerComments(), event_id);
-            DBfunctions.getInstance().updateEventDetails(getApplicationContext(), getSyncComments(), getRecyclerComments(), CheckSharedPreferences.getInstance().getAdmin_id(), getEventTotalOrganizersTextView(), getEventTotalPercentageTextView(), getEventTotalCostsTextView(), getEventNameTextView(), getEventDateTextView(), getEventLocationTextView(), getEvent_id());
+            DBfunctions.getInstance().updateEventDetails( getSyncComments(),getProgressBarEvent(), CheckSharedPreferences.getInstance().getAdmin_id(), getEventTotalOrganizersTextView(), getEventTotalPercentageTextView(), getEventTotalCostsTextView(), getEventNameTextView(), getEventDateTextView(), getEventLocationTextView(), getEvent_id());
         }else{
             CheckSharedPreferences.getInstance().endSession(getApplicationContext());
         }
@@ -105,7 +108,7 @@ public class CommentOnEventActivity extends ActionBarActivity {
         public void onRefresh() {
             if (CheckSharedPreferences.getInstance().isLoggedIn(getApplicationContext())) {
                 DBfunctions.getInstance().getEventComments(getApplicationContext(), getSyncComments(),getRecyclerComments(), event_id);
-                DBfunctions.getInstance().updateEventDetails(getApplicationContext(), getSyncComments(), getRecyclerComments(), CheckSharedPreferences.getInstance().getAdmin_id(), getEventTotalOrganizersTextView(), getEventTotalPercentageTextView(), getEventTotalCostsTextView(), getEventNameTextView(), getEventDateTextView(), getEventLocationTextView(), getEvent_id());
+                DBfunctions.getInstance().updateEventDetails( getSyncComments(),getProgressBarEvent(), CheckSharedPreferences.getInstance().getAdmin_id(), getEventTotalOrganizersTextView(), getEventTotalPercentageTextView(), getEventTotalCostsTextView(), getEventNameTextView(), getEventDateTextView(), getEventLocationTextView(), getEvent_id());
             } else {
                 CheckSharedPreferences.getInstance().endSession(getApplicationContext());
             }
@@ -166,7 +169,7 @@ public class CommentOnEventActivity extends ActionBarActivity {
 
         this.commentOnEventButton = new FloatingActionButton.Builder(this)
                 .setContentView(icon)
-                .setBackgroundDrawable(R.drawable.add_button_shape)
+                .setBackgroundDrawable(R.drawable.icons_shape_blue)
                 .build();
         commentOnEventButton.setTag(COMMENT_ON_EVENT);
     }
@@ -227,5 +230,12 @@ public class CommentOnEventActivity extends ActionBarActivity {
     public void setRecyclerComments(int res) {
         this.recyclerComments = (RecyclerView) findViewById(res);
     }
+    public ProgressBar getProgressBarEvent() {
+        return progressBarEvent;
+    }
+    public void setProgressBarEvent(int res) {
+        this.progressBarEvent = (ProgressBar) findViewById(res);
+    }
+
 
 }

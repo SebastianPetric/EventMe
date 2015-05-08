@@ -41,7 +41,7 @@
                         android:layout_alignParentRight="true"
                         android:layout_alignParentEnd="true"
                         android:src="@drawable/add_button"
-                        android:id="@+id/imageButtonNewTaskAddButton" android:background="@drawable/add_button_shape"
+                        android:id="@+id/imageButtonNewTaskAddButton" android:background="@drawable/icons_shape_blue"
                         android:layout_marginRight="23dp"/>
             </RelativeLayout>
         </LinearLayout>

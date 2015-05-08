@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import com.oguzdev.circularfloatingactionmenu.library.FloatingActionButton;
 import thesis.hfu.eventmy.R;
@@ -31,6 +32,7 @@ public class AllTasksOfEventActivity extends ActionBarActivity {
     private SwipeRefreshLayout syncRefresh;
     private FloatingActionButton createTaskButton;
     private int event_id;
+    private ProgressBar progressBarEvent;
 
     private final static String ADD_TASK_BUTTON ="add_task_button";
     private static final String EVENT_ID="event_id";
@@ -46,6 +48,7 @@ public class AllTasksOfEventActivity extends ActionBarActivity {
         if(CheckSharedPreferences.getInstance().isLoggedIn(getApplicationContext())){
             setEvent_id(getIntent().getExtras().getInt(EVENT_ID));
             setFloatingActionButton();
+            setProgressBarEvent(R.id.progressBarAllTasks);
             setEventLocationTextView(R.id.textViewTaskOfEventLocation);
             setTotalOrganizersTextView(R.id.textViewTaskOfEventTotalOrganizers);
             setTotalCostsTextView(R.id.textViewTaskOfEventTotalCosts);
@@ -62,14 +65,14 @@ public class AllTasksOfEventActivity extends ActionBarActivity {
             getSyncRefresh().setOnRefreshListener(new CustomSwipeListener());
             getAddOrganizersButton().setOnClickListener(new CustomClickListener());
             getFloatingActionButton().setOnClickListener(new FloatingButtonCustomClickListener());
-            DBfunctions.getInstance().updateEventDetails(getApplicationContext(),getSyncRefresh(),getAllTasksOfEventRecycler(), CheckSharedPreferences.getInstance().getAdmin_id(),getEventTotalOrganizersTextView(), getEventTotalPercentageTextView(), getEventTotalCostsTextView(), getEventNameTextView(), getEventDateTextView(),getEventLocationTextView(), getEvent_id());
-            DBfunctions.getInstance().getAllTasks(this, getSyncRefresh(), getAllTasksOfEventRecycler(), getEvent_id(), getEventTotalOrganizersTextView(), getEventTotalPercentageTextView(), getEventTotalCostsTextView(), getEventNameTextView(), getEventDateTextView(),getEventLocationTextView());
+            DBfunctions.getInstance().updateEventDetails(getSyncRefresh(), getProgressBarEvent(), CheckSharedPreferences.getInstance().getAdmin_id(), getEventTotalOrganizersTextView(), getEventTotalPercentageTextView(), getEventTotalCostsTextView(), getEventNameTextView(), getEventDateTextView(), getEventLocationTextView(), getEvent_id());
+            DBfunctions.getInstance().getAllTasks(this, getProgressBarEvent(),getSyncRefresh(), getAllTasksOfEventRecycler(), getEvent_id(), getEventTotalOrganizersTextView(), getEventTotalPercentageTextView(), getEventTotalCostsTextView(), getEventNameTextView(), getEventDateTextView(), getEventLocationTextView());
         }else{
             CheckSharedPreferences.getInstance().endSession(getApplicationContext());
         }
     }
 
-    //----------------------------------------------------------------------
+   //----------------------------------------------------------------------
     //-----------------CUSTOM LISTENER-------------------------------------
     //----------------------------------------------------------------------
 
@@ -107,8 +110,8 @@ public class AllTasksOfEventActivity extends ActionBarActivity {
         @Override
         public void onRefresh() {
             if(CheckSharedPreferences.getInstance().isLoggedIn(getApplicationContext())){
-                DBfunctions.getInstance().updateEventDetails(getApplicationContext(),getSyncRefresh(),getAllTasksOfEventRecycler(), CheckSharedPreferences.getInstance().getAdmin_id(), getEventTotalOrganizersTextView(), getEventTotalPercentageTextView(), getEventTotalCostsTextView(), getEventNameTextView(), getEventDateTextView(),getEventLocationTextView(), getEvent_id());
-                DBfunctions.getInstance().getAllTasks(AllTasksOfEventActivity.this, getSyncRefresh(), getAllTasksOfEventRecycler(), getEvent_id(), getEventTotalOrganizersTextView(), getEventTotalPercentageTextView(), getEventTotalCostsTextView(), getEventNameTextView(), getEventDateTextView(),getEventLocationTextView());
+                DBfunctions.getInstance().updateEventDetails(getSyncRefresh(), getProgressBarEvent(), CheckSharedPreferences.getInstance().getAdmin_id(), getEventTotalOrganizersTextView(), getEventTotalPercentageTextView(), getEventTotalCostsTextView(), getEventNameTextView(), getEventDateTextView(),getEventLocationTextView(), getEvent_id());
+                DBfunctions.getInstance().getAllTasks(AllTasksOfEventActivity.this, getProgressBarEvent(),getSyncRefresh(), getAllTasksOfEventRecycler(), getEvent_id(), getEventTotalOrganizersTextView(), getEventTotalPercentageTextView(), getEventTotalCostsTextView(), getEventNameTextView(), getEventDateTextView(),getEventLocationTextView());
             }else{
                 CheckSharedPreferences.getInstance().endSession(getApplicationContext());
             }
@@ -222,7 +225,7 @@ public class AllTasksOfEventActivity extends ActionBarActivity {
 
         this.createTaskButton = new FloatingActionButton.Builder(this)
                 .setContentView(icon)
-                .setBackgroundDrawable(R.drawable.add_button_shape)
+                .setBackgroundDrawable(R.drawable.icons_shape_blue)
                 .build();
         this.createTaskButton.setTag(ADD_TASK_BUTTON);
     }
@@ -235,5 +238,10 @@ public class AllTasksOfEventActivity extends ActionBarActivity {
     public void setEventLocationTextView(int res) {
         this.eventLocationTextView = (TextView) findViewById(res);
     }
-
+    public ProgressBar getProgressBarEvent() {
+        return progressBarEvent;
+    }
+    public void setProgressBarEvent(int res) {
+        this.progressBarEvent = (ProgressBar) findViewById(res);
+    }
 }

@@ -14,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import com.oguzdev.circularfloatingactionmenu.library.FloatingActionButton;
 import thesis.hfu.eventmy.R;
@@ -30,6 +31,7 @@ public class EditTaskActivity extends ActionBarActivity {
     private SwipeRefreshLayout syncRefresh;
     private FloatingActionButton commentTaskButton;
     private RecyclerView recyclerComments;
+    private ProgressBar progressBarTask;
     private int event_id,task_id;
     // No Event Updates necessary in this activity
     private final int typeOfUpdate=0;
@@ -51,6 +53,7 @@ public class EditTaskActivity extends ActionBarActivity {
             setEvent_id(getIntent().getExtras().getInt(EVENT_ID));
             setTask_id(getIntent().getExtras().getInt(TASK_ID));
             setFloatingActionButton();
+            setProgressBarTask(R.id.progressBarTask);
             setSyncRefresh(R.id.swipe_refresh_all_tasks);
             setRecyclerComments(R.id.recyclerViewAllComments);
             setSyncRefresh(R.id.swipe_refresh_edit_task);
@@ -72,7 +75,7 @@ public class EditTaskActivity extends ActionBarActivity {
             getPercentageButton().setOnClickListener(new CustomClickListener());
             getEditorButton().setOnClickListener(new CustomClickListener());
             getCommentTaskButton().setOnClickListener(new FloatingMenuCustomClickListener());
-            DBfunctions.getInstance().updateTaskDetails(getApplicationContext(), getSyncRefresh(),getRecyclerComments(), getEventNameTextView(), getTaskTextView(), getQuantityTextView(), getCostsTextView(), getPercentageTextView(), getEditorTextView(), getTask_id());
+            DBfunctions.getInstance().updateTaskDetails(getApplicationContext(),getProgressBarTask(), getSyncRefresh(),getRecyclerComments(), getEventNameTextView(), getTaskTextView(), getQuantityTextView(), getCostsTextView(), getPercentageTextView(), getEditorTextView(), getTask_id());
         }else{
             CheckSharedPreferences.getInstance().endSession(getApplicationContext());
         }
@@ -89,7 +92,7 @@ public class EditTaskActivity extends ActionBarActivity {
             if(v.getId()==R.id.imageButtonEditTaskCosts){
                 EditCostsDialog.getInstance().startEditTaskDialog(getFragmentManager(),getSyncRefresh(),getRecyclerComments(), getCostsTextView(),null,null,null,null,null,null,getEvent_id(),getTask_id(),getTypeOfUpdate());
             }else if(v.getId()==R.id.imageButtonEditTaskPercentage){
-                EditPercentageDialog.getInstance().startEditPercentageDialog(getFragmentManager(),getRecyclerComments(),getSyncRefresh(),getPercentageTextView(),null,null,null,null,null,null,getTask_id(),getEvent_id(),getTypeOfUpdate());
+                EditPercentageDialog.getInstance().startEditPercentageDialog(getFragmentManager(),null,getProgressBarTask(),getRecyclerComments(),getSyncRefresh(),getPercentageTextView(),null,null,null,null,null,null,getTask_id(),getEvent_id(),getTypeOfUpdate());
             }else if(v.getId()==R.id.imageButtonEditTaskEditor){
                 if (CheckSharedPreferences.getInstance().isLoggedIn(getApplicationContext())) {
                     DBfunctions.getInstance().changeEditorOfTask(getApplicationContext(), getEditorTextView(), CheckSharedPreferences.getInstance().getAdmin_id(),getTask_id());
@@ -105,7 +108,7 @@ public class EditTaskActivity extends ActionBarActivity {
         @Override
         public void onClick(View v) {
            if(v.getTag().equals(COMMENT_TASK)) {
-              CommentOnTaskDialog.getInstance().startCommentDialog(getFragmentManager(),getSyncRefresh(), getRecyclerComments(), getApplicationContext(), getTask_id(), CheckSharedPreferences.getInstance().getAdmin_id(), getEventNameTextView(), getTaskTextView(), getQuantityTextView(), getCostsTextView(),getPercentageTextView(),getEditorTextView());
+              CommentOnTaskDialog.getInstance().startCommentDialog(getFragmentManager(),getProgressBarTask(),getSyncRefresh(), getRecyclerComments(), getApplicationContext(), getTask_id(), CheckSharedPreferences.getInstance().getAdmin_id(), getEventNameTextView(), getTaskTextView(), getQuantityTextView(), getCostsTextView(),getPercentageTextView(),getEditorTextView());
             }
         }
     }
@@ -115,7 +118,7 @@ public class EditTaskActivity extends ActionBarActivity {
         @Override
         public void onRefresh() {
             if(CheckSharedPreferences.getInstance().isLoggedIn(getApplicationContext())){
-               DBfunctions.getInstance().updateTaskDetails(getApplicationContext(),getSyncRefresh(),getRecyclerComments(), getEventNameTextView(), getTaskTextView(), getQuantityTextView(), getCostsTextView(), getPercentageTextView(), getEditorTextView(), getTask_id());
+               DBfunctions.getInstance().updateTaskDetails(getApplicationContext(),getProgressBarTask(),getSyncRefresh(),getRecyclerComments(), getEventNameTextView(), getTaskTextView(), getQuantityTextView(), getCostsTextView(), getPercentageTextView(), getEditorTextView(), getTask_id());
             }else{
                 CheckSharedPreferences.getInstance().endSession(getApplicationContext());
             }
@@ -151,7 +154,7 @@ public class EditTaskActivity extends ActionBarActivity {
             StartActivityFunctions.getInstance().startArchivedEventsActivity(getApplicationContext());
             return true;
         }else if (item.getItemId() == R.id.action_edit) {
-            EditTaskDialog.getInstance().startEditTaskDialog(getFragmentManager(),getApplicationContext(),getSyncRefresh(),getRecyclerComments(),getTaskTextView(),getQuantityTextView(),getEventNameTextView(),getCostsTextView(),getPercentageTextView(),getEditorTextView(),getTask_id(),CheckSharedPreferences.getInstance().getAdmin_id());
+            EditTaskDialog.getInstance().startEditTaskDialog(getFragmentManager(),getProgressBarTask(),getApplicationContext(),getSyncRefresh(),getRecyclerComments(),getTaskTextView(),getQuantityTextView(),getEventNameTextView(),getCostsTextView(),getPercentageTextView(),getEditorTextView(),getTask_id(),CheckSharedPreferences.getInstance().getAdmin_id());
             return true;
         }else if (item.getItemId() == R.id.action_delete) {
             DeleteTaskDialog.getInstance().startDeleteTaskDialog(getFragmentManager(),getTask_id(),getEvent_id());
@@ -159,7 +162,6 @@ public class EditTaskActivity extends ActionBarActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-
 
     //----------------------------------------------------------------------
     //-----------------Getter and Setter-------------------------------------
@@ -246,7 +248,7 @@ public class EditTaskActivity extends ActionBarActivity {
 
         this.commentTaskButton = new FloatingActionButton.Builder(this)
                 .setContentView(icon)
-                .setBackgroundDrawable(R.drawable.add_button_shape)
+                .setBackgroundDrawable(R.drawable.icons_shape_blue)
                 .build();
         this.commentTaskButton.setTag(COMMENT_TASK);
     }
@@ -258,5 +260,11 @@ public class EditTaskActivity extends ActionBarActivity {
     }
     public void setRecyclerComments(int res) {
         this.recyclerComments = (RecyclerView) findViewById(res);
+    }
+    public ProgressBar getProgressBarTask() {
+        return progressBarTask;
+    }
+    public void setProgressBarTask(int res) {
+        this.progressBarTask= (ProgressBar) findViewById(res);
     }
 }

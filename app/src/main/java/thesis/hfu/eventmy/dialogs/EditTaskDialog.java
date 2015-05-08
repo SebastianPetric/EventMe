@@ -12,6 +12,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import thesis.hfu.eventmy.R;
 import thesis.hfu.eventmy.database.DBfunctions;
@@ -23,6 +24,7 @@ public class EditTaskDialog extends DialogFragment {
     private TextView taskNameTextView, quantityTextView, eventNameTextView, costsTextView,percentageTextView,editorTextView;
     private RecyclerView recyclerView;
     private SwipeRefreshLayout syncRefresh;
+    private ProgressBar progressBarTask;
     private String editor_id;
     private int task_id;
 
@@ -33,7 +35,7 @@ public class EditTaskDialog extends DialogFragment {
         return EditTaskDialog.instance;
     }
 
-    public void startEditTaskDialog(FragmentManager manager, Context context,SwipeRefreshLayout syncRefresh, RecyclerView recyclerView, TextView taskNameTextView, TextView quantityTextView,final TextView eventNameTextView, final TextView costsTextView, final TextView percentageTextView, final TextView editorTextView,int task_id,String editor_id) {
+    public void startEditTaskDialog(FragmentManager manager,ProgressBar progressBarTask, Context context,SwipeRefreshLayout syncRefresh, RecyclerView recyclerView, TextView taskNameTextView, TextView quantityTextView,final TextView eventNameTextView, final TextView costsTextView, final TextView percentageTextView, final TextView editorTextView,int task_id,String editor_id) {
         setContext(context);
         setTaskNameTextView(taskNameTextView);
         setQuantityTextView(quantityTextView);
@@ -45,6 +47,7 @@ public class EditTaskDialog extends DialogFragment {
         setEditorTextView(editorTextView);
         setRecyclerView(recyclerView);
         setSyncRefresh(syncRefresh);
+        setProgressBarTask(progressBarTask);
         this.show(manager, "editTaskDialog");
     }
 
@@ -62,7 +65,7 @@ public class EditTaskDialog extends DialogFragment {
                     public void onClick(DialogInterface dialog, int id) {
                         String name = changeName.getText().toString().trim();
                         String quantity = changeQuantity.getText().toString().trim();
-                        DBfunctions.getInstance().updateTaskNameQuantity(getContext(),getSyncRefresh(),getRecyclerView(), getTaskNameTextView(), getQuantityTextView(), getEventNameTextView(),getCostsTextView(),getPercentageTextView(),getEditorTextView(),getTask_id(),getEditor_id(),quantity,name);
+                        DBfunctions.getInstance().updateTaskNameQuantity(getContext(),getProgressBarTask(),getSyncRefresh(),getRecyclerView(), getTaskNameTextView(), getQuantityTextView(), getEventNameTextView(),getCostsTextView(),getPercentageTextView(),getEditorTextView(),getTask_id(),getEditor_id(),quantity,name);
                         dialog.cancel();
                     }
                 })
@@ -143,5 +146,11 @@ public class EditTaskDialog extends DialogFragment {
     }
     public void setSyncRefresh(SwipeRefreshLayout syncRefresh) {
         this.syncRefresh = syncRefresh;
+    }
+    public ProgressBar getProgressBarTask() {
+        return progressBarTask;
+    }
+    public void setProgressBarTask(ProgressBar progressBarTask) {
+        this.progressBarTask = progressBarTask;
     }
 }

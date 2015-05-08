@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import thesis.hfu.eventmy.R;
 import thesis.hfu.eventmy.dialogs.LongClickEventDialog;
@@ -22,6 +23,7 @@ public class AllEventsListAdapter extends
     private ArrayList<Event> eventList;
     private Context context;
     private FragmentManager fragmentManager;
+    private ProgressBar progressBarEvent;
 
     public AllEventsListAdapter(Activity context,ArrayList<Event> list) {
         this.eventList = list;
@@ -44,6 +46,7 @@ public class AllEventsListAdapter extends
         viewHolder.costsTextView.setText(String.valueOf(event.getCosts()));
         viewHolder.numberOrganizersTextView.setText(String.valueOf(event.getNumOrganizers()));
         viewHolder.percentageTextView.setText(String.valueOf(event.getPercentage_of_event()));
+        viewHolder.progressBarEvent.setProgress((int)event.getPercentage_of_event());
         viewHolder.addOrganizersButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -64,6 +67,7 @@ public class AllEventsListAdapter extends
 
         private TextView nameTextView, locationTextView, dateTextView, numberOrganizersTextView, costsTextView, percentageTextView;
         private ImageButton addOrganizersButton;
+        private ProgressBar progressBarEvent;
 
         public MyViewHolder(View itemView) {
             super(itemView);
@@ -74,6 +78,7 @@ public class AllEventsListAdapter extends
             costsTextView = (TextView) itemView.findViewById(R.id.textViewListRowEventCosts);
             percentageTextView = (TextView) itemView.findViewById(R.id.textViewlistRowEventPercentage);
             addOrganizersButton= (ImageButton) itemView.findViewById(R.id.imageButtonListRowEventOrganizer);
+            progressBarEvent= (ProgressBar) itemView.findViewById(R.id.progressBarEvent);
             itemView.setOnClickListener(this);
             itemView.setOnLongClickListener(this);
         }
@@ -99,5 +104,8 @@ public class AllEventsListAdapter extends
     }
     public FragmentManager getFragmentManager() {
         return fragmentManager;
+    }
+    public ProgressBar getProgressBarEvent() {
+        return progressBarEvent;
     }
 }

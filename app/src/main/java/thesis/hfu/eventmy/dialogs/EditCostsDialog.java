@@ -68,7 +68,7 @@ public class EditCostsDialog extends DialogFragment {
                                     setCostValue(Calculation.getInstance().round(Double.parseDouble(userInput.getText().toString())));
                                     setTypeOfCalculation(0);
                                     if (CheckSharedPreferences.getInstance().isLoggedIn(getActivity())) {
-                                        DBfunctions.getInstance().updateCosts(getActivity(),getRecyclerView(),getSyncRefresh(), getTaskCostTextView(), getTotalOrganizersTextView(), getTotalPercentageTextView(), getToalCostsTextView(), getEventNameTextView(), getEventDateTextView(),getEventLocationTextView(),getEvent_id(),getTask_id(), Integer.parseInt(CheckSharedPreferences.getInstance().getAdmin_id()), getCostValue(), getTypeOfCalculation(), getTypeOfUpdate());
+                                        DBfunctions.getInstance().updateCosts(getActivity(),null,getSyncRefresh(), getTaskCostTextView(), getTotalOrganizersTextView(), getTotalPercentageTextView(), getToalCostsTextView(), getEventNameTextView(), getEventDateTextView(),getEventLocationTextView(),getEvent_id(),getTask_id(), Integer.parseInt(CheckSharedPreferences.getInstance().getAdmin_id()), getCostValue(), getTypeOfCalculation(), getTypeOfUpdate());
                                     }else{
                                         CheckSharedPreferences.getInstance().endSession(getActivity());
                                     }
@@ -90,7 +90,7 @@ public class EditCostsDialog extends DialogFragment {
                             setCostValue(Calculation.getInstance().round(Double.parseDouble(userInput.getText().toString())));
                             setTypeOfCalculation(1);
                             if (CheckSharedPreferences.getInstance().isLoggedIn(getActivity())) {
-                                DBfunctions.getInstance().updateCosts(getActivity(),getRecyclerView(),getSyncRefresh(), getTaskCostTextView(), getTotalOrganizersTextView(), getTotalPercentageTextView(), getToalCostsTextView(), getEventNameTextView(), getEventDateTextView(),getEventLocationTextView(),getEvent_id(),getTask_id(), Integer.parseInt(CheckSharedPreferences.getInstance().getAdmin_id()), getCostValue(), getTypeOfCalculation(), getTypeOfUpdate());
+                                DBfunctions.getInstance().updateCosts(getActivity(),null,getSyncRefresh(), getTaskCostTextView(), getTotalOrganizersTextView(), getTotalPercentageTextView(), getToalCostsTextView(), getEventNameTextView(), getEventDateTextView(),getEventLocationTextView(),getEvent_id(),getTask_id(), Integer.parseInt(CheckSharedPreferences.getInstance().getAdmin_id()), getCostValue(), getTypeOfCalculation(), getTypeOfUpdate());
                             } else {
                                 CheckSharedPreferences.getInstance().endSession(getActivity());
                             }

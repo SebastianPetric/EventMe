@@ -1,8 +1,8 @@
 <resources>
-    <style name="AppTheme" parent="Theme.AppCompat.Light">
-        <item name="colorPrimary">#FFC83C</item>
-        <item name="colorControlNormal">#FFFFFF</item>
-        <item name="colorControlActivated">#FFFFFF</item>
-        <item name="colorControlHighlight">#FFFFFF</item>
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">#df4e3d</item>
+        <item name="colorControlNormal">#e5b6b0</item>
+        <item name="colorControlActivated">#e5b6b0</item>
+        <item name="colorControlHighlight">#e5b6b0</item>
     </style>
 </resources>

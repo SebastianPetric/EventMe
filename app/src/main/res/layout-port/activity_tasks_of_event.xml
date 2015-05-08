@@ -4,125 +4,151 @@
         android:id="@+id/swipe_refresh_all_tasks"
         android:layout_width="match_parent"
         android:layout_height="match_parent" android:background="#151515">
-<RelativeLayout android:layout_width="match_parent"
-                android:layout_height="match_parent">
-    <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent">
+    <RelativeLayout android:layout_width="match_parent"
+                    android:layout_height="match_parent">
         <LinearLayout
-                android:orientation="horizontal"
+                android:orientation="vertical"
                 android:layout_width="fill_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="fill_parent">
+                <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" android:background="@drawable/customborder">
+                    <LinearLayout
+                            android:orientation="vertical"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentBottom="true"
+                            android:layout_weight="0.5">
+                        <LinearLayout
+                                android:orientation="horizontal"
+                                android:layout_width="match_parent"
+                                android:layout_height="70dp">
+                            <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textSize="40dp"
+                                    android:textAppearance="?android:attr/textAppearanceMedium"
+                                    android:id="@+id/textViewTaskOfEventTotalPercentage"
+                                    android:layout_alignTop="@+id/textViewTaskOfEventTotalCosts"
+                                    android:layout_alignLeft="@+id/imageViewTasksOfEventTotalPercentage"
+                                    android:layout_alignStart="@+id/imageViewTasksOfEventTotalPercentage"
+                                    android:layout_gravity="center"
+                                    android:textColor="#ffffff" android:layout_marginLeft="10dp"/>
+                            <ImageButton android:layout_width="40dp" android:layout_height="40dp"
+                                         android:layout_alignParentRight="true" android:layout_alignParentEnd="true"
+                                         android:layout_alignParentBottom="true"
+                                         android:id="@+id/imageButton5"
+                                         android:layout_gravity="center" android:background="#151515"
+                                         android:layout_marginLeft="5dp"
+                                         android:src="@drawable/percentageiconbigwhite"/>
+                        </LinearLayout>
+                        <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="50dp">
+                            <ProgressBar
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    style="?android:attr/progressBarStyleHorizontal"
+                                    android:id="@+id/progressBarAllTasks"
+                                    android:progressDrawable="@drawable/custom_progressbar_event"
+                                    android:layout_marginLeft="5dp" android:layout_marginRight="5dp"
+                                    android:layout_alignParentBottom="true" android:layout_marginBottom="10dp"/>
+                        </RelativeLayout>
+                    </LinearLayout>
+                    <LinearLayout
+                            android:orientation="vertical"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent" android:layout_weight="0.5"
+                            android:background="@drawable/customborder">
+                        <LinearLayout
+                                android:orientation="vertical"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content">
+                            <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textAppearance="?android:attr/textAppearanceLarge"
+                                    android:id="@+id/textViewTaskOfEventEventName" android:layout_alignParentTop="true" android:layout_alignParentLeft="true"
+                                    android:layout_alignParentStart="true"
+                                    android:layout_marginTop="10dp"
+                                    android:textColor="#FFFFFF" android:layout_gravity="left"
+                                    android:layout_marginLeft="10dp"/>
+                            <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textAppearance="?android:attr/textAppearanceSmall"
+                                    android:id="@+id/textViewTaskOfEventLocation" android:textColor="#FFFFFF"
+                                    android:layout_marginTop="5dp"
+                                    android:layout_marginLeft="10dp"/>
+                            <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:textAppearance="?android:attr/textAppearanceSmall"
+                                    android:id="@+id/textViewTaskOfEventDate"
+                                    android:layout_below="@+id/textViewTaskOfEventEventLocation" android:layout_alignLeft="@+id/textViewTaskOfEventEventLocation"
+                                    android:layout_alignStart="@+id/textViewTaskOfEventEventLocation" android:layout_marginTop="5dp"
+                                    android:textColor="#FFFFFF" android:layout_marginLeft="10dp"
+                                    android:layout_marginBottom="5dp"/>
+                        </LinearLayout>
+                        <LinearLayout
+                                android:orientation="horizontal"
+                                android:layout_width="fill_parent"
+                                android:layout_height="match_parent"
+                                android:background="@drawable/customborder">
+                            <LinearLayout
+                                    android:orientation="horizontal"
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent" android:layout_weight="0.7">
+                                <ImageButton android:layout_width="16dp" android:layout_height="16dp"
+                                             android:id="@+id/imageButton" android:background="#151515"
+                                             android:clickable="false" android:layout_alignParentRight="true"
+                                             android:layout_gravity="center_vertical" android:layout_marginLeft="10dp"
+                                             android:src="@drawable/euroiconwhite"/>
+                                <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                                          android:textAppearance="?android:attr/textAppearanceLarge"
+                                          android:id="@+id/textViewTaskOfEventTotalCosts"
+                                          android:layout_gravity="center"
+                                          android:textColor="#ffffff"
+                                          android:layout_marginLeft="10dp" android:textSize="20dp"/>
+                            </LinearLayout>
+                            <LinearLayout android:orientation="horizontal" android:layout_width="0dp"
+                                          android:layout_height="match_parent" android:layout_weight="0.3">
+                                <LinearLayout android:orientation="horizontal" android:layout_width="match_parent"
+                                              android:layout_height="match_parent">
+                                    <ImageButton android:layout_width="16dp" android:layout_height="16dp"
+                                                 android:layout_alignParentRight="true"
+                                                 android:layout_alignParentEnd="true"
+                                                 android:layout_alignParentBottom="true" android:id="@+id/imageButtonTasksOfEventOrganizers"
+                                                 android:layout_gravity="center_vertical"
+                                                 android:layout_marginLeft="10dp" android:background="#151515"
+                                                 android:src="@drawable/grouporganizers"/>
+                                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                                              android:textAppearance="?android:attr/textAppearanceMedium"
+                                              android:id="@+id/textViewTaskOfEventTotalOrganizers" android:layout_alignParentBottom="true"
+                                              android:layout_alignLeft="@+id/imageViewTasksOfEventTotalOrganizers"
+                                              android:layout_alignStart="@+id/imageViewTasksOfEventTotalOrganizers"
+                                              android:layout_gravity="center" android:textColor="#ffffff"
+                                              android:layout_marginLeft="10dp"
+                                              android:textSize="20dp"/>
+                                </LinearLayout>
+                            </LinearLayout>
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
             <LinearLayout
-                    android:orientation="vertical"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-                <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceLarge"
-                        android:id="@+id/textViewTaskOfEventEventName" android:layout_alignParentTop="true" android:layout_alignParentLeft="true"
-                        android:layout_alignParentStart="true"
-                        android:layout_marginTop="10dp" android:layout_gravity="center_horizontal"
-                        android:textColor="#ffffff"/>
-                <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:id="@+id/textViewTaskOfEventLocation" android:textColor="#FFFFFF"
-                        android:layout_gravity="center_horizontal" android:layout_marginTop="5dp"/>
-                <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:id="@+id/textViewTaskOfEventDate"
-                        android:layout_below="@+id/textViewTaskOfEventEventLocation" android:layout_alignLeft="@+id/textViewTaskOfEventEventLocation"
-                        android:layout_alignStart="@+id/textViewTaskOfEventEventLocation" android:layout_marginTop="5dp"
-                        android:layout_gravity="center" android:textColor="#ffffff"/>
-            </LinearLayout>
-        </LinearLayout>
-        <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true" android:layout_marginTop="12dp">
-            <LinearLayout
-                    android:orientation="vertical"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0.333333333">
-                <ImageButton android:layout_width="wrap_content" android:layout_height="wrap_content"
-                             android:layout_alignParentRight="true" android:layout_alignParentEnd="true"
-                             android:layout_alignParentBottom="true" android:src="@drawable/organizers_icon"
-                             android:id="@+id/imageButtonTasksOfEventOrganizers" android:background="@drawable/icons_shape"
-                             android:layout_gravity="center_horizontal"/>
-                <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:id="@+id/textViewTaskOfEventTotalOrganizers"
-                        android:layout_alignParentBottom="true"
-                        android:layout_alignLeft="@+id/imageViewTasksOfEventTotalOrganizers"
-                        android:layout_alignStart="@+id/imageViewTasksOfEventTotalOrganizers"
-                        android:layout_marginTop="10dp"
-                        android:layout_gravity="center_horizontal" android:textColor="#ffffff"/>
-            </LinearLayout>
-            <LinearLayout
-                    android:orientation="vertical"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0.333333333">
-                <ImageButton android:layout_width="wrap_content" android:layout_height="wrap_content"
-                             android:layout_alignParentRight="true" android:layout_alignParentEnd="true"
-                             android:layout_alignParentBottom="true" android:src="@drawable/euro_icon"
-                             android:id="@+id/imageButton3" android:background="@drawable/icons_shape"
-                             android:layout_gravity="center_horizontal" android:clickable="false"/>
-                <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:id="@+id/textViewTaskOfEventTotalCosts"
-                        android:layout_marginTop="10dp" android:layout_gravity="center_horizontal"
-                        android:textColor="#ffffff"/>
-            </LinearLayout>
-            <LinearLayout
-                    android:orientation="vertical"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0.333333333">
-                <ImageButton android:layout_width="wrap_content" android:layout_height="wrap_content"
-                             android:layout_alignParentRight="true" android:layout_alignParentEnd="true"
-                             android:layout_alignParentBottom="true" android:src="@drawable/percentage_icon"
-                             android:id="@+id/imageButton4" android:background="@drawable/icons_shape"
-                             android:layout_gravity="center_horizontal"/>
-                <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:id="@+id/textViewTaskOfEventTotalPercentage"
-                        android:layout_alignTop="@+id/textViewTaskOfEventTotalCosts"
-                        android:layout_alignLeft="@+id/imageViewTasksOfEventTotalPercentage"
-                        android:layout_alignStart="@+id/imageViewTasksOfEventTotalPercentage"
-                        android:layout_marginTop="10dp" android:layout_gravity="center_horizontal"
-                        android:textColor="#ffffff"/>
-            </LinearLayout>
-
-
-        </LinearLayout>
-        <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="fill_parent"
-                android:layout_height="match_parent" android:layout_marginTop="12dp">
-            <android.support.v7.widget.RecyclerView
-                    xmlns:android="http://schemas.android.com/apk/res/android"
-                    xmlns:tools="http://schemas.android.com/tools"
-                    android:id="@+id/recyclerViewAllTasksOfEvent"
+                    android:orientation="horizontal"
                     android:layout_width="fill_parent"
-                    android:layout_height="fill_parent"
-                    tools:context=".MainActivity"
-                    />
+                    android:layout_height="match_parent" android:layout_marginTop="12dp">
+                <android.support.v7.widget.RecyclerView
+                        xmlns:android="http://schemas.android.com/apk/res/android"
+                        xmlns:tools="http://schemas.android.com/tools"
+                        android:id="@+id/recyclerViewAllTasksOfEvent"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        tools:context=".MainActivity"
+                        />
+            </LinearLayout>
         </LinearLayout>
-    </LinearLayout>
-</RelativeLayout>
+    </RelativeLayout>
 </android.support.v4.widget.SwipeRefreshLayout>

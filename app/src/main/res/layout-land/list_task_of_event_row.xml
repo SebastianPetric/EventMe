@@ -7,7 +7,7 @@
     <LinearLayout
             android:orientation="horizontal"
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent">
+            android:layout_height="wrap_content">
         <LinearLayout
                 android:orientation="vertical"
                 android:layout_width="0dp"
@@ -39,7 +39,7 @@
                 <ImageButton android:layout_width="50dp" android:layout_height="50dp"
                              android:layout_alignParentRight="true" android:layout_alignParentEnd="true"
                              android:layout_alignParentBottom="true" android:src="@drawable/euro_icon"
-                             android:id="@+id/imageButtonListRowTaskOfEventCosts" android:background="@drawable/add_button_shape"
+                             android:id="@+id/imageButtonListRowTaskOfEventCosts" android:background="@drawable/icons_shape_blue"
                              android:layout_gravity="center_horizontal" android:layout_marginTop="5dp"/>
                 <TextView
                         android:layout_width="wrap_content"
@@ -58,7 +58,7 @@
                              android:layout_alignParentRight="true" android:layout_alignParentEnd="true"
                              android:layout_alignParentBottom="true" android:src="@drawable/percentage_icon"
                              android:id="@+id/imageButtonListRowTaskOfEventPercentage"
-                             android:background="@drawable/add_button_shape" android:layout_gravity="center_horizontal"
+                             android:background="@drawable/icons_shape_blue" android:layout_gravity="center_horizontal"
                              android:layout_marginTop="5dp"/>
                 <TextView
                         android:layout_width="wrap_content"
@@ -77,7 +77,7 @@
                              android:layout_alignParentRight="true" android:layout_alignParentEnd="true"
                              android:layout_alignParentBottom="true" android:src="@drawable/editor_icon"
                              android:id="@+id/imageButtonlistRowTaskOfEventPercentage"
-                             android:background="@drawable/add_button_shape" android:layout_gravity="center_horizontal"
+                             android:background="@drawable/icons_shape_blue" android:layout_gravity="center_horizontal"
                              android:layout_marginTop="5dp"/>
                 <TextView
                         android:layout_width="wrap_content"
@@ -88,5 +88,18 @@
                         android:textColor="#ffffffff"/>
             </LinearLayout>
         </LinearLayout>
+    </LinearLayout>
+    <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        <ProgressBar
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:id="@+id/progressBarTask"
+                android:progressDrawable="@drawable/custom_progressbar_task"
+                android:layout_marginLeft="5dp" android:layout_marginRight="5dp"
+                android:layout_alignParentBottom="true" android:layout_marginBottom="10dp"/>
     </LinearLayout>
 </LinearLayout>

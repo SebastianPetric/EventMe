@@ -12,6 +12,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import thesis.hfu.eventmy.R;
 import thesis.hfu.eventmy.database.DBfunctions;
@@ -24,6 +25,7 @@ public class CommentOnTaskDialog extends DialogFragment {
     private TextView taskNameTextView, eventNameTextView, taskQuantityTextView, costsTextView, percentageTextView, editorTextView;
     private RecyclerView recyclerView;
     private SwipeRefreshLayout syncRefresh;
+    private ProgressBar progressBarTask;
 
     public static CommentOnTaskDialog getInstance() {
         if (CommentOnTaskDialog.instance == null) {
@@ -32,7 +34,7 @@ public class CommentOnTaskDialog extends DialogFragment {
         return CommentOnTaskDialog.instance;
     }
 
-    public void startCommentDialog(FragmentManager manager,SwipeRefreshLayout syncRefresh,final RecyclerView recyclerView,Context context, int task_id,String admin_id,final TextView eventNameTextView,final TextView taskFieldTextView, final TextView quantityTextView, final TextView costTextView, TextView percentageTextView, final TextView editorTextView) {
+    public void startCommentDialog(FragmentManager manager,ProgressBar progressBarTask,SwipeRefreshLayout syncRefresh,final RecyclerView recyclerView,Context context, int task_id,String admin_id,final TextView eventNameTextView,final TextView taskFieldTextView, final TextView quantityTextView, final TextView costTextView, TextView percentageTextView, final TextView editorTextView) {
         setTask_id(task_id);
         setAdmin_id(Integer.valueOf(admin_id));
         setContext(context);
@@ -44,6 +46,7 @@ public class CommentOnTaskDialog extends DialogFragment {
         setEditorTextView(editorTextView);
         setRecyclerView(recyclerView);
         setSyncRefresh(syncRefresh);
+        setProgressBarTask(progressBarTask);
         this.show(manager, "commentDialog");
     }
 
@@ -59,7 +62,7 @@ public class CommentOnTaskDialog extends DialogFragment {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
                         String comment = userInput.getText().toString().trim();
-                        DBfunctions.getInstance().commentOnTask(getContext(), getSyncRefresh(),getRecyclerView(),getEventNameTextView(), getTaskTextView(),getQuantityTextView(),getCostsTextView(),getPercentageTextView(),getEditorTextView(),getTask_id(),getAdmin_id(),comment);
+                        DBfunctions.getInstance().commentOnTask(getContext(),getProgressBarTask(), getSyncRefresh(),getRecyclerView(),getEventNameTextView(), getTaskTextView(),getQuantityTextView(),getCostsTextView(),getPercentageTextView(),getEditorTextView(),getTask_id(),getAdmin_id(),comment);
                         dialog.cancel();
                     }
                 })
@@ -140,5 +143,11 @@ public class CommentOnTaskDialog extends DialogFragment {
     }
     public void setSyncRefresh(SwipeRefreshLayout syncRefresh) {
         this.syncRefresh = syncRefresh;
+    }
+    public ProgressBar getProgressBarTask() {
+        return progressBarTask;
+    }
+    public void setProgressBarTask(ProgressBar progressBarTask) {
+        this.progressBarTask = progressBarTask;
     }
 }

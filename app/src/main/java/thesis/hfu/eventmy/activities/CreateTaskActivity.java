@@ -179,7 +179,7 @@ public class CreateTaskActivity extends ActionBarActivity {
 
         this.createTaskButton = new FloatingActionButton.Builder(this)
                 .setContentView(icon)
-                .setBackgroundDrawable(R.drawable.add_button_shape)
+                .setBackgroundDrawable(R.drawable.icons_shape_blue)
                 .build();
         createTaskButton.setTag(CREATE_TASK_BUTTON);
     }

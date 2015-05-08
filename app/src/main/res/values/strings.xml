@@ -28,7 +28,7 @@
 
     <!-- EDIT TASK SCREEN -->
     <string name="edit_task_quantity">Menge ändern</string>
-    <string name="edit_task_name">Name ändern</string>
+    <string name="edit_task_name">Aufgabenname ändern</string>
     <string name="edit_task_quantity_text">Menge:</string>
     <string name="edit_task_note">Kommentar</string>
     <string name="edit_task_previous_note_header">Verlauf:</string>
@@ -36,7 +36,7 @@
     <!-- EDIT EVENT DIALOG -->
     <string name="edit_event_message">Event bearbeiten</string>
     <string name="edit_event_date">Datum ändern</string>
-    <string name="edit_event_name">Name ändern</string>
+    <string name="edit_event_name">Eventame ändern</string>
     <string name="edit_event_location">Location ändern</string>
     <string name="edit_event_ok">Aktualisieren</string>
     <string name="edit_event_cancel">Abbrechen</string>

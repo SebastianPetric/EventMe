@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import thesis.hfu.eventmy.R;
 import thesis.hfu.eventmy.database.DBfunctions;
@@ -31,11 +32,12 @@ public class AllTasksOfEventListAdapter extends
     private TextView eventNameTextView, eventDateTextView, eventTotalOrganizersTextView, eventTotalCostsTextView, eventTotalPercentageTextView,eventLocationTextView;
     private RecyclerView recyclerView;
     private SwipeRefreshLayout syncRefresh;
+    private ProgressBar progressBarEvent,progressBarTask;
     private int event_id;
     private final int typeOfUpdate=1;
     private FragmentManager fragmentManager;
 
-    public AllTasksOfEventListAdapter(Activity context,RecyclerView recyclerView,SwipeRefreshLayout syncRefresh,ArrayList<Task> list,TextView eventNameTextView,TextView eventDateTextView,TextView eventTotalOrganizersTextView,TextView eventTotalCostsTextView,TextView eventTotalPercentageTextView,TextView eventLocationTextView,int event_id) {
+    public AllTasksOfEventListAdapter(Activity context,ProgressBar progressBarEvent,RecyclerView recyclerView,SwipeRefreshLayout syncRefresh,ArrayList<Task> list,TextView eventNameTextView,TextView eventDateTextView,TextView eventTotalOrganizersTextView,TextView eventTotalCostsTextView,TextView eventTotalPercentageTextView,TextView eventLocationTextView,int event_id) {
         this.tasks = list;
         this.context=context;
         this.eventNameTextView = eventNameTextView;
@@ -48,6 +50,8 @@ public class AllTasksOfEventListAdapter extends
         this.recyclerView= recyclerView;
         this.syncRefresh=syncRefresh;
         this.fragmentManager=context.getFragmentManager();
+        this.progressBarEvent=progressBarEvent;
+       // setProgressBarTask(progressBarTask);
     }
     @Override
     public int getItemCount() {
@@ -63,6 +67,7 @@ public class AllTasksOfEventListAdapter extends
         viewHolder.costTextView.setText(String.valueOf(task.getCostOfTask()));
         viewHolder.percentageTextView.setText(String.valueOf(task.getPercentage()));
         viewHolder.editorTextView.setText(task.getEditor_name());
+        viewHolder.progressBar.setProgress(task.getPercentage());
 
         viewHolder.editorButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -80,7 +85,7 @@ public class AllTasksOfEventListAdapter extends
             @Override
             public void onClick(View v) {
                 setViewHolder(viewHolder);
-                EditPercentageDialog.getInstance().startEditPercentageDialog(getFragmentManager(),getRecyclerView(),getSyncRefresh(), viewHolder.percentageTextView, getEventTotalOrganizersTextView(), getEventTotalCostsTextView(), getEventTotalPercentageTextView(), getEventNameTextView(), getEventDateTextView(),getEventLocationTextView(), task.getTask_id(),getEvent_id(),getTypeOfUpdate());
+                EditPercentageDialog.getInstance().startEditPercentageDialog(getFragmentManager(),getProgressBarEvent(),viewHolder.progressBar,getRecyclerView(),getSyncRefresh(), viewHolder.percentageTextView, getEventTotalOrganizersTextView(), getEventTotalCostsTextView(), getEventTotalPercentageTextView(), getEventNameTextView(), getEventDateTextView(),getEventLocationTextView(), task.getTask_id(),getEvent_id(),getTypeOfUpdate());
             }
         });
 
@@ -105,6 +110,7 @@ public class AllTasksOfEventListAdapter extends
 
         ImageButton costButton,percentageButton,editorButton;
         TextView costTextView, percentageTextView, editorTextView, taskTextView, quantityTextView;
+        ProgressBar progressBar;
 
         public MyViewHolder(View itemView) {
             super(itemView);
@@ -117,6 +123,7 @@ public class AllTasksOfEventListAdapter extends
             editorTextView = (TextView) itemView.findViewById(R.id.textViewlistRowTaskOfEventOrganizer);
             taskTextView = (TextView) itemView.findViewById(R.id.textViewListRowTaskOfEventName);
             quantityTextView = (TextView) itemView.findViewById(R.id.textViewListRowTaskOfEventDate);
+            progressBar=(ProgressBar) itemView.findViewById(R.id.progressBarTask);
             itemView.setOnClickListener(this);
         }
 
@@ -182,5 +189,19 @@ public class AllTasksOfEventListAdapter extends
     public void setSyncRefresh(SwipeRefreshLayout syncRefresh) {
         this.syncRefresh = syncRefresh;
     }
+    public ProgressBar getProgressBarEvent() {
+        return progressBarEvent;
+    }
+    public void setProgressBarEvent(ProgressBar progressBar) {
+        this.progressBarEvent = progressBar;
+    }
+    /* public ProgressBar getProgressBarTask() {
+        return progressBarTask;
+    }
+    public void setProgressBarTask(ProgressBar progressBarTask) {
+        this.progressBarTask = progressBarTask;
+    }
+*/
+
 
 }

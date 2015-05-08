@@ -162,7 +162,7 @@ public class CreateEventActivity extends ActionBarActivity {
 
         this.createEventButton = new FloatingActionButton.Builder(this)
                 .setContentView(icon)
-                .setBackgroundDrawable(R.drawable.add_button_shape)
+                .setBackgroundDrawable(R.drawable.icons_shape_blue)
                 .build();
         createEventButton.setTag(CREATE_EVENT_BUTTON);
     }

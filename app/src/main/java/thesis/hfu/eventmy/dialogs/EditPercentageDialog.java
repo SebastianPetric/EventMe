@@ -8,6 +8,7 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import thesis.hfu.eventmy.R;
 import thesis.hfu.eventmy.database.DBfunctions;
@@ -19,7 +20,9 @@ public class EditPercentageDialog extends DialogFragment {
     private int task_id,event_id, percentageValue,status_of_update;
     private static EditPercentageDialog instance;
     private RecyclerView recyclerView;
-    public SwipeRefreshLayout syncRefresh;
+    private SwipeRefreshLayout syncRefresh;
+    private ProgressBar progressBarEvent,progressBarTask;
+
 
     public static EditPercentageDialog getInstance(){
         if (EditPercentageDialog.instance == null){
@@ -28,7 +31,7 @@ public class EditPercentageDialog extends DialogFragment {
         return EditPercentageDialog.instance;
     }
 
-    public void startEditPercentageDialog(FragmentManager manager,RecyclerView recyclerView, SwipeRefreshLayout syncRefresh,TextView percentageTextView,TextView totalOrganizersTextView, TextView totalCostsTextView, TextView totalPercentageTextView,TextView eventNameTextView,TextView eventDateTextView,TextView eventLocationTextView,int task_id,int event_id, int status_of_update) {
+    public void startEditPercentageDialog(FragmentManager manager,ProgressBar progressBarEvent,ProgressBar progressBarTask,RecyclerView recyclerView, SwipeRefreshLayout syncRefresh,TextView percentageTextView,TextView totalOrganizersTextView, TextView totalCostsTextView, TextView totalPercentageTextView,TextView eventNameTextView,TextView eventDateTextView,TextView eventLocationTextView,int task_id,int event_id, int status_of_update) {
         setTask_id(task_id);
         setPercentageTextView(percentageTextView);
         setTotalCostsTextView(totalCostsTextView);
@@ -41,6 +44,8 @@ public class EditPercentageDialog extends DialogFragment {
         setEvent_id(event_id);
         setRecyclerView(recyclerView);
         setSyncRefresh(syncRefresh);
+        setProgressBarEvent(progressBarEvent);
+        setProgressBarTask(progressBarTask);
         this.show(manager, "editPercentageDialog");
     }
 
@@ -68,7 +73,7 @@ public class EditPercentageDialog extends DialogFragment {
                                 break;
                         }
                         if (CheckSharedPreferences.getInstance().isLoggedIn(getActivity())) {
-                            DBfunctions.getInstance().updatePercentage(getActivity(), getRecyclerView(), getSyncRefresh(),getPercentageTextView(), getTotalCostsTextView(), getTotalPercentageTextView(), getTotalOrganizersTextView(), getEventNameTextView(), getEventDateTextView(),getEventLocationTextView(),getEvent_id(), getTask_id(), Integer.parseInt(CheckSharedPreferences.getInstance().getAdmin_id()), getPercentageValue(),getStatus_of_update());
+                            DBfunctions.getInstance().updatePercentage(getActivity(), getProgressBarEvent(),getProgressBarTask(),getSyncRefresh(),getPercentageTextView(), getTotalCostsTextView(), getTotalPercentageTextView(), getTotalOrganizersTextView(), getEventNameTextView(), getEventDateTextView(),getEventLocationTextView(),getEvent_id(), getTask_id(), Integer.parseInt(CheckSharedPreferences.getInstance().getAdmin_id()), getPercentageValue(),getStatus_of_update());
                         } else {
                             CheckSharedPreferences.getInstance().endSession(getActivity());
                         }
@@ -158,5 +163,17 @@ public class EditPercentageDialog extends DialogFragment {
     }
     public void setSyncRefresh(SwipeRefreshLayout syncRefresh) {
         this.syncRefresh = syncRefresh;
+    }
+    public ProgressBar getProgressBarEvent() {
+        return progressBarEvent;
+    }
+    public void setProgressBarEvent(ProgressBar progressBarEvent) {
+        this.progressBarEvent = progressBarEvent;
+    }
+    public ProgressBar getProgressBarTask() {
+        return progressBarTask;
+    }
+    public void setProgressBarTask(ProgressBar progressBarTask) {
+        this.progressBarTask = progressBarTask;
     }
 }

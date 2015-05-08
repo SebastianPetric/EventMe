@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="fill_parent"
               android:layout_height="wrap_content"
-              android:orientation="vertical" android:background="#151515">
+              android:orientation="vertical" android:background="#e9e8e4">
     <LinearLayout
             android:orientation="horizontal"
             android:layout_width="fill_parent"
@@ -14,7 +14,7 @@
                 android:text="@string/login_header"
                 android:id="@+id/textView"
                 android:layout_marginTop="24dp"
-                android:textColor="#ffffffff"/>
+                android:textColor="#6c6b69"/>
     </LinearLayout>
     <LinearLayout
             android:orientation="horizontal"
@@ -30,8 +30,8 @@
                 android:ems="10"
                 android:id="@+id/loginEmailEditText"
                 android:layout_marginRight="23dp"
-            android:hint="@string/login_email" android:textColorHint="#ffffffff" android:backgroundTint="#ffffffff"
-                android:textColor="#ffffffff" android:singleLine="false" android:shadowColor="#ffffffff"/>
+            android:hint="@string/login_email" android:textColorHint="#6c6b69" android:backgroundTint="#6c6b69"
+                android:textColor="#6c6b69" android:singleLine="false" android:shadowColor="#6c6b69"/>
     </LinearLayout>
     <LinearLayout
             android:orientation="horizontal"
@@ -46,8 +46,8 @@
                 android:ems="10"
                 android:id="@+id/loginPasswortEditText"
                 android:layout_marginRight="23dp"
-            android:hint="@string/login_password" android:backgroundTint="#ffffffff" android:textColorHint="#ffffffff"
-                android:textColor="#ffffffff"/>
+            android:hint="@string/login_password" android:backgroundTint="#6c6b69" android:textColorHint="#6c6b69"
+                android:textColor="#6c6b69" android:shadowColor="#6c6b69"/>
     </LinearLayout>
     <LinearLayout
             android:orientation="horizontal"
@@ -76,14 +76,14 @@
                     android:id="@+id/loginRegistrationButton"
                     android:ems="5"
                     android:layout_marginTop="10dp" android:layout_marginRight="10dp" android:layout_weight="0.4"
-                    android:textColor="#ffffffff"/>
+                    android:textColor="#6c6b69"/>
             <Button
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/login_button"
                     android:id="@+id/loginButton"
                     android:ems="6"
-                    android:layout_weight="0.6"/>
+                    android:layout_weight="0.6" android:background="#df4e3d" android:textColor="#ffcdb9"/>
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>
