@@ -1,11 +1,11 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
       xmlns:app="http://schemas.android.com/apk/res-auto">
     <item android:id="@+id/action_edit"
-          android:icon="@drawable/editicon"
+          android:icon="@drawable/editicon_actionbar"
           android:title="@string/action_edit"
           app:showAsAction="always" />
     <item android:id="@+id/action_delete"
-          android:icon="@drawable/deleteicon"
+          android:icon="@drawable/deleteicon_actionbar"
           android:title="@string/action_delete"
           app:showAsAction="always" />
     <item android:id="@+id/action_search"

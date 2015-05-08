@@ -221,11 +221,11 @@ public class AllTasksOfEventActivity extends ActionBarActivity {
     }
     public void setFloatingActionButton(){
         ImageView icon = new ImageView(this);
-        icon.setImageDrawable(getResources().getDrawable(R.drawable.add_button));
+        icon.setImageDrawable(getResources().getDrawable(R.drawable.add_button_big_grey));
 
         this.createTaskButton = new FloatingActionButton.Builder(this)
                 .setContentView(icon)
-                .setBackgroundDrawable(R.drawable.icons_shape_blue)
+                .setBackgroundDrawable(R.drawable.icons_shape_green)
                 .build();
         this.createTaskButton.setTag(ADD_TASK_BUTTON);
     }

@@ -4,12 +4,12 @@
               android:layout_width="fill_parent"
               android:layout_height="fill_parent"
               android:orientation="vertical"
-              android:padding="10dp" android:background="#151515">
+              android:padding="10dp" android:background="#e9e8e4">
     <EditText
             android:id="@+id/editTextCommentUserInput"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" android:hint="Kommentar" android:textColor="#ffffff"
-            android:textColorHint="#ffffff" android:backgroundTint="#ffffff">
+            android:layout_height="wrap_content" android:hint="Kommentar" android:textColor="#6c6b69"
+            android:textColorHint="#6c6b69" android:backgroundTint="#6c6b69">
 
         <requestFocus />
     </EditText>

@@ -131,11 +131,11 @@ public class AllEventsActivity extends ActionBarActivity {
     }
     public void setFloatingActionButton(){
         ImageView icon = new ImageView(this);
-        icon.setImageDrawable(getResources().getDrawable(R.drawable.add_button));
+        icon.setImageDrawable(getResources().getDrawable(R.drawable.add_button_big_grey));
 
         this.createEventButton = new FloatingActionButton.Builder(this)
                 .setContentView(icon)
-                .setBackgroundDrawable(R.drawable.icons_shape_blue)
+                .setBackgroundDrawable(R.drawable.icons_shape_red)
                 .build();
         this.createEventButton.setTag(ADD_BUTTON);
     }

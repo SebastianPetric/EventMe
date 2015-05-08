@@ -3,7 +3,7 @@
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/swipe_refresh_all_events"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" android:background="#151515">
+        android:layout_height="match_parent" android:background="#e9e8e4">
     <android.support.v7.widget.RecyclerView
             xmlns:tools="http://schemas.android.com/tools"
             android:id="@+id/recyclerViewAllEvents"

@@ -3,7 +3,7 @@
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/swipe_refresh_event_comments"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" android:background="#151515">
+        android:layout_height="match_parent" android:background="#e9e8e4">
     <LinearLayout android:orientation="vertical"
                   android:layout_width="match_parent"
                   android:layout_height="match_parent">
@@ -31,14 +31,14 @@
                             android:layout_alignLeft="@+id/imageViewTasksOfEventTotalPercentage"
                             android:layout_alignStart="@+id/imageViewTasksOfEventTotalPercentage"
                             android:layout_gravity="center"
-                            android:textColor="#ffffff" android:layout_marginLeft="10dp"/>
+                            android:textColor="#6c6b69" android:layout_marginLeft="10dp"/>
                     <ImageButton android:layout_width="40dp" android:layout_height="40dp"
                                  android:layout_alignParentRight="true" android:layout_alignParentEnd="true"
                                  android:layout_alignParentBottom="true"
                                  android:id="@+id/imageButton5"
-                                 android:layout_gravity="center" android:background="#151515"
+                                 android:layout_gravity="center" android:background="#e9e8e4"
                                  android:layout_marginLeft="5dp"
-                                 android:src="@drawable/percentageiconbigwhite"/>
+                                 android:src="@drawable/percentage_icon_big_black"/>
                 </LinearLayout>
                 <RelativeLayout
                         android:layout_width="match_parent"
@@ -69,13 +69,13 @@
                             android:id="@+id/textViewTaskOfEventEventName" android:layout_alignParentTop="true" android:layout_alignParentLeft="true"
                             android:layout_alignParentStart="true"
                             android:layout_marginTop="10dp"
-                            android:textColor="#FFFFFF" android:layout_gravity="left"
+                            android:textColor="#6c6b69" android:layout_gravity="left"
                             android:layout_marginLeft="10dp"/>
                     <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textAppearance="?android:attr/textAppearanceSmall"
-                            android:id="@+id/textViewTaskOfEventLocation" android:textColor="#FFFFFF"
+                            android:id="@+id/textViewTaskOfEventLocation" android:textColor="#6c6b69"
                             android:layout_marginTop="5dp"
                             android:layout_marginLeft="10dp"/>
                     <TextView
@@ -85,7 +85,7 @@
                             android:id="@+id/textViewTaskOfEventDate"
                             android:layout_below="@+id/textViewTaskOfEventEventLocation" android:layout_alignLeft="@+id/textViewTaskOfEventEventLocation"
                             android:layout_alignStart="@+id/textViewTaskOfEventEventLocation" android:layout_marginTop="5dp"
-                            android:textColor="#FFFFFF" android:layout_marginLeft="10dp"
+                            android:textColor="#6c6b69" android:layout_marginLeft="10dp"
                             android:layout_marginBottom="5dp"/>
                 </LinearLayout>
                 <LinearLayout
@@ -98,15 +98,15 @@
                             android:layout_width="0dp"
                             android:layout_height="match_parent" android:layout_weight="0.7">
                         <ImageButton android:layout_width="16dp" android:layout_height="16dp"
-                                     android:id="@+id/imageButton" android:background="#151515"
+                                     android:id="@+id/imageButton" android:background="#e9e8e4"
                                      android:clickable="false" android:layout_alignParentRight="true"
                                      android:layout_gravity="center_vertical" android:layout_marginLeft="10dp"
-                                     android:src="@drawable/euroiconwhite"/>
+                                     android:src="@drawable/euro_small_black"/>
                         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
                                   android:textAppearance="?android:attr/textAppearanceLarge"
                                   android:id="@+id/textViewTaskOfEventTotalCosts"
                                   android:layout_gravity="center"
-                                  android:textColor="#ffffff"
+                                  android:textColor="#6c6b69"
                                   android:layout_marginLeft="10dp" android:textSize="20dp"/>
                     </LinearLayout>
                     <LinearLayout android:orientation="horizontal" android:layout_width="0dp"
@@ -118,14 +118,14 @@
                                          android:layout_alignParentEnd="true"
                                          android:layout_alignParentBottom="true" android:id="@+id/imageButtonTasksOfEventOrganizers"
                                          android:layout_gravity="center_vertical"
-                                         android:layout_marginLeft="10dp" android:background="#151515"
-                                         android:src="@drawable/grouporganizers"/>
+                                         android:layout_marginLeft="10dp" android:background="#e9e8e4"
+                                         android:src="@drawable/group_small_black"/>
                             <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
                                       android:textAppearance="?android:attr/textAppearanceMedium"
                                       android:id="@+id/textViewTaskOfEventTotalOrganizers" android:layout_alignParentBottom="true"
                                       android:layout_alignLeft="@+id/imageViewTasksOfEventTotalOrganizers"
                                       android:layout_alignStart="@+id/imageViewTasksOfEventTotalOrganizers"
-                                      android:layout_gravity="center" android:textColor="#ffffff"
+                                      android:layout_gravity="center" android:textColor="#6c6b69"
                                       android:layout_marginLeft="10dp"
                                       android:textSize="20dp"/>
                         </LinearLayout>
@@ -136,7 +136,7 @@
         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
                   android:textAppearance="?android:attr/textAppearanceMedium"
                   android:text="@string/edit_task_previous_note_header" android:id="@+id/textView2"
-                  android:textColor="#ffffff" android:layout_marginLeft="23dp" android:layout_marginTop="10dp"/>
+                  android:textColor="#6c6b69" android:layout_marginLeft="23dp" android:layout_marginTop="10dp"/>
         <android.support.v7.widget.RecyclerView
                 xmlns:tools="http://schemas.android.com/tools"
                 android:id="@+id/recyclerViewAllComments"
