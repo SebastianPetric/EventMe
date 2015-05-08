@@ -62,7 +62,7 @@ public class AllTasksOfEventActivity extends ActionBarActivity {
             getSyncRefresh().setOnRefreshListener(new CustomSwipeListener());
             getAddOrganizersButton().setOnClickListener(new CustomClickListener());
             getFloatingActionButton().setOnClickListener(new FloatingButtonCustomClickListener());
-            DBfunctions.getInstance().updateEventDetails(null, CheckSharedPreferences.getInstance().getAdmin_id(), getEvent_id(),getEventTotalOrganizersTextView(), getEventTotalPercentageTextView(), getEventTotalCostsTextView(), getEventNameTextView(), getEventDateTextView(),getEventLocationTextView());
+            DBfunctions.getInstance().updateEventDetails(getApplicationContext(),getSyncRefresh(),getAllTasksOfEventRecycler(), CheckSharedPreferences.getInstance().getAdmin_id(),getEventTotalOrganizersTextView(), getEventTotalPercentageTextView(), getEventTotalCostsTextView(), getEventNameTextView(), getEventDateTextView(),getEventLocationTextView(), getEvent_id());
             DBfunctions.getInstance().getAllTasks(this, getSyncRefresh(), getAllTasksOfEventRecycler(), getEvent_id(), getEventTotalOrganizersTextView(), getEventTotalPercentageTextView(), getEventTotalCostsTextView(), getEventNameTextView(), getEventDateTextView(),getEventLocationTextView());
         }else{
             CheckSharedPreferences.getInstance().endSession(getApplicationContext());
@@ -107,7 +107,7 @@ public class AllTasksOfEventActivity extends ActionBarActivity {
         @Override
         public void onRefresh() {
             if(CheckSharedPreferences.getInstance().isLoggedIn(getApplicationContext())){
-                DBfunctions.getInstance().updateEventDetails(null, CheckSharedPreferences.getInstance().getAdmin_id(), getEvent_id(), getEventTotalOrganizersTextView(), getEventTotalPercentageTextView(), getEventTotalCostsTextView(), getEventNameTextView(), getEventDateTextView(),getEventLocationTextView());
+                DBfunctions.getInstance().updateEventDetails(getApplicationContext(),getSyncRefresh(),getAllTasksOfEventRecycler(), CheckSharedPreferences.getInstance().getAdmin_id(), getEventTotalOrganizersTextView(), getEventTotalPercentageTextView(), getEventTotalCostsTextView(), getEventNameTextView(), getEventDateTextView(),getEventLocationTextView(), getEvent_id());
                 DBfunctions.getInstance().getAllTasks(AllTasksOfEventActivity.this, getSyncRefresh(), getAllTasksOfEventRecycler(), getEvent_id(), getEventTotalOrganizersTextView(), getEventTotalPercentageTextView(), getEventTotalCostsTextView(), getEventNameTextView(), getEventDateTextView(),getEventLocationTextView());
             }else{
                 CheckSharedPreferences.getInstance().endSession(getApplicationContext());

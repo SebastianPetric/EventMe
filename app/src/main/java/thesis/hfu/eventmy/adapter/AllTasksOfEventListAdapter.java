@@ -4,6 +4,7 @@ package thesis.hfu.eventmy.adapter;
 import android.app.Activity;
 import android.app.FragmentManager;
 import android.content.Context;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,11 +29,13 @@ public class AllTasksOfEventListAdapter extends
     private Context context;
     private MyViewHolder viewHolder;
     private TextView eventNameTextView, eventDateTextView, eventTotalOrganizersTextView, eventTotalCostsTextView, eventTotalPercentageTextView,eventLocationTextView;
+    private RecyclerView recyclerView;
+    private SwipeRefreshLayout syncRefresh;
     private int event_id;
     private final int typeOfUpdate=1;
     private FragmentManager fragmentManager;
 
-    public AllTasksOfEventListAdapter(Activity context,ArrayList<Task> list,TextView eventNameTextView,TextView eventDateTextView,TextView eventTotalOrganizersTextView,TextView eventTotalCostsTextView,TextView eventTotalPercentageTextView,TextView eventLocationTextView,int event_id) {
+    public AllTasksOfEventListAdapter(Activity context,RecyclerView recyclerView,SwipeRefreshLayout syncRefresh,ArrayList<Task> list,TextView eventNameTextView,TextView eventDateTextView,TextView eventTotalOrganizersTextView,TextView eventTotalCostsTextView,TextView eventTotalPercentageTextView,TextView eventLocationTextView,int event_id) {
         this.tasks = list;
         this.context=context;
         this.eventNameTextView = eventNameTextView;
@@ -42,6 +45,8 @@ public class AllTasksOfEventListAdapter extends
         this.eventTotalOrganizersTextView = eventTotalOrganizersTextView;
         this.eventTotalPercentageTextView = eventTotalPercentageTextView;
         this.eventLocationTextView=eventLocationTextView;
+        this.recyclerView= recyclerView;
+        this.syncRefresh=syncRefresh;
         this.fragmentManager=context.getFragmentManager();
     }
     @Override
@@ -75,7 +80,7 @@ public class AllTasksOfEventListAdapter extends
             @Override
             public void onClick(View v) {
                 setViewHolder(viewHolder);
-                EditPercentageDialog.getInstance().startEditPercentageDialog(getFragmentManager(), viewHolder.percentageTextView, getEventTotalOrganizersTextView(), getEventTotalCostsTextView(), getEventTotalPercentageTextView(), getEventNameTextView(), getEventDateTextView(),getEventLocationTextView(), task.getTask_id(),getEvent_id(),getTypeOfUpdate());
+                EditPercentageDialog.getInstance().startEditPercentageDialog(getFragmentManager(),getRecyclerView(),getSyncRefresh(), viewHolder.percentageTextView, getEventTotalOrganizersTextView(), getEventTotalCostsTextView(), getEventTotalPercentageTextView(), getEventNameTextView(), getEventDateTextView(),getEventLocationTextView(), task.getTask_id(),getEvent_id(),getTypeOfUpdate());
             }
         });
 
@@ -83,7 +88,7 @@ public class AllTasksOfEventListAdapter extends
             @Override
             public void onClick(View v) {
                 setViewHolder(viewHolder);
-                EditCostsDialog.getInstance().startEditTaskDialog(getFragmentManager(), viewHolder.costTextView, getEventTotalOrganizersTextView(), getEventTotalCostsTextView(), getEventTotalPercentageTextView(), getEventNameTextView(), getEventDateTextView(),getEventLocationTextView(),getEvent_id(),task.getTask_id(),getTypeOfUpdate());
+                EditCostsDialog.getInstance().startEditTaskDialog(getFragmentManager(),getSyncRefresh(),getRecyclerView(), viewHolder.costTextView, getEventTotalOrganizersTextView(), getEventTotalCostsTextView(), getEventTotalPercentageTextView(), getEventNameTextView(), getEventDateTextView(),getEventLocationTextView(),getEvent_id(),task.getTask_id(),getTypeOfUpdate());
             }
         });
     }
@@ -165,4 +170,17 @@ public class AllTasksOfEventListAdapter extends
     public TextView getEventLocationTextView() {
         return eventLocationTextView;
     }
+    public RecyclerView getRecyclerView() {
+        return recyclerView;
+    }
+    public void setRecyclerView(RecyclerView recyclerView) {
+        this.recyclerView = recyclerView;
+    }
+    public SwipeRefreshLayout getSyncRefresh() {
+        return syncRefresh;
+    }
+    public void setSyncRefresh(SwipeRefreshLayout syncRefresh) {
+        this.syncRefresh = syncRefresh;
+    }
+
 }

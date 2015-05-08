@@ -80,6 +80,11 @@
     <string name="dialog_delete_task_ok">Ja</string>
     <string name="dialog_delete_task_cancel">Nein</string>
 
+    <!-- DIALOG DELETE TASK -->
+    <string name="dialog_delete_event_message">Wollen Sie das Event wirklich löschen?</string>
+    <string name="dialog_delete_event_ok">Ja</string>
+    <string name="dialog_delete_event_cancel">Nein</string>
+
     <!-- DIALOG COMMENT -->
     <string name="dialog_comment_message">Kommentar</string>
     <string name="dialog_comment_ok">Posten</string>

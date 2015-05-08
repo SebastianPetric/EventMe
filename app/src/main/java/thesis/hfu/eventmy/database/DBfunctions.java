@@ -4,12 +4,12 @@ import android.app.Activity;
 import android.content.Context;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 import org.apache.http.Header;
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import thesis.hfu.eventmy.adapter.*;
@@ -207,7 +207,7 @@ public class DBfunctions {
                             Toast.makeText(context.getApplicationContext(), response.getString(MESSAGE), Toast.LENGTH_SHORT).show();
                             if (response.getInt(STATUS) == 200) {
                                 ArrayList<Task> taskList = BuildJSON.getInstance().getAllTasksOfEventJSON(response.getJSONArray(TASKS));
-                                RecyclerView.Adapter<AllTasksOfEventListAdapter.MyViewHolder> recAdapter = new AllTasksOfEventListAdapter(context, taskList, nameTextView, dateTextView, totalOrganizersTextView, totalCostsTextView, totalPercentageTextView,locationTextView,event_id);
+                                RecyclerView.Adapter<AllTasksOfEventListAdapter.MyViewHolder> recAdapter = new AllTasksOfEventListAdapter(context,recyclerView,swipeRefreshLayout, taskList, nameTextView, dateTextView, totalOrganizersTextView, totalCostsTextView, totalPercentageTextView,locationTextView,event_id);
                                 recyclerView.setAdapter(recAdapter);
                                 recyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
                                     public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
@@ -399,6 +399,49 @@ public class DBfunctions {
         });
     }
 
+    public void deleteEvent(final Context context, String admin_id, final int event_id){
+
+        RequestParams params = BuildJSON.getInstance().deleteArchivEventJSON(event_id, admin_id);
+        DBconnection.post(URL_DELETE_EVENT,params,new JsonHttpResponseHandler(){
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                try {
+                    Toast.makeText(context.getApplicationContext(), response.getString(MESSAGE), Toast.LENGTH_SHORT).show();
+                    if(response.getInt(STATUS)==200){
+                        StartActivityFunctions.getInstance().startAllEventsActivity(context);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                Log.d("schlecht",responseString);
+            }
+        });
+    }
+
+    public void archiveEvent(final Context context, String admin_id, final int event_id){
+
+        RequestParams params = BuildJSON.getInstance().deleteArchivEventJSON(event_id, admin_id);
+        DBconnection.post(URL_ARCHIV_EVENT,params,new JsonHttpResponseHandler(){
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                try {
+                    Toast.makeText(context.getApplicationContext(), response.getString(MESSAGE), Toast.LENGTH_SHORT).show();
+                    if(response.getInt(STATUS)==200){
+                        StartActivityFunctions.getInstance().startAllEventsActivity(context);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
     public void archivEvent(final Context context, final ArrayList<Event> eventList, final RecyclerView.Adapter<AllEventsListAdapter.MyViewHolder> adapter, final int position,String admin_id, final int event_id){
 
         RequestParams params = BuildJSON.getInstance().deleteArchivEventJSON(event_id, admin_id);
@@ -470,47 +513,7 @@ public class DBfunctions {
         });
     }
 
-
-
-    public void getEventComments(final Context context, final RecyclerView recyclerView ,int event_id){
-        RequestParams params= BuildJSON.getInstance().getCommentsJSON(event_id);
-        DBconnection.post(URL_GET_EVENT_COMMENTS,params,new JsonHttpResponseHandler(){
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
-                try {
-                    Toast.makeText(context.getApplicationContext(), response.getJSONObject(0).getString(MESSAGE), Toast.LENGTH_SHORT).show();
-                    if(response.getJSONObject(0).getInt(STATUS)==200) {
-
-                        final ArrayList<History> history=BuildJSON.getInstance().getComments(response);
-                        RecyclerView.Adapter<CommentListAdapter.MyViewHolder> recAdapter = new CommentListAdapter(context, history);
-                        recyclerView.setAdapter(recAdapter);
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-    }
-
-    public void commentOnEvent(final Context context, final RecyclerView recyclerView, final int event_id,int admin_id,String comment){
-
-        RequestParams params= BuildJSON.getInstance().commentEventJSON(event_id, admin_id, comment);
-        DBconnection.post(URL_COMMENT_ON_EVENT,params,new JsonHttpResponseHandler(){
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                try {
-                    Toast.makeText(context.getApplicationContext(), response.getString(MESSAGE), Toast.LENGTH_SHORT).show();
-                    if(response.getInt(STATUS)==200){
-                        getEventComments(context, recyclerView, event_id);
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-    }
-
-    public void updatePercentage(final Context context,final TextView percentageTextView,final TextView totalCostsTextView,final TextView totalPercentageTextView,final TextView totalOrganizersTextView, final TextView eventNameTextView, final TextView eventDateTextView,final TextView eventLocationTextView,final int event_id,int task_id, int editor_id, final int percentage,final int status_of_update){
+    public void updatePercentage(final Context context, final RecyclerView recyclerView, final SwipeRefreshLayout syncRefresh,final TextView percentageTextView,final TextView totalCostsTextView,final TextView totalPercentageTextView,final TextView totalOrganizersTextView, final TextView eventNameTextView, final TextView eventDateTextView,final TextView eventLocationTextView,final int event_id,int task_id, int editor_id, final int percentage,final int status_of_update){
 
         RequestParams params = BuildJSON.getInstance().editPercentageOfTaskJSON(task_id, editor_id, percentage);
         DBconnection.post(URL_UPDATE_PERCENTAGE_OF_TASK, params, new JsonHttpResponseHandler() {
@@ -524,7 +527,7 @@ public class DBfunctions {
                         //If there aren't the fields totalOrganizers etc than this won't happen
                         if(status_of_update==1){
                             if(CheckSharedPreferences.getInstance().isLoggedIn(context.getApplicationContext())){
-                               updateEventDetails(null, CheckSharedPreferences.getInstance().getAdmin_id(), event_id, totalOrganizersTextView, totalPercentageTextView, totalCostsTextView,eventNameTextView,eventDateTextView,eventLocationTextView);
+                               updateEventDetails(context,syncRefresh,recyclerView,CheckSharedPreferences.getInstance().getAdmin_id(), totalOrganizersTextView, totalPercentageTextView, totalCostsTextView,eventNameTextView,eventDateTextView,eventLocationTextView, event_id);
                             }else{
                                 CheckSharedPreferences.getInstance().endSession(context.getApplicationContext());
                             }
@@ -537,7 +540,7 @@ public class DBfunctions {
         });
     }
 
-    public void updateCosts(final Context context,final TextView costsFieldTextView, final TextView totalOrganizersTextView, final TextView totalPercentageTextView, final TextView totalCostsTextView, final TextView eventNameTextView, final TextView eventDateTextView,final TextView eventLocationTextView, final int event_id,int task_id, int editor_id, final double costs, final int type_of_calculation, final int status_of_update){
+    public void updateCosts(final Context context, final RecyclerView recyclerView, final SwipeRefreshLayout syncRefresh,final TextView costsFieldTextView, final TextView totalOrganizersTextView, final TextView totalPercentageTextView, final TextView totalCostsTextView, final TextView eventNameTextView, final TextView eventDateTextView,final TextView eventLocationTextView, final int event_id,int task_id, int editor_id, final double costs, final int type_of_calculation, final int status_of_update){
 
         RequestParams params = BuildJSON.getInstance().getCostsOfTaskJSON(task_id, editor_id, costs, type_of_calculation);
         DBconnection.post(URL_UPDATE_COSTS_OF_TASK,params,new JsonHttpResponseHandler(){
@@ -555,38 +558,11 @@ public class DBfunctions {
                         //If there aren't the fields totalOrganizers etc than this won't happen
                         if(status_of_update==1){
                             if(CheckSharedPreferences.getInstance().isLoggedIn(context.getApplicationContext())){
-                                updateEventDetails(null, CheckSharedPreferences.getInstance().getAdmin_id(), event_id, totalOrganizersTextView, totalPercentageTextView, totalCostsTextView,eventNameTextView,eventDateTextView,eventLocationTextView);
+                                updateEventDetails(context,syncRefresh,recyclerView,CheckSharedPreferences.getInstance().getAdmin_id(), totalOrganizersTextView, totalPercentageTextView, totalCostsTextView,eventNameTextView,eventDateTextView,eventLocationTextView, event_id);
                             }else{
                                 CheckSharedPreferences.getInstance().endSession(context.getApplicationContext());
                             }
                         }
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-    }
-
-    public void updateEventDetails(final SwipeRefreshLayout swipeRefreshLayout,String admin_id,int event_id, final TextView totalOrganizersTextView, final TextView totalPercentageTextView, final TextView totalCostsTextView, final TextView eventNameTextView, final TextView eventDateTextView, final TextView eventLocationTextView) {
-
-        RequestParams params = BuildJSON.getInstance().getEventDetailsJSON(admin_id, event_id);
-        DBconnection.post(URL_UPDATE_EVENT_DETAILS, params, new JsonHttpResponseHandler() {
-
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                try {
-                    if (response.getInt(STATUS) == 200) {
-                        Event event = BuildJSON.getInstance().getEventJSON(response.getJSONArray(EVENTS));
-                        eventNameTextView.setText(event.getName());
-                        eventDateTextView.setText(event.getDate().getDate() + "." + (event.getDate().getMonth() + 1) + "." + event.getDate().getYear());
-                        totalOrganizersTextView.setText(String.valueOf(event.getNumOrganizers()));
-                        totalCostsTextView.setText(String.valueOf(event.getCosts()));
-                        totalPercentageTextView.setText(String.valueOf(event.getPercentage_of_event()));
-                        eventLocationTextView.setText(String.valueOf(event.getLocation()));
-                    }
-                    if(swipeRefreshLayout!=null){
-                        swipeRefreshLayout.setRefreshing(false);
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -795,8 +771,8 @@ public class DBfunctions {
         });
     }
 
-    public void getTaskComments(final Context context, final SwipeRefreshLayout swipeRefreshLayout, final RecyclerView recyclerView ,int task_id){
-        RequestParams params= BuildJSON.getInstance().getCommentsJSON(task_id);
+    public void getTaskComments(final Context context, final SwipeRefreshLayout swipeRefreshLayout, final RecyclerView recyclerView, int task_id){
+        final RequestParams params= BuildJSON.getInstance().getCommentsJSON(task_id);
         DBconnection.post(URL_GET_TASK_COMMENTS,params,new JsonHttpResponseHandler(){
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
@@ -826,6 +802,37 @@ public class DBfunctions {
         });
     }
 
+    public void getEventComments(final Context context, final SwipeRefreshLayout swipeRefreshLayout, final RecyclerView recyclerView, int event_id){
+        final RequestParams params= BuildJSON.getInstance().getCommentsJSON(event_id);
+        DBconnection.post(URL_GET_EVENT_COMMENTS,params,new JsonHttpResponseHandler(){
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                try {
+                    Toast.makeText(context.getApplicationContext(), response.getString(MESSAGE), Toast.LENGTH_SHORT).show();
+                    if(response.getInt(STATUS)==200) {
+                        final ArrayList<History> history=BuildJSON.getInstance().getComments(response.getJSONArray(HISTORY));
+                        RecyclerView.Adapter<CommentListAdapter.MyViewHolder> recAdapter = new CommentListAdapter(context, history);
+                        recyclerView.setAdapter(recAdapter);
+                        recyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
+                            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                                super.onScrolled(recyclerView, dx, dy);
+                                overallYScroll = overallYScroll + dy;
+                                if (overallYScroll <= 0) {
+                                    swipeRefreshLayout.setEnabled(true);
+                                } else {
+                                    swipeRefreshLayout.setEnabled(false);
+                                }
+                            }
+                        });
+                        swipeRefreshLayout.setRefreshing(false);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
     public void commentOnTask(final Context context, final SwipeRefreshLayout swipeRefreshLayout, final RecyclerView recyclerView, final TextView eventNameTextView, final TextView taskNameTextView, final TextView quantityTextView, final TextView costsTextView, final TextView percentageTextView, final TextView editorTextView, final int task_id, int admin_id, String comment){
 
         RequestParams params = BuildJSON.getInstance().commentTaskJSON(task_id, admin_id, comment);
@@ -837,6 +844,24 @@ public class DBfunctions {
                     Toast.makeText(context.getApplicationContext(), response.getString(MESSAGE), Toast.LENGTH_SHORT).show();
                     if(response.getInt(STATUS)==200){
                         updateTaskDetails(context, swipeRefreshLayout, recyclerView, eventNameTextView, taskNameTextView, quantityTextView, costsTextView, percentageTextView, editorTextView, task_id);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+    public void commentOnEvent(final Context context, final RecyclerView recyclerView, final SwipeRefreshLayout synRefresh, final int event_id,int admin_id,String comment){
+
+        RequestParams params= BuildJSON.getInstance().commentEventJSON(event_id, admin_id, comment);
+        DBconnection.post(URL_COMMENT_ON_EVENT,params,new JsonHttpResponseHandler(){
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                try {
+                    Toast.makeText(context.getApplicationContext(), response.getString(MESSAGE), Toast.LENGTH_SHORT).show();
+                    if(response.getInt(STATUS)==200){
+                        getEventComments(context, synRefresh, recyclerView, event_id);
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -862,7 +887,7 @@ public class DBfunctions {
                         quantityTextView.setText(task.getQuantity());
                         costsTextView.setText(String.valueOf(task.getCostOfTask()));
                         editorTextView.setText(task.getEditor_name());
-                        getTaskComments(context,swipeRefreshLayout,recyclerView,task_id);
+                        getTaskComments(context, swipeRefreshLayout, recyclerView, task_id);
                     }
                     if (swipeRefreshLayout != null) {
                         swipeRefreshLayout.setRefreshing(false);
@@ -874,6 +899,34 @@ public class DBfunctions {
             }
         });
     }
+
+    public void updateEventDetails(final Context context,final SwipeRefreshLayout swipeRefreshLayout, final RecyclerView recyclerView,String admin_id, final TextView totalOrganizersTextView, final TextView totalPercentageTextView, final TextView totalCostsTextView, final TextView eventNameTextView, final TextView eventDateTextView, final TextView eventLocationTextView,final int event_id) {
+
+        RequestParams params = BuildJSON.getInstance().getEventDetailsJSON(admin_id, event_id);
+        DBconnection.post(URL_UPDATE_EVENT_DETAILS, params, new JsonHttpResponseHandler() {
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                try {
+                    if (response.getInt(STATUS) == 200) {
+                        Event event = BuildJSON.getInstance().getEventJSON(response.getJSONArray(EVENTS));
+                        eventNameTextView.setText(event.getName());
+                        eventDateTextView.setText(event.getDate().getDate() + "." + (event.getDate().getMonth() + 1) + "." + event.getDate().getYear());
+                        totalOrganizersTextView.setText(String.valueOf(event.getNumOrganizers()));
+                        totalCostsTextView.setText(String.valueOf(event.getCosts()));
+                        totalPercentageTextView.setText(String.valueOf(event.getPercentage_of_event()));
+                        eventLocationTextView.setText(String.valueOf(event.getLocation()));
+                    }
+                    if(swipeRefreshLayout!=null){
+                        swipeRefreshLayout.setRefreshing(false);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
 
 
 

@@ -69,7 +69,7 @@
 
         <activity
                 android:name=".activities.CommentOnEventActivity"
-                android:label="Verlauf" >
+                android:label="Details" >
         </activity>
 
         <activity

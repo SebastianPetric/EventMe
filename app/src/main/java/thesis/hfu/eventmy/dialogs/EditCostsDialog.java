@@ -6,6 +6,8 @@ import android.app.DialogFragment;
 import android.app.FragmentManager;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
@@ -22,6 +24,8 @@ public class EditCostsDialog extends DialogFragment {
     private TextView taskCostTextView, toalCostsTextView, totalPercentageTextView, totalOrganizersTextView, eventNameTextView, eventDateTextView,eventLocationTextView;
     private int event_id,task_id, typeOfCalculation, typeOfUpdate;
     private double costValue;
+    private SwipeRefreshLayout syncRefresh;
+    private RecyclerView recyclerView;
     private static EditCostsDialog instance;
 
     private static final String ERROR_NUMERIC= "Sie haben keine Zahlen eingegeben!";
@@ -33,7 +37,7 @@ public class EditCostsDialog extends DialogFragment {
         return EditCostsDialog.instance;
     }
 
-    public void startEditTaskDialog(FragmentManager manager,TextView taskCostTextView,TextView totalOrganizersTextView,TextView totalCostsTextView, TextView totalPercentageTextView,TextView eventNameTextView, TextView eventDateTextView,TextView eventLocationTextView,int event_id,int task_id,int typeOfUpdate) {
+    public void startEditTaskDialog(FragmentManager manager,SwipeRefreshLayout syncRefresh,RecyclerView recyclerView,TextView taskCostTextView,TextView totalOrganizersTextView,TextView totalCostsTextView, TextView totalPercentageTextView,TextView eventNameTextView, TextView eventDateTextView,TextView eventLocationTextView,int event_id,int task_id,int typeOfUpdate) {
         setTask_id(task_id);
         setTaskCostTextView(taskCostTextView);
         setEvent_id(event_id);
@@ -43,6 +47,8 @@ public class EditCostsDialog extends DialogFragment {
         setEventNameTextView(eventNameTextView);
         setEventDateTextView(eventDateTextView);
         setTypeOfUpdate(typeOfUpdate);
+        setRecyclerView(recyclerView);
+        setSyncRefresh(syncRefresh);
         setEventLocationTextView(eventLocationTextView);
         this.show(manager, "editCostsDialog");
     }
@@ -62,7 +68,7 @@ public class EditCostsDialog extends DialogFragment {
                                     setCostValue(Calculation.getInstance().round(Double.parseDouble(userInput.getText().toString())));
                                     setTypeOfCalculation(0);
                                     if (CheckSharedPreferences.getInstance().isLoggedIn(getActivity())) {
-                                        DBfunctions.getInstance().updateCosts(getActivity(), getTaskCostTextView(), getTotalOrganizersTextView(), getTotalPercentageTextView(), getToalCostsTextView(), getEventNameTextView(), getEventDateTextView(),getEventLocationTextView(),getEvent_id(),getTask_id(), Integer.parseInt(CheckSharedPreferences.getInstance().getAdmin_id()), getCostValue(), getTypeOfCalculation(), getTypeOfUpdate());
+                                        DBfunctions.getInstance().updateCosts(getActivity(),getRecyclerView(),getSyncRefresh(), getTaskCostTextView(), getTotalOrganizersTextView(), getTotalPercentageTextView(), getToalCostsTextView(), getEventNameTextView(), getEventDateTextView(),getEventLocationTextView(),getEvent_id(),getTask_id(), Integer.parseInt(CheckSharedPreferences.getInstance().getAdmin_id()), getCostValue(), getTypeOfCalculation(), getTypeOfUpdate());
                                     }else{
                                         CheckSharedPreferences.getInstance().endSession(getActivity());
                                     }
@@ -84,7 +90,7 @@ public class EditCostsDialog extends DialogFragment {
                             setCostValue(Calculation.getInstance().round(Double.parseDouble(userInput.getText().toString())));
                             setTypeOfCalculation(1);
                             if (CheckSharedPreferences.getInstance().isLoggedIn(getActivity())) {
-                                DBfunctions.getInstance().updateCosts(getActivity(), getTaskCostTextView(), getTotalOrganizersTextView(), getTotalPercentageTextView(), getToalCostsTextView(), getEventNameTextView(), getEventDateTextView(),getEventLocationTextView(),getEvent_id(),getTask_id(), Integer.parseInt(CheckSharedPreferences.getInstance().getAdmin_id()), getCostValue(), getTypeOfCalculation(), getTypeOfUpdate());
+                                DBfunctions.getInstance().updateCosts(getActivity(),getRecyclerView(),getSyncRefresh(), getTaskCostTextView(), getTotalOrganizersTextView(), getTotalPercentageTextView(), getToalCostsTextView(), getEventNameTextView(), getEventDateTextView(),getEventLocationTextView(),getEvent_id(),getTask_id(), Integer.parseInt(CheckSharedPreferences.getInstance().getAdmin_id()), getCostValue(), getTypeOfCalculation(), getTypeOfUpdate());
                             } else {
                                 CheckSharedPreferences.getInstance().endSession(getActivity());
                             }
@@ -171,5 +177,17 @@ public class EditCostsDialog extends DialogFragment {
     }
     public void setEventLocationTextView(TextView eventLocationTextView) {
         this.eventLocationTextView = eventLocationTextView;
+    }
+    public SwipeRefreshLayout getSyncRefresh() {
+        return syncRefresh;
+    }
+    public void setSyncRefresh(SwipeRefreshLayout syncRefresh) {
+        this.syncRefresh = syncRefresh;
+    }
+    public RecyclerView getRecyclerView() {
+        return recyclerView;
+    }
+    public void setRecyclerView(RecyclerView recyclerView) {
+        this.recyclerView = recyclerView;
     }
 }

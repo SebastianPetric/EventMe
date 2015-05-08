@@ -7,6 +7,7 @@ import android.app.FragmentManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +20,7 @@ public class CommentOnEventDialog extends DialogFragment {
     private static CommentOnEventDialog instance;
     private int admin_id,event_id;
     private RecyclerView recyclerView;
+    private SwipeRefreshLayout syncRefresh;
     private Context context;
 
     public static CommentOnEventDialog getInstance() {
@@ -28,11 +30,12 @@ public class CommentOnEventDialog extends DialogFragment {
         return CommentOnEventDialog.instance;
     }
 
-    public void startCommentDialog(Context context,RecyclerView recyclerView,FragmentManager manager,int event_id,String admin_id) {
+    public void startCommentDialog(Context context,RecyclerView recyclerView,SwipeRefreshLayout syncRefresh,FragmentManager manager,int event_id,String admin_id) {
         setEvent_id(event_id);
         setAdmin_id(Integer.valueOf(admin_id));
         setContext(context);
         setRecyclerView(recyclerView);
+        setSyncRefresh(syncRefresh);
         this.show(manager, "commentDialog");
     }
 
@@ -48,7 +51,7 @@ public class CommentOnEventDialog extends DialogFragment {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
                         String comment = userInput.getText().toString().trim();
-                        DBfunctions.getInstance().commentOnEvent(getContext(),getRecyclerView(), getEvent_id(), getAdmin_id(), comment);
+                        DBfunctions.getInstance().commentOnEvent(getContext(),getRecyclerView(),getSyncRefresh(), getEvent_id(), getAdmin_id(), comment);
                         dialog.cancel();
                     }
                 })
@@ -88,5 +91,11 @@ public class CommentOnEventDialog extends DialogFragment {
     }
     public void setRecyclerView(RecyclerView recyclerView) {
         this.recyclerView = recyclerView;
+    }
+    public SwipeRefreshLayout getSyncRefresh() {
+        return syncRefresh;
+    }
+    public void setSyncRefresh(SwipeRefreshLayout syncRefresh) {
+        this.syncRefresh = syncRefresh;
     }
 }

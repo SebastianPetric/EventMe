@@ -101,22 +101,16 @@
                             android:textColor="#ffffff"/>
                 </LinearLayout>
             </LinearLayout>
-            <ScrollView android:layout_width="fill_parent"
-                        android:layout_height="fill_parent">
-            <LinearLayout
-                    android:orientation="horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" android:layout_marginLeft="23dp" android:layout_marginRight="23dp"
-                    android:layout_marginTop="24dp">
-                <android.support.v7.widget.RecyclerView
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                  android:textAppearance="?android:attr/textAppearanceMedium"
+                  android:text="@string/edit_task_previous_note_header" android:id="@+id/textView3"
+                  android:textColor="#ffffff" android:layout_marginLeft="23dp" android:layout_marginTop="10dp"/>
+        <android.support.v7.widget.RecyclerView
                         xmlns:tools="http://schemas.android.com/tools"
                         android:id="@+id/recyclerViewAllComments"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         tools:context=".MainActivity"
-                        />
+                        android:layout_marginTop="5dp"/>
             </LinearLayout>
-            </ScrollView>
-        </LinearLayout>
-
 </android.support.v4.widget.SwipeRefreshLayout>

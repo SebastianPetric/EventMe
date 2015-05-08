@@ -15,8 +15,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import com.oguzdev.circularfloatingactionmenu.library.FloatingActionButton;
 import thesis.hfu.eventmy.R;
-import thesis.hfu.eventmy.dialogs.CommentOnEventDialog;
-import thesis.hfu.eventmy.dialogs.LogoutDialog;
+import thesis.hfu.eventmy.database.DBfunctions;
+import thesis.hfu.eventmy.dialogs.*;
 import thesis.hfu.eventmy.functions.CheckSharedPreferences;
 import thesis.hfu.eventmy.functions.StartActivityFunctions;
 import thesis.hfu.eventmy.list_decoration.DividerItemDecoration;
@@ -60,8 +60,8 @@ public class CommentOnEventActivity extends ActionBarActivity {
             getAddOrganizersButton().setOnClickListener(new CustomClickListener());
             getSyncComments().setOnRefreshListener(new CustomSwipeListener());
             getCommentButton().setOnClickListener(new FloatingButtonCustomClickListener());
-            //DBfunctions.getInstance().updateEventDetails(getSyncComments(),CheckSharedPreferences.getInstance().getAdmin_id(),getEvent_id(),getEventTotalOrganizersTextView(),getEventTotalPercentageTextView(), getEventTotalCostsTextView(),getEventNameTextView(),getEventDateTextView(),getEventLocationTextView());
-            //DBfunctions.getInstance().getEventComments(getApplicationContext(),getRecyclerComments(),getEvent_id());
+            DBfunctions.getInstance().getEventComments(getApplicationContext(), getSyncComments(),getRecyclerComments(), event_id);
+            DBfunctions.getInstance().updateEventDetails(getApplicationContext(), getSyncComments(), getRecyclerComments(), CheckSharedPreferences.getInstance().getAdmin_id(), getEventTotalOrganizersTextView(), getEventTotalPercentageTextView(), getEventTotalCostsTextView(), getEventNameTextView(), getEventDateTextView(), getEventLocationTextView(), getEvent_id());
         }else{
             CheckSharedPreferences.getInstance().endSession(getApplicationContext());
         }
@@ -91,7 +91,7 @@ public class CommentOnEventActivity extends ActionBarActivity {
         public void onClick(View v) {
             if(v.getTag().equals(COMMENT_ON_EVENT)){
                 if(CheckSharedPreferences.getInstance().isLoggedIn(getApplicationContext())){
-                    CommentOnEventDialog.getInstance().startCommentDialog(getApplicationContext(),null,getFragmentManager(), getEvent_id(), CheckSharedPreferences.getInstance().getAdmin_id());
+                    CommentOnEventDialog.getInstance().startCommentDialog(getApplicationContext(),getRecyclerComments(),getSyncComments(),getFragmentManager(), getEvent_id(), CheckSharedPreferences.getInstance().getAdmin_id());
                 }else{
                     CheckSharedPreferences.getInstance().endSession(getApplicationContext());
                 }
@@ -104,8 +104,8 @@ public class CommentOnEventActivity extends ActionBarActivity {
         @Override
         public void onRefresh() {
             if (CheckSharedPreferences.getInstance().isLoggedIn(getApplicationContext())) {
-                //DBfunctions.getInstance().updateEventDetails(getSyncComments(),CheckSharedPreferences.getInstance().getAdmin_id(),getEvent_id(),getEventTotalOrganizersTextView(),getEventTotalPercentageTextView(), getEventTotalCostsTextView(),getEventNameTextView(),getEventDateTextView(),getEventLocationTextView());
-                //DBfunctions.getInstance().getEventComments(getApplicationContext(),getRecyclerComments(),getEvent_id());
+                DBfunctions.getInstance().getEventComments(getApplicationContext(), getSyncComments(),getRecyclerComments(), event_id);
+                DBfunctions.getInstance().updateEventDetails(getApplicationContext(), getSyncComments(), getRecyclerComments(), CheckSharedPreferences.getInstance().getAdmin_id(), getEventTotalOrganizersTextView(), getEventTotalPercentageTextView(), getEventTotalCostsTextView(), getEventNameTextView(), getEventDateTextView(), getEventLocationTextView(), getEvent_id());
             } else {
                 CheckSharedPreferences.getInstance().endSession(getApplicationContext());
             }
@@ -119,7 +119,7 @@ public class CommentOnEventActivity extends ActionBarActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu, menu);
+        inflater.inflate(R.menu.menu_task_details, menu);
         return true;
     }
 
@@ -139,6 +139,12 @@ public class CommentOnEventActivity extends ActionBarActivity {
             return true;
         } else if (item.getItemId() == R.id.action_archived_events) {
             StartActivityFunctions.getInstance().startArchivedEventsActivity(getApplicationContext());
+            return true;
+        }else if (item.getItemId() == R.id.action_edit) {
+            EditEventDialog.getInstance().startEditEventDialog(getFragmentManager(),getApplicationContext(),getEventDateTextView(),getEventNameTextView(),getEventDateTextView(),getEventLocationTextView(),getEvent_id());
+            return true;
+        }else if (item.getItemId() == R.id.action_delete) {
+            DeleteArchivEventDialog.getInstance().startDeleteArchivEventDialog(getFragmentManager(),getApplicationContext(),getEvent_id());
             return true;
         }
         return super.onOptionsItemSelected(item);

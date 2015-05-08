@@ -72,7 +72,6 @@ public class EditTaskActivity extends ActionBarActivity {
             getPercentageButton().setOnClickListener(new CustomClickListener());
             getEditorButton().setOnClickListener(new CustomClickListener());
             getCommentTaskButton().setOnClickListener(new FloatingMenuCustomClickListener());
-            DBfunctions.getInstance().getTaskComments(getApplicationContext(),getSyncRefresh(), getRecyclerComments(), getTask_id());
             DBfunctions.getInstance().updateTaskDetails(getApplicationContext(), getSyncRefresh(),getRecyclerComments(), getEventNameTextView(), getTaskTextView(), getQuantityTextView(), getCostsTextView(), getPercentageTextView(), getEditorTextView(), getTask_id());
         }else{
             CheckSharedPreferences.getInstance().endSession(getApplicationContext());
@@ -88,9 +87,9 @@ public class EditTaskActivity extends ActionBarActivity {
         @Override
         public void onClick(View v) {
             if(v.getId()==R.id.imageButtonEditTaskCosts){
-                EditCostsDialog.getInstance().startEditTaskDialog(getFragmentManager(), getCostsTextView(),null,null,null,null,null,null,getEvent_id(),getTask_id(),getTypeOfUpdate());
+                EditCostsDialog.getInstance().startEditTaskDialog(getFragmentManager(),getSyncRefresh(),getRecyclerComments(), getCostsTextView(),null,null,null,null,null,null,getEvent_id(),getTask_id(),getTypeOfUpdate());
             }else if(v.getId()==R.id.imageButtonEditTaskPercentage){
-                EditPercentageDialog.getInstance().startEditPercentageDialog(getFragmentManager(),getPercentageTextView(),null,null,null,null,null,null,getTask_id(),getEvent_id(),getTypeOfUpdate());
+                EditPercentageDialog.getInstance().startEditPercentageDialog(getFragmentManager(),getRecyclerComments(),getSyncRefresh(),getPercentageTextView(),null,null,null,null,null,null,getTask_id(),getEvent_id(),getTypeOfUpdate());
             }else if(v.getId()==R.id.imageButtonEditTaskEditor){
                 if (CheckSharedPreferences.getInstance().isLoggedIn(getApplicationContext())) {
                     DBfunctions.getInstance().changeEditorOfTask(getApplicationContext(), getEditorTextView(), CheckSharedPreferences.getInstance().getAdmin_id(),getTask_id());
