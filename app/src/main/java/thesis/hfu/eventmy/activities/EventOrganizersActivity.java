@@ -111,8 +111,8 @@ public class EventOrganizersActivity extends ActionBarActivity {
         }else if(item.getItemId()==R.id.action_logout){
             LogoutDialog.getInstance().startLogoutDialog(getFragmentManager());
             return true;
-        }else if(item.getItemId()==R.id.action_events){
-            StartActivityFunctions.getInstance().startAllEventsActivity(getApplicationContext());
+        }else if(item.getItemId()==R.id.action_archived_events){
+            StartActivityFunctions.getInstance().startArchivedEventsActivity(getApplicationContext());
             return true;
         }
         return super.onOptionsItemSelected(item);

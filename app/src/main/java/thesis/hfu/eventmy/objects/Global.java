@@ -2,10 +2,13 @@ package thesis.hfu.eventmy.objects;
 
 import android.app.Application;
 
+import java.sql.Date;
+
 public class Global extends Application
 {
     private int editor_id=-1;
     private String editor_name="";
+    private Date date=null;
 
     //----------------------------------------------------------------------
     //-----------------Getter and Setter-------------------------------------
@@ -24,5 +27,11 @@ public class Global extends Application
     }
     public void setEditor_id(int editor_id) {
         this.editor_id = editor_id;
+    }
+    public Date getDate() {
+        return date;
+    }
+    public void setDate(Date date) {
+        this.date = date;
     }
 }

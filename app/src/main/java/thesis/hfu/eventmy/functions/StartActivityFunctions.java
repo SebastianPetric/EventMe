@@ -62,6 +62,12 @@ public class StartActivityFunctions {
         context.getApplicationContext().startActivity(intent);
     }
 
+    public void startArchivedEventsActivity(Context context){
+        Intent intent = new Intent(context.getApplicationContext(), ArchivedEventsActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.getApplicationContext().startActivity(intent);
+    }
+
     public void startAllTasksActivity(Context context,final int event_id){
         Intent intent = new Intent(context.getApplicationContext(), AllTasksOfEventActivity.class);
         intent.putExtra(EVENT_ID, event_id);

@@ -10,11 +10,8 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import com.oguzdev.circularfloatingactionmenu.library.FloatingActionButton;
-import com.oguzdev.circularfloatingactionmenu.library.FloatingActionMenu;
-import com.oguzdev.circularfloatingactionmenu.library.SubActionButton;
 import thesis.hfu.eventmy.R;
 import thesis.hfu.eventmy.database.DBfunctions;
 import thesis.hfu.eventmy.dialogs.LogoutDialog;
@@ -26,11 +23,9 @@ public class AllEventsActivity extends ActionBarActivity {
 
     private RecyclerView allEventsRecycler;
     private SwipeRefreshLayout syncRefresh;
-    private FloatingActionMenu actionMenu;
+    FloatingActionButton createEventButton;
 
     private final static String ADD_BUTTON = "add_button";
-    private final static String ARCHIV_BUTTON = "archiv_button";
-    private final static String TOPIC_EVENTS_BUTTON = "topic_events_button";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,13 +36,14 @@ public class AllEventsActivity extends ActionBarActivity {
         actionBar.setDisplayHomeAsUpEnabled(false);
 
         if (CheckSharedPreferences.getInstance().isLoggedIn(getApplicationContext())) {
-            setFloatingActionMenu();
+            setFloatingActionButton();
             setSyncRefresh(R.id.swipe_refresh_all_events);
             setAllEventsRecycler(R.id.recyclerViewAllEvents);
             getAllEventsRecycler().setHasFixedSize(true);
             LinearLayoutManager layoutManager = new LinearLayoutManager(this);
             getAllEventsRecycler().setLayoutManager(layoutManager);
             getAllEventsRecycler().addItemDecoration(new DividerItemDecoration(this));
+            getFloatingButton().setOnClickListener(new FloatingButtonCustomClickListener());
             getSyncRefresh().setOnRefreshListener(new CustomSwipeListener());
             DBfunctions.getInstance().getAllEvents(this, getSyncRefresh(), getAllEventsRecycler(), CheckSharedPreferences.getInstance().getAdmin_id());
         } else {
@@ -64,24 +60,9 @@ public class AllEventsActivity extends ActionBarActivity {
         @Override
         public void onClick(View v) {
             if (v.getTag().equals(ADD_BUTTON)) {
-                getFloatingMenu().close(true);
                 if (CheckSharedPreferences.getInstance().isLoggedIn(getApplicationContext())) {
                     StartActivityFunctions.getInstance().startCreateEventActivity(getApplicationContext());
                 } else {
-                    CheckSharedPreferences.getInstance().endSession(getApplicationContext());
-                }
-            }else if(v.getTag().equals(TOPIC_EVENTS_BUTTON)){
-                getFloatingMenu().close(true);
-                if(CheckSharedPreferences.getInstance().isLoggedIn(getApplicationContext())) {
-                    DBfunctions.getInstance().getAllEvents(AllEventsActivity.this, getSyncRefresh(), getAllEventsRecycler(), CheckSharedPreferences.getInstance().getAdmin_id());
-                }else{
-                    CheckSharedPreferences.getInstance().endSession(getApplicationContext());
-                }
-            }else if(v.getTag().equals(ARCHIV_BUTTON)){
-                getFloatingMenu().close(true);
-                if(CheckSharedPreferences.getInstance().isLoggedIn(getApplicationContext())) {
-                    DBfunctions.getInstance().getAllArchivEvents(AllEventsActivity.this, getSyncRefresh(), getAllEventsRecycler(), CheckSharedPreferences.getInstance().getAdmin_id());
-                }else{
                     CheckSharedPreferences.getInstance().endSession(getApplicationContext());
                 }
             }
@@ -125,7 +106,8 @@ public class AllEventsActivity extends ActionBarActivity {
         } else if (item.getItemId() == R.id.action_logout) {
             LogoutDialog.getInstance().startLogoutDialog(getFragmentManager());
             return true;
-        } else if (item.getItemId() == R.id.action_events) {
+        } else if (item.getItemId() == R.id.action_archived_events) {
+            StartActivityFunctions.getInstance().startArchivedEventsActivity(getApplicationContext());
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -147,48 +129,18 @@ public class AllEventsActivity extends ActionBarActivity {
     public void setSyncRefresh(int res) {
         this.syncRefresh = (SwipeRefreshLayout) findViewById(res);
     }
-    public void setFloatingActionMenu(){
+    public void setFloatingActionButton(){
         ImageView icon = new ImageView(this);
-        icon.setImageDrawable(getResources().getDrawable(R.drawable.editiconbig));
+        icon.setImageDrawable(getResources().getDrawable(R.drawable.add_button));
 
-        FloatingActionButton actionButton = new FloatingActionButton.Builder(this)
+        this.createEventButton = new FloatingActionButton.Builder(this)
                 .setContentView(icon)
                 .setBackgroundDrawable(R.drawable.add_button_shape)
                 .build();
-
-        ImageView deleteFloatButton = new ImageButton(this);
-        deleteFloatButton.setImageResource(R.drawable.events);
-        deleteFloatButton.setBackgroundDrawable(getResources().getDrawable(R.drawable.icons_shape));
-        ImageView archivFloatButton = new ImageButton(this);
-        archivFloatButton.setImageResource(R.drawable.archivicon);
-        archivFloatButton.setBackgroundDrawable(getResources().getDrawable(R.drawable.icons_shape));
-        ImageView addFloatButton = new ImageButton(this);
-        addFloatButton.setImageResource(R.drawable.add_button);
-        addFloatButton.setBackgroundDrawable(getResources().getDrawable(R.drawable.icons_shape));
-
-        SubActionButton.Builder itemBuilder = new SubActionButton.Builder(this);
-
-        SubActionButton archivEvent = itemBuilder.setContentView(archivFloatButton).build();
-        SubActionButton topicEvents = itemBuilder.setContentView(deleteFloatButton).build();
-        SubActionButton addEvent = itemBuilder.setContentView(addFloatButton).build();
-
-        archivEvent.setTag(ARCHIV_BUTTON);
-        topicEvents.setTag(TOPIC_EVENTS_BUTTON);
-        addEvent.setTag(ADD_BUTTON);
-
-        this.actionMenu = new FloatingActionMenu.Builder(this)
-                .addSubActionView(topicEvents)
-                .addSubActionView(archivEvent)
-                .addSubActionView(addEvent)
-                .attachTo(actionButton)
-                .build();
-
-        archivEvent.setOnClickListener(new FloatingButtonCustomClickListener());
-        topicEvents.setOnClickListener(new FloatingButtonCustomClickListener());
-        addEvent.setOnClickListener(new FloatingButtonCustomClickListener());
+        this.createEventButton.setTag(ADD_BUTTON);
     }
-    public FloatingActionMenu getFloatingMenu(){
-        return this.actionMenu;
+    public FloatingActionButton getFloatingButton(){
+        return this.createEventButton;
     }
 }
 

@@ -5,6 +5,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import thesis.hfu.eventmy.objects.Event;
+import thesis.hfu.eventmy.objects.History;
 import thesis.hfu.eventmy.objects.Task;
 import thesis.hfu.eventmy.objects.User;
 
@@ -17,6 +18,7 @@ import java.util.Date;
 public class BuildJSON {
 
     private static BuildJSON instance;
+    private static final String ID="id";
     private static final String NAME="name";
     private static final String PRENAME="prename";
     private static final String EMAIL="email";
@@ -160,7 +162,7 @@ public class BuildJSON {
         return params;
     }
 
-    public RequestParams updateEventDetailsJSON(String admin_id,int event_id) {
+    public RequestParams getEventDetailsJSON(String admin_id, int event_id) {
 
         RequestParams params= new RequestParams();
         params.put(ADMIN_ID, Integer.parseInt(admin_id));
@@ -168,7 +170,7 @@ public class BuildJSON {
         return params;
     }
 
-    public RequestParams updatePercentageOfTaskJSON(int task_id,int admin_id,int percentage) {
+    public RequestParams editPercentageOfTaskJSON(int task_id, int admin_id, int percentage) {
 
         RequestParams params= new RequestParams();
         params.put(TASK_ID,task_id);
@@ -177,7 +179,24 @@ public class BuildJSON {
         return params;
     }
 
-    public RequestParams updateCostsOfTaskJSON(int task_id, int editor_id, double costs, int type_of_update) {
+    public RequestParams editEventDetailsJSON(int event_id,String admin_id, String name, String location, Date date) {
+
+        RequestParams params= new RequestParams();
+        params.put(EVENT_ID,event_id);
+        params.put(ADMIN_ID,Integer.parseInt(admin_id));
+        params.put(NAME,name);
+        params.put(LOCATION,location);
+        int no_date_change;
+        if(date==null){
+            no_date_change=-1;
+            params.put(DATE,no_date_change);
+        }else{
+            params.put(DATE,date);
+        }
+        return params;
+    }
+
+    public RequestParams getCostsOfTaskJSON(int task_id, int editor_id, double costs, int type_of_update) {
 
         RequestParams params= new RequestParams();
         params.put(TASK_ID,task_id);
@@ -267,13 +286,12 @@ public class BuildJSON {
             int event_id=jsonArray.getJSONObject(i).getInt(EVENT_ID);
             String task=jsonArray.getJSONObject(i).getString(TASK);
             String quantity=jsonArray.getJSONObject(i).getString(QUANTITY);
-            String description=jsonArray.getJSONObject(i).getString(DESCRIPTION);
             Double costs_of_task=jsonArray.getJSONObject(i).getDouble(COSTS_OF_TASK);
             int percentage_of_task=jsonArray.getJSONObject(i).getInt(PERCENTAGE_OF_TASK);
             String editor_name=jsonArray.getJSONObject(i).getString(EDITOR_NAME);
             int editor_id=jsonArray.getJSONObject(i).getInt(EDITOR_ID);
 
-            Task newTask= new Task(task_id,event_id,percentage_of_task,editor_id,costs_of_task,task, quantity,description,editor_name,EMPTY_STRING);
+            Task newTask= new Task(task_id,event_id,percentage_of_task,editor_id,costs_of_task,task, quantity,editor_name,EMPTY_STRING);
             taskList.add(newTask);
         }
         return taskList;
@@ -292,13 +310,12 @@ public class BuildJSON {
             int event_id=jsonObject.getInt(EVENT_ID);
             String task=jsonObject.getString(TASK);
             String quantity=jsonObject.getString(QUANTITY);
-            String history=jsonObject.getString(HISTORY);
             Double costs_of_task=jsonObject.getDouble(COSTS_OF_TASK);
             int percentage_of_task=jsonObject.getInt(PERCENTAGE_OF_TASK);
             String editor_name=jsonObject.getString(EDITOR_NAME);
             int editor_id=jsonObject.getInt(EDITOR_ID);
             String event_name=jsonObject.getString(EVENT_NAME);
-            Task newTask= new Task(task_id,event_id,percentage_of_task,editor_id,costs_of_task,task, quantity,history,editor_name,event_name);
+            Task newTask= new Task(task_id,event_id,percentage_of_task,editor_id,costs_of_task,task, quantity,editor_name,event_name);
 
         return newTask;
     }
@@ -337,11 +354,25 @@ public class BuildJSON {
         return params;
     }
 
-    public RequestParams getEventCommentsJSON(int event_id) {
+    public RequestParams getCommentsJSON(int id) {
 
         RequestParams params= new RequestParams();
-        params.put(EVENT_ID, event_id);
+        params.put(ID, id);
         return params;
+    }
+
+    public ArrayList<History> getComments(JSONArray jsonArray) throws JSONException{
+
+        ArrayList<History> commentList = new ArrayList<>();
+
+        for(int i=0;i<jsonArray.length();i++) {
+            String name=jsonArray.getJSONObject(i).getString(NAME);
+            String date=jsonArray.getJSONObject(i).getString(DATE);
+            String comment=jsonArray.getJSONObject(i).getString(COMMENT);
+            History history= new History(date,name,comment);
+            commentList.add(history);
+        }
+        return commentList;
     }
 
     public RequestParams updateTaskNameQuantityJSON(String admin_id,int task_id,String quantity, String task) {

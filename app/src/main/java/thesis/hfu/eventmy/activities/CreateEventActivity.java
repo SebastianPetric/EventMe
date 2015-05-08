@@ -1,9 +1,6 @@
 package thesis.hfu.eventmy.activities;
 
 
-import android.app.DatePickerDialog;
-import android.app.Dialog;
-import android.app.DialogFragment;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
@@ -15,12 +12,13 @@ import android.widget.*;
 import com.oguzdev.circularfloatingactionmenu.library.FloatingActionButton;
 import thesis.hfu.eventmy.R;
 import thesis.hfu.eventmy.database.DBfunctions;
+import thesis.hfu.eventmy.dialogs.DatePickerDialog;
+import thesis.hfu.eventmy.dialogs.LogoutDialog;
 import thesis.hfu.eventmy.functions.CheckSharedPreferences;
 import thesis.hfu.eventmy.functions.StartActivityFunctions;
-import thesis.hfu.eventmy.dialogs.LogoutDialog;
+import thesis.hfu.eventmy.objects.Global;
 
 import java.sql.Date;
-import java.util.Calendar;
 
 public class CreateEventActivity extends ActionBarActivity {
 
@@ -65,8 +63,7 @@ public class CreateEventActivity extends ActionBarActivity {
         @Override
         public void onClick(View v) {
            if(v.getId()==R.id.imageButtonNewEventDate){
-                DialogFragment newFragment = new DatePickerFragment();
-                newFragment.show(getFragmentManager(), DATE_PICKER);
+               DatePickerDialog.getInstance().startDatePickerDialog(getFragmentManager(),getApplicationContext(),getEventDateTextView());
             }
         }
     }
@@ -76,8 +73,11 @@ public class CreateEventActivity extends ActionBarActivity {
         @Override
         public void onClick(View v) {
             if(v.getTag().equals(CREATE_EVENT_BUTTON)){
-                if(!getEventNameEditText().equals(EMPTY_STRING)&&!getEventLocationEditText().equals(EMPTY_STRING)&&!getEventDateTextView().equals(EMPTY_STRING)){
+                if(!getEventNameEditText().equals(EMPTY_STRING)&&!getEventLocationEditText().equals(EMPTY_STRING)&&!getEventDateField().equals(EMPTY_STRING)){
                     if(CheckSharedPreferences.getInstance().isLoggedIn(getApplicationContext())) {
+                        Global global= (Global) getApplicationContext();
+                        setEventDate(global.getDate());
+
                         DBfunctions.getInstance().createEvent(getApplicationContext(), getEventNameEditText(), getEventLocationEditText(), getEventDate(), CheckSharedPreferences.getInstance().getAdmin_id());
                     }else CheckSharedPreferences.getInstance().endSession(getApplicationContext());
                 }else{
@@ -112,34 +112,11 @@ public class CreateEventActivity extends ActionBarActivity {
         }else if(item.getItemId()==R.id.action_logout){
             LogoutDialog.getInstance().startLogoutDialog(getFragmentManager());
             return true;
-        }else if(item.getItemId()==R.id.action_events){
-            StartActivityFunctions.getInstance().startAllEventsActivity(getApplicationContext());
+        }else if(item.getItemId()==R.id.action_archived_events){
+            StartActivityFunctions.getInstance().startArchivedEventsActivity(getApplicationContext());
             return true;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    //----------------------------------------------------------------------
-    //-----------------DATEPICKER-------------------------------------
-    //----------------------------------------------------------------------
-
-    public class DatePickerFragment extends DialogFragment
-            implements DatePickerDialog.OnDateSetListener {
-
-        @Override
-        public Dialog onCreateDialog(Bundle savedInstanceState) {
-            final Calendar c = Calendar.getInstance();
-            int year = c.get(Calendar.YEAR);
-            int month = c.get(Calendar.MONTH);
-            int day = c.get(Calendar.DAY_OF_MONTH);
-            return new DatePickerDialog(getActivity(), this, year, month, day);
-        }
-
-        public void onDateSet(DatePicker view, int year, int month, int day) {
-            String date=day+"."+(month+1)+"."+ (year);
-            setEventDateTextView(date);
-            setEventDate(new Date((year),month,day));
-        }
     }
 
     //----------------------------------------------------------------------
@@ -149,11 +126,11 @@ public class CreateEventActivity extends ActionBarActivity {
     public String getEventNameEditText() {
         return eventNameEditText.getText().toString().trim();
     }
-    public String getEventDateTextView() {
+    public String getEventDateField() {
         return eventDateTextView.getText().toString();
     }
-    public void setEventDateTextView(String eventDateTextView) {
-        this.eventDateTextView.setText(eventDateTextView);
+    public TextView getEventDateTextView() {
+        return eventDateTextView;
     }
     public ImageButton getAddDateButton() {
         return addDateButton;

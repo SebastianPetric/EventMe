@@ -27,7 +27,6 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textAppearance="?android:attr/textAppearanceLarge"
-                            android:text=""
                             android:id="@+id/textViewTaskOfEventEventName" android:layout_alignParentTop="true" android:layout_alignParentLeft="true"
                             android:layout_alignParentStart="true" android:layout_marginLeft="23dp" android:layout_marginStart="34dp"
                             android:layout_marginTop="24dp" android:textColor="#ffffff"/>
@@ -35,9 +34,15 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textAppearance="?android:attr/textAppearanceSmall"
+                            android:id="@+id/textViewTaskOfEventLocation" android:textColor="#FFFFFF" android:layout_marginLeft="23dp"
+                            android:layout_marginTop="5dp"/>
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textAppearance="?android:attr/textAppearanceSmall"
                             android:id="@+id/textViewTaskOfEventDate"
                             android:layout_below="@+id/textViewTaskOfEventEventLocation" android:layout_alignLeft="@+id/textViewTaskOfEventEventLocation"
-                            android:layout_alignStart="@+id/textViewTaskOfEventEventLocation" android:layout_marginTop="8dp"
+                            android:layout_alignStart="@+id/textViewTaskOfEventEventLocation" android:layout_marginTop="5dp"
                             android:layout_marginLeft="23dp" android:textColor="#ffffff"/>
                 </LinearLayout>
             </LinearLayout>
@@ -124,7 +129,5 @@
                     />
         </LinearLayout>
     </LinearLayout>
-
-
 </RelativeLayout>
 </android.support.v4.widget.SwipeRefreshLayout>

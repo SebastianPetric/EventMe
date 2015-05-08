@@ -13,7 +13,7 @@ import thesis.hfu.eventmy.functions.CheckSharedPreferences;
 
 public class EditPercentageDialog extends DialogFragment {
 
-    private TextView percentageTextView, totalOrganizersTextView, totalCostsTextView, totalPercentageTextView, eventNameTextView, eventDateTextView;
+    private TextView percentageTextView, totalOrganizersTextView, totalCostsTextView, totalPercentageTextView, eventNameTextView, eventDateTextView,eventLocationTextView;
     private int task_id,event_id, percentageValue,status_of_update;
     private static EditPercentageDialog instance;
 
@@ -24,7 +24,7 @@ public class EditPercentageDialog extends DialogFragment {
         return EditPercentageDialog.instance;
     }
 
-    public void startEditPercentageDialog(FragmentManager manager,TextView percentageTextView,TextView totalOrganizersTextView, TextView totalCostsTextView, TextView totalPercentageTextView,TextView eventNameTextView,TextView eventDateTextView,int task_id,int event_id, int status_of_update) {
+    public void startEditPercentageDialog(FragmentManager manager,TextView percentageTextView,TextView totalOrganizersTextView, TextView totalCostsTextView, TextView totalPercentageTextView,TextView eventNameTextView,TextView eventDateTextView,TextView eventLocationTextView,int task_id,int event_id, int status_of_update) {
         setTask_id(task_id);
         setPercentageTextView(percentageTextView);
         setTotalCostsTextView(totalCostsTextView);
@@ -33,6 +33,7 @@ public class EditPercentageDialog extends DialogFragment {
         setStatus_of_update(status_of_update);
         setEventDateTextView(eventDateTextView);
         setEventNameTextView(eventNameTextView);
+        setEventLocationTextView(eventLocationTextView);
         setEvent_id(event_id);
         this.show(manager, "editPercentageDialog");
     }
@@ -61,7 +62,7 @@ public class EditPercentageDialog extends DialogFragment {
                                 break;
                         }
                         if (CheckSharedPreferences.getInstance().isLoggedIn(getActivity())) {
-                            DBfunctions.getInstance().updatePercentage(getActivity(), getPercentageTextView(), getTotalCostsTextView(), getTotalPercentageTextView(), getTotalOrganizersTextView(), getEventNameTextView(), getEventDateTextView(),getEvent_id(), getTask_id(), Integer.parseInt(CheckSharedPreferences.getInstance().getAdmin_id()), getPercentageValue(),getStatus_of_update());
+                            DBfunctions.getInstance().updatePercentage(getActivity(), getPercentageTextView(), getTotalCostsTextView(), getTotalPercentageTextView(), getTotalOrganizersTextView(), getEventNameTextView(), getEventDateTextView(),getEventLocationTextView(),getEvent_id(), getTask_id(), Integer.parseInt(CheckSharedPreferences.getInstance().getAdmin_id()), getPercentageValue(),getStatus_of_update());
                         } else {
                             CheckSharedPreferences.getInstance().endSession(getActivity());
                         }
@@ -134,5 +135,10 @@ public class EditPercentageDialog extends DialogFragment {
     public void setEventDateTextView(TextView eventDateTextView) {
         this.eventDateTextView = eventDateTextView;
     }
-
+    public TextView getEventLocationTextView() {
+        return eventLocationTextView;
+    }
+    public void setEventLocationTextView(TextView eventLocationTextView) {
+        this.eventLocationTextView = eventLocationTextView;
+    }
 }

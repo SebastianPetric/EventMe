@@ -19,7 +19,7 @@ import thesis.hfu.eventmy.functions.CheckSharedPreferences;
 
 public class EditCostsDialog extends DialogFragment {
 
-    private TextView taskCostTextView, toalCostsTextView, totalPercentageTextView, totalOrganizersTextView, eventNameTextView, eventDateTextView;
+    private TextView taskCostTextView, toalCostsTextView, totalPercentageTextView, totalOrganizersTextView, eventNameTextView, eventDateTextView,eventLocationTextView;
     private int event_id,task_id, typeOfCalculation, typeOfUpdate;
     private double costValue;
     private static EditCostsDialog instance;
@@ -33,7 +33,7 @@ public class EditCostsDialog extends DialogFragment {
         return EditCostsDialog.instance;
     }
 
-    public void startEditTaskDialog(FragmentManager manager,TextView taskCostTextView,TextView totalOrganizersTextView,TextView totalCostsTextView, TextView totalPercentageTextView,TextView eventNameTextView, TextView eventDateTextView,int event_id,int task_id,int typeOfUpdate) {
+    public void startEditTaskDialog(FragmentManager manager,TextView taskCostTextView,TextView totalOrganizersTextView,TextView totalCostsTextView, TextView totalPercentageTextView,TextView eventNameTextView, TextView eventDateTextView,TextView eventLocationTextView,int event_id,int task_id,int typeOfUpdate) {
         setTask_id(task_id);
         setTaskCostTextView(taskCostTextView);
         setEvent_id(event_id);
@@ -43,6 +43,7 @@ public class EditCostsDialog extends DialogFragment {
         setEventNameTextView(eventNameTextView);
         setEventDateTextView(eventDateTextView);
         setTypeOfUpdate(typeOfUpdate);
+        setEventLocationTextView(eventLocationTextView);
         this.show(manager, "editCostsDialog");
     }
 
@@ -61,7 +62,7 @@ public class EditCostsDialog extends DialogFragment {
                                     setCostValue(Calculation.getInstance().round(Double.parseDouble(userInput.getText().toString())));
                                     setTypeOfCalculation(0);
                                     if (CheckSharedPreferences.getInstance().isLoggedIn(getActivity())) {
-                                        DBfunctions.getInstance().updateCosts(getActivity(), getTaskCostTextView(), getTotalOrganizersTextView(), getTotalPercentageTextView(), getToalCostsTextView(), getEventNameTextView(), getEventDateTextView(),getEvent_id(),getTask_id(), Integer.parseInt(CheckSharedPreferences.getInstance().getAdmin_id()), getCostValue(), getTypeOfCalculation(), getTypeOfUpdate());
+                                        DBfunctions.getInstance().updateCosts(getActivity(), getTaskCostTextView(), getTotalOrganizersTextView(), getTotalPercentageTextView(), getToalCostsTextView(), getEventNameTextView(), getEventDateTextView(),getEventLocationTextView(),getEvent_id(),getTask_id(), Integer.parseInt(CheckSharedPreferences.getInstance().getAdmin_id()), getCostValue(), getTypeOfCalculation(), getTypeOfUpdate());
                                     }else{
                                         CheckSharedPreferences.getInstance().endSession(getActivity());
                                     }
@@ -83,7 +84,7 @@ public class EditCostsDialog extends DialogFragment {
                             setCostValue(Calculation.getInstance().round(Double.parseDouble(userInput.getText().toString())));
                             setTypeOfCalculation(1);
                             if (CheckSharedPreferences.getInstance().isLoggedIn(getActivity())) {
-                                DBfunctions.getInstance().updateCosts(getActivity(), getTaskCostTextView(), getTotalOrganizersTextView(), getTotalPercentageTextView(), getToalCostsTextView(), getEventNameTextView(), getEventDateTextView(),getEvent_id(),getTask_id(), Integer.parseInt(CheckSharedPreferences.getInstance().getAdmin_id()), getCostValue(), getTypeOfCalculation(), getTypeOfUpdate());
+                                DBfunctions.getInstance().updateCosts(getActivity(), getTaskCostTextView(), getTotalOrganizersTextView(), getTotalPercentageTextView(), getToalCostsTextView(), getEventNameTextView(), getEventDateTextView(),getEventLocationTextView(),getEvent_id(),getTask_id(), Integer.parseInt(CheckSharedPreferences.getInstance().getAdmin_id()), getCostValue(), getTypeOfCalculation(), getTypeOfUpdate());
                             } else {
                                 CheckSharedPreferences.getInstance().endSession(getActivity());
                             }
@@ -164,5 +165,11 @@ public class EditCostsDialog extends DialogFragment {
     }
     public void setTypeOfUpdate(int typeOfUpdate) {
         this.typeOfUpdate = typeOfUpdate;
+    }
+    public TextView getEventLocationTextView() {
+        return eventLocationTextView;
+    }
+    public void setEventLocationTextView(TextView eventLocationTextView) {
+        this.eventLocationTextView = eventLocationTextView;
     }
 }

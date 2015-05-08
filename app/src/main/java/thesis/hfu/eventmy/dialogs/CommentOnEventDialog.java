@@ -7,11 +7,10 @@ import android.app.FragmentManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
-import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.TextView;
 import thesis.hfu.eventmy.R;
 import thesis.hfu.eventmy.database.DBfunctions;
 
@@ -19,8 +18,7 @@ public class CommentOnEventDialog extends DialogFragment {
 
     private static CommentOnEventDialog instance;
     private int admin_id,event_id;
-    private TextView historyTextView;
-    private SwipeRefreshLayout syncComments;
+    private RecyclerView recyclerView;
     private Context context;
 
     public static CommentOnEventDialog getInstance() {
@@ -30,12 +28,11 @@ public class CommentOnEventDialog extends DialogFragment {
         return CommentOnEventDialog.instance;
     }
 
-    public void startCommentDialog(Context context,SwipeRefreshLayout syncComments,FragmentManager manager,int event_id,String admin_id,final TextView historyTextView) {
+    public void startCommentDialog(Context context,RecyclerView recyclerView,FragmentManager manager,int event_id,String admin_id) {
         setEvent_id(event_id);
         setAdmin_id(Integer.valueOf(admin_id));
-        setHistoryTextView(historyTextView);
         setContext(context);
-        setSyncComments(syncComments);
+        setRecyclerView(recyclerView);
         this.show(manager, "commentDialog");
     }
 
@@ -51,7 +48,7 @@ public class CommentOnEventDialog extends DialogFragment {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
                         String comment = userInput.getText().toString().trim();
-                        DBfunctions.getInstance().commentOnEvent(getContext(),getSyncComments(),getHistoryTextView(), getEvent_id(), getAdmin_id(), comment);
+                        DBfunctions.getInstance().commentOnEvent(getContext(),getRecyclerView(), getEvent_id(), getAdmin_id(), comment);
                         dialog.cancel();
                     }
                 })
@@ -74,12 +71,6 @@ public class CommentOnEventDialog extends DialogFragment {
     public void setAdmin_id(int event_id) {
         this.admin_id = event_id;
     }
-    public TextView getHistoryTextView(){
-        return this.historyTextView;
-    }
-    public void setHistoryTextView(TextView historyTextView) {
-        this.historyTextView = historyTextView;
-    }
     public int getEvent_id() {
         return event_id;
     }
@@ -92,10 +83,10 @@ public class CommentOnEventDialog extends DialogFragment {
     public void setContext(Context context) {
         this.context = context;
     }
-    public SwipeRefreshLayout getSyncComments() {
-        return syncComments;
+    public RecyclerView getRecyclerView() {
+        return this.recyclerView;
     }
-    public void setSyncComments(SwipeRefreshLayout syncComments) {
-        this.syncComments = syncComments;
+    public void setRecyclerView(RecyclerView recyclerView) {
+        this.recyclerView = recyclerView;
     }
 }

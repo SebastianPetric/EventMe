@@ -27,12 +27,12 @@ public class AllTasksOfEventListAdapter extends
     private ArrayList<Task> tasks;
     private Context context;
     private MyViewHolder viewHolder;
-    private TextView eventNameTextView, eventDateTextView, eventTotalOrganizersTextView, eventTotalCostsTextView, eventTotalPercentageTextView;
+    private TextView eventNameTextView, eventDateTextView, eventTotalOrganizersTextView, eventTotalCostsTextView, eventTotalPercentageTextView,eventLocationTextView;
     private int event_id;
     private final int typeOfUpdate=1;
     private FragmentManager fragmentManager;
 
-    public AllTasksOfEventListAdapter(Activity context,ArrayList<Task> list,TextView eventNameTextView,TextView eventDateTextView,TextView eventTotalOrganizersTextView,TextView eventTotalCostsTextView,TextView eventTotalPercentageTextView,int event_id) {
+    public AllTasksOfEventListAdapter(Activity context,ArrayList<Task> list,TextView eventNameTextView,TextView eventDateTextView,TextView eventTotalOrganizersTextView,TextView eventTotalCostsTextView,TextView eventTotalPercentageTextView,TextView eventLocationTextView,int event_id) {
         this.tasks = list;
         this.context=context;
         this.eventNameTextView = eventNameTextView;
@@ -41,6 +41,7 @@ public class AllTasksOfEventListAdapter extends
         this.eventTotalCostsTextView = eventTotalCostsTextView;
         this.eventTotalOrganizersTextView = eventTotalOrganizersTextView;
         this.eventTotalPercentageTextView = eventTotalPercentageTextView;
+        this.eventLocationTextView=eventLocationTextView;
         this.fragmentManager=context.getFragmentManager();
     }
     @Override
@@ -74,7 +75,7 @@ public class AllTasksOfEventListAdapter extends
             @Override
             public void onClick(View v) {
                 setViewHolder(viewHolder);
-                EditPercentageDialog.getInstance().startEditPercentageDialog(getFragmentManager(), viewHolder.percentageTextView, getEventTotalOrganizersTextView(), getEventTotalCostsTextView(), getEventTotalPercentageTextView(), getEventNameTextView(), getEventDateTextView(), task.getTask_id(),getEvent_id(),getTypeOfUpdate());
+                EditPercentageDialog.getInstance().startEditPercentageDialog(getFragmentManager(), viewHolder.percentageTextView, getEventTotalOrganizersTextView(), getEventTotalCostsTextView(), getEventTotalPercentageTextView(), getEventNameTextView(), getEventDateTextView(),getEventLocationTextView(), task.getTask_id(),getEvent_id(),getTypeOfUpdate());
             }
         });
 
@@ -82,7 +83,7 @@ public class AllTasksOfEventListAdapter extends
             @Override
             public void onClick(View v) {
                 setViewHolder(viewHolder);
-                EditCostsDialog.getInstance().startEditTaskDialog(getFragmentManager(), viewHolder.costTextView, getEventTotalOrganizersTextView(), getEventTotalCostsTextView(), getEventTotalPercentageTextView(), getEventNameTextView(), getEventDateTextView(),getEvent_id(),task.getTask_id(),getTypeOfUpdate());
+                EditCostsDialog.getInstance().startEditTaskDialog(getFragmentManager(), viewHolder.costTextView, getEventTotalOrganizersTextView(), getEventTotalCostsTextView(), getEventTotalPercentageTextView(), getEventNameTextView(), getEventDateTextView(),getEventLocationTextView(),getEvent_id(),task.getTask_id(),getTypeOfUpdate());
             }
         });
     }
@@ -160,5 +161,8 @@ public class AllTasksOfEventListAdapter extends
     }
     public int getTypeOfUpdate() {
         return typeOfUpdate;
+    }
+    public TextView getEventLocationTextView() {
+        return eventLocationTextView;
     }
 }

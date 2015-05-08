@@ -4,11 +4,8 @@
         android:id="@+id/swipe_refresh_edit_task"
         android:layout_width="match_parent"
         android:layout_height="match_parent" android:background="#151515">
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent">
-
-    <LinearLayout android:orientation="vertical"
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                  android:orientation="vertical"
                   android:layout_width="match_parent"
                   android:layout_height="match_parent">
         <LinearLayout android:orientation="vertical" android:layout_width="match_parent"
@@ -97,25 +94,24 @@
                         android:textColor="#ffffff"/>
             </LinearLayout>
         </LinearLayout>
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="@string/edit_task_previous_note_header"
+                android:id="@+id/textView18" android:textColor="#ffffff" android:layout_marginLeft="23dp"/>
         <LinearLayout
                 android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" android:layout_marginLeft="23dp" android:layout_marginTop="23dp"
-                android:layout_marginRight="23dp">
-            <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="@string/edit_task_previous_note_header"
-                    android:id="@+id/textView18" android:textColor="#ffffff"/>
-            <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:id="@+id/textViewEditTaskRecentReview" android:layout_marginTop="10dp"
-                    android:textColor="#ffffff"/>
+                android:layout_width="fill_parent"
+                android:layout_height="match_parent" android:layout_marginTop="5dp"
+                >
+            <android.support.v7.widget.RecyclerView
+                    xmlns:tools="http://schemas.android.com/tools"
+                    android:id="@+id/recyclerViewAllComments"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    tools:context=".MainActivity"
+                    android:layout_marginLeft="23dp" android:layout_marginRight="23dp"/>
         </LinearLayout>
-
     </LinearLayout>
-</ScrollView>
 </android.support.v4.widget.SwipeRefreshLayout>

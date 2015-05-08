@@ -7,6 +7,8 @@ import android.app.FragmentManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
@@ -18,7 +20,9 @@ public class EditTaskDialog extends DialogFragment {
 
     private static EditTaskDialog instance;
     private Context context;
-    private TextView taskNameTextView, quantityTextView, eventNameTextView, costsTextView,percentageTextView,editorTextView,historyTextView;
+    private TextView taskNameTextView, quantityTextView, eventNameTextView, costsTextView,percentageTextView,editorTextView;
+    private RecyclerView recyclerView;
+    private SwipeRefreshLayout syncRefresh;
     private String editor_id;
     private int task_id;
 
@@ -29,7 +33,7 @@ public class EditTaskDialog extends DialogFragment {
         return EditTaskDialog.instance;
     }
 
-    public void startEditTaskDialog(FragmentManager manager, Context context, TextView taskNameTextView, TextView quantityTextView,final TextView eventNameTextView, final TextView costsTextView, final TextView percentageTextView, final TextView editorTextView, final TextView historyTextView,int task_id,String editor_id) {
+    public void startEditTaskDialog(FragmentManager manager, Context context,SwipeRefreshLayout syncRefresh, RecyclerView recyclerView, TextView taskNameTextView, TextView quantityTextView,final TextView eventNameTextView, final TextView costsTextView, final TextView percentageTextView, final TextView editorTextView,int task_id,String editor_id) {
         setContext(context);
         setTaskNameTextView(taskNameTextView);
         setQuantityTextView(quantityTextView);
@@ -39,7 +43,8 @@ public class EditTaskDialog extends DialogFragment {
         setCostsTextView(costsTextView);
         setPercentageTextView(percentageTextView);
         setEditorTextView(editorTextView);
-        setHistoryTextView(historyTextView);
+        setRecyclerView(recyclerView);
+        setSyncRefresh(syncRefresh);
         this.show(manager, "editTaskDialog");
     }
 
@@ -57,7 +62,7 @@ public class EditTaskDialog extends DialogFragment {
                     public void onClick(DialogInterface dialog, int id) {
                         String name = changeName.getText().toString().trim();
                         String quantity = changeQuantity.getText().toString().trim();
-                        DBfunctions.getInstance().updateTaskNameQuantity(getContext(), getTaskNameTextView(), getQuantityTextView(), getEventNameTextView(),getCostsTextView(),getPercentageTextView(),getEditorTextView(),getHistoryTextView(),getTask_id(),getEditor_id(),quantity,name);
+                        DBfunctions.getInstance().updateTaskNameQuantity(getContext(),getSyncRefresh(),getRecyclerView(), getTaskNameTextView(), getQuantityTextView(), getEventNameTextView(),getCostsTextView(),getPercentageTextView(),getEditorTextView(),getTask_id(),getEditor_id(),quantity,name);
                         dialog.cancel();
                     }
                 })
@@ -127,10 +132,16 @@ public class EditTaskDialog extends DialogFragment {
     public void setEditorTextView(TextView editorTextView) {
         this.editorTextView = editorTextView;
     }
-    public TextView getHistoryTextView() {
-        return historyTextView;
+    public RecyclerView getRecyclerView() {
+        return recyclerView;
     }
-    public void setHistoryTextView(TextView historyTextView) {
-        this.historyTextView = historyTextView;
+    public void setRecyclerView(RecyclerView recyclerView) {
+        this.recyclerView = recyclerView;
+    }
+    public SwipeRefreshLayout getSyncRefresh() {
+        return syncRefresh;
+    }
+    public void setSyncRefresh(SwipeRefreshLayout syncRefresh) {
+        this.syncRefresh = syncRefresh;
     }
 }

@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
@@ -20,8 +21,9 @@ public class CommentOnTaskDialog extends DialogFragment {
     private static CommentOnTaskDialog instance;
     private int task_id,admin_id;
     private Context context;
-    private TextView taskNameTextView, eventNameTextView, taskQuantityTextView, costsTextView, percentageTextView, editorTextView, historyTextView;
-    private SwipeRefreshLayout swipeRefreshLayout;
+    private TextView taskNameTextView, eventNameTextView, taskQuantityTextView, costsTextView, percentageTextView, editorTextView;
+    private RecyclerView recyclerView;
+    private SwipeRefreshLayout syncRefresh;
 
     public static CommentOnTaskDialog getInstance() {
         if (CommentOnTaskDialog.instance == null) {
@@ -30,7 +32,7 @@ public class CommentOnTaskDialog extends DialogFragment {
         return CommentOnTaskDialog.instance;
     }
 
-    public void startCommentDialog(FragmentManager manager,final SwipeRefreshLayout swipeRefreshLayout,Context context, int task_id,String admin_id,final TextView eventNameTextView,final TextView taskFieldTextView, final TextView quantityTextView, final TextView costTextView, TextView percentageTextView, final TextView editorTextView, final TextView historyTextView) {
+    public void startCommentDialog(FragmentManager manager,SwipeRefreshLayout syncRefresh,final RecyclerView recyclerView,Context context, int task_id,String admin_id,final TextView eventNameTextView,final TextView taskFieldTextView, final TextView quantityTextView, final TextView costTextView, TextView percentageTextView, final TextView editorTextView) {
         setTask_id(task_id);
         setAdmin_id(Integer.valueOf(admin_id));
         setContext(context);
@@ -40,8 +42,8 @@ public class CommentOnTaskDialog extends DialogFragment {
         setCostsTextView(costTextView);
         setPercentageTextView(percentageTextView);
         setEditorTextView(editorTextView);
-        setHistoryTextView(historyTextView);
-        setSwipeRefreshLayout(swipeRefreshLayout);
+        setRecyclerView(recyclerView);
+        setSyncRefresh(syncRefresh);
         this.show(manager, "commentDialog");
     }
 
@@ -57,7 +59,7 @@ public class CommentOnTaskDialog extends DialogFragment {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
                         String comment = userInput.getText().toString().trim();
-                        DBfunctions.getInstance().commentOnTask(getContext(), getEventNameTextView(), getTaskTextView(),getQuantityTextView(),getCostsTextView(),getPercentageTextView(),getEditorTextView(),getHistoryTextView(),getTask_id(),getAdmin_id(),comment);
+                        DBfunctions.getInstance().commentOnTask(getContext(), getSyncRefresh(),getRecyclerView(),getEventNameTextView(), getTaskTextView(),getQuantityTextView(),getCostsTextView(),getPercentageTextView(),getEditorTextView(),getTask_id(),getAdmin_id(),comment);
                         dialog.cancel();
                     }
                 })
@@ -109,9 +111,6 @@ public class CommentOnTaskDialog extends DialogFragment {
     public TextView getEditorTextView(){
         return this.editorTextView;
     }
-    public TextView getHistoryTextView(){
-        return this.historyTextView;
-    }
     public void setTaskNameTextView(TextView taskNameTextView) {
         this.taskNameTextView = taskNameTextView;
     }
@@ -130,13 +129,16 @@ public class CommentOnTaskDialog extends DialogFragment {
     public void setEditorTextView(TextView editorTextView) {
         this.editorTextView = editorTextView;
     }
-    public void setHistoryTextView(TextView historyTextView) {
-        this.historyTextView = historyTextView;
+    public RecyclerView getRecyclerView() {
+        return recyclerView;
     }
-    public void setSwipeRefreshLayout(SwipeRefreshLayout swipeRefreshLayout) {
-        this.swipeRefreshLayout = swipeRefreshLayout;
+    public void setRecyclerView(RecyclerView recyclerView) {
+        this.recyclerView = recyclerView;
     }
-    public SwipeRefreshLayout getSwipeRefreshLayout() {
-       return this.swipeRefreshLayout;
+    public SwipeRefreshLayout getSyncRefresh() {
+        return syncRefresh;
+    }
+    public void setSyncRefresh(SwipeRefreshLayout syncRefresh) {
+        this.syncRefresh = syncRefresh;
     }
 }

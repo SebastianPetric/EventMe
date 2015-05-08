@@ -59,7 +59,7 @@
 
         <activity
                 android:name=".activities.EditTaskActivity"
-                android:label="Bearbeiten" >
+                android:label="Details" >
         </activity>
 
         <activity
@@ -69,7 +69,12 @@
 
         <activity
                 android:name=".activities.CommentOnEventActivity"
-                android:label="Kommentare" >
+                android:label="Verlauf" >
+        </activity>
+
+        <activity
+                android:name=".activities.ArchivedEventsActivity"
+                android:label="Archiv" >
         </activity>
     </application>
 

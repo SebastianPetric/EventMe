@@ -1,0 +1,54 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content" android:background="#151515">
+    <EditText
+            android:id="@+id/editTextEditEventChangeEventNameField"
+            android:inputType="text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginLeft="23dp"
+            android:layout_marginRight="23dp"
+            android:layout_marginBottom="4dp"
+            android:hint="@string/edit_event_name" android:backgroundTint="#ffffff" android:textColorHint="#ffffff"
+            android:textColor="#ffffff"/>
+    <EditText
+            android:id="@+id/editTextEditEventChangeLocationField"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:layout_marginLeft="23dp"
+            android:layout_marginRight="23dp"
+            android:layout_marginBottom="10dp"
+            android:fontFamily="sans-serif"
+            android:hint="@string/edit_event_location" android:inputType="text" android:backgroundTint="#ffffff"
+            android:textColor="#ffffff" android:textColorHint="#ffffff"/>
+    <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" android:layout_marginLeft="23dp"
+            android:layout_marginRight="23dp">
+        <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="@string/edit_event_date"
+                android:layout_weight="0.18"
+                android:id="@+id/textView17" android:textColor="#ffffff" android:layout_gravity="center_vertical"/>
+        <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:id="@+id/textViewNewEventDateField" android:layout_gravity="center_vertical" android:layout_weight="0.4"
+                android:textColor="#ffffff"/>
+        <ImageButton
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:src="@drawable/calendar_icon"
+                android:id="@+id/imageButtonNewEventDate" android:background="@drawable/add_button_shape"
+                android:focusableInTouchMode="false"/>
+    </LinearLayout>
+</LinearLayout>

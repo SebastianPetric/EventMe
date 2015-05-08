@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -13,20 +15,21 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import com.oguzdev.circularfloatingactionmenu.library.FloatingActionButton;
 import thesis.hfu.eventmy.R;
-import thesis.hfu.eventmy.database.DBfunctions;
 import thesis.hfu.eventmy.dialogs.CommentOnEventDialog;
 import thesis.hfu.eventmy.dialogs.LogoutDialog;
 import thesis.hfu.eventmy.functions.CheckSharedPreferences;
 import thesis.hfu.eventmy.functions.StartActivityFunctions;
+import thesis.hfu.eventmy.list_decoration.DividerItemDecoration;
 
 
 public class CommentOnEventActivity extends ActionBarActivity {
 
-    private TextView commentTextView,totalOrganizersTextView, totalCostsTextView, totalPercentageTextView, eventNameTextView, eventDateTextView;
+    private TextView totalOrganizersTextView, totalCostsTextView, totalPercentageTextView, eventNameTextView, eventDateTextView,eventLocationTextView;
     private ImageButton addOrganizersButton;
     private int event_id;
     private FloatingActionButton commentOnEventButton;
     private SwipeRefreshLayout syncComments;
+    private RecyclerView recyclerComments;
 
     private static final String EVENT_ID="event_id";
     private final static String COMMENT_ON_EVENT = "comment_on_event";
@@ -41,20 +44,24 @@ public class CommentOnEventActivity extends ActionBarActivity {
 
         if(CheckSharedPreferences.getInstance().isLoggedIn(getApplicationContext())){
             setEvent_id(getIntent().getExtras().getInt(EVENT_ID));
-            setCommentTextView(R.id.CommentOnEventField);
+            setRecyclerComments(R.id.recyclerViewAllComments);
             setSyncCommentsView(R.id.swipe_refresh_event_comments);
             setTotalOrganizersTextView(R.id.textViewTaskOfEventTotalOrganizers);
             setTotalCostsTextView(R.id.textViewTaskOfEventTotalCosts);
             setTotalPercentageTextView(R.id.textViewTaskOfEventTotalPercentage);
             setEventNameTextView(R.id.textViewTaskOfEventEventName);
             setEventDateTextView(R.id.textViewTaskOfEventDate);
+            setEventLocationTextView(R.id.textViewTaskOfEventLocation);
             setAddOrganizersButton(R.id.imageButtonTasksOfEventOrganizers);
             setCommentOnEventBttuon();
+            LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+            getRecyclerComments().setLayoutManager(layoutManager);
+            getRecyclerComments().addItemDecoration(new DividerItemDecoration(this));
             getAddOrganizersButton().setOnClickListener(new CustomClickListener());
             getSyncComments().setOnRefreshListener(new CustomSwipeListener());
             getCommentButton().setOnClickListener(new FloatingButtonCustomClickListener());
-            DBfunctions.getInstance().updateEventDetails(getSyncComments(),CheckSharedPreferences.getInstance().getAdmin_id(),getEvent_id(),getEventTotalOrganizersTextView(),getEventTotalPercentageTextView(),getEventTotalCostsTextView(),getEventNameTextView(),getEventDateTextView());
-            DBfunctions.getInstance().getEventComments(getApplicationContext(),null, getCommentTextView(),getEvent_id());
+            //DBfunctions.getInstance().updateEventDetails(getSyncComments(),CheckSharedPreferences.getInstance().getAdmin_id(),getEvent_id(),getEventTotalOrganizersTextView(),getEventTotalPercentageTextView(), getEventTotalCostsTextView(),getEventNameTextView(),getEventDateTextView(),getEventLocationTextView());
+            //DBfunctions.getInstance().getEventComments(getApplicationContext(),getRecyclerComments(),getEvent_id());
         }else{
             CheckSharedPreferences.getInstance().endSession(getApplicationContext());
         }
@@ -84,7 +91,7 @@ public class CommentOnEventActivity extends ActionBarActivity {
         public void onClick(View v) {
             if(v.getTag().equals(COMMENT_ON_EVENT)){
                 if(CheckSharedPreferences.getInstance().isLoggedIn(getApplicationContext())){
-                    CommentOnEventDialog.getInstance().startCommentDialog(getApplicationContext(),null,getFragmentManager(), getEvent_id(), CheckSharedPreferences.getInstance().getAdmin_id(), getCommentTextView());
+                    CommentOnEventDialog.getInstance().startCommentDialog(getApplicationContext(),null,getFragmentManager(), getEvent_id(), CheckSharedPreferences.getInstance().getAdmin_id());
                 }else{
                     CheckSharedPreferences.getInstance().endSession(getApplicationContext());
                 }
@@ -97,8 +104,8 @@ public class CommentOnEventActivity extends ActionBarActivity {
         @Override
         public void onRefresh() {
             if (CheckSharedPreferences.getInstance().isLoggedIn(getApplicationContext())) {
-                DBfunctions.getInstance().updateEventDetails(getSyncComments(),CheckSharedPreferences.getInstance().getAdmin_id(),getEvent_id(),getEventTotalOrganizersTextView(),getEventTotalPercentageTextView(),getEventTotalCostsTextView(),getEventNameTextView(),getEventDateTextView());
-                DBfunctions.getInstance().getEventComments(getApplicationContext(),getSyncComments(), getCommentTextView(),getEvent_id());
+                //DBfunctions.getInstance().updateEventDetails(getSyncComments(),CheckSharedPreferences.getInstance().getAdmin_id(),getEvent_id(),getEventTotalOrganizersTextView(),getEventTotalPercentageTextView(), getEventTotalCostsTextView(),getEventNameTextView(),getEventDateTextView(),getEventLocationTextView());
+                //DBfunctions.getInstance().getEventComments(getApplicationContext(),getRecyclerComments(),getEvent_id());
             } else {
                 CheckSharedPreferences.getInstance().endSession(getApplicationContext());
             }
@@ -130,8 +137,8 @@ public class CommentOnEventActivity extends ActionBarActivity {
         } else if (item.getItemId() == R.id.action_logout) {
             LogoutDialog.getInstance().startLogoutDialog(getFragmentManager());
             return true;
-        } else if (item.getItemId() == R.id.action_events) {
-            StartActivityFunctions.getInstance().startAllEventsActivity(getApplicationContext());
+        } else if (item.getItemId() == R.id.action_archived_events) {
+            StartActivityFunctions.getInstance().startArchivedEventsActivity(getApplicationContext());
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -141,12 +148,6 @@ public class CommentOnEventActivity extends ActionBarActivity {
     //-----------------Getter and Setter-------------------------------------
     //----------------------------------------------------------------------
 
-    public void setCommentTextView(int res) {
-        commentTextView = (TextView) findViewById(res);
-    }
-    public TextView getCommentTextView() {
-        return this.commentTextView;
-    }
     public int getEvent_id() {
         return event_id;
     }
@@ -207,6 +208,18 @@ public class CommentOnEventActivity extends ActionBarActivity {
     }
     public ImageButton getAddOrganizersButton() {
         return addOrganizersButton;
+    }
+    public TextView getEventLocationTextView() {
+        return eventLocationTextView;
+    }
+    public void setEventLocationTextView(int eventLocationTextView) {
+        this.eventLocationTextView= (TextView) findViewById(eventLocationTextView);
+    }
+    public RecyclerView getRecyclerComments() {
+        return recyclerComments;
+    }
+    public void setRecyclerComments(int res) {
+        this.recyclerComments = (RecyclerView) findViewById(res);
     }
 
 }
