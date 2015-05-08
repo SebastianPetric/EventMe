@@ -1,113 +1,126 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent" android:background="#151515">
+            android:layout_height="fill_parent"
+            android:background="#e9e8e4">
 
-    <LinearLayout android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical" >
+    <LinearLayout  android:layout_width="fill_parent"
+                   android:layout_height="wrap_content"
+                   android:orientation="vertical" >
         <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content" android:layout_marginRight="23dp" android:layout_marginLeft="23dp"
-            android:layout_marginTop="23dp">
-
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="textPersonName"
-                android:ems="10"
-                android:id="@+id/registrationNameField"
-                android:hint="@string/registration_name" android:backgroundTint="#ffffff" android:textColor="#ffffff"
-                android:textColorHint="#ffffff"/>
-        </LinearLayout>
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content" android:layout_marginRight="23dp"
-            android:layout_marginLeft="23dp" android:layout_marginTop="12dp">
+                android:orientation="horizontal"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content" android:layout_marginRight="23dp" android:layout_marginLeft="23dp"
+                android:layout_marginTop="23dp">
 
             <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="textPersonName"
-                android:ems="10"
-                android:id="@+id/registrationPrenameField"
-                android:hint="@string/registration_prename" android:backgroundTint="#ffffff"
-                android:textColorHint="#ffffff" android:textColor="#ffffff"/>
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPersonName"
+                    android:ems="10"
+                    android:id="@+id/registrationNameField"
+                    android:hint="@string/registration_name" android:backgroundTint="#6c6b69" android:textColor="#6c6b69"
+                    android:textColorHint="#6c6b69"/>
         </LinearLayout>
         <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content" android:layout_marginTop="12dp" android:layout_marginLeft="23dp"
-            android:layout_marginRight="23dp">
+                android:orientation="horizontal"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content" android:layout_marginRight="23dp"
+                android:layout_marginLeft="23dp" android:layout_marginTop="12dp">
 
             <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="textEmailAddress"
-                android:ems="10"
-                android:id="@+id/registrationEmailField"
-                android:hint="@string/registration_email" android:backgroundTint="#ffffff" android:textColor="#ffffff"
-                android:textColorHint="#ffffff"/>
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPersonName"
+                    android:ems="10"
+                    android:id="@+id/registrationPrenameField"
+                    android:hint="@string/registration_prename" android:backgroundTint="#6c6b69"
+                    android:textColorHint="#6c6b69" android:textColor="#6c6b69"/>
         </LinearLayout>
         <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content" android:layout_marginTop="12dp" android:layout_marginRight="23dp"
-            android:layout_marginLeft="23dp">
+                android:orientation="horizontal"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content" android:layout_marginTop="12dp" android:layout_marginLeft="23dp"
+                android:layout_marginRight="23dp">
 
             <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="textPassword"
-                android:ems="10"
-                android:id="@+id/registrationPasswordField"
-                android:hint="@string/registration_password" android:backgroundTint="#ffffff"
-                android:textColorHint="#ffffff" android:textColor="#ffffff"/>
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textEmailAddress"
+                    android:ems="10"
+                    android:id="@+id/registrationEmailField"
+                    android:hint="@string/registration_email" android:backgroundTint="#6c6b69" android:textColor="#6c6b69"
+                    android:textColorHint="#6c6b69"/>
         </LinearLayout>
         <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content" android:layout_marginLeft="23dp" android:layout_marginRight="23dp"
-            android:layout_marginTop="12dp">
+                android:orientation="horizontal"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content" android:layout_marginTop="12dp" android:layout_marginRight="23dp"
+                android:layout_marginLeft="23dp">
 
             <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="textPassword"
-                android:ems="10"
-                android:id="@+id/registrationPasswordRepeatField"
-                android:hint="@string/registration_password_repeat" android:backgroundTint="#ffffff"
-                android:textColor="#ffffff" android:textColorHint="#ffffff"/>
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPassword"
+                    android:ems="10"
+                    android:id="@+id/registrationPasswordField"
+                    android:hint="@string/registration_password" android:backgroundTint="#6c6b69"
+                    android:textColorHint="#6c6b69" android:textColor="#6c6b69"/>
         </LinearLayout>
         <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content" android:layout_marginRight="23dp" android:layout_marginLeft="23dp">
+                android:orientation="horizontal"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content" android:layout_marginLeft="23dp" android:layout_marginRight="23dp"
+                android:layout_marginTop="12dp">
+
+            <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPassword"
+                    android:ems="10"
+                    android:id="@+id/registrationPasswordRepeatField"
+                    android:hint="@string/registration_password_repeat" android:backgroundTint="#6c6b69"
+                    android:textColor="#6c6b69" android:textColorHint="#6c6b69"/>
+        </LinearLayout>
+        <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content" android:layout_marginRight="23dp" android:layout_marginLeft="23dp">
 
             <View
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="0.75" />
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.6" />
 
 
             <LinearLayout
                     android:orientation="horizontal"
                     android:layout_width="0dp"
-                    android:layout_weight="0.50"
+                    android:layout_weight="0.4"
                     android:layout_height="wrap_content">
-                <Button
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/registration_cancel_button"
-                        android:id="@+id/registrationCancelButton"/>
-                <Button
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/registration_button"
-                        android:id="@+id/registrationButton"
-                        android:layout_marginTop="26dp" android:layout_gravity="right" android:layout_marginLeft="10dp"/>
+                <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content" android:layout_weight="0.5">
+                    <Button
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/registration_cancel_button"
+                            android:id="@+id/registrationCancelButton" android:background="#df4e3d"
+                            android:textColor="#e5b6b0" android:layout_gravity="right"/>
+                </LinearLayout>
+                <LinearLayout
+                        android:orientation="vertical"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content" android:layout_weight="0.5">
+                    <Button
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/registration_button"
+                            android:id="@+id/registrationButton"
+                            android:layout_marginLeft="10dp"
+                            android:background="#df4e3d" android:textColor="#e5b6b0" android:layout_gravity="right"/>
+                </LinearLayout>
 
             </LinearLayout>
         </LinearLayout>
