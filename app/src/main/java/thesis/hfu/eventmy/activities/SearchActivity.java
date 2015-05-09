@@ -19,7 +19,6 @@ import thesis.hfu.eventmy.functions.StartActivityFunctions;
 import thesis.hfu.eventmy.list_decoration.DividerItemDecoration;
 import thesis.hfu.eventmy.dialogs.LogoutDialog;
 
-
 public class SearchActivity extends ActionBarActivity {
 
     private EditText searchEditText;

@@ -23,7 +23,6 @@ import thesis.hfu.eventmy.functions.CheckSharedPreferences;
 import thesis.hfu.eventmy.functions.StartActivityFunctions;
 import thesis.hfu.eventmy.list_decoration.DividerItemDecoration;
 
-
 public class AllTasksOfEventActivity extends ActionBarActivity {
 
     private ImageButton addOrganizersButton;

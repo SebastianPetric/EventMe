@@ -12,7 +12,6 @@ import thesis.hfu.eventmy.database.DBfunctions;
 import thesis.hfu.eventmy.functions.CheckIf;
 import thesis.hfu.eventmy.functions.StartActivityFunctions;
 
-
 public class LoginActivity extends ActionBarActivity {
 
     private EditText emailEditText, passwordEditText;

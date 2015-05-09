@@ -1,6 +1,5 @@
 package thesis.hfu.eventmy.activities;
 
-
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
@@ -29,7 +28,6 @@ public class CreateEventActivity extends ActionBarActivity {
     private FloatingActionButton createEventButton;
 
     private static final String EMPTY_STRING = "";
-    private static final String DATE_PICKER = "datepicker";
     private static final String ERROR_EMPTY_FIELD = "Bitte füllen Sie alle Felder aus!";
     private final static String CREATE_EVENT_BUTTON = "create_event_button";
 

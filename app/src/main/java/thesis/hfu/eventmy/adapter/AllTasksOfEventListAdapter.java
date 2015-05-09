@@ -32,7 +32,7 @@ public class AllTasksOfEventListAdapter extends
     private TextView eventNameTextView, eventDateTextView, eventTotalOrganizersTextView, eventTotalCostsTextView, eventTotalPercentageTextView,eventLocationTextView;
     private RecyclerView recyclerView;
     private SwipeRefreshLayout syncRefresh;
-    private ProgressBar progressBarEvent,progressBarTask;
+    private ProgressBar progressBarEvent;
     private int event_id;
     private final int typeOfUpdate=1;
     private FragmentManager fragmentManager;
@@ -47,11 +47,10 @@ public class AllTasksOfEventListAdapter extends
         this.eventTotalOrganizersTextView = eventTotalOrganizersTextView;
         this.eventTotalPercentageTextView = eventTotalPercentageTextView;
         this.eventLocationTextView=eventLocationTextView;
-        this.recyclerView= recyclerView;
+        setRecyclerView(recyclerView);
         this.syncRefresh=syncRefresh;
         this.fragmentManager=context.getFragmentManager();
-        this.progressBarEvent=progressBarEvent;
-       // setProgressBarTask(progressBarTask);
+        setProgressBarEvent(progressBarEvent);
     }
     @Override
     public int getItemCount() {
@@ -85,7 +84,7 @@ public class AllTasksOfEventListAdapter extends
             @Override
             public void onClick(View v) {
                 setViewHolder(viewHolder);
-                EditPercentageDialog.getInstance().startEditPercentageDialog(getFragmentManager(),getProgressBarEvent(),viewHolder.progressBar,getRecyclerView(),getSyncRefresh(), viewHolder.percentageTextView, getEventTotalOrganizersTextView(), getEventTotalCostsTextView(), getEventTotalPercentageTextView(), getEventNameTextView(), getEventDateTextView(),getEventLocationTextView(), task.getTask_id(),getEvent_id(),getTypeOfUpdate());
+                EditPercentageDialog.getInstance().startEditPercentageDialog(getFragmentManager(),getProgressBarEvent(),viewHolder.progressBar,getSyncRefresh(), viewHolder.percentageTextView, getEventTotalOrganizersTextView(), getEventTotalCostsTextView(), getEventTotalPercentageTextView(), getEventNameTextView(), getEventDateTextView(),getEventLocationTextView(), task.getTask_id(),getEvent_id(),getTypeOfUpdate());
             }
         });
 
@@ -195,13 +194,4 @@ public class AllTasksOfEventListAdapter extends
     public void setProgressBarEvent(ProgressBar progressBar) {
         this.progressBarEvent = progressBar;
     }
-    /* public ProgressBar getProgressBarTask() {
-        return progressBarTask;
-    }
-    public void setProgressBarTask(ProgressBar progressBarTask) {
-        this.progressBarTask = progressBarTask;
-    }
-*/
-
-
 }

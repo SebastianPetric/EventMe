@@ -1,6 +1,5 @@
 package thesis.hfu.eventmy.dialogs;
 
-
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.app.FragmentManager;
@@ -12,7 +11,6 @@ import thesis.hfu.eventmy.objects.Global;
 
 import java.sql.Date;
 import java.util.Calendar;
-
 
     public class DatePickerDialog extends DialogFragment
             implements android.app.DatePickerDialog.OnDateSetListener {

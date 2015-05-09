@@ -184,9 +184,6 @@ public class EditCostsDialog extends DialogFragment {
     public void setSyncRefresh(SwipeRefreshLayout syncRefresh) {
         this.syncRefresh = syncRefresh;
     }
-    public RecyclerView getRecyclerView() {
-        return recyclerView;
-    }
     public void setRecyclerView(RecyclerView recyclerView) {
         this.recyclerView = recyclerView;
     }

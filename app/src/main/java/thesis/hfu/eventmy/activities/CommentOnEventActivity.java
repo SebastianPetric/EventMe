@@ -22,7 +22,6 @@ import thesis.hfu.eventmy.functions.CheckSharedPreferences;
 import thesis.hfu.eventmy.functions.StartActivityFunctions;
 import thesis.hfu.eventmy.list_decoration.DividerItemDecoration;
 
-
 public class CommentOnEventActivity extends ActionBarActivity {
 
     private TextView totalOrganizersTextView, totalCostsTextView, totalPercentageTextView, eventNameTextView, eventDateTextView,eventLocationTextView;
@@ -236,5 +235,4 @@ public class CommentOnEventActivity extends ActionBarActivity {
     public void setProgressBarEvent(int res) {
         this.progressBarEvent = (ProgressBar) findViewById(res);
     }
-
 }

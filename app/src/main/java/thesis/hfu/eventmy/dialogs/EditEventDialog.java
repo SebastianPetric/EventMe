@@ -19,7 +19,6 @@ import thesis.hfu.eventmy.objects.Global;
 
 import java.sql.Date;
 
-
 public class EditEventDialog extends DialogFragment {
 
     private static EditEventDialog instance;

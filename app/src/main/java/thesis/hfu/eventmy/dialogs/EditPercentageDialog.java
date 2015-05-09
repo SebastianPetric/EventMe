@@ -7,7 +7,6 @@ import android.app.FragmentManager;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.RecyclerView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import thesis.hfu.eventmy.R;
@@ -19,7 +18,6 @@ public class EditPercentageDialog extends DialogFragment {
     private TextView percentageTextView, totalOrganizersTextView, totalCostsTextView, totalPercentageTextView, eventNameTextView, eventDateTextView,eventLocationTextView;
     private int task_id,event_id, percentageValue,status_of_update;
     private static EditPercentageDialog instance;
-    private RecyclerView recyclerView;
     private SwipeRefreshLayout syncRefresh;
     private ProgressBar progressBarEvent,progressBarTask;
 
@@ -31,7 +29,7 @@ public class EditPercentageDialog extends DialogFragment {
         return EditPercentageDialog.instance;
     }
 
-    public void startEditPercentageDialog(FragmentManager manager,ProgressBar progressBarEvent,ProgressBar progressBarTask,RecyclerView recyclerView, SwipeRefreshLayout syncRefresh,TextView percentageTextView,TextView totalOrganizersTextView, TextView totalCostsTextView, TextView totalPercentageTextView,TextView eventNameTextView,TextView eventDateTextView,TextView eventLocationTextView,int task_id,int event_id, int status_of_update) {
+    public void startEditPercentageDialog(FragmentManager manager,ProgressBar progressBarEvent,ProgressBar progressBarTask, SwipeRefreshLayout syncRefresh,TextView percentageTextView,TextView totalOrganizersTextView, TextView totalCostsTextView, TextView totalPercentageTextView,TextView eventNameTextView,TextView eventDateTextView,TextView eventLocationTextView,int task_id,int event_id, int status_of_update) {
         setTask_id(task_id);
         setPercentageTextView(percentageTextView);
         setTotalCostsTextView(totalCostsTextView);
@@ -42,7 +40,6 @@ public class EditPercentageDialog extends DialogFragment {
         setEventNameTextView(eventNameTextView);
         setEventLocationTextView(eventLocationTextView);
         setEvent_id(event_id);
-        setRecyclerView(recyclerView);
         setSyncRefresh(syncRefresh);
         setProgressBarEvent(progressBarEvent);
         setProgressBarTask(progressBarTask);
@@ -151,12 +148,6 @@ public class EditPercentageDialog extends DialogFragment {
     }
     public void setEventLocationTextView(TextView eventLocationTextView) {
         this.eventLocationTextView = eventLocationTextView;
-    }
-    public RecyclerView getRecyclerView() {
-        return recyclerView;
-    }
-    public void setRecyclerView(RecyclerView recyclerView) {
-        this.recyclerView = recyclerView;
     }
     public SwipeRefreshLayout getSyncRefresh() {
         return syncRefresh;

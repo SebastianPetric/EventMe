@@ -92,7 +92,7 @@ public class EditTaskActivity extends ActionBarActivity {
             if(v.getId()==R.id.imageButtonEditTaskCosts){
                 EditCostsDialog.getInstance().startEditTaskDialog(getFragmentManager(),getSyncRefresh(),getRecyclerComments(), getCostsTextView(),null,null,null,null,null,null,getEvent_id(),getTask_id(),getTypeOfUpdate());
             }else if(v.getId()==R.id.imageButtonEditTaskPercentage){
-                EditPercentageDialog.getInstance().startEditPercentageDialog(getFragmentManager(),null,getProgressBarTask(),getRecyclerComments(),getSyncRefresh(),getPercentageTextView(),null,null,null,null,null,null,getTask_id(),getEvent_id(),getTypeOfUpdate());
+                EditPercentageDialog.getInstance().startEditPercentageDialog(getFragmentManager(),null,getProgressBarTask(),getSyncRefresh(),getPercentageTextView(),null,null,null,null,null,null,getTask_id(),getEvent_id(),getTypeOfUpdate());
             }else if(v.getId()==R.id.imageButtonEditTaskEditor){
                 if (CheckSharedPreferences.getInstance().isLoggedIn(getApplicationContext())) {
                     DBfunctions.getInstance().changeEditorOfTask(getApplicationContext(), getEditorTextView(), CheckSharedPreferences.getInstance().getAdmin_id(),getTask_id());

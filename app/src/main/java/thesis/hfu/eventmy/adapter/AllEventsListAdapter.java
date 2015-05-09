@@ -23,7 +23,6 @@ public class AllEventsListAdapter extends
     private ArrayList<Event> eventList;
     private Context context;
     private FragmentManager fragmentManager;
-    private ProgressBar progressBarEvent;
 
     public AllEventsListAdapter(Activity context,ArrayList<Event> list) {
         this.eventList = list;
@@ -104,8 +103,5 @@ public class AllEventsListAdapter extends
     }
     public FragmentManager getFragmentManager() {
         return fragmentManager;
-    }
-    public ProgressBar getProgressBarEvent() {
-        return progressBarEvent;
     }
 }

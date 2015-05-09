@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -169,6 +168,29 @@ public class DBfunctions {
                     e.printStackTrace();
                 }
             }
+        });
+    }
+
+    public void getAllEvents(final Activity context,  final SwipeRefreshLayout swipeRefreshLayout, final RecyclerView recyclerView, String admin_id) {
+
+        RequestParams params = BuildJSON.getInstance().getAllEventsJSON(admin_id);
+        DBconnection.post(URL_GET_ALL_EVENTS, params, new JsonHttpResponseHandler() {
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                try {
+                    Toast.makeText(context.getApplicationContext(), response.getString(MESSAGE), Toast.LENGTH_SHORT).show();
+                    if (response.getInt(STATUS) == 200) {
+                        final ArrayList<Event> eventList = BuildJSON.getInstance().getAllEventsJSON(response.getJSONArray(EVENTS));
+                        RecyclerView.Adapter<AllEventsListAdapter.MyViewHolder> recAdapter = new AllEventsListAdapter(context, eventList);
+                        recyclerView.setAdapter(recAdapter);
+                    }
+                    swipeRefreshLayout.setRefreshing(false);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
         });
     }
 
@@ -415,11 +437,6 @@ public class DBfunctions {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-            }
-
-            @Override
-            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-                Log.d("schlecht",responseString);
             }
         });
     }
@@ -727,29 +744,6 @@ public class DBfunctions {
         context.finish();
     }
 
-    public void getAllEvents(final Activity context,  final SwipeRefreshLayout swipeRefreshLayout, final RecyclerView recyclerView, String admin_id) {
-
-        RequestParams params = BuildJSON.getInstance().getAllEventsJSON(admin_id);
-        DBconnection.post(URL_GET_ALL_EVENTS, params, new JsonHttpResponseHandler() {
-
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                try {
-                    Toast.makeText(context.getApplicationContext(), response.getString(MESSAGE), Toast.LENGTH_SHORT).show();
-                    if (response.getInt(STATUS) == 200) {
-                        final ArrayList<Event> eventList = BuildJSON.getInstance().getAllEventsJSON(response.getJSONArray(EVENTS));
-                        RecyclerView.Adapter<AllEventsListAdapter.MyViewHolder> recAdapter = new AllEventsListAdapter(context, eventList);
-                        recyclerView.setAdapter(recAdapter);
-                    }
-                    swipeRefreshLayout.setRefreshing(false);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-
-        });
-    }
-
     public void getTaskComments(final Context context, final SwipeRefreshLayout swipeRefreshLayout, final RecyclerView recyclerView, int task_id){
         final RequestParams params= BuildJSON.getInstance().getCommentsJSON(task_id);
         DBconnection.post(URL_GET_TASK_COMMENTS,params,new JsonHttpResponseHandler(){
@@ -759,7 +753,7 @@ public class DBfunctions {
                     Toast.makeText(context.getApplicationContext(), response.getString(MESSAGE), Toast.LENGTH_SHORT).show();
                     if(response.getInt(STATUS)==200) {
                         final ArrayList<History> history=BuildJSON.getInstance().getComments(response.getJSONArray(HISTORY));
-                        RecyclerView.Adapter<CommentListAdapter.MyViewHolder> recAdapter = new CommentListAdapter(context, history);
+                        RecyclerView.Adapter<CommentTaskListAdapter.MyViewHolder> recAdapter = new CommentTaskListAdapter(context, history);
                         recyclerView.setAdapter(recAdapter);
                         recyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
                             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
@@ -790,7 +784,7 @@ public class DBfunctions {
                     Toast.makeText(context.getApplicationContext(), response.getString(MESSAGE), Toast.LENGTH_SHORT).show();
                     if(response.getInt(STATUS)==200) {
                         final ArrayList<History> history=BuildJSON.getInstance().getComments(response.getJSONArray(HISTORY));
-                        RecyclerView.Adapter<CommentListAdapter.MyViewHolder> recAdapter = new CommentListAdapter(context, history);
+                        RecyclerView.Adapter<CommentEventListAdapter.MyViewHolder> recAdapter = new CommentEventListAdapter(context, history);
                         recyclerView.setAdapter(recAdapter);
                         recyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
                             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
@@ -812,8 +806,6 @@ public class DBfunctions {
         });
     }
 
-
-
     public void commentOnEvent(final Context context, final RecyclerView recyclerView, final SwipeRefreshLayout synRefresh, final int event_id,int admin_id,String comment){
 
         RequestParams params= BuildJSON.getInstance().commentEventJSON(event_id, admin_id, comment);
@@ -831,8 +823,6 @@ public class DBfunctions {
             }
         });
     }
-
-
 
     public void updateEventDetails(final SwipeRefreshLayout swipeRefreshLayout,final ProgressBar progressBar,String admin_id, final TextView totalOrganizersTextView, final TextView totalPercentageTextView, final TextView totalCostsTextView, final TextView eventNameTextView, final TextView eventDateTextView, final TextView eventLocationTextView,final int event_id) {
 
@@ -864,7 +854,6 @@ public class DBfunctions {
         });
     }
 
-
     public void updateTaskDetails(final Context context, final ProgressBar progressBarTask,final SwipeRefreshLayout swipeRefreshLayout,final RecyclerView recyclerView,final TextView eventNameTextView, final TextView taskFieldTextView, final TextView quantityTextView, final TextView costsTextView, final TextView percentageFieldTextView, final TextView editorTextView,final int task_id){
 
         RequestParams params= BuildJSON.getInstance().getTaskDetailsJSON(task_id);
@@ -895,7 +884,6 @@ public class DBfunctions {
             }
         });
     }
-
 
     public void updateTaskNameQuantity(final Context context, final ProgressBar progressBarTask,final SwipeRefreshLayout syncRefresh,final RecyclerView recyclerView,final TextView taskNameTextView, final TextView quantityTextView,final TextView eventNameTextView, final TextView costsTextView, final TextView percentageTextView, final TextView editorTextView, final int task_id, String editor_id, final String quantity, final String task_name){
 

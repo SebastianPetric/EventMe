@@ -1,6 +1,5 @@
 package thesis.hfu.eventmy.dialogs;
 
-
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;

@@ -4,7 +4,6 @@ public class History {
 
     private String comment,editor_name,date;
 
-
     public History(String date, String editor_name, String comment){
         this.comment=comment;
         this.editor_name=editor_name;
