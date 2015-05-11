@@ -3,7 +3,7 @@
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/swipe_refresh_search"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" android:background="#e9e8e4">
+        android:layout_height="match_parent" android:background="#2e2a41">
 <LinearLayout     android:orientation="vertical"
                   android:layout_width="match_parent"
                   android:layout_height="match_parent">
@@ -18,14 +18,14 @@
                     android:inputType="textPersonName"
                     android:ems="10"
                     android:id="@+id/editTextSearchField" android:layout_weight="0.75"
-                android:hint="@string/search_header" android:backgroundTint="#6c6b69" android:textColor="#6c6b69"
-                    android:textColorHint="#6c6b69"/>
+                android:hint="@string/search_header" android:backgroundTint="#cccdc8" android:textColor="#cccdc8"
+                    android:textColorHint="#cccdc8"/>
             <Button
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:text="@string/search_search_button"
-                    android:id="@+id/buttonSearchButton" android:layout_weight="0.25" android:background="#df4e3d"
-                    android:textColor="#ffcdb9"/>
+                    android:id="@+id/buttonSearchButton" android:layout_weight="0.25" android:background="#cf4c5a"
+                    android:textColor="#341922"/>
         </LinearLayout>
         <LinearLayout
                 android:orientation="vertical"

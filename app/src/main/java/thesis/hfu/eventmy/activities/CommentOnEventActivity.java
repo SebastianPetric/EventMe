@@ -164,7 +164,7 @@ public class CommentOnEventActivity extends ActionBarActivity {
     }
     public void setCommentOnEventBttuon(){
         ImageView icon = new ImageView(this);
-        icon.setImageDrawable(getResources().getDrawable(R.drawable.comment_icon_big_grey));
+        icon.setImageDrawable(getResources().getDrawable(R.drawable.comments_icon_big_event));
 
         this.commentOnEventButton = new FloatingActionButton.Builder(this)
                 .setContentView(icon)

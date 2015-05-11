@@ -156,7 +156,7 @@ public class CreateEventActivity extends ActionBarActivity {
     }
     public void setCreateEventBttuon(){
         ImageView icon = new ImageView(this);
-        icon.setImageDrawable(getResources().getDrawable(R.drawable.accept_icon_big_grey));
+        icon.setImageDrawable(getResources().getDrawable(R.drawable.accept_icon_big_event));
 
         this.createEventButton = new FloatingActionButton.Builder(this)
                 .setContentView(icon)

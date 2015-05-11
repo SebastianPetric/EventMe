@@ -5,7 +5,7 @@
           android:title="@string/action_edit"
           app:showAsAction="always" />
     <item android:id="@+id/action_comment"
-          android:icon="@drawable/commenticon"
+          android:icon="@drawable/commenticon_actionbar"
           android:title="@string/action_comment"
           app:showAsAction="always" />
     <item android:id="@+id/action_search"
@@ -21,7 +21,7 @@
           android:title="@string/action_events"
           app:showAsAction="never" />
     <item android:id="@+id/action_logout"
-          android:icon="@drawable/logout"
+          android:icon="@drawable/logout_actionbar"
           android:title="@string/action_logout"
           app:showAsAction="never" />
 </menu>

@@ -11,10 +11,9 @@
     <string name="action_delete">Löschen</string>
 
     <!-- LOGIN SCREEN -->
-    <string name="login_header">Login</string>
     <string name="login_email">Email</string>
     <string name="login_password">Passwort</string>
-    <string name="login_registration">Registrierung</string>
+    <string name="login_registration">Registrieren</string>
     <string name="login_button">Anmelden</string>
 
     <!-- REGISTRATION SCREEN -->

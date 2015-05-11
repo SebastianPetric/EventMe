@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="horizontal"
               android:layout_width="match_parent"
-              android:layout_height="match_parent">
+              android:layout_height="match_parent" android:background="#2e2a41">
     <LinearLayout
             android:orientation="vertical"
             android:layout_width="0dp"
@@ -10,7 +10,7 @@
         <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="fill_parent"
-                android:layout_height="wrap_content" android:layout_marginTop="5dp" android:background="#e9e8e4">
+                android:layout_height="wrap_content" android:layout_marginTop="5dp">
 
             <TextView
                     android:layout_width="wrap_content"
@@ -18,14 +18,14 @@
                     android:textAppearance="?android:attr/textAppearanceLarge"
                     android:text="Large Text"
                     android:id="@+id/textViewListEventOrganizersRowName" android:layout_marginLeft="23dp"
-                    android:textColor="#6c6b69"/>
+                    android:textColor="#cccdc8"/>
             <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceLarge"
                     android:text="Large Text"
                     android:id="@+id/textViewListEventOrganizersRowPrename" android:layout_marginLeft="10dp"
-                    android:textColor="#6c6b69"/>
+                    android:textColor="#cccdc8"/>
         </LinearLayout>
         <LinearLayout
                 android:orientation="vertical"
@@ -37,7 +37,7 @@
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:text="Small Text"
                     android:id="@+id/textViewListEventOrganizersRowEmail" android:layout_weight="0.25"
-                    android:layout_marginLeft="23dp" android:textColor="#6c6b69"/>
+                    android:layout_marginLeft="23dp" android:textColor="#cccdc8"/>
         </LinearLayout>
     </LinearLayout>
 
@@ -51,7 +51,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentBottom="true"
-                android:src="@drawable/add_button_small_grey"
+                android:src="@drawable/add_icon_small_event"
                 android:id="@+id/imageButtonAddToEvent" android:background="@drawable/icons_shape_red"
                 />
         <ImageButton
@@ -60,9 +60,8 @@
                 android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentBottom="true"
-                android:src="@drawable/minus_button_small_grey"
+                android:src="@drawable/minus_icon_button_event"
                 android:id="@+id/imageButtonDeleteFromEvent" android:background="@drawable/icons_shape_red"
-                />
+                android:layout_marginRight="23dp"/>
     </LinearLayout>
-
 </LinearLayout>

@@ -3,43 +3,43 @@
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/swipe_refresh_event_organizers"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" android:background="#e9e8e4">
-<LinearLayout android:orientation="vertical"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent">
-    <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" android:layout_marginLeft="23dp" android:layout_marginRight="23dp"
-            android:layout_marginTop="23dp">
-        <EditText
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:inputType="textPersonName"
-                android:ems="10"
-                android:id="@+id/editTextEventOrganizersSearchField" android:layout_weight="0.75"
-                android:hint="@string/search_header" android:backgroundTint="#6c6b69" android:textColor="#6c6b69"
-                android:textColorHint="#6c6b69"/>
-        <Button
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:text="@string/search_search_button"
-                android:id="@+id/buttonEventOrganizersSearchButton" android:layout_weight="0.25"
-                android:background="#df4e3d" android:textColor="#ffcdb9"/>
-    </LinearLayout>
-    <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" android:layout_marginTop="23dp"
-            android:layout_marginBottom="0dp">
-        <android.support.v7.widget.RecyclerView
-                xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:tools="http://schemas.android.com/tools"
-                android:id="@+id/recyclerEventOrganizers"
+        android:layout_height="match_parent" android:background="#2e2a41">
+    <LinearLayout android:orientation="vertical"
+                  android:layout_width="match_parent"
+                  android:layout_height="match_parent">
+        <LinearLayout
+                android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                tools:context=".MainActivity"
-                />
+                android:layout_height="wrap_content" android:layout_marginLeft="23dp" android:layout_marginRight="23dp"
+                android:layout_marginTop="23dp">
+            <EditText
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPersonName"
+                    android:ems="10"
+                    android:id="@+id/editTextEventOrganizersSearchField" android:layout_weight="0.75"
+                    android:hint="@string/search_header" android:backgroundTint="#cccdc8" android:textColor="#cccdc8"
+                    android:textColorHint="#cccdc8"/>
+            <Button
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/search_search_button"
+                    android:id="@+id/buttonEventOrganizersSearchButton" android:layout_weight="0.25"
+                    android:background="#cf4c5a" android:textColor="#341922"/>
+        </LinearLayout>
+        <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" android:layout_marginTop="23dp"
+                android:layout_marginBottom="0dp">
+            <android.support.v7.widget.RecyclerView
+                    xmlns:android="http://schemas.android.com/apk/res/android"
+                    xmlns:tools="http://schemas.android.com/tools"
+                    android:id="@+id/recyclerEventOrganizers"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:context=".MainActivity"
+                    />
+        </LinearLayout>
     </LinearLayout>
-</LinearLayout>
 </android.support.v4.widget.SwipeRefreshLayout>

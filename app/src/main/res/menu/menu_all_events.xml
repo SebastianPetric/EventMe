@@ -14,7 +14,7 @@
           android:title="@string/action_events"
           app:showAsAction="never" />
     <item android:id="@+id/action_logout"
-          android:icon="@drawable/logout"
+          android:icon="@drawable/logout_actionbar"
           android:title="@string/action_logout"
           app:showAsAction="never" />
 </menu>

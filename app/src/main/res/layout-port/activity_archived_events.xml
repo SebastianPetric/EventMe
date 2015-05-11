@@ -3,7 +3,7 @@
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/swipe_refresh_archived_events"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" android:background="#e9e8e4">
+        android:layout_height="match_parent" android:background="#2e2a41">
     <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"

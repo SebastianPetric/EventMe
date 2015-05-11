@@ -1,83 +1,91 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="fill_parent"
-              android:layout_height="wrap_content"
-              android:orientation="vertical" android:background="#e9e8e4">
-    <LinearLayout
-            android:orientation="horizontal"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent" android:layout_marginLeft="23dp">
-        <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="@string/login_header"
-                android:id="@+id/textView"
-                android:layout_marginTop="24dp"
-                android:textColor="#6c6b69"/>
+            android:layout_height="fill_parent"
+            android:background="#2e2a41">
+
+
+<LinearLayout
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent"
+              android:orientation="vertical">
+    <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" android:layout_marginTop="60dp">
+        <ImageView
+                android:layout_width="170dp"
+                android:layout_height="170dp"
+                android:layout_gravity="center"
+                android:id="@+id/imageView"
+                android:src="@drawable/logo"/>
     </LinearLayout>
     <LinearLayout
             android:orientation="horizontal"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="23dp" android:layout_marginTop="12dp">
-
+            android:layout_marginLeft="23dp" android:layout_marginTop="40dp">
         <EditText
-                android:layout_width="0dp"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPersonName"
-                android:layout_weight="0.75"
                 android:ems="10"
+                android:ellipsize="start"
+                android:gravity="center"
                 android:id="@+id/loginEmailEditText"
                 android:layout_marginRight="23dp"
-                android:hint="@string/login_email" android:textColorHint="#6c6b69" android:backgroundTint="#6c6b69"
-                android:textColor="#6c6b69" android:singleLine="false" android:shadowColor="#6c6b69"/>
+                android:hint="@string/login_email" android:textColorHint="#cccdc8" android:backgroundTint="#cccdc8"
+                android:textColor="#cccdc8" android:singleLine="true" android:shadowColor="#6c6b69"
+                />
     </LinearLayout>
     <LinearLayout
             android:orientation="horizontal"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content" android:layout_marginLeft="23dp">
         <EditText
-                android:layout_width="0dp"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"
-                android:layout_weight="0.75"
+                android:ellipsize="start"
+                android:gravity="center"
                 android:ems="10"
                 android:id="@+id/loginPasswortEditText"
                 android:layout_marginRight="23dp"
-                android:hint="@string/login_password" android:backgroundTint="#6c6b69" android:textColorHint="#6c6b69"
-                android:textColor="#6c6b69" android:shadowColor="#6c6b69"/>
+                android:hint="@string/login_password" android:backgroundTint="#cccdc8" android:textColorHint="#cccdc8"
+                android:textColor="#cccdc8" android:shadowColor="#cccdc8"/>
     </LinearLayout>
     <LinearLayout
-            android:orientation="horizontal"
+            android:orientation="vertical"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content" android:layout_marginTop="12dp" android:layout_marginRight="23dp"
+            android:layout_height="fill_parent" android:layout_marginTop="12dp" android:layout_marginRight="23dp"
             android:layout_marginLeft="23dp">
-        <View
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.25" />
         <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="50dp"
-                android:layout_weight="0.75"
-                android:orientation="horizontal">
-            <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:text="@string/login_registration"
-                    android:id="@+id/loginRegistrationButton"
-                    android:ems="5"
-                    android:layout_marginTop="10dp" android:layout_marginRight="10dp" android:layout_weight="0.4"
-                    android:textColor="#6c6b69"/>
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
             <Button
-                    android:layout_width="wrap_content"
+                    android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/login_button"
                     android:id="@+id/loginButton"
                     android:ems="6"
-                    android:layout_weight="0.6" android:background="#df4e3d" android:textColor="#ffcdb9"/>
+                    android:layout_weight="0.6" android:background="#cf4c5a" android:textColor="#341922"/>
         </LinearLayout>
+        <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:layout_centerHorizontal="true"
+                    android:text="@string/login_registration"
+                    android:id="@+id/loginRegistrationButton"
+                    android:ems="5"
+                    android:layout_marginTop="10dp"
+                    android:textColor="#cccdc8" android:layout_gravity="bottom|center_horizontal"
+                    android:layout_alignParentBottom="true" android:layout_marginBottom="12dp"/>
+        </RelativeLayout>
     </LinearLayout>
 </LinearLayout>
+</ScrollView>

@@ -220,7 +220,7 @@ public class AllTasksOfEventActivity extends ActionBarActivity {
     }
     public void setFloatingActionButton(){
         ImageView icon = new ImageView(this);
-        icon.setImageDrawable(getResources().getDrawable(R.drawable.add_button_big_grey));
+        icon.setImageDrawable(getResources().getDrawable(R.drawable.add_icon_big_task));
 
         this.createTaskButton = new FloatingActionButton.Builder(this)
                 .setContentView(icon)

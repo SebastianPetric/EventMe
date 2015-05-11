@@ -47,7 +47,7 @@ public class EditTaskActivity extends ActionBarActivity {
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#3d948b")));
+        actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#1d9798")));
 
         if(CheckSharedPreferences.getInstance().isLoggedIn(getApplicationContext())){
             setEvent_id(getIntent().getExtras().getInt(EVENT_ID));
@@ -244,7 +244,7 @@ public class EditTaskActivity extends ActionBarActivity {
     }
     public void setFloatingActionButton(){
         ImageView icon = new ImageView(this); // Create an icon
-        icon.setImageDrawable(getResources().getDrawable(R.drawable.comment_icon_big_grey));
+        icon.setImageDrawable(getResources().getDrawable(R.drawable.comment_icon_button_task));
 
         this.commentTaskButton = new FloatingActionButton.Builder(this)
                 .setContentView(icon)

@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="vertical"
               android:layout_width="match_parent"
-              android:layout_height="match_parent" android:background="#e9e8e4">
+              android:layout_height="match_parent" android:background="#2e2a41">
 
     <LinearLayout
             android:orientation="horizontal"
@@ -19,7 +19,7 @@
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="EventName"
                     android:id="@+id/textViewListRowEventName" android:layout_marginLeft="12dp"
-                    android:layout_marginTop="5dp" android:textColor="#6c6b69"/>
+                    android:layout_marginTop="5dp" android:textColor="#cccdc8"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -28,7 +28,7 @@
                 android:text="Location"
                 android:id="@+id/textViewListRowEventLocation"
                 android:layout_marginLeft="12dp"
-                android:layout_marginTop="5dp" android:textColor="#6c6b69"/>
+                android:layout_marginTop="5dp" android:textColor="#cccdc8"/>
 
             <TextView
                     android:layout_width="wrap_content"
@@ -36,7 +36,7 @@
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:text="Datum"
                     android:id="@+id/textViewListRowEventDate" android:layout_marginTop="5dp" android:layout_marginLeft="12dp"
-                    android:layout_marginBottom="5dp" android:textColor="#6c6b69"/>
+                    android:layout_marginBottom="5dp" android:textColor="#cccdc8"/>
         </LinearLayout>
         <LinearLayout
                 android:orientation="horizontal"
@@ -51,7 +51,7 @@
                     >
                 <ImageButton android:layout_width="wrap_content" android:layout_height="wrap_content"
                              android:layout_alignParentRight="true" android:layout_alignParentEnd="true"
-                             android:layout_alignParentBottom="true" android:src="@drawable/group_middle_grey"
+                             android:layout_alignParentBottom="true" android:src="@drawable/organizers_icon_button"
                              android:id="@+id/imageButtonListRowEventOrganizer"
                              android:background="@drawable/icons_shape_red" android:layout_gravity="center_horizontal"
                              android:layout_marginTop="5dp"/>
@@ -62,7 +62,7 @@
                         android:text="0"
                         android:id="@+id/textViewListRowEventOrganizer" android:layout_marginTop="5dp"
                         android:layout_gravity="center_horizontal" android:layout_marginBottom="5dp"
-                        android:textColor="#6c6b69"/>
+                        android:textColor="#cccdc8"/>
             </LinearLayout>
             <LinearLayout
                     android:orientation="vertical"
@@ -72,7 +72,7 @@
                     >
                 <ImageButton android:layout_width="wrap_content" android:layout_height="wrap_content"
                              android:layout_alignParentRight="true" android:layout_alignParentEnd="true"
-                             android:layout_alignParentBottom="true" android:src="@drawable/euro_icon_middle_grey"
+                             android:layout_alignParentBottom="true" android:src="@drawable/euro_icon_button_event"
                              android:id="@+id/imageButtonListRowEventCosts" android:background="@drawable/icons_shape_red"
                              android:layout_gravity="center_horizontal" android:layout_marginTop="5dp"/>
                 <TextView
@@ -82,7 +82,7 @@
                         android:text="0"
                         android:id="@+id/textViewListRowEventCosts" android:layout_marginTop="5dp"
                         android:layout_gravity="center_horizontal" android:layout_marginBottom="5dp"
-                        android:textColor="#6c6b69"/>
+                        android:textColor="#cccdc8"/>
             </LinearLayout>
             <LinearLayout
                     android:orientation="vertical"
@@ -92,7 +92,7 @@
                     >
                 <ImageButton android:layout_width="wrap_content" android:layout_height="wrap_content"
                              android:layout_alignParentRight="true" android:layout_alignParentEnd="true"
-                             android:layout_alignParentBottom="true" android:src="@drawable/percentage_icon_middle"
+                             android:layout_alignParentBottom="true" android:src="@drawable/percentage_icon_button_event"
                              android:id="@+id/imageButtonlistRowEventPercentage"
                              android:background="@drawable/icons_shape_red" android:layout_gravity="center_horizontal"
                              android:layout_marginTop="5dp"/>
@@ -103,7 +103,7 @@
                         android:text="0"
                         android:id="@+id/textViewlistRowEventPercentage" android:layout_marginTop="5dp"
                         android:layout_gravity="center_horizontal" android:layout_marginBottom="5dp"
-                        android:textColor="#6c6b69"/>
+                        android:textColor="#cccdc8"/>
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

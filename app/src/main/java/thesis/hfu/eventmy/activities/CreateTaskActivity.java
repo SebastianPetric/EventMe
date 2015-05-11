@@ -174,7 +174,7 @@ public class CreateTaskActivity extends ActionBarActivity {
     }
     public void setCreateTaskBttuon(){
         ImageView icon = new ImageView(this);
-        icon.setImageDrawable(getResources().getDrawable(R.drawable.accept_icon_big_grey));
+        icon.setImageDrawable(getResources().getDrawable(R.drawable.accept_icon_big_task));
 
         this.createTaskButton = new FloatingActionButton.Builder(this)
                 .setContentView(icon)

@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="vertical"
               android:layout_width="match_parent"
-              android:layout_height="match_parent" android:background="#e9e8e4">
+              android:layout_height="match_parent" android:background="#2e2a41">
 
     <LinearLayout
             android:orientation="horizontal"
@@ -13,18 +13,18 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:id="@+id/listRowCommentsName" android:layout_marginLeft="23dp" android:layout_marginTop="5dp"
-                android:textColor="#3d948b" android:text="hvjhv"/>
+                android:textColor="#1d9798" android:text="hvjhv"/>
         <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:id="@+id/listRowCommentsDate" android:layout_gravity="bottom" android:layout_marginLeft="10dp"
-                android:textColor="#6c6b69" android:text="hhvh" android:textSize="10dp"/>
+                android:textColor="#cccdc8" android:text="hhvh" android:textSize="10dp"/>
     </LinearLayout>
     <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:id="@+id/listRowCommentsComment" android:layout_marginLeft="23dp" android:layout_marginTop="5dp"
-            android:textColor="#6c6b69" android:layout_marginBottom="5dp"/>
+            android:textColor="#cccdc8" android:layout_marginBottom="5dp"/>
 </LinearLayout>
