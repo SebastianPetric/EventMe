@@ -23,8 +23,9 @@ public class SearchActivity extends ActionBarActivity {
 
     private EditText searchEditText;
     private Button searchButton;
-    private RecyclerView recyclerView;
-    private SwipeRefreshLayout syncRefresh;
+    private RecyclerView recyclerViewSearch;
+    private SwipeRefreshLayout syncRefreshSearch;
+
     private static final String EMPTY_STRING = "";
     
     @Override
@@ -38,15 +39,15 @@ public class SearchActivity extends ActionBarActivity {
         if(CheckSharedPreferences.getInstance().isLoggedIn(getApplicationContext())){
             setSearchEditText(R.id.editTextSearchField);
             setSearchButton(R.id.buttonSearchButton);
-            setSyncRefresh(R.id.swipe_refresh_search);
+            setSyncRefreshSearch(R.id.swipe_refresh_search);
             getSearchButton().setOnClickListener(new CustomClickListener());
-            setRecyclerView(R.id.recyclerViewSearch);
-            getRecyclerView().setHasFixedSize(true);
+            setRecyclerViewSearch(R.id.recyclerViewSearch);
+            getRecyclerViewSearch().setHasFixedSize(true);
             LinearLayoutManager layoutManager= new LinearLayoutManager(this);
-            getRecyclerView().setLayoutManager(layoutManager);
-            getRecyclerView().addItemDecoration(new DividerItemDecoration(this));
-            getSyncRefresh().setOnRefreshListener(new CustomSwipeListener());
-            DBfunctions.getInstance().searchAllUsers(getApplicationContext(), null, getRecyclerView(), EMPTY_STRING, CheckSharedPreferences.getInstance().getAdmin_id());
+            getRecyclerViewSearch().setLayoutManager(layoutManager);
+            getRecyclerViewSearch().addItemDecoration(new DividerItemDecoration(this));
+            getSyncRefreshSearch().setOnRefreshListener(new CustomSwipeListener());
+            DBfunctions.getInstance().searchAllUsers(getApplicationContext(), null, getRecyclerViewSearch(), EMPTY_STRING, CheckSharedPreferences.getInstance().getAdmin_id());
         }else{
             CheckSharedPreferences.getInstance().endSession(getApplicationContext());
         }
@@ -62,7 +63,7 @@ public class SearchActivity extends ActionBarActivity {
         public void onClick(View v) {
             if(v.getId()==R.id.buttonSearchButton){
                 if(CheckSharedPreferences.getInstance().isLoggedIn(getApplicationContext())){
-                    DBfunctions.getInstance().searchAllUsers(getApplicationContext(), null, getRecyclerView(), getSearchEditText(), CheckSharedPreferences.getInstance().getAdmin_id());
+                    DBfunctions.getInstance().searchAllUsers(getApplicationContext(), null, getRecyclerViewSearch(), getSearchEditText(), CheckSharedPreferences.getInstance().getAdmin_id());
                     }else{
                     CheckSharedPreferences.getInstance().endSession(getApplicationContext());
                 }
@@ -74,7 +75,7 @@ public class SearchActivity extends ActionBarActivity {
 
         @Override
         public void onRefresh() {
-            DBfunctions.getInstance().searchAllUsers(getApplicationContext(), getSyncRefresh(), getRecyclerView(), EMPTY_STRING, CheckSharedPreferences.getInstance().getAdmin_id());
+            DBfunctions.getInstance().searchAllUsers(getApplicationContext(), getSyncRefreshSearch(), getRecyclerViewSearch(), EMPTY_STRING, CheckSharedPreferences.getInstance().getAdmin_id());
         }
     }
 
@@ -125,16 +126,16 @@ public class SearchActivity extends ActionBarActivity {
     public void setSearchButton(int res) {
         this.searchButton = (Button) findViewById(res);
     }
-    public void setRecyclerView(int res) {
-        this.recyclerView = (RecyclerView) findViewById(res);
+    public void setRecyclerViewSearch(int res) {
+        this.recyclerViewSearch = (RecyclerView) findViewById(res);
     }
-    public RecyclerView getRecyclerView(){
-        return this.recyclerView;
+    public RecyclerView getRecyclerViewSearch(){
+        return this.recyclerViewSearch;
     }
-    public SwipeRefreshLayout getSyncRefresh() {
-        return syncRefresh;
+    public SwipeRefreshLayout getSyncRefreshSearch() {
+        return syncRefreshSearch;
     }
-    public void setSyncRefresh(int res) {
-        this.syncRefresh = (SwipeRefreshLayout) findViewById(res);
+    public void setSyncRefreshSearch(int res) {
+        this.syncRefreshSearch = (SwipeRefreshLayout) findViewById(res);
     }
 }

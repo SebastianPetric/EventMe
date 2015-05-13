@@ -3,7 +3,6 @@
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:background="#2e2a41">
-
     <LinearLayout  android:layout_width="fill_parent"
                    android:layout_height="wrap_content"
                    android:orientation="vertical" >
@@ -12,7 +11,6 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content" android:layout_marginRight="23dp" android:layout_marginLeft="23dp"
                 android:layout_marginTop="23dp">
-
             <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -29,7 +27,6 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content" android:layout_marginRight="23dp"
                 android:layout_marginLeft="23dp" android:layout_marginTop="12dp">
-
             <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -46,7 +43,6 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content" android:layout_marginTop="12dp" android:layout_marginLeft="23dp"
                 android:layout_marginRight="23dp">
-
             <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -63,7 +59,6 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content" android:layout_marginTop="12dp" android:layout_marginRight="23dp"
                 android:layout_marginLeft="23dp">
-
             <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -80,7 +75,6 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content" android:layout_marginLeft="23dp" android:layout_marginRight="23dp"
                 android:layout_marginTop="12dp">
-
             <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -96,8 +90,6 @@
                 android:orientation="horizontal"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content" android:layout_marginRight="23dp" android:layout_marginLeft="23dp">
-
-
             <LinearLayout
                     android:orientation="horizontal"
                     android:layout_width="fill_parent"
@@ -125,7 +117,6 @@
                             android:layout_marginLeft="10dp"
                             android:background="#cf4c5a" android:textColor="#341922" android:layout_gravity="right"/>
                 </LinearLayout>
-
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

@@ -16,6 +16,8 @@ import thesis.hfu.eventmy.functions.CheckSharedPreferences;
 public class EditPercentageDialog extends DialogFragment {
 
     private TextView percentageTextView, totalOrganizersTextView, totalCostsTextView, totalPercentageTextView, eventNameTextView, eventDateTextView,eventLocationTextView;
+
+    //If there are the fields totalOrganizers,totalPercentage,etc from the event in this activity then the value of status_of_update is 1, otherwise it is 0
     private int task_id,event_id, percentageValue,status_of_update;
     private static EditPercentageDialog instance;
     private SwipeRefreshLayout syncRefresh;

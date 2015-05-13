@@ -1,6 +1,5 @@
 package thesis.hfu.eventmy.objects;
 
-
 import java.util.Date;
 
 public class Event {

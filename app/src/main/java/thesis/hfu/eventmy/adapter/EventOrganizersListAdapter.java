@@ -71,7 +71,6 @@ import java.util.ArrayList;
                     setPosition(position);
                     if(CheckSharedPreferences.getInstance().isLoggedIn(context)){
                         DBfunctions.getInstance().removeFriendFromEvent(context, EventOrganizersListAdapter.this, getUserList(), getPosition(), getUserList().get(getPosition()).getUser_id(), getEvent_id());
-
                     }else {
                         CheckSharedPreferences.getInstance().endSession(context);
                     }

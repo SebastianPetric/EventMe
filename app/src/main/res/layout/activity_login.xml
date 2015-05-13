@@ -80,7 +80,5 @@
                     android:textColor="#cccdc8" android:layout_gravity="bottom|center_horizontal"
                     android:layout_alignParentBottom="true" android:layout_marginBottom="12dp"/>
         </RelativeLayout>
-
-
     </LinearLayout>
 </LinearLayout>

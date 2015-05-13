@@ -3,7 +3,6 @@
               android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="match_parent" android:background="#2e2a41">
-
     <LinearLayout
             android:orientation="horizontal"
             android:layout_width="fill_parent"
@@ -20,7 +19,6 @@
                     android:text="EventName"
                     android:id="@+id/textViewListRowEventName" android:layout_marginLeft="12dp"
                     android:layout_marginTop="5dp" android:textColor="#cccdc8"/>
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -29,7 +27,6 @@
                 android:id="@+id/textViewListRowEventLocation"
                 android:layout_marginLeft="12dp"
                 android:layout_marginTop="5dp" android:textColor="#cccdc8"/>
-
             <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -62,7 +59,7 @@
                         android:text="0"
                         android:id="@+id/textViewListRowEventOrganizer" android:layout_marginTop="5dp"
                         android:layout_gravity="center_horizontal" android:layout_marginBottom="5dp"
-                        android:textColor="#cccdc8"/>
+                        android:textColor="#cccdc8" android:textSize="12dp"/>
             </LinearLayout>
             <LinearLayout
                     android:orientation="vertical"

@@ -22,8 +22,8 @@ import thesis.hfu.eventmy.list_decoration.DividerItemDecoration;
 public class AllEventsActivity extends ActionBarActivity {
 
     private RecyclerView allEventsRecycler;
-    private SwipeRefreshLayout syncRefresh;
-    FloatingActionButton createEventButton;
+    private SwipeRefreshLayout syncRefreshAllEvents;
+    private FloatingActionButton createEventButton;
 
     private final static String ADD_BUTTON = "add_button";
 
@@ -36,16 +36,16 @@ public class AllEventsActivity extends ActionBarActivity {
         actionBar.setDisplayHomeAsUpEnabled(false);
 
         if (CheckSharedPreferences.getInstance().isLoggedIn(getApplicationContext())) {
-            setFloatingActionButton();
-            setSyncRefresh(R.id.swipe_refresh_all_events);
+            setCreateEventButton();
+            setSyncRefreshAllEvents(R.id.swipe_refresh_all_events);
             setAllEventsRecycler(R.id.recyclerViewAllEvents);
             getAllEventsRecycler().setHasFixedSize(true);
             LinearLayoutManager layoutManager = new LinearLayoutManager(this);
             getAllEventsRecycler().setLayoutManager(layoutManager);
             getAllEventsRecycler().addItemDecoration(new DividerItemDecoration(this));
-            getFloatingButton().setOnClickListener(new FloatingButtonCustomClickListener());
-            getSyncRefresh().setOnRefreshListener(new CustomSwipeListener());
-            DBfunctions.getInstance().getAllEvents(this, getSyncRefresh(), getAllEventsRecycler(), CheckSharedPreferences.getInstance().getAdmin_id());
+            getCreateEventButton().setOnClickListener(new FloatingButtonCustomClickListener());
+            getSyncRefreshAllEvents().setOnRefreshListener(new CustomSwipeListener());
+            DBfunctions.getInstance().getAllEvents(this, getSyncRefreshAllEvents(), getAllEventsRecycler(), CheckSharedPreferences.getInstance().getAdmin_id());
         } else {
             CheckSharedPreferences.getInstance().endSession(getApplicationContext());
         }
@@ -74,7 +74,7 @@ public class AllEventsActivity extends ActionBarActivity {
         @Override
         public void onRefresh() {
             if (CheckSharedPreferences.getInstance().isLoggedIn(getApplicationContext())) {
-                DBfunctions.getInstance().getAllEvents(AllEventsActivity.this, getSyncRefresh(), getAllEventsRecycler(), CheckSharedPreferences.getInstance().getAdmin_id());
+                DBfunctions.getInstance().getAllEvents(AllEventsActivity.this, getSyncRefreshAllEvents(), getAllEventsRecycler(), CheckSharedPreferences.getInstance().getAdmin_id());
             } else {
                 CheckSharedPreferences.getInstance().endSession(getApplicationContext());
             }
@@ -123,23 +123,22 @@ public class AllEventsActivity extends ActionBarActivity {
     public void setAllEventsRecycler(int res) {
         this.allEventsRecycler = (RecyclerView) findViewById(res);
     }
-    public SwipeRefreshLayout getSyncRefresh() {
-        return syncRefresh;
+    public SwipeRefreshLayout getSyncRefreshAllEvents() {
+        return syncRefreshAllEvents;
     }
-    public void setSyncRefresh(int res) {
-        this.syncRefresh = (SwipeRefreshLayout) findViewById(res);
+    public void setSyncRefreshAllEvents(int res) {
+        this.syncRefreshAllEvents = (SwipeRefreshLayout) findViewById(res);
     }
-    public void setFloatingActionButton(){
+    public void setCreateEventButton(){
         ImageView icon = new ImageView(this);
         icon.setImageDrawable(getResources().getDrawable(R.drawable.add_icon_big_event));
-
         this.createEventButton = new FloatingActionButton.Builder(this)
                 .setContentView(icon)
                 .setBackgroundDrawable(R.drawable.icons_shape_red)
                 .build();
         this.createEventButton.setTag(ADD_BUTTON);
     }
-    public FloatingActionButton getFloatingButton(){
+    public FloatingActionButton getCreateEventButton(){
         return this.createEventButton;
     }
 }

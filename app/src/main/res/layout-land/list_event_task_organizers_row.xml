@@ -40,7 +40,6 @@
                     android:layout_marginLeft="23dp" android:textColor="#cccdc8"/>
         </LinearLayout>
     </LinearLayout>
-
     <LinearLayout
             android:orientation="horizontal"
             android:layout_width="0dp"

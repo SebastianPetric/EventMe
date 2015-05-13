@@ -22,11 +22,10 @@ import thesis.hfu.eventmy.objects.Task;
 
 import java.util.ArrayList;
 
-
 public class AllTasksOfEventListAdapter extends
         RecyclerView.Adapter<AllTasksOfEventListAdapter.MyViewHolder>  {
 
-    private ArrayList<Task> tasks;
+    private ArrayList<Task> taskList;
     private Context context;
     private MyViewHolder viewHolder;
     private TextView eventNameTextView, eventDateTextView, eventTotalOrganizersTextView, eventTotalCostsTextView, eventTotalPercentageTextView,eventLocationTextView;
@@ -34,32 +33,34 @@ public class AllTasksOfEventListAdapter extends
     private SwipeRefreshLayout syncRefresh;
     private ProgressBar progressBarEvent;
     private int event_id;
+
+    //If there are the fields totalOrganizers,totalPercentage,etc from the event in this activity then the value is 1, otherwise it is 0
     private final int typeOfUpdate=1;
     private FragmentManager fragmentManager;
 
-    public AllTasksOfEventListAdapter(Activity context,ProgressBar progressBarEvent,RecyclerView recyclerView,SwipeRefreshLayout syncRefresh,ArrayList<Task> list,TextView eventNameTextView,TextView eventDateTextView,TextView eventTotalOrganizersTextView,TextView eventTotalCostsTextView,TextView eventTotalPercentageTextView,TextView eventLocationTextView,int event_id) {
-        this.tasks = list;
-        this.context=context;
-        this.eventNameTextView = eventNameTextView;
-        this.event_id=event_id;
-        this.eventDateTextView = eventDateTextView;
-        this.eventTotalCostsTextView = eventTotalCostsTextView;
-        this.eventTotalOrganizersTextView = eventTotalOrganizersTextView;
-        this.eventTotalPercentageTextView = eventTotalPercentageTextView;
-        this.eventLocationTextView=eventLocationTextView;
+    public AllTasksOfEventListAdapter(Activity context,ProgressBar progressBarEvent,RecyclerView recyclerView,SwipeRefreshLayout syncRefresh,ArrayList<Task> taskList,TextView eventNameTextView,TextView eventDateTextView,TextView eventTotalOrganizersTextView,TextView eventTotalCostsTextView,TextView eventTotalPercentageTextView, TextView eventLocationTextView,int event_id) {
+        setTaskList(taskList);
+        setContext(context);
+        setEventNameTextView(eventNameTextView);
+        setEvent_id(event_id);
+        setEventDateTextView(eventDateTextView);
+        setEventTotalCostsTextView(eventTotalCostsTextView);
+        setEventTotalOrganizersTextView(eventTotalOrganizersTextView);
+        setEventTotalPercentageTextView(eventTotalPercentageTextView);
+        setEventLocationTextView(eventLocationTextView);
         setRecyclerView(recyclerView);
-        this.syncRefresh=syncRefresh;
-        this.fragmentManager=context.getFragmentManager();
+        setSyncRefresh(syncRefresh);
+        setFragmentManager(context.getFragmentManager());
         setProgressBarEvent(progressBarEvent);
     }
     @Override
     public int getItemCount() {
-        return tasks.size();
+        return taskList.size();
     }
 
     @Override
     public void onBindViewHolder(final MyViewHolder viewHolder, final int position) {
-        final Task task = this.tasks.get(position);
+        final Task task = this.taskList.get(position);
 
         viewHolder.taskTextView.setText(task.getTask());
         viewHolder.quantityTextView.setText(task.getQuantity());
@@ -129,7 +130,7 @@ public class AllTasksOfEventListAdapter extends
         @Override
         public void onClick(View v) {
             if(CheckSharedPreferences.getInstance().isLoggedIn(context.getApplicationContext())){
-            StartActivityFunctions.getInstance().startEditTaskActivity(context.getApplicationContext(),getTasks().get(getPosition()).getTask_id(),getEvent_id());
+            StartActivityFunctions.getInstance().startEditTaskActivity(context.getApplicationContext(), getTaskList().get(getPosition()).getTask_id(),getEvent_id());
             }else{
                 CheckSharedPreferences.getInstance().endSession(context.getApplicationContext());
             }
@@ -143,8 +144,38 @@ public class AllTasksOfEventListAdapter extends
     public void setViewHolder(MyViewHolder viewHolder) {
         this.viewHolder = viewHolder;
     }
-    public ArrayList<Task> getTasks(){
-        return this.tasks;
+    public ArrayList<Task> getTaskList(){
+        return this.taskList;
+    }
+    public void setTaskList(ArrayList<Task> tasks){
+        this.taskList =tasks;
+    }
+    public void setContext(Context context){
+        this.context=context;
+    }
+    public void setEventNameTextView(TextView eventName){
+        this.eventNameTextView=eventName;
+    }
+    public void setEventDateTextView(TextView eventDate){
+        this.eventDateTextView=eventDate;
+    }
+    public void setEventTotalOrganizersTextView(TextView totalOrganizers){
+        this.eventTotalOrganizersTextView=totalOrganizers;
+    }
+    public void setEventTotalCostsTextView(TextView totalCosts){
+        this.eventTotalCostsTextView=totalCosts;
+    }
+    public void setEventTotalPercentageTextView(TextView totalPercentage){
+        this.eventTotalPercentageTextView=totalPercentage;
+    }
+    public void setEvent_id(int event_id){
+        this.event_id=event_id;
+    }
+    public void setEventLocationTextView(TextView eventLocation){
+        this.eventLocationTextView=eventLocation;
+    }
+    public void setFragmentManager(FragmentManager fragmentManager){
+        this.fragmentManager=fragmentManager;
     }
     public MyViewHolder getViewHolder() {
         return viewHolder;

@@ -11,7 +11,6 @@
                 android:orientation="horizontal"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content" android:layout_marginTop="5dp">
-
             <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -40,7 +39,6 @@
                     android:layout_marginLeft="23dp" android:textColor="#cccdc8"/>
         </LinearLayout>
     </LinearLayout>
-
     <LinearLayout
             android:orientation="horizontal"
             android:layout_width="0dp"
@@ -64,5 +62,4 @@
                 android:id="@+id/imageButtonDeleteFromEvent" android:background="@drawable/icons_shape_red"
                 android:layout_marginRight="23dp"/>
     </LinearLayout>
-
 </LinearLayout>

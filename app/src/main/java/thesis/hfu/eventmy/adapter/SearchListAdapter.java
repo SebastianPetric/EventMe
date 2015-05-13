@@ -71,7 +71,7 @@ public class SearchListAdapter extends
                     setPosition(position);
 
                     if(CheckSharedPreferences.getInstance().isLoggedIn(context)){
-                        DBfunctions.getInstance().friendRequest(context, SearchListAdapter.this, getUserList(), getPosition(), getUserList().get(getPosition()).getUser_id(), CheckSharedPreferences.getInstance().getAdmin_id());
+                        DBfunctions.getInstance().sendFriendRequest(context, SearchListAdapter.this, getUserList(), getPosition(), getUserList().get(getPosition()).getUser_id(), CheckSharedPreferences.getInstance().getAdmin_id());
                     }else {
                         CheckSharedPreferences.getInstance().endSession(context);
                     }

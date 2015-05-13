@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -24,7 +25,10 @@ import java.util.ArrayList;
 public class DBfunctions {
 
     private static DBfunctions instance;
+
+    //Variable to fix the Problem with scrolling in a recyclerview inside a scrollview
     private int overallYScroll = 0;
+
     private static final String MESSAGE = "message";
     private static final String STATUS = "status";
 
@@ -42,15 +46,18 @@ public class DBfunctions {
     //All ARCHIV EVENTS
     private static final String URL_GET_ALL_ARCHIV_EVENTS = "get_all_archiv_events.php";
 
+    //Update all Tasks
+    private static final String TASKS = "tasks";
+    private static final String URL_GET_ALL_TASKS_OF_EVENT = "get_all_tasks_from_event.php";
+
+    //Get task details
+    private static final String URL_GET_TASK_DETAILS = "get_task_details.php";
+
     //Create Event
     private static final String URL_CREATE_EVENT = "create_event.php";
 
     //Create Task
     private static final String URL_CREATE_TASK = "create_task.php";
-
-    //Update all Tasks
-    private static final String TASKS = "tasks";
-    private static final String URL_GET_ALL_TASKS_OF_EVENT = "get_all_tasks_from_event.php";
 
     //Search
     private static final String USERS = "users";
@@ -60,7 +67,10 @@ public class DBfunctions {
     private static final String URL_SEARCH_FRIENDS_EVENT = "search_friends_for_event.php";
 
     //Get FriendsList
-    private static final String URL_GET_FRIENDSLIST = "get_friendlist.php";
+    private static final String URL_SEARCH_FRIENDSLIST = "search_friendlist.php";
+
+    //Search friend for task
+    private static final String URL_SEARCH_FRIENDS_TASK="search_friends_for_task.php";
 
     //Update Event Details
     private static final String URL_UPDATE_EVENT_DETAILS = "update_event_details.php";
@@ -77,8 +87,15 @@ public class DBfunctions {
     //Comment on task
     private static final String URL_COMMENT_ON_TASK = "comment_on_task.php";
 
-    //Get task details
-    private static final String URL_GET_TASK_DETAILS = "get_task_details.php";
+    //Comment on Event
+    private static final String URL_COMMENT_ON_EVENT="comment_on_event.php";
+
+    //Get Task Comments
+    private static final String URL_GET_TASK_COMMENTS = "get_task_comments.php";
+
+    //Get Event Comments
+    private static final String HISTORY = "history";
+    private static final String URL_GET_EVENT_COMMENTS = "get_event_comments.php";
 
     //Become editor of task
     private static final String URL_BECOME_EDITOR_OF_TASK= "become_editor_of_task.php";
@@ -90,15 +107,12 @@ public class DBfunctions {
     private static final String URL_UPDATE_COSTS_OF_TASK = "update_costs_of_task.php";
 
     //Edit task details
-    private static final String URL_UPDATE_TASK_QUANTITY_NAME = "update_task_quantity_name.php";
+    private static final String URL_EDIT_TASK_DETAILS = "edit_task_details.php";
     private static final String EDITOR_NAME = "editor_name";
     private static final String EMPTY_STRING = "";
 
-    //Search friend for task
-    private static final String URL_SEARCH_FRIENDS_TASK="search_friends_for_task.php";
-
-    //Comment on Event
-    private static final String URL_COMMENT_ON_EVENT="comment_on_event.php";
+    //Edit event details
+    private static final String URL_EDIT_EVENT_DETAILS = "edit_event_details.php";
 
     //Add Friend to Event
     private static final String URL_FRIEND_TO_EVENT = "add_friend_to_event.php";
@@ -113,20 +127,10 @@ public class DBfunctions {
     private static final String URL_ADD_FRIEND_TO_FRIENDSLIST = "friend_request.php";
 
     //Friend Request
-    private static final String URL_FRIEND_REQUEST= "friend_request.php";
+    private static final String URL_SEND_FRIEND_REQUEST = "friend_request.php";
 
     //Remove Friend
     private static final String URL_REMOVE_FRIEND = "remove_friend.php";
-
-    //Edit event details
-    private static final String URL_EDIT_EVENT_DETAILS = "edit_event_details.php";
-
-    //Get Task Comments
-    private static final String URL_GET_TASK_COMMENTS = "get_task_comments.php";
-
-    //Get Event Comments
-    private static final String HISTORY = "history";
-    private static final String URL_GET_EVENT_COMMENTS = "get_event_comments.php";
 
     public static DBfunctions getInstance() {
         if (DBfunctions.instance == null) {
@@ -168,6 +172,11 @@ public class DBfunctions {
                     e.printStackTrace();
                 }
             }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                Log.d("schlecht",responseString);
+            }
         });
     }
 
@@ -184,8 +193,23 @@ public class DBfunctions {
                         final ArrayList<Event> eventList = BuildJSON.getInstance().getAllEventsJSON(response.getJSONArray(EVENTS));
                         RecyclerView.Adapter<AllEventsListAdapter.MyViewHolder> recAdapter = new AllEventsListAdapter(context, eventList);
                         recyclerView.setAdapter(recAdapter);
+                        recyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
+                            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                                super.onScrolled(recyclerView, dx, dy);
+                                overallYScroll = overallYScroll + dy;
+                                if (swipeRefreshLayout != null) {
+                                    if (overallYScroll <= 0) {
+                                        swipeRefreshLayout.setEnabled(true);
+                                    } else {
+                                        swipeRefreshLayout.setEnabled(false);
+                                    }
+                                }
+                            }
+                        });
+                        if (swipeRefreshLayout != null) {
+                            swipeRefreshLayout.setRefreshing(false);
+                        }
                     }
-                    swipeRefreshLayout.setRefreshing(false);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -207,9 +231,22 @@ public class DBfunctions {
                         final ArrayList<Event> eventList = BuildJSON.getInstance().getAllEventsJSON(response.getJSONArray(EVENTS));
                         RecyclerView.Adapter<AllEventsListAdapter.MyViewHolder> recAdapter = new AllEventsListAdapter(context, eventList);
                         recyclerView.setAdapter(recAdapter);
-                    }
-                    if(swipeRefreshLayout!=null) {
-                        swipeRefreshLayout.setRefreshing(false);
+                        recyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
+                            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                                super.onScrolled(recyclerView, dx, dy);
+                                overallYScroll = overallYScroll + dy;
+                                if (swipeRefreshLayout != null) {
+                                    if (overallYScroll <= 0) {
+                                        swipeRefreshLayout.setEnabled(true);
+                                    } else {
+                                        swipeRefreshLayout.setEnabled(false);
+                                    }
+                                }
+                            }
+                        });
+                        if (swipeRefreshLayout != null) {
+                            swipeRefreshLayout.setRefreshing(false);
+                        }
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -236,15 +273,19 @@ public class DBfunctions {
                                     public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                                         super.onScrolled(recyclerView, dx, dy);
                                         overallYScroll = overallYScroll + dy;
-                                        if (overallYScroll <= 0) {
-                                            swipeRefreshLayout.setEnabled(true);
-                                        } else {
-                                            swipeRefreshLayout.setEnabled(false);
+                                        if (swipeRefreshLayout != null){
+                                            if (overallYScroll <= 0) {
+                                                swipeRefreshLayout.setEnabled(true);
+                                            } else {
+                                                swipeRefreshLayout.setEnabled(false);
+                                            }
                                         }
                                     }
                                 });
+                                if (swipeRefreshLayout != null) {
+                                    swipeRefreshLayout.setRefreshing(false);
+                                }
                             }
-                            swipeRefreshLayout.setRefreshing(false);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -300,9 +341,22 @@ public class DBfunctions {
                         ArrayList<User> userList = BuildJSON.getInstance().getAllUsersJSON(response.getJSONArray(USERS));
                         RecyclerView.Adapter<SearchListAdapter.MyViewHolder> recAdapter = new SearchListAdapter(context.getApplicationContext(), userList);
                         recyclerView.setAdapter(recAdapter);
-                    }
-                    if(swipeRefreshLayout!=null){
-                        swipeRefreshLayout.setRefreshing(false);
+                        recyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
+                            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                                super.onScrolled(recyclerView, dx, dy);
+                                overallYScroll = overallYScroll + dy;
+                                if (swipeRefreshLayout != null){
+                                    if (overallYScroll <= 0) {
+                                        swipeRefreshLayout.setEnabled(true);
+                                    } else {
+                                        swipeRefreshLayout.setEnabled(false);
+                                    }
+                            }
+                            }
+                        });
+                        if (swipeRefreshLayout != null) {
+                            swipeRefreshLayout.setRefreshing(false);
+                        }
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -324,9 +378,22 @@ public class DBfunctions {
                         ArrayList<User> userList = BuildJSON.getInstance().getAllUsersJSON(response.getJSONArray(USERS));
                         RecyclerView.Adapter<EventOrganizersListAdapter.MyViewHolder> recAdapter = new EventOrganizersListAdapter(context.getApplicationContext(), userList,event_id);
                         recyclerView.setAdapter(recAdapter);
-                    }
-                    if(swipeRefreshLayout!=null){
-                        swipeRefreshLayout.setRefreshing(false);
+                        recyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
+                            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                                super.onScrolled(recyclerView, dx, dy);
+                                overallYScroll = overallYScroll + dy;
+                                if (swipeRefreshLayout != null) {
+                                    if (overallYScroll <= 0) {
+                                        swipeRefreshLayout.setEnabled(true);
+                                    } else {
+                                        swipeRefreshLayout.setEnabled(false);
+                                    }
+                                }
+                            }
+                        });
+                        if (swipeRefreshLayout != null) {
+                            swipeRefreshLayout.setRefreshing(false);
+                        }
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -348,9 +415,22 @@ public class DBfunctions {
                         ArrayList<User> userList = BuildJSON.getInstance().getAllUsersJSON(response.getJSONArray(USERS));
                         RecyclerView.Adapter<TaskOrganizersListAdapter.MyViewHolder> recAdapter = new TaskOrganizersListAdapter(activity,userList,event_id);
                         recyclerView.setAdapter(recAdapter);
-                    }
-                    if(swipeRefreshLayout!=null){
-                        swipeRefreshLayout.setRefreshing(false);
+                        recyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
+                            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                                super.onScrolled(recyclerView, dx, dy);
+                                overallYScroll = overallYScroll + dy;
+                                if (swipeRefreshLayout != null) {
+                                    if (overallYScroll <= 0) {
+                                        swipeRefreshLayout.setEnabled(true);
+                                    } else {
+                                        swipeRefreshLayout.setEnabled(false);
+                                    }
+                                }
+                            }
+                        });
+                        if (swipeRefreshLayout != null) {
+                            swipeRefreshLayout.setRefreshing(false);
+                        }
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -362,7 +442,7 @@ public class DBfunctions {
     public void searchFriendsList(final Context context, final SwipeRefreshLayout swipeRefreshLayout, final RecyclerView recyclerView, String search, String admin_id) {
 
         RequestParams params = BuildJSON.getInstance().getFriendsListJSON(search, admin_id);
-        DBconnection.post(URL_GET_FRIENDSLIST, params, new JsonHttpResponseHandler() {
+        DBconnection.post(URL_SEARCH_FRIENDSLIST, params, new JsonHttpResponseHandler() {
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
@@ -372,9 +452,22 @@ public class DBfunctions {
                         ArrayList<User> userList = BuildJSON.getInstance().getAllUsersJSON(response.getJSONArray(USERS));
                         RecyclerView.Adapter<FriendsListAdapter.MyViewHolder> recAdapter = new FriendsListAdapter(context.getApplicationContext(), userList);
                         recyclerView.setAdapter(recAdapter);
-                    }
-                    if(swipeRefreshLayout!=null){
-                        swipeRefreshLayout.setRefreshing(false);
+                        recyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
+                            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                                super.onScrolled(recyclerView, dx, dy);
+                                overallYScroll = overallYScroll + dy;
+                                if (swipeRefreshLayout != null) {
+                                    if (overallYScroll <= 0) {
+                                        swipeRefreshLayout.setEnabled(true);
+                                    } else {
+                                        swipeRefreshLayout.setEnabled(false);
+                                    }
+                                }
+                            }
+                        });
+                        if (swipeRefreshLayout != null) {
+                            swipeRefreshLayout.setRefreshing(false);
+                        }
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -402,6 +495,7 @@ public class DBfunctions {
         });
     }
 
+    //Delete Event in Activity with all the other Events
     public void deleteEvent(final Context context, final ArrayList<Event> eventList, final RecyclerView.Adapter<AllEventsListAdapter.MyViewHolder> adapter, final int position,String admin_id, final int event_id){
 
         RequestParams params = BuildJSON.getInstance().deleteArchivEventJSON(event_id, admin_id);
@@ -422,6 +516,7 @@ public class DBfunctions {
         });
     }
 
+    //Delete Event in Activity from Event Detail Site
     public void deleteEvent(final Context context, String admin_id, final int event_id){
 
         RequestParams params = BuildJSON.getInstance().deleteArchivEventJSON(event_id, admin_id);
@@ -441,25 +536,7 @@ public class DBfunctions {
         });
     }
 
-    public void archiveEvent(final Context context, String admin_id, final int event_id){
-
-        RequestParams params = BuildJSON.getInstance().deleteArchivEventJSON(event_id, admin_id);
-        DBconnection.post(URL_ARCHIV_EVENT,params,new JsonHttpResponseHandler(){
-
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                try {
-                    Toast.makeText(context.getApplicationContext(), response.getString(MESSAGE), Toast.LENGTH_SHORT).show();
-                    if(response.getInt(STATUS)==200){
-                        StartActivityFunctions.getInstance().startAllEventsActivity(context);
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-    }
-
+    //Archive Event in Activity with all the other Events
     public void archivEvent(final Context context, final ArrayList<Event> eventList, final RecyclerView.Adapter<AllEventsListAdapter.MyViewHolder> adapter, final int position,String admin_id, final int event_id){
 
         RequestParams params = BuildJSON.getInstance().deleteArchivEventJSON(event_id, admin_id);
@@ -472,6 +549,26 @@ public class DBfunctions {
                     if(response.getInt(STATUS)==200){
                         eventList.remove(position);
                         adapter.notifyItemRemoved(position);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+    //Archiv Event in Activity from Event Detail Site
+    public void archiveEvent(final Context context, String admin_id, final int event_id){
+
+        RequestParams params = BuildJSON.getInstance().deleteArchivEventJSON(event_id, admin_id);
+        DBconnection.post(URL_ARCHIV_EVENT,params,new JsonHttpResponseHandler(){
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                try {
+                    Toast.makeText(context.getApplicationContext(), response.getString(MESSAGE), Toast.LENGTH_SHORT).show();
+                    if(response.getInt(STATUS)==200){
+                        StartActivityFunctions.getInstance().startAllEventsActivity(context);
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -520,7 +617,7 @@ public class DBfunctions {
                         if(progressBarTask!=null) {
                             progressBarTask.setProgress(percentage);
                         }
-                        //If there aren't the fields totalOrganizers etc than this won't happen
+                        //If there are the fields totalOrganizers,totalPercentage,etc from the event in this activity then the value is 1, otherwise it is 0
                         if(status_of_update==1){
                             if(CheckSharedPreferences.getInstance().isLoggedIn(context.getApplicationContext())){
                                updateEventDetails(syncRefresh,progressBarEvent,CheckSharedPreferences.getInstance().getAdmin_id(), totalOrganizersTextView, totalPercentageTextView, totalCostsTextView,eventNameTextView,eventDateTextView,eventLocationTextView, event_id);
@@ -682,10 +779,10 @@ public class DBfunctions {
         });
     }
 
-    public void friendRequest(final Context context, final RecyclerView.Adapter<SearchListAdapter.MyViewHolder> adapter, final ArrayList<User> userList, final int position,int user_id,String admin_id){
+    public void sendFriendRequest(final Context context, final RecyclerView.Adapter<SearchListAdapter.MyViewHolder> adapter, final ArrayList<User> userList, final int position, int user_id, String admin_id){
 
         RequestParams params = BuildJSON.getInstance().addRemoveFriendJSON(admin_id, user_id);
-        DBconnection.post(URL_FRIEND_REQUEST, params, new JsonHttpResponseHandler() {
+        DBconnection.post(URL_SEND_FRIEND_REQUEST, params, new JsonHttpResponseHandler() {
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
@@ -710,6 +807,7 @@ public class DBfunctions {
             }
         });
     }
+
 
     public void removeFriend(final Context context, final RecyclerView.Adapter<SearchListAdapter.MyViewHolder> adapter, final ArrayList<User> userList, final int position,int user_id,String admin_id) {
 
@@ -746,27 +844,31 @@ public class DBfunctions {
 
     public void getTaskComments(final Context context, final SwipeRefreshLayout swipeRefreshLayout, final RecyclerView recyclerView, int task_id){
         final RequestParams params= BuildJSON.getInstance().getCommentsJSON(task_id);
-        DBconnection.post(URL_GET_TASK_COMMENTS,params,new JsonHttpResponseHandler(){
+        DBconnection.post(URL_GET_TASK_COMMENTS, params, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 try {
                     Toast.makeText(context.getApplicationContext(), response.getString(MESSAGE), Toast.LENGTH_SHORT).show();
-                    if(response.getInt(STATUS)==200) {
-                        final ArrayList<History> history=BuildJSON.getInstance().getComments(response.getJSONArray(HISTORY));
+                    if (response.getInt(STATUS) == 200) {
+                        final ArrayList<History> history = BuildJSON.getInstance().getComments(response.getJSONArray(HISTORY));
                         RecyclerView.Adapter<CommentTaskListAdapter.MyViewHolder> recAdapter = new CommentTaskListAdapter(context, history);
                         recyclerView.setAdapter(recAdapter);
                         recyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
                             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                                 super.onScrolled(recyclerView, dx, dy);
                                 overallYScroll = overallYScroll + dy;
-                                if (overallYScroll <= 0) {
-                                    swipeRefreshLayout.setEnabled(true);
-                                } else {
-                                    swipeRefreshLayout.setEnabled(false);
+                                if (swipeRefreshLayout != null) {
+                                    if (overallYScroll <= 0) {
+                                        swipeRefreshLayout.setEnabled(true);
+                                    } else {
+                                        swipeRefreshLayout.setEnabled(false);
+                                    }
                                 }
-                                }
+                            }
                         });
-                        swipeRefreshLayout.setRefreshing(false);
+                        if (swipeRefreshLayout != null) {
+                            swipeRefreshLayout.setRefreshing(false);
+                        }
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -790,14 +892,18 @@ public class DBfunctions {
                             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                                 super.onScrolled(recyclerView, dx, dy);
                                 overallYScroll = overallYScroll + dy;
-                                if (overallYScroll <= 0) {
-                                    swipeRefreshLayout.setEnabled(true);
-                                } else {
-                                    swipeRefreshLayout.setEnabled(false);
+                                if (swipeRefreshLayout != null) {
+                                    if (overallYScroll <= 0) {
+                                        swipeRefreshLayout.setEnabled(true);
+                                    } else {
+                                        swipeRefreshLayout.setEnabled(false);
+                                    }
                                 }
                             }
                         });
-                        swipeRefreshLayout.setRefreshing(false);
+                        if (swipeRefreshLayout != null) {
+                            swipeRefreshLayout.setRefreshing(false);
+                        }
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -816,6 +922,25 @@ public class DBfunctions {
                     Toast.makeText(context.getApplicationContext(), response.getString(MESSAGE), Toast.LENGTH_SHORT).show();
                     if(response.getInt(STATUS)==200){
                         getEventComments(context, synRefresh, recyclerView, event_id);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+    public void commentOnTask(final Context context, final ProgressBar progressBarTask, final SwipeRefreshLayout swipeRefreshLayout, final RecyclerView recyclerView, final TextView eventNameTextView, final TextView taskNameTextView, final TextView quantityTextView, final TextView costsTextView, final TextView percentageTextView, final TextView editorTextView, final int task_id, int admin_id, String comment){
+
+        RequestParams params = BuildJSON.getInstance().commentTaskJSON(task_id, admin_id, comment);
+        DBconnection.post(URL_COMMENT_ON_TASK,params,new JsonHttpResponseHandler(){
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                try {
+                    Toast.makeText(context.getApplicationContext(), response.getString(MESSAGE), Toast.LENGTH_SHORT).show();
+                    if(response.getInt(STATUS)==200){
+                        updateTaskDetails(context, progressBarTask, swipeRefreshLayout, recyclerView, eventNameTextView, taskNameTextView, quantityTextView, costsTextView, percentageTextView, editorTextView, task_id);
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -888,7 +1013,7 @@ public class DBfunctions {
     public void updateTaskNameQuantity(final Context context, final ProgressBar progressBarTask,final SwipeRefreshLayout syncRefresh,final RecyclerView recyclerView,final TextView taskNameTextView, final TextView quantityTextView,final TextView eventNameTextView, final TextView costsTextView, final TextView percentageTextView, final TextView editorTextView, final int task_id, String editor_id, final String quantity, final String task_name){
 
         RequestParams params = BuildJSON.getInstance().updateTaskNameQuantityJSON(editor_id, task_id, quantity, task_name);
-        DBconnection.post(URL_UPDATE_TASK_QUANTITY_NAME,params,new JsonHttpResponseHandler(){
+        DBconnection.post(URL_EDIT_TASK_DETAILS,params,new JsonHttpResponseHandler(){
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
@@ -909,26 +1034,4 @@ public class DBfunctions {
             }
         });
     }
-
-    public void commentOnTask(final Context context, final ProgressBar progressBarTask, final SwipeRefreshLayout swipeRefreshLayout, final RecyclerView recyclerView, final TextView eventNameTextView, final TextView taskNameTextView, final TextView quantityTextView, final TextView costsTextView, final TextView percentageTextView, final TextView editorTextView, final int task_id, int admin_id, String comment){
-
-        RequestParams params = BuildJSON.getInstance().commentTaskJSON(task_id, admin_id, comment);
-        DBconnection.post(URL_COMMENT_ON_TASK,params,new JsonHttpResponseHandler(){
-
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                try {
-                    Toast.makeText(context.getApplicationContext(), response.getString(MESSAGE), Toast.LENGTH_SHORT).show();
-                    if(response.getInt(STATUS)==200){
-                        updateTaskDetails(context, progressBarTask, swipeRefreshLayout, recyclerView, eventNameTextView, taskNameTextView, quantityTextView, costsTextView, percentageTextView, editorTextView, task_id);
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-    }
-
-
-
 }

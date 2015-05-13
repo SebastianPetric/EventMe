@@ -46,7 +46,7 @@ public class AllTasksOfEventActivity extends ActionBarActivity {
 
         if(CheckSharedPreferences.getInstance().isLoggedIn(getApplicationContext())){
             setEvent_id(getIntent().getExtras().getInt(EVENT_ID));
-            setFloatingActionButton();
+            setCreateTaskButton();
             setProgressBarEvent(R.id.progressBarAllTasks);
             setEventLocationTextView(R.id.textViewTaskOfEventLocation);
             setTotalOrganizersTextView(R.id.textViewTaskOfEventTotalOrganizers);
@@ -63,7 +63,7 @@ public class AllTasksOfEventActivity extends ActionBarActivity {
             getAllTasksOfEventRecycler().addItemDecoration(new DividerItemDecoration(this));
             getSyncRefresh().setOnRefreshListener(new CustomSwipeListener());
             getAddOrganizersButton().setOnClickListener(new CustomClickListener());
-            getFloatingActionButton().setOnClickListener(new FloatingButtonCustomClickListener());
+            getCreateTaskButton().setOnClickListener(new FloatingButtonCustomClickListener());
             DBfunctions.getInstance().updateEventDetails(getSyncRefresh(), getProgressBarEvent(), CheckSharedPreferences.getInstance().getAdmin_id(), getEventTotalOrganizersTextView(), getEventTotalPercentageTextView(), getEventTotalCostsTextView(), getEventNameTextView(), getEventDateTextView(), getEventLocationTextView(), getEvent_id());
             DBfunctions.getInstance().getAllTasks(this, getProgressBarEvent(),getSyncRefresh(), getAllTasksOfEventRecycler(), getEvent_id(), getEventTotalOrganizersTextView(), getEventTotalPercentageTextView(), getEventTotalCostsTextView(), getEventNameTextView(), getEventDateTextView(), getEventLocationTextView());
         }else{
@@ -218,7 +218,7 @@ public class AllTasksOfEventActivity extends ActionBarActivity {
     public TextView getEventTotalPercentageTextView(){
         return this.totalPercentageTextView;
     }
-    public void setFloatingActionButton(){
+    public void setCreateTaskButton(){
         ImageView icon = new ImageView(this);
         icon.setImageDrawable(getResources().getDrawable(R.drawable.add_icon_big_task));
 
@@ -228,7 +228,7 @@ public class AllTasksOfEventActivity extends ActionBarActivity {
                 .build();
         this.createTaskButton.setTag(ADD_TASK_BUTTON);
     }
-    public FloatingActionButton getFloatingActionButton(){
+    public FloatingActionButton getCreateTaskButton(){
         return this.createTaskButton;
     }
     public TextView getEventLocationTextView() {

@@ -14,7 +14,7 @@ public class CommentEventListAdapter extends
         RecyclerView.Adapter<CommentEventListAdapter.MyViewHolder> {
 
     private ArrayList<History> list;
-    private Context context;
+    final Context context;
 
     public CommentEventListAdapter(Context context, ArrayList<History> list) {
         this.list = list;

@@ -43,12 +43,12 @@
                 android:id="@+id/textViewNewEventDateField" android:layout_gravity="center_vertical" android:layout_weight="0.4"
                 android:textColor="#cccdc8"/>
         <ImageButton
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true"
                 android:src="@drawable/calender_icon_button"
                 android:id="@+id/imageButtonNewEventDate" android:background="@drawable/icons_shape_red"
-                android:focusableInTouchMode="false"/>
+                android:focusableInTouchMode="false" android:layout_marginBottom="5dp"/>
     </LinearLayout>
 </LinearLayout>

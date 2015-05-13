@@ -21,10 +21,11 @@ import thesis.hfu.eventmy.dialogs.LogoutDialog;
 
 public class FriendslistActivity extends ActionBarActivity {
 
-    private RecyclerView FriendsListRecycler;
-    private SwipeRefreshLayout syncRefresh;
+    private RecyclerView recyclerViewFriendslist;
+    private SwipeRefreshLayout syncRefreshFriendslist;
     private EditText searchEditText;
     private Button searchButton;
+
     private String EMPTY_STRING="";
 
     @Override
@@ -36,17 +37,17 @@ public class FriendslistActivity extends ActionBarActivity {
         actionBar.setDisplayHomeAsUpEnabled(true);
 
         if(CheckSharedPreferences.getInstance().isLoggedIn(getApplicationContext())){
-            setFriendsListRecycler(R.id.recyclerViewFriendsList);
-            setSyncRefresh(R.id.swipe_refresh_friendslist);
+            setRecyclerViewFriendslist(R.id.recyclerViewFriendsList);
+            setSyncRefreshFriendslist(R.id.swipe_refresh_friendslist);
             setSearchButton(R.id.buttonFriendsListSearchButton);
             setSearchEditText(R.id.editTextFriendsListSearchField);
-            getFriendsListRecycler().setHasFixedSize(true);
+            getRecyclerViewFriendslist().setHasFixedSize(true);
             LinearLayoutManager layoutManager= new LinearLayoutManager(this);
-            getFriendsListRecycler().setLayoutManager(layoutManager);
-            getFriendsListRecycler().addItemDecoration(new DividerItemDecoration(this));
-            getSyncRefresh().setOnRefreshListener(new CustomSwipeListener());
+            getRecyclerViewFriendslist().setLayoutManager(layoutManager);
+            getRecyclerViewFriendslist().addItemDecoration(new DividerItemDecoration(this));
+            getSyncRefreshFriendslist().setOnRefreshListener(new CustomSwipeListener());
             getSearchButton().setOnClickListener(new CustomClickListener());
-            DBfunctions.getInstance().searchFriendsList(getApplicationContext(), null, getFriendsListRecycler(), EMPTY_STRING, CheckSharedPreferences.getInstance().getAdmin_id());
+            DBfunctions.getInstance().searchFriendsList(getApplicationContext(), null, getRecyclerViewFriendslist(), EMPTY_STRING, CheckSharedPreferences.getInstance().getAdmin_id());
         }else{
             CheckSharedPreferences.getInstance().endSession(getApplicationContext());
         }
@@ -62,7 +63,7 @@ public class FriendslistActivity extends ActionBarActivity {
         public void onClick(View v) {
             if(v.getId()==R.id.buttonFriendsListSearchButton){
                 if(CheckSharedPreferences.getInstance().isLoggedIn(getApplicationContext())){
-                    DBfunctions.getInstance().searchFriendsList(getApplicationContext(), null, getFriendsListRecycler(), getSearchFieldValue(), CheckSharedPreferences.getInstance().getAdmin_id());
+                    DBfunctions.getInstance().searchFriendsList(getApplicationContext(), null, getRecyclerViewFriendslist(), getSearchFieldValue(), CheckSharedPreferences.getInstance().getAdmin_id());
                 }else{
                     CheckSharedPreferences.getInstance().endSession(getApplicationContext());
                 }
@@ -75,7 +76,7 @@ public class FriendslistActivity extends ActionBarActivity {
         @Override
         public void onRefresh() {
             if(CheckSharedPreferences.getInstance().isLoggedIn(getApplicationContext())){
-                DBfunctions.getInstance().searchFriendsList(getApplicationContext(), getSyncRefresh(), getFriendsListRecycler(), EMPTY_STRING, CheckSharedPreferences.getInstance().getAdmin_id());
+                DBfunctions.getInstance().searchFriendsList(getApplicationContext(), getSyncRefreshFriendslist(), getRecyclerViewFriendslist(), EMPTY_STRING, CheckSharedPreferences.getInstance().getAdmin_id());
             }else{
                 CheckSharedPreferences.getInstance().endSession(getApplicationContext());
             }
@@ -117,17 +118,17 @@ public class FriendslistActivity extends ActionBarActivity {
     //-----------------Getter and Setter-------------------------------------
     //----------------------------------------------------------------------
 
-    public RecyclerView getFriendsListRecycler() {
-        return FriendsListRecycler;
+    public RecyclerView getRecyclerViewFriendslist() {
+        return recyclerViewFriendslist;
     }
-    public void setFriendsListRecycler(int res) {
-        this.FriendsListRecycler = (RecyclerView) findViewById(res);
+    public void setRecyclerViewFriendslist(int res) {
+        this.recyclerViewFriendslist = (RecyclerView) findViewById(res);
     }
-    public SwipeRefreshLayout getSyncRefresh() {
-        return syncRefresh;
+    public SwipeRefreshLayout getSyncRefreshFriendslist() {
+        return syncRefreshFriendslist;
     }
-    public void setSyncRefresh(int res) {
-        this.syncRefresh = (SwipeRefreshLayout) findViewById(res);
+    public void setSyncRefreshFriendslist(int res) {
+        this.syncRefreshFriendslist = (SwipeRefreshLayout) findViewById(res);
     }
     public String getSearchFieldValue() {
         return searchEditText.getText().toString().trim();

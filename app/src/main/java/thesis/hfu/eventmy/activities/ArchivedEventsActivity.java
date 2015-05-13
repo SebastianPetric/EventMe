@@ -19,7 +19,7 @@ import thesis.hfu.eventmy.list_decoration.DividerItemDecoration;
 public class ArchivedEventsActivity extends ActionBarActivity {
 
     private RecyclerView archievedEventsRecycler;
-    private SwipeRefreshLayout syncRefresh;
+    private SwipeRefreshLayout syncRefreshArchivedEvents;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,11 +31,11 @@ public class ArchivedEventsActivity extends ActionBarActivity {
 
         if (CheckSharedPreferences.getInstance().isLoggedIn(getApplicationContext())) {
             setArchievedEventsRecycler(R.id.recyclerViewArchivedEvents);
-            setSyncRefresh(R.id.swipe_refresh_archived_events);
+            setSyncRefreshArchivedEvents(R.id.swipe_refresh_archived_events);
             getArchievedEventsRecycler().setHasFixedSize(true);
             LinearLayoutManager layoutManager = new LinearLayoutManager(this);
             getArchievedEventsRecycler().setLayoutManager(layoutManager);
-            getSyncRefresh().setOnRefreshListener(new CustomSwipeListener());
+            getSyncRefreshArchivedEvents().setOnRefreshListener(new CustomSwipeListener());
             getArchievedEventsRecycler().addItemDecoration(new DividerItemDecoration(this));
             DBfunctions.getInstance().getAllArchivEvents(ArchivedEventsActivity.this, null, getArchievedEventsRecycler(), CheckSharedPreferences.getInstance().getAdmin_id());
         } else {
@@ -53,7 +53,7 @@ public class ArchivedEventsActivity extends ActionBarActivity {
         @Override
         public void onRefresh() {
             if (CheckSharedPreferences.getInstance().isLoggedIn(getApplicationContext())) {
-                DBfunctions.getInstance().getAllArchivEvents(ArchivedEventsActivity.this, getSyncRefresh(), getArchievedEventsRecycler(), CheckSharedPreferences.getInstance().getAdmin_id());
+                DBfunctions.getInstance().getAllArchivEvents(ArchivedEventsActivity.this, getSyncRefreshArchivedEvents(), getArchievedEventsRecycler(), CheckSharedPreferences.getInstance().getAdmin_id());
             } else {
                 CheckSharedPreferences.getInstance().endSession(getApplicationContext());
             }
@@ -101,10 +101,10 @@ public class ArchivedEventsActivity extends ActionBarActivity {
     public void setArchievedEventsRecycler(int res) {
         this.archievedEventsRecycler = (RecyclerView) findViewById(res);
     }
-    public SwipeRefreshLayout getSyncRefresh() {
-        return syncRefresh;
+    public SwipeRefreshLayout getSyncRefreshArchivedEvents() {
+        return syncRefreshArchivedEvents;
     }
-    public void setSyncRefresh(int res) {
-        this.syncRefresh = (SwipeRefreshLayout) findViewById(res);
+    public void setSyncRefreshArchivedEvents(int res) {
+        this.syncRefreshArchivedEvents = (SwipeRefreshLayout) findViewById(res);
     }
 }

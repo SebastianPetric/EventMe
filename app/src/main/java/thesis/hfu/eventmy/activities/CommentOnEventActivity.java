@@ -28,7 +28,7 @@ public class CommentOnEventActivity extends ActionBarActivity {
     private ImageButton addOrganizersButton;
     private int event_id;
     private FloatingActionButton commentOnEventButton;
-    private SwipeRefreshLayout syncComments;
+    private SwipeRefreshLayout syncRefreshCommentsOnEvent;
     private RecyclerView recyclerComments;
     private ProgressBar progressBarEvent;
 
@@ -46,7 +46,7 @@ public class CommentOnEventActivity extends ActionBarActivity {
         if(CheckSharedPreferences.getInstance().isLoggedIn(getApplicationContext())){
             setEvent_id(getIntent().getExtras().getInt(EVENT_ID));
             setRecyclerComments(R.id.recyclerViewAllComments);
-            setSyncCommentsView(R.id.swipe_refresh_event_comments);
+            setSyncRefreshCommentsOnEvent(R.id.swipe_refresh_event_comments);
             setTotalOrganizersTextView(R.id.textViewTaskOfEventTotalOrganizers);
             setTotalCostsTextView(R.id.textViewTaskOfEventTotalCosts);
             setTotalPercentageTextView(R.id.textViewTaskOfEventTotalPercentage);
@@ -60,10 +60,10 @@ public class CommentOnEventActivity extends ActionBarActivity {
             getRecyclerComments().setLayoutManager(layoutManager);
             getRecyclerComments().addItemDecoration(new DividerItemDecoration(this));
             getAddOrganizersButton().setOnClickListener(new CustomClickListener());
-            getSyncComments().setOnRefreshListener(new CustomSwipeListener());
-            getCommentButton().setOnClickListener(new FloatingButtonCustomClickListener());
-            DBfunctions.getInstance().getEventComments(getApplicationContext(), getSyncComments(),getRecyclerComments(), event_id);
-            DBfunctions.getInstance().updateEventDetails( getSyncComments(),getProgressBarEvent(), CheckSharedPreferences.getInstance().getAdmin_id(), getEventTotalOrganizersTextView(), getEventTotalPercentageTextView(), getEventTotalCostsTextView(), getEventNameTextView(), getEventDateTextView(), getEventLocationTextView(), getEvent_id());
+            getSyncRefreshCommentsOnEvent().setOnRefreshListener(new CustomSwipeListener());
+            getCommentOnEventButton().setOnClickListener(new FloatingButtonCustomClickListener());
+            DBfunctions.getInstance().getEventComments(getApplicationContext(), getSyncRefreshCommentsOnEvent(),getRecyclerComments(), event_id);
+            DBfunctions.getInstance().updateEventDetails( getSyncRefreshCommentsOnEvent(),getProgressBarEvent(), CheckSharedPreferences.getInstance().getAdmin_id(), getEventTotalOrganizersTextView(), getEventTotalPercentageTextView(), getEventTotalCostsTextView(), getEventNameTextView(), getEventDateTextView(), getEventLocationTextView(), getEvent_id());
         }else{
             CheckSharedPreferences.getInstance().endSession(getApplicationContext());
         }
@@ -93,7 +93,7 @@ public class CommentOnEventActivity extends ActionBarActivity {
         public void onClick(View v) {
             if(v.getTag().equals(COMMENT_ON_EVENT)){
                 if(CheckSharedPreferences.getInstance().isLoggedIn(getApplicationContext())){
-                    CommentOnEventDialog.getInstance().startCommentDialog(getApplicationContext(),getRecyclerComments(),getSyncComments(),getFragmentManager(), getEvent_id(), CheckSharedPreferences.getInstance().getAdmin_id());
+                    CommentOnEventDialog.getInstance().startCommentDialog(getApplicationContext(),getRecyclerComments(), getSyncRefreshCommentsOnEvent(),getFragmentManager(), getEvent_id(), CheckSharedPreferences.getInstance().getAdmin_id());
                 }else{
                     CheckSharedPreferences.getInstance().endSession(getApplicationContext());
                 }
@@ -106,8 +106,8 @@ public class CommentOnEventActivity extends ActionBarActivity {
         @Override
         public void onRefresh() {
             if (CheckSharedPreferences.getInstance().isLoggedIn(getApplicationContext())) {
-                DBfunctions.getInstance().getEventComments(getApplicationContext(), getSyncComments(),getRecyclerComments(), event_id);
-                DBfunctions.getInstance().updateEventDetails( getSyncComments(),getProgressBarEvent(), CheckSharedPreferences.getInstance().getAdmin_id(), getEventTotalOrganizersTextView(), getEventTotalPercentageTextView(), getEventTotalCostsTextView(), getEventNameTextView(), getEventDateTextView(), getEventLocationTextView(), getEvent_id());
+                DBfunctions.getInstance().getEventComments(getApplicationContext(), getSyncRefreshCommentsOnEvent(),getRecyclerComments(), event_id);
+                DBfunctions.getInstance().updateEventDetails( getSyncRefreshCommentsOnEvent(),getProgressBarEvent(), CheckSharedPreferences.getInstance().getAdmin_id(), getEventTotalOrganizersTextView(), getEventTotalPercentageTextView(), getEventTotalCostsTextView(), getEventNameTextView(), getEventDateTextView(), getEventLocationTextView(), getEvent_id());
             } else {
                 CheckSharedPreferences.getInstance().endSession(getApplicationContext());
             }
@@ -165,21 +165,20 @@ public class CommentOnEventActivity extends ActionBarActivity {
     public void setCommentOnEventBttuon(){
         ImageView icon = new ImageView(this);
         icon.setImageDrawable(getResources().getDrawable(R.drawable.comments_icon_big_event));
-
         this.commentOnEventButton = new FloatingActionButton.Builder(this)
                 .setContentView(icon)
                 .setBackgroundDrawable(R.drawable.icons_shape_red)
                 .build();
         commentOnEventButton.setTag(COMMENT_ON_EVENT);
     }
-    public FloatingActionButton getCommentButton(){
+    public FloatingActionButton getCommentOnEventButton(){
         return this.commentOnEventButton;
     }
-    public SwipeRefreshLayout getSyncComments() {
-        return syncComments;
+    public SwipeRefreshLayout getSyncRefreshCommentsOnEvent() {
+        return syncRefreshCommentsOnEvent;
     }
-    public void setSyncCommentsView(int res) {
-        this.syncComments = (SwipeRefreshLayout) findViewById(res);
+    public void setSyncRefreshCommentsOnEvent(int res) {
+        this.syncRefreshCommentsOnEvent = (SwipeRefreshLayout) findViewById(res);
     }
     public void setAddOrganizersButton(int res) {
         this.addOrganizersButton = (ImageButton) findViewById(res);

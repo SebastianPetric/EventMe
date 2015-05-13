@@ -23,8 +23,8 @@ public class EventOrganizersActivity extends ActionBarActivity {
 
     private Button searchButton;
     private EditText searchEditText;
-    private RecyclerView recyclerView;
-    private SwipeRefreshLayout syncRefresh;
+    private RecyclerView recyclerViewEventOrganizers;
+    private SwipeRefreshLayout syncRefreshEventOrganizers;
     private int event_id;
 
     private static final String EVENT_ID="event_id";
@@ -40,17 +40,17 @@ public class EventOrganizersActivity extends ActionBarActivity {
 
         if(CheckSharedPreferences.getInstance().isLoggedIn(getApplicationContext())) {
             setEvent_id(getIntent().getExtras().getInt(EVENT_ID));
-            setSyncRefresh(R.id.swipe_refresh_event_organizers);
+            setSyncRefreshEventOrganizers(R.id.swipe_refresh_event_organizers);
             setSearchEditText(R.id.editTextEventOrganizersSearchField);
             setSearchButton(R.id.buttonEventOrganizersSearchButton);
-            setRecyclerView(R.id.recyclerEventOrganizers);
+            setRecyclerViewEventOrganizers(R.id.recyclerEventOrganizers);
             getSearchButton().setOnClickListener(new CustomClickListener());
-            getRecyclerView().setHasFixedSize(true);
+            getRecyclerViewEventOrganizers().setHasFixedSize(true);
             LinearLayoutManager layoutManager= new LinearLayoutManager(this);
-            getRecyclerView().setLayoutManager(layoutManager);
-            getRecyclerView().addItemDecoration(new DividerItemDecoration(this));
-            getSyncRefresh().setOnRefreshListener(new CustomSwipeListener());
-            DBfunctions.getInstance().searchFriendsForEvent(getApplicationContext(),null, getRecyclerView(),EMPTY_STRING, CheckSharedPreferences.getInstance().getAdmin_id(),getEvent_id());
+            getRecyclerViewEventOrganizers().setLayoutManager(layoutManager);
+            getRecyclerViewEventOrganizers().addItemDecoration(new DividerItemDecoration(this));
+            getSyncRefreshEventOrganizers().setOnRefreshListener(new CustomSwipeListener());
+            DBfunctions.getInstance().searchFriendsForEvent(getApplicationContext(),null, getRecyclerViewEventOrganizers(),EMPTY_STRING, CheckSharedPreferences.getInstance().getAdmin_id(),getEvent_id());
         }else{
             CheckSharedPreferences.getInstance().endSession(getApplicationContext());
         }
@@ -66,7 +66,7 @@ public class EventOrganizersActivity extends ActionBarActivity {
         public void onClick(View v) {
             if(v.getId()==R.id.buttonEventOrganizersSearchButton){
                 if(CheckSharedPreferences.getInstance().isLoggedIn(getApplicationContext())){
-                    DBfunctions.getInstance().searchFriendsForEvent(getApplicationContext(),null, getRecyclerView(),getSearchFieldValue(), CheckSharedPreferences.getInstance().getAdmin_id(), getEvent_id());
+                    DBfunctions.getInstance().searchFriendsForEvent(getApplicationContext(),null, getRecyclerViewEventOrganizers(),getSearchFieldValue(), CheckSharedPreferences.getInstance().getAdmin_id(), getEvent_id());
                 }else{
                     CheckSharedPreferences.getInstance().endSession(getApplicationContext());
                 }
@@ -79,7 +79,7 @@ public class EventOrganizersActivity extends ActionBarActivity {
         @Override
         public void onRefresh() {
             if(CheckSharedPreferences.getInstance().isLoggedIn(getApplicationContext())){
-                DBfunctions.getInstance().searchFriendsForEvent(getApplicationContext(), getSyncRefresh(), getRecyclerView(),EMPTY_STRING, CheckSharedPreferences.getInstance().getAdmin_id(),getEvent_id());
+                DBfunctions.getInstance().searchFriendsForEvent(getApplicationContext(), getSyncRefreshEventOrganizers(), getRecyclerViewEventOrganizers(),EMPTY_STRING, CheckSharedPreferences.getInstance().getAdmin_id(),getEvent_id());
             }else{
                 CheckSharedPreferences.getInstance().endSession(getApplicationContext());
             }
@@ -134,11 +134,11 @@ public class EventOrganizersActivity extends ActionBarActivity {
     public void setSearchEditText(int res) {
         this.searchEditText = (EditText) findViewById(res);
     }
-    public RecyclerView getRecyclerView() {
-        return recyclerView;
+    public RecyclerView getRecyclerViewEventOrganizers() {
+        return recyclerViewEventOrganizers;
     }
-    public void setRecyclerView(int res) {
-        this.recyclerView = (RecyclerView) findViewById(res);
+    public void setRecyclerViewEventOrganizers(int res) {
+        this.recyclerViewEventOrganizers = (RecyclerView) findViewById(res);
     }
     public int getEvent_id() {
         return event_id;
@@ -146,10 +146,10 @@ public class EventOrganizersActivity extends ActionBarActivity {
     public void setEvent_id(int event_id) {
         this.event_id = event_id;
     }
-    public SwipeRefreshLayout getSyncRefresh() {
-        return syncRefresh;
+    public SwipeRefreshLayout getSyncRefreshEventOrganizers() {
+        return syncRefreshEventOrganizers;
     }
-    public void setSyncRefresh(int res) {
-        this.syncRefresh = (SwipeRefreshLayout) findViewById(res);
+    public void setSyncRefreshEventOrganizers(int res) {
+        this.syncRefreshEventOrganizers = (SwipeRefreshLayout) findViewById(res);
     }
 }

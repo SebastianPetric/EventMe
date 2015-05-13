@@ -9,7 +9,6 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content" android:layout_marginTop="23dp" android:layout_marginLeft="23dp"
         android:layout_marginRight="23dp">
-
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -18,7 +17,6 @@
             android:hint="@string/new_event_name" android:backgroundTint="#cccdc8" android:textColor="#cccdc8"
             android:textColorHint="#cccdc8"/>
     </LinearLayout>
-
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="fill_parent"
@@ -26,7 +24,6 @@
         android:layout_marginTop="10dp"
         android:layout_marginLeft="23dp"
         android:layout_marginRight="23dp" >
-
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -34,7 +31,6 @@
             android:hint="@string/new_event_location" android:backgroundTint="#cccdc8" android:textColor="#cccdc8"
             android:textColorHint="#cccdc8"/>
     </LinearLayout>
-
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="fill_parent"

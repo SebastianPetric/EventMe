@@ -15,7 +15,7 @@ public class CommentTaskListAdapter extends
         RecyclerView.Adapter<CommentTaskListAdapter.MyViewHolder> {
 
     private ArrayList<History> list;
-    private Context context;
+    final Context context;
 
     public CommentTaskListAdapter(Context context, ArrayList<History> list) {
         this.list = list;

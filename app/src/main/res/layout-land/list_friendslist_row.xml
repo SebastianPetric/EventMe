@@ -40,7 +40,6 @@
                     android:layout_marginLeft="23dp" android:textColor="#cccdc8"/>
         </LinearLayout>
     </LinearLayout>
-
     <LinearLayout
             android:orientation="horizontal"
             android:layout_width="0dp"
@@ -53,7 +52,7 @@
                 android:layout_alignParentBottom="true"
                 android:src="@drawable/add_icon_small_event"
                 android:id="@+id/imageButtonAddToFriendsList" android:background="@drawable/icons_shape_red"
-                />
+                android:layout_marginRight="10dp"/>
         <ImageButton
                 android:layout_width="40dp"
                 android:layout_height="40dp"
@@ -73,5 +72,4 @@
                 android:id="@+id/imageButtonOpenRequestFriendsList" android:background="@drawable/icons_shape_red"
                 android:layout_marginRight="23dp"/>
     </LinearLayout>
-
 </LinearLayout>

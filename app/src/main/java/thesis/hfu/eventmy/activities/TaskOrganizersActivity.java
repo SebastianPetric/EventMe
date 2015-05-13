@@ -23,8 +23,8 @@ public class TaskOrganizersActivity extends ActionBarActivity {
 
     private Button searchButton;
     private EditText searchEditText;
-    private RecyclerView recyclerView;
-    private SwipeRefreshLayout syncRefresh;
+    private RecyclerView recyclerViewTaskOrganizers;
+    private SwipeRefreshLayout syncRefreshTaskOrganizers;
     private int event_id;
 
     private static final String EVENT_ID="event_id";
@@ -40,17 +40,17 @@ public class TaskOrganizersActivity extends ActionBarActivity {
 
         if(CheckSharedPreferences.getInstance().isLoggedIn(getApplicationContext())) {
             setEvent_id(getIntent().getExtras().getInt(EVENT_ID));
-            setSyncRefresh(R.id.swipe_refresh_event_organizers);
+            setSyncRefreshTaskOrganizers(R.id.swipe_refresh_event_organizers);
             setSearchEditText(R.id.editTextEventOrganizersSearchField);
             setSearchButton(R.id.buttonEventOrganizersSearchButton);
-            setRecyclerView(R.id.recyclerEventOrganizers);
+            setRecyclerViewTaskOrganizers(R.id.recyclerEventOrganizers);
             getSearchButton().setOnClickListener(new CustomClickListener());
-            getRecyclerView().setHasFixedSize(true);
+            getRecyclerViewTaskOrganizers().setHasFixedSize(true);
             LinearLayoutManager layoutManager= new LinearLayoutManager(this);
-            getRecyclerView().setLayoutManager(layoutManager);
-            getRecyclerView().addItemDecoration(new DividerItemDecoration(this));
-            getSyncRefresh().setOnRefreshListener(new CustomSwipeListener());
-            DBfunctions.getInstance().searchFriendsForTask(this,getApplicationContext(), null, getRecyclerView(), EMPTY_STRING, CheckSharedPreferences.getInstance().getAdmin_id(),getEvent_id());
+            getRecyclerViewTaskOrganizers().setLayoutManager(layoutManager);
+            getRecyclerViewTaskOrganizers().addItemDecoration(new DividerItemDecoration(this));
+            getSyncRefreshTaskOrganizers().setOnRefreshListener(new CustomSwipeListener());
+            DBfunctions.getInstance().searchFriendsForTask(this,getApplicationContext(), null, getRecyclerViewTaskOrganizers(), EMPTY_STRING, CheckSharedPreferences.getInstance().getAdmin_id(),getEvent_id());
         }else{
             CheckSharedPreferences.getInstance().endSession(getApplicationContext());
         }
@@ -66,7 +66,7 @@ public class TaskOrganizersActivity extends ActionBarActivity {
         public void onClick(View v) {
             if(v.getId()==R.id.buttonEventOrganizersSearchButton){
                 if(CheckSharedPreferences.getInstance().isLoggedIn(getApplicationContext())){
-                    DBfunctions.getInstance().searchFriendsForTask(TaskOrganizersActivity.this,getApplicationContext(), null, getRecyclerView(), getSearchFieldValue(), CheckSharedPreferences.getInstance().getAdmin_id(),getEvent_id());
+                    DBfunctions.getInstance().searchFriendsForTask(TaskOrganizersActivity.this,getApplicationContext(), null, getRecyclerViewTaskOrganizers(), getSearchFieldValue(), CheckSharedPreferences.getInstance().getAdmin_id(),getEvent_id());
                 }else{
                     CheckSharedPreferences.getInstance().endSession(getApplicationContext());
                 }
@@ -79,7 +79,7 @@ public class TaskOrganizersActivity extends ActionBarActivity {
         @Override
         public void onRefresh() {
             if(CheckSharedPreferences.getInstance().isLoggedIn(getApplicationContext())){
-                DBfunctions.getInstance().searchFriendsForTask(TaskOrganizersActivity.this,getApplicationContext(), getSyncRefresh(), getRecyclerView(), EMPTY_STRING, CheckSharedPreferences.getInstance().getAdmin_id(),getEvent_id());
+                DBfunctions.getInstance().searchFriendsForTask(TaskOrganizersActivity.this,getApplicationContext(), getSyncRefreshTaskOrganizers(), getRecyclerViewTaskOrganizers(), EMPTY_STRING, CheckSharedPreferences.getInstance().getAdmin_id(),getEvent_id());
             }else{
                 CheckSharedPreferences.getInstance().endSession(getApplicationContext());
             }
@@ -134,11 +134,11 @@ public class TaskOrganizersActivity extends ActionBarActivity {
     public void setSearchEditText(int res) {
         this.searchEditText = (EditText) findViewById(res);
     }
-    public RecyclerView getRecyclerView() {
-        return recyclerView;
+    public RecyclerView getRecyclerViewTaskOrganizers() {
+        return recyclerViewTaskOrganizers;
     }
-    public void setRecyclerView(int res) {
-        this.recyclerView = (RecyclerView) findViewById(res);
+    public void setRecyclerViewTaskOrganizers(int res) {
+        this.recyclerViewTaskOrganizers = (RecyclerView) findViewById(res);
     }
     public int getEvent_id() {
         return event_id;
@@ -146,10 +146,10 @@ public class TaskOrganizersActivity extends ActionBarActivity {
     public void setEvent_id(int event_id) {
         this.event_id = event_id;
     }
-    public SwipeRefreshLayout getSyncRefresh() {
-        return syncRefresh;
+    public SwipeRefreshLayout getSyncRefreshTaskOrganizers() {
+        return syncRefreshTaskOrganizers;
     }
-    public void setSyncRefresh(int res) {
-        this.syncRefresh = (SwipeRefreshLayout) findViewById(res);
+    public void setSyncRefreshTaskOrganizers(int res) {
+        this.syncRefreshTaskOrganizers = (SwipeRefreshLayout) findViewById(res);
     }
 }
