@@ -160,6 +160,9 @@ public class EditTaskActivity extends ActionBarActivity {
         }else if (item.getItemId() == R.id.action_delete) {
             DeleteTaskDialog.getInstance().startDeleteTaskDialog(getFragmentManager(),getTask_id(),getEvent_id());
             return true;
+        }else if (item.getItemId() == R.id.action_impressum) {
+            StartActivityFunctions.getInstance().startImpressumActivity(getApplicationContext());
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }

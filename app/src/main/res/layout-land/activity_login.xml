@@ -16,7 +16,7 @@
                 android:layout_height="170dp"
                 android:layout_gravity="center"
                 android:id="@+id/imageView"
-                android:src="@drawable/logo"/>
+                android:src="@drawable/logo_icon"/>
     </LinearLayout>
     <LinearLayout
             android:orientation="horizontal"

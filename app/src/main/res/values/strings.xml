@@ -9,6 +9,7 @@
     <string name="action_edit">Bearbeiten</string>
     <string name="action_comment">Kommentieren</string>
     <string name="action_delete">Löschen</string>
+    <string name="action_impressum">Impressum</string>
 
     <!-- LOGIN SCREEN -->
     <string name="login_email">Email</string>
@@ -94,11 +95,26 @@
     <string name="dialog_edit_task_ok">Aktualisieren</string>
     <string name="dialog_edit_task_cancel">Abbrechen</string>
 
-
     <!-- DIALOG EDIT EVENT -->
     <string name="dialog_edit_event_message">Was wollen Sie mit dem Event machen?</string>
     <string name="dialog_edit_event_delete">Löschen</string>
     <string name="dialog_edit_event_cancel">Abbrechen</string>
     <string name="dialog_edit_event_archiv">Archivieren</string>
+
+    <!-- IMPRESSUM-->
+    <string name="impressum_header">Impressum</string>
+    <string name="impressum_contact_header">Kontakt</string>
+    <string name="impressum_contact_tmg">Angaben gemäß §5 TMG:</string>
+    <string name="impressum_contact_name">Sebastian Petöcz</string>
+    <string name="impressum_contact_adresse">Goethestraße 4</string>
+    <string name="impressum_contact_city">78120 Furtwangen</string>
+    <string name="impressum_policy_header">Datenschutz</string>
+    <string name="impressum_policy_1">Die Nutzung meiner App ist nur mit Angaben personenbezogener Daten möglich. Diese Daten werden ausdrücklich nicht an Dritte weitergegeben.
+        Ich weise darauf hin, dass die Datenübertragung im Internet immer Sicherheitslücken aufweisen kann. Ein lückenloser Schutz der Daten
+        vor dem Zugriff durch Dritte ist nicht möglich.</string>
+    <string name="impressum_policy_2">
+        Der Nutzung von im Rahmen der Impressumspflicht veröffentlichen Kontaktdaten durch Dritte zur Übersendung von nicht ausdrücklich angefordeter Werbung
+        und Informationsmaterialien wird hiermit ausdrücklich widersprochen. Der Betreiber der Seite behält sich ausdrücklich rechtliche Schritte im Falle der unverlangten
+        Zusendung von Werbeinformationen, etwa durch Spam-Mails, vor.</string>
 
 </resources>

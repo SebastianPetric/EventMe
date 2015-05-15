@@ -109,6 +109,9 @@ public class AllEventsActivity extends ActionBarActivity {
         } else if (item.getItemId() == R.id.action_archived_events) {
             StartActivityFunctions.getInstance().startArchivedEventsActivity(getApplicationContext());
             return true;
+        } else if (item.getItemId() == R.id.action_impressum) {
+            StartActivityFunctions.getInstance().startImpressumActivity(getApplicationContext());
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }

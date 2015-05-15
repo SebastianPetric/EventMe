@@ -156,6 +156,9 @@ public class AllTasksOfEventActivity extends ActionBarActivity {
         }else if(item.getItemId()==R.id.action_edit){
             EditEventDialog.getInstance().startEditEventDialog(getFragmentManager(),getApplicationContext(),getEventDateTextView(),getEventNameTextView(),getEventDateTextView(),getEventLocationTextView(),getEvent_id());
             return true;
+        }else if (item.getItemId() == R.id.action_impressum) {
+            StartActivityFunctions.getInstance().startImpressumActivity(getApplicationContext());
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }

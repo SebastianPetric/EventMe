@@ -87,6 +87,9 @@ public class ArchivedEventsActivity extends ActionBarActivity {
             return true;
         } else if (item.getItemId() == R.id.action_archived_events) {
             return true;
+        }else if (item.getItemId() == R.id.action_impressum) {
+            StartActivityFunctions.getInstance().startImpressumActivity(getApplicationContext());
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }

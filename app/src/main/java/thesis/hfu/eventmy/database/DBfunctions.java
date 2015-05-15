@@ -114,6 +114,12 @@ public class DBfunctions {
     //Edit event details
     private static final String URL_EDIT_EVENT_DETAILS = "edit_event_details.php";
 
+    //Edit event details
+    private static final String URL_DELETE_COMMENT_TASK = "delete_comment_task.php";
+
+    //Edit event details
+    private static final String URL_DELETE_COMMENT_EVENT = "delete_comment_event.php";
+
     //Add Friend to Event
     private static final String URL_FRIEND_TO_EVENT = "add_friend_to_event.php";
 
@@ -487,6 +493,46 @@ public class DBfunctions {
                     Toast.makeText(context.getApplicationContext(), response.getString(MESSAGE), Toast.LENGTH_SHORT).show();
                     if(response.getInt(STATUS)==200){
                         StartActivityFunctions.getInstance().startAllTasksActivity(context, event_id);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+    public void deleteCommentTask(final Context context, final RecyclerView.Adapter<CommentTaskListAdapter.MyViewHolder> adapter, final ArrayList<History> history_list ,final int position, final int history_id){
+
+        RequestParams params = BuildJSON.getInstance().deleteCommentsJSON(history_id);
+        DBconnection.post(URL_DELETE_COMMENT_TASK,params,new JsonHttpResponseHandler(){
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                try {
+                    Toast.makeText(context.getApplicationContext(), response.getString(MESSAGE), Toast.LENGTH_SHORT).show();
+                    if(response.getInt(STATUS)==200){
+                        history_list.remove(position);
+                        adapter.notifyItemRemoved(position);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+    public void deleteCommentEvent(final Context context, final RecyclerView.Adapter<CommentEventListAdapter.MyViewHolder> adapter, final ArrayList<History> history_list ,final int position, final int history_id){
+
+        RequestParams params = BuildJSON.getInstance().deleteCommentsJSON(history_id);
+        DBconnection.post(URL_DELETE_COMMENT_EVENT,params,new JsonHttpResponseHandler(){
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+                try {
+                    Toast.makeText(context.getApplicationContext(), response.getString(MESSAGE), Toast.LENGTH_SHORT).show();
+                    if(response.getInt(STATUS)==200){
+                        history_list.remove(position);
+                        adapter.notifyItemRemoved(position);
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -908,6 +954,11 @@ public class DBfunctions {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                Log.d("schlecht",responseString);
             }
         });
     }

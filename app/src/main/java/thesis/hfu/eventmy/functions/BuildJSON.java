@@ -361,6 +361,14 @@ public class BuildJSON {
         return params;
     }
 
+
+    public RequestParams deleteCommentsJSON(int history_id) {
+
+        RequestParams params= new RequestParams();
+        params.put(ID, history_id);
+        return params;
+    }
+
     public ArrayList<History> getComments(JSONArray jsonArray) throws JSONException{
 
         ArrayList<History> commentList = new ArrayList<>();
@@ -369,7 +377,9 @@ public class BuildJSON {
             String name=jsonArray.getJSONObject(i).getString(NAME);
             String date=jsonArray.getJSONObject(i).getString(DATE);
             String comment=jsonArray.getJSONObject(i).getString(COMMENT);
-            History history= new History(date,name,comment);
+            int history_id=jsonArray.getJSONObject(i).getInt(ID);
+            int editor_id=jsonArray.getJSONObject(i).getInt(EDITOR_ID);
+            History history= new History(date,name,comment,history_id,editor_id);
             commentList.add(history);
         }
         return commentList;

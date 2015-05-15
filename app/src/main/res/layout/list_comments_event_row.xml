@@ -7,18 +7,33 @@
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-        <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:id="@+id/listRowCommentsName" android:layout_marginLeft="23dp" android:layout_marginTop="5dp"
-                android:textColor="#cf4c5a" android:text="hvjhv"/>
-        <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:id="@+id/listRowCommentsDate" android:layout_gravity="bottom" android:layout_marginLeft="10dp"
-                android:textColor="#cccdc8" android:text="hhvh" android:textSize="10dp"/>
+        <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="0dp"
+                android:layout_height="match_parent" android:layout_weight="0.5">
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:id="@+id/listRowCommentsName" android:layout_marginLeft="23dp" android:layout_marginTop="5dp"
+                    android:textColor="#cf4c5a" android:text="hvjhv"/>
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:id="@+id/listRowCommentsDate" android:layout_gravity="bottom" android:layout_marginLeft="10dp"
+                    android:textColor="#cccdc8" android:text="hhvh" android:textSize="10dp"/>
+        </LinearLayout>
+        <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent" android:layout_weight="0.5">
+            <ImageButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/imageButtonDeleteCommentEvent" android:layout_alignParentRight="true"
+                    android:layout_marginRight="23dp" android:background="@drawable/icons_shape_red"
+                    android:src="@drawable/minus_icon_button_small_event" android:layout_marginTop="5dp"/>
+        </RelativeLayout>
     </LinearLayout>
     <TextView
             android:layout_width="wrap_content"

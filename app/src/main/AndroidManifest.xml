@@ -76,6 +76,11 @@
                 android:name=".activities.ArchivedEventsActivity"
                 android:label="Archiv" >
         </activity>
+
+        <activity
+                android:name=".activities.ImpressumActivity"
+                android:label="Impressum" >
+        </activity>
     </application>
 
     <!--  Internet Permissions -->

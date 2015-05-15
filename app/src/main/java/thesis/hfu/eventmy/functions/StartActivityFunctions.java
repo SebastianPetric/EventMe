@@ -115,4 +115,10 @@ public class StartActivityFunctions {
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.getApplicationContext().startActivity(intent);
     }
+
+    public void startImpressumActivity(Context context){
+        Intent intent = new Intent(context.getApplicationContext(),ImpressumActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.getApplicationContext().startActivity(intent);
+    }
 }

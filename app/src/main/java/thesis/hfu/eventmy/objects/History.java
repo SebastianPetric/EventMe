@@ -1,13 +1,25 @@
 package thesis.hfu.eventmy.objects;
 
+import thesis.hfu.eventmy.functions.CheckSharedPreferences;
+
 public class History {
 
     private String comment,editor_name,date;
+    private int history_id,editor_id;
+    private boolean isEditor;
+    private int admin_id= Integer.parseInt(CheckSharedPreferences.getInstance().getAdmin_id());
 
-    public History(String date, String editor_name, String comment){
+    public History(String date, String editor_name, String comment, int history_id,int editor_id){
         this.comment=comment;
         this.editor_name=editor_name;
         this.date=date;
+        this.history_id=history_id;
+        this.editor_id= editor_id;
+        if(admin_id==editor_id){
+            setIsEditor(true);
+        }else{
+            setIsEditor(false);
+        }
     }
 
     //----------------------------------------------------------------------
@@ -32,5 +44,22 @@ public class History {
     public void setDate(String date) {
         this.date = date;
     }
-
+    public int getHistory_id() {
+        return history_id;
+    }
+    public void setHistory_id(int history_id) {
+        this.history_id = history_id;
+    }
+    public int getEditor_id() {
+        return editor_id;
+    }
+    public void setEditor_id(int editor_id) {
+        this.editor_id = editor_id;
+    }
+    public boolean isEditor() {
+        return isEditor;
+    }
+    public void setIsEditor(boolean isEditor) {
+        this.isEditor = isEditor;
+    }
 }

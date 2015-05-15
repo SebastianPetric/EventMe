@@ -5,8 +5,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import thesis.hfu.eventmy.R;
+import thesis.hfu.eventmy.database.DBfunctions;
 import thesis.hfu.eventmy.objects.History;
 
 import java.util.ArrayList;
@@ -34,6 +36,17 @@ public class CommentTaskListAdapter extends
         viewHolder.name.setText(history_temp.getEditor_name());
         viewHolder.date.setText(history_temp.getDate());
         viewHolder.comment.setText(history_temp.getComment());
+        if(history_temp.isEditor()){
+            viewHolder.deleteTask.setVisibility(View.VISIBLE);
+            viewHolder.deleteTask.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    DBfunctions.getInstance().deleteCommentTask(context,CommentTaskListAdapter.this,getList(),position,history_temp.getHistory_id());
+                }
+            });
+        }else{
+            viewHolder.deleteTask.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -47,12 +60,14 @@ public class CommentTaskListAdapter extends
             View.OnClickListener {
 
         TextView name, date, comment;
+        ImageButton deleteTask;
 
         public MyViewHolder(View itemView) {
             super(itemView);
             name = (TextView) itemView.findViewById(R.id.listRowCommentsName);
             date = (TextView) itemView.findViewById(R.id.listRowCommentsDate);
             comment = (TextView) itemView.findViewById(R.id.listRowCommentsComment);
+            deleteTask = (ImageButton) itemView.findViewById(R.id.imageButtonDeleteCommentTask);
             itemView.setOnClickListener(this);
         }
 
@@ -60,4 +75,13 @@ public class CommentTaskListAdapter extends
         public void onClick(View v) {
         }
     }
+
+    //----------------------------------------------------------------------
+    //-----------------Getter and Setter-------------------------------------
+    //----------------------------------------------------------------------
+
+    public ArrayList<History> getList(){
+        return this.list;
+    }
 }
+

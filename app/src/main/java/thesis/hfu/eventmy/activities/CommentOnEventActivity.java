@@ -148,6 +148,9 @@ public class CommentOnEventActivity extends ActionBarActivity {
         }else if (item.getItemId() == R.id.action_delete) {
             DeleteArchivEventDialog.getInstance().startDeleteArchivEventDialog(getFragmentManager(),getApplicationContext(),getEvent_id());
             return true;
+        }else if (item.getItemId() == R.id.action_impressum) {
+            StartActivityFunctions.getInstance().startImpressumActivity(getApplicationContext());
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }
