@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="vertical"
               android:layout_width="match_parent"
-              android:layout_height="match_parent" android:background="#2e2a41">
+              android:layout_height="match_parent" android:background="@color/background">
     <LinearLayout
             android:orientation="horizontal"
             android:layout_width="fill_parent"
@@ -18,7 +18,7 @@
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:text="EventName"
                     android:id="@+id/textViewListRowEventName" android:layout_marginLeft="12dp"
-                    android:layout_marginTop="5dp" android:textColor="#cccdc8"/>
+                    android:layout_marginTop="5dp" android:textColor="@color/white"/>
             <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -26,14 +26,14 @@
                     android:text="Location"
                     android:id="@+id/textViewListRowEventLocation"
                     android:layout_marginLeft="12dp"
-                    android:layout_marginTop="5dp" android:textColor="#cccdc8"/>
+                    android:layout_marginTop="5dp" android:textColor="@color/white"/>
             <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:text="Datum"
                     android:id="@+id/textViewListRowEventDate" android:layout_marginTop="5dp" android:layout_marginLeft="12dp"
-                    android:layout_marginBottom="5dp" android:textColor="#cccdc8"/>
+                    android:layout_marginBottom="5dp" android:textColor="@color/white"/>
         </LinearLayout>
         <LinearLayout
                 android:orientation="horizontal"
@@ -59,7 +59,7 @@
                         android:text="0"
                         android:id="@+id/textViewListRowEventOrganizer" android:layout_marginTop="5dp"
                         android:layout_gravity="center_horizontal" android:layout_marginBottom="5dp"
-                        android:textColor="#cccdc8"/>
+                        android:textColor="@color/white"/>
             </LinearLayout>
             <LinearLayout
                     android:orientation="vertical"
@@ -79,7 +79,7 @@
                         android:text="0"
                         android:id="@+id/textViewListRowEventCosts" android:layout_marginTop="5dp"
                         android:layout_gravity="center_horizontal" android:layout_marginBottom="5dp"
-                        android:textColor="#cccdc8"/>
+                        android:textColor="@color/white"/>
             </LinearLayout>
             <LinearLayout
                     android:orientation="vertical"
@@ -100,7 +100,7 @@
                         android:text="0"
                         android:id="@+id/textViewlistRowEventPercentage" android:layout_marginTop="5dp"
                         android:layout_gravity="center_horizontal" android:layout_marginBottom="5dp"
-                        android:textColor="#cccdc8"/>
+                        android:textColor="@color/white"/>
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

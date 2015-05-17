@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="actionbar_main_color" type="color">#cf4c5a</item>
+    <item name="main_color_dark" type="color">#341922</item>
+    <item name="background" type="color">#2e2a41</item>
+    <item name="white" type="color">#cccdc8</item>
+    <item name="task_main_color" type="color">#1d9798</item>
+    <item name="task_main_color_dark" type="color">#041212</item>
+</resources> 
+

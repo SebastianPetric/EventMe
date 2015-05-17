@@ -2,7 +2,7 @@
 <LinearLayout  xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="fill_parent"
               android:layout_height="match_parent"
-              android:orientation="vertical" android:background="#2e2a41">
+              android:orientation="vertical" android:background="@color/background">
     <LinearLayout
             android:orientation="horizontal"
             android:layout_width="fill_parent"
@@ -16,8 +16,8 @@
                 android:inputType="textPersonName"
                 android:ems="10"
             android:id="@+id/registrationNameField"
-            android:hint="@string/registration_name" android:backgroundTint="#cccdc8" android:textColor="#cccdc8"
-                android:textColorHint="#cccdc8"/>
+            android:hint="@string/registration_name" android:backgroundTint="@color/white" android:textColor="@color/white"
+                android:textColorHint="@color/white"/>
     </LinearLayout>
     <LinearLayout
             android:orientation="horizontal"
@@ -32,8 +32,8 @@
                 android:inputType="textPersonName"
                 android:ems="10"
             android:id="@+id/registrationPrenameField"
-            android:hint="@string/registration_prename" android:backgroundTint="#cccdc8"
-                android:textColorHint="#cccdc8" android:textColor="#cccdc8"/>
+            android:hint="@string/registration_prename" android:backgroundTint="@color/white"
+                android:textColorHint="@color/white" android:textColor="@color/white"/>
     </LinearLayout>
     <LinearLayout
             android:orientation="horizontal"
@@ -48,8 +48,8 @@
                 android:inputType="textEmailAddress"
                 android:ems="10"
             android:id="@+id/registrationEmailField"
-            android:hint="@string/registration_email" android:backgroundTint="#cccdc8" android:textColor="#cccdc8"
-                android:textColorHint="#cccdc8"/>
+            android:hint="@string/registration_email" android:backgroundTint="@color/white" android:textColor="@color/white"
+                android:textColorHint="@color/white"/>
     </LinearLayout>
     <LinearLayout
             android:orientation="horizontal"
@@ -65,8 +65,8 @@
                 android:inputType="textPassword"
                 android:ems="10"
             android:id="@+id/registrationPasswordField"
-            android:hint="@string/registration_password" android:backgroundTint="#cccdc8"
-                android:textColorHint="#cccdc8" android:textColor="#cccdc8"/>
+            android:hint="@string/registration_password" android:backgroundTint="@color/white"
+                android:textColorHint="@color/white" android:textColor="@color/white"/>
     </LinearLayout>
     <LinearLayout
             android:orientation="horizontal"
@@ -82,8 +82,8 @@
                 android:inputType="textPassword"
                 android:ems="10"
             android:id="@+id/registrationPasswordRepeatField"
-            android:hint="@string/registration_password_repeat" android:backgroundTint="#cccdc8"
-                android:textColor="#cccdc8" android:textColorHint="#cccdc8"/>
+            android:hint="@string/registration_password_repeat" android:backgroundTint="@color/white"
+                android:textColor="@color/white" android:textColorHint="@color/white"/>
     </LinearLayout>
     <LinearLayout
             android:orientation="horizontal"
@@ -101,8 +101,8 @@
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/registration_cancel_button"
-                        android:id="@+id/registrationCancelButton" android:background="#cf4c5a"
-                        android:textColor="#341922" android:layout_gravity="right"/>
+                        android:id="@+id/registrationCancelButton" android:background="@color/actionbar_main_color"
+                        android:textColor="@color/main_color_dark" android:layout_gravity="right"/>
             </LinearLayout>
             <LinearLayout
                     android:orientation="vertical"
@@ -114,7 +114,7 @@
                         android:text="@string/registration_button"
                         android:id="@+id/registrationButton"
                         android:layout_marginLeft="10dp"
-                        android:background="#cf4c5a" android:textColor="#341922" android:layout_gravity="right"/>
+                        android:background="@color/actionbar_main_color" android:textColor="@color/main_color_dark" android:layout_gravity="right"/>
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

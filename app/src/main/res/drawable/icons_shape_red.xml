@@ -118,7 +118,7 @@
             <!-- Blue button -->
             <item>
                 <shape android:shape="oval">
-                    <solid android:color="#cf4c5a"/>
+                    <solid android:color="@color/actionbar_main_color"/>
                 </shape>
             </item>
         </layer-list>

@@ -1,12 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:background="#2e2a41">
-<LinearLayout
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="fill_parent"
               android:layout_height="fill_parent"
-              android:orientation="vertical">
+              android:orientation="vertical" android:background="@color/background">
     <LinearLayout
             android:orientation="vertical"
             android:layout_width="fill_parent"
@@ -16,7 +12,7 @@
                 android:layout_height="170dp"
                 android:layout_gravity="center"
                 android:id="@+id/imageView"
-                android:src="@drawable/logo_icon"/>
+                android:src="@drawable/logo"/>
     </LinearLayout>
     <LinearLayout
             android:orientation="horizontal"
@@ -32,8 +28,8 @@
                 android:gravity="center"
                 android:id="@+id/loginEmailEditText"
                 android:layout_marginRight="23dp"
-                android:hint="@string/login_email" android:textColorHint="#cccdc8" android:backgroundTint="#cccdc8"
-                android:textColor="#cccdc8" android:singleLine="true" android:shadowColor="#6c6b69"
+                android:hint="@string/login_email" android:textColorHint="@color/white" android:backgroundTint="@color/white"
+                android:textColor="@color/white" android:singleLine="true" android:shadowColor="@color/white"
                 />
     </LinearLayout>
     <LinearLayout
@@ -49,8 +45,8 @@
                 android:ems="10"
                 android:id="@+id/loginPasswortEditText"
                 android:layout_marginRight="23dp"
-                android:hint="@string/login_password" android:backgroundTint="#cccdc8" android:textColorHint="#cccdc8"
-                android:textColor="#cccdc8" android:shadowColor="#cccdc8"/>
+                android:hint="@string/login_password" android:backgroundTint="@color/white" android:textColorHint="@color/white"
+                android:textColor="@color/white" android:shadowColor="@color/white"/>
     </LinearLayout>
     <LinearLayout
             android:orientation="vertical"
@@ -67,7 +63,7 @@
                     android:text="@string/login_button"
                     android:id="@+id/loginButton"
                     android:ems="6"
-                    android:layout_weight="0.6" android:background="#cf4c5a" android:textColor="#341922"/>
+                    android:layout_weight="0.6" android:background="@color/actionbar_main_color" android:textColor="@color/main_color_dark"/>
         </LinearLayout>
         <RelativeLayout
                 android:layout_width="match_parent"
@@ -81,9 +77,8 @@
                     android:id="@+id/loginRegistrationButton"
                     android:ems="5"
                     android:layout_marginTop="10dp"
-                    android:textColor="#cccdc8" android:layout_gravity="bottom|center_horizontal"
+                    android:textColor="@color/white" android:layout_gravity="bottom|center_horizontal"
                     android:layout_alignParentBottom="true" android:layout_marginBottom="12dp"/>
         </RelativeLayout>
     </LinearLayout>
 </LinearLayout>
-</ScrollView>

@@ -4,12 +4,12 @@
               android:layout_width="fill_parent"
               android:layout_height="fill_parent"
               android:orientation="vertical"
-              android:padding="10dp" android:background="#2e2a41">
+              android:padding="10dp" android:background="@color/background">
     <EditText
             android:id="@+id/editTextDialogUserInput"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" android:backgroundTint="#cccdc8" android:textColor="#cccdc8"
-            android:textColorHint="#cccdc8" android:hint="Kosten">
+            android:layout_height="wrap_content" android:backgroundTint="@color/white" android:textColor="@color/white"
+            android:textColorHint="@color/white" android:hint="Kosten">
         <requestFocus />
     </EditText>
 </LinearLayout>

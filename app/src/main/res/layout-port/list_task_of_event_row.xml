@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="vertical"
               android:layout_width="match_parent"
-              android:layout_height="match_parent" android:background="#2e2a41">
+              android:layout_height="match_parent" android:background="@color/background">
     <LinearLayout
             android:orientation="horizontal"
             android:layout_width="fill_parent"
@@ -17,13 +17,13 @@
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceLarge"
                     android:id="@+id/textViewListRowTaskOfEventName" android:layout_marginLeft="0dp"
-                    android:layout_marginTop="5dp" android:textColor="#cccdc8"/>
+                    android:layout_marginTop="5dp" android:textColor="@color/white"/>
             <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:id="@+id/textViewListRowTaskOfEventDate" android:layout_marginTop="10dp" android:layout_marginLeft="0dp"
-                    android:layout_marginBottom="5dp" android:textColor="#cccdc8"/>
+                    android:layout_marginBottom="5dp" android:textColor="@color/white"/>
         </LinearLayout>
         <LinearLayout
                 android:orientation="horizontal"
@@ -47,7 +47,7 @@
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:id="@+id/textViewListRowTaskOfEventCosts" android:layout_marginTop="10dp"
                         android:layout_gravity="center_horizontal" android:layout_marginBottom="5dp"
-                        android:textColor="#cccdc8"/>
+                        android:textColor="@color/white"/>
             </LinearLayout>
             <LinearLayout
                     android:orientation="vertical"
@@ -66,7 +66,7 @@
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:id="@+id/textViewListRowTaskOfEventPercentage" android:layout_marginTop="10dp"
                         android:layout_gravity="center_horizontal" android:layout_marginBottom="5dp"
-                        android:textColor="#cccdc8"/>
+                        android:textColor="@color/white"/>
             </LinearLayout>
             <LinearLayout
                     android:orientation="vertical"
@@ -85,7 +85,7 @@
                         android:textAppearance="?android:attr/textAppearanceSmall"
                         android:id="@+id/textViewlistRowTaskOfEventOrganizer" android:layout_marginTop="10dp"
                         android:layout_gravity="center_horizontal" android:layout_marginBottom="5dp"
-                        android:textColor="#cccdc8"/>
+                        android:textColor="@color/white"/>
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
