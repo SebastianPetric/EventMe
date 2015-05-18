@@ -2,53 +2,53 @@
 <items version="2" >
 
     <item
-        jar="C:\Development\studio-workspace\EventMe\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\21.0.3\classes.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="81d42bf983a8741f4888a6e333e454e4a5e0eeb7">
-        <dex dex="C:\Development\studio-workspace\EventMe\app\build\intermediates\pre-dexed\debug\classes-93258de729ef6da89cc0cc348eb1143dbd82edc1.jar" />
-    </item>
-    <item
-        jar="C:\Development\studio-workspace\EventMe\app\build\intermediates\exploded-aar\com.android.support\recyclerview-v7\22.0.0\classes.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="c6d79137693d494dee16372d3921f919eb724ced">
-        <dex dex="C:\Development\studio-workspace\EventMe\app\build\intermediates\pre-dexed\debug\classes-9c133390ee22e4fe1e74e71154b1b803df4a08eb.jar" />
-    </item>
-    <item
-        jar="C:\Development\studio-workspace\EventMe\app\build\intermediates\exploded-aar\com.oguzdev\CircularFloatingActionMenu\1.0.2\classes.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="607d961caf1a59b6e782724654c1f3229e036c20">
-        <dex dex="C:\Development\studio-workspace\EventMe\app\build\intermediates\pre-dexed\debug\classes-3ace2e6d1cc0212977bdc99aa22f74f931130dee.jar" />
-    </item>
-    <item
-        jar="C:\Users\Sebastian Petric\AppData\Local\Android\Sdk\extras\android\m2repository\com\android\support\support-annotations\22.0.0\support-annotations-22.0.0.jar"
+        jar="C:\Android\android-sdks\extras\android\m2repository\com\android\support\support-annotations\22.0.0\support-annotations-22.0.0.jar"
         jumboMode="false"
         revision="21.1.2"
         sha1="685d0b2c590447e85284ed84712cb363ba04eff8">
-        <dex dex="C:\Development\studio-workspace\EventMe\app\build\intermediates\pre-dexed\debug\support-annotations-22.0.0-5677167138fd1d3d70dcb35ce29aaa2bba49d023.jar" />
+        <dex dex="C:\Android\studio-workspace\EventMe\app\build\intermediates\pre-dexed\debug\support-annotations-22.0.0-37cc9b965496f95915229b28b84b859512b3d84b.jar" />
     </item>
     <item
-        jar="C:\Development\studio-workspace\EventMe\app\build\intermediates\exploded-aar\com.android.support\support-v4\22.0.0\libs\internal_impl-22.0.0.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="b5b92f469d515a13d778900f6d50c03d12f35504">
-        <dex dex="C:\Development\studio-workspace\EventMe\app\build\intermediates\pre-dexed\debug\internal_impl-22.0.0-cca105b5de19d988bb96977335148104afa2d6c2.jar" />
-    </item>
-    <item
-        jar="C:\Development\studio-workspace\EventMe\app\libs\android-async-http-1.4.6.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="a845a88238be0b5be9d238652c1bc0605ef91f52">
-        <dex dex="C:\Development\studio-workspace\EventMe\app\build\intermediates\pre-dexed\debug\android-async-http-1.4.6-d6ea98d31fdb61310bb3ac4374fb2c1db0d1935f.jar" />
-    </item>
-    <item
-        jar="C:\Development\studio-workspace\EventMe\app\build\intermediates\exploded-aar\com.android.support\support-v4\22.0.0\classes.jar"
+        jar="C:\Android\studio-workspace\EventMe\app\build\intermediates\exploded-aar\com.android.support\support-v4\22.0.0\classes.jar"
         jumboMode="false"
         revision="21.1.2"
         sha1="4e86306289ace4aa0cfec44a05ed2b410d36989d">
-        <dex dex="C:\Development\studio-workspace\EventMe\app\build\intermediates\pre-dexed\debug\classes-01a169a7ad7eb61e75d7ed222ff41186bc4e49e9.jar" />
+        <dex dex="C:\Android\studio-workspace\EventMe\app\build\intermediates\pre-dexed\debug\classes-9e5659bddbd24456da7e458d95adf22df60d1a2d.jar" />
+    </item>
+    <item
+        jar="C:\Android\studio-workspace\EventMe\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\21.0.3\classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="81d42bf983a8741f4888a6e333e454e4a5e0eeb7">
+        <dex dex="C:\Android\studio-workspace\EventMe\app\build\intermediates\pre-dexed\debug\classes-9a6183f4c0fbc5e77251547eba23cac6d2dc48a0.jar" />
+    </item>
+    <item
+        jar="C:\Android\studio-workspace\EventMe\app\libs\android-async-http-1.4.6.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="a845a88238be0b5be9d238652c1bc0605ef91f52">
+        <dex dex="C:\Android\studio-workspace\EventMe\app\build\intermediates\pre-dexed\debug\android-async-http-1.4.6-9b0a6d287ae737ab914ec0c176f5e0e51d69cf12.jar" />
+    </item>
+    <item
+        jar="C:\Android\studio-workspace\EventMe\app\build\intermediates\exploded-aar\com.android.support\support-v4\22.0.0\libs\internal_impl-22.0.0.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="b5b92f469d515a13d778900f6d50c03d12f35504">
+        <dex dex="C:\Android\studio-workspace\EventMe\app\build\intermediates\pre-dexed\debug\internal_impl-22.0.0-e20936c5080bbbdb5d6102fe74d2a88c208d2482.jar" />
+    </item>
+    <item
+        jar="C:\Android\studio-workspace\EventMe\app\build\intermediates\exploded-aar\com.oguzdev\CircularFloatingActionMenu\1.0.2\classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="607d961caf1a59b6e782724654c1f3229e036c20">
+        <dex dex="C:\Android\studio-workspace\EventMe\app\build\intermediates\pre-dexed\debug\classes-981590d205244692a95366e634e517dd442b7734.jar" />
+    </item>
+    <item
+        jar="C:\Android\studio-workspace\EventMe\app\build\intermediates\exploded-aar\com.android.support\recyclerview-v7\22.0.0\classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="c6d79137693d494dee16372d3921f919eb724ced">
+        <dex dex="C:\Android\studio-workspace\EventMe\app\build\intermediates\pre-dexed\debug\classes-1a52c9aff28ac6a173bfb71d5d9986cb562dce63.jar" />
     </item>
 
 </items>

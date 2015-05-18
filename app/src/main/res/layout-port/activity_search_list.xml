@@ -24,8 +24,8 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:text="@string/search_search_button"
-                    android:id="@+id/buttonSearchButton" android:layout_weight="0.25" android:background="@color/actionbar_main_color"
-                    android:textColor="@color/main_color_dark"/>
+                    android:id="@+id/buttonSearchButton" android:layout_weight="0.25" android:background="@drawable/custom_button_color"
+                    android:textColor="@color/white"/>
         </LinearLayout>
         <LinearLayout
                 android:orientation="vertical"

@@ -114,7 +114,7 @@
                         android:text="@string/registration_button"
                         android:id="@+id/registrationButton"
                         android:layout_marginLeft="10dp"
-                        android:background="@color/actionbar_main_color" android:textColor="@color/main_color_dark" android:layout_gravity="right"/>
+                        android:background="@drawable/custom_button_color" android:textColor="@color/white" android:layout_gravity="right"/>
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
