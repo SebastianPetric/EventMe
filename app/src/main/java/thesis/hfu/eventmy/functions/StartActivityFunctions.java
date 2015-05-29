@@ -3,8 +3,8 @@ package thesis.hfu.eventmy.functions;
 
 import android.content.Context;
 import android.content.Intent;
-import thesis.hfu.eventmy.activities.*;
-import thesis.hfu.eventmy.objects.Global;
+import thesis.hfu.eventme.activities.*;
+import thesis.hfu.eventme.objects.Global;
 
 public class StartActivityFunctions {
 

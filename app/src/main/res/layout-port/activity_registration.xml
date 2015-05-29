@@ -101,8 +101,8 @@
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/registration_cancel_button"
-                        android:id="@+id/registrationCancelButton" android:background="@color/actionbar_main_color"
-                        android:textColor="@color/main_color_dark" android:layout_gravity="right"/>
+                        android:id="@+id/registrationCancelButton" android:background="@drawable/custom_button_color"
+                        android:textColor="@color/white" android:layout_gravity="right"/>
             </LinearLayout>
             <LinearLayout
                     android:orientation="vertical"
