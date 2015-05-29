@@ -12,7 +12,7 @@
                 android:layout_height="170dp"
                 android:layout_gravity="center"
                 android:id="@+id/imageView"
-                android:src="@drawable/logo"/>
+                android:src="@drawable/event_me_logo"/>
     </LinearLayout>
     <LinearLayout
             android:orientation="horizontal"
