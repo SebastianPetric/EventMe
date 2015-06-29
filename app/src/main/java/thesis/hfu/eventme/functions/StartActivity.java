@@ -13,7 +13,7 @@ public class StartActivity {
     private static final String INACTIVE_TASK="";
     private static final int NO_EDITOR=-1;
 
-    public static StartActivity getInstance(){
+    public static synchronized StartActivity getInstance(){
         if (StartActivity.instance == null){
             StartActivity.instance = new StartActivity();
         }

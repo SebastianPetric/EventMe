@@ -8,29 +8,29 @@ public class CheckSharedPreferences {
 
     private static CheckSharedPreferences instance;
     private static final String SAVED_PROFILE = "SavedProfile";
-    private static final String DEFAULT="N/A";
+    private static final int DEFAULT=-1;
     private static final String SAVED_UID = "savedUserID";
-    private String admin_id;
+    private int admin_id;
 
-    public static CheckSharedPreferences getInstance(){
+    public static synchronized CheckSharedPreferences getInstance(){
         if (CheckSharedPreferences.instance == null){
             CheckSharedPreferences.instance = new CheckSharedPreferences();
         }
         return CheckSharedPreferences.instance;
     }
 
-    public void setPreferances(Context context, String user_id){
+    public void setPreferences(Context context, int user_id){
         SharedPreferences.Editor editor = context.getSharedPreferences(SAVED_PROFILE, context.MODE_PRIVATE).edit();
-        editor.putString(SAVED_UID, user_id);
+        editor.putInt(SAVED_UID, user_id);
         editor.apply();
     }
 
     public boolean isLoggedIn(Context context){
-        this.admin_id =null;
+        this.admin_id =-1;
         SharedPreferences sharedPreferences= context.getSharedPreferences(SAVED_PROFILE, context.MODE_PRIVATE);
-        this.admin_id =sharedPreferences.getString(SAVED_UID, DEFAULT);
+        this.admin_id =sharedPreferences.getInt(SAVED_UID, DEFAULT);
 
-        if(admin_id.equals(DEFAULT)){
+        if(admin_id==DEFAULT){
             return false;
         }else {
             setAdmin_id(admin_id);
@@ -39,8 +39,7 @@ public class CheckSharedPreferences {
     }
 
     public void endSession(Context context){
-        SharedPreferences sharedpreferences = context.getSharedPreferences(SAVED_PROFILE,context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedpreferences.edit();
+        SharedPreferences.Editor editor = context.getSharedPreferences(SAVED_PROFILE,context.MODE_PRIVATE).edit();
         editor.clear();
         editor.apply();
         StartActivity.getInstance().startLoginActivity(context.getApplicationContext());
@@ -50,10 +49,10 @@ public class CheckSharedPreferences {
     //-----------------Getter and Setter-------------------------------------
     //----------------------------------------------------------------------
 
-    public String getAdmin_id() {
+    public int getAdmin_id() {
         return admin_id;
     }
-    public void setAdmin_id(String admin_id) {
+    public void setAdmin_id(int admin_id) {
         this.admin_id = admin_id;
     }
 }

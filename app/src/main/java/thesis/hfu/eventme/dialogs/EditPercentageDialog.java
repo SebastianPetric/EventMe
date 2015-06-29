@@ -72,7 +72,7 @@ public class EditPercentageDialog extends DialogFragment {
                                 break;
                         }
                         if (CheckSharedPreferences.getInstance().isLoggedIn(getActivity())) {
-                            DBfunctions.getInstance().updatePercentage(getActivity(), getProgressBarEvent(),getProgressBarTask(),getSyncRefresh(),getPercentageTextView(), getTotalCostsTextView(), getTotalPercentageTextView(), getTotalOrganizersTextView(), getEventNameTextView(), getEventDateTextView(),getEventLocationTextView(),getEvent_id(), getTask_id(), Integer.parseInt(CheckSharedPreferences.getInstance().getAdmin_id()), getPercentageValue(),getStatus_of_update());
+                            DBfunctions.getInstance().updatePercentage(getActivity(), getProgressBarEvent(),getProgressBarTask(),getSyncRefresh(),getPercentageTextView(), getTotalCostsTextView(), getTotalPercentageTextView(), getTotalOrganizersTextView(), getEventNameTextView(), getEventDateTextView(),getEventLocationTextView(),getEvent_id(), getTask_id(), CheckSharedPreferences.getInstance().getAdmin_id(), getPercentageValue(),getStatus_of_update());
                         } else {
                             CheckSharedPreferences.getInstance().endSession(getActivity());
                         }

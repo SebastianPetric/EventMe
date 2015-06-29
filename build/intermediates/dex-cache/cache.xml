@@ -37,18 +37,18 @@
         <dex dex="C:\Development\studio-workspace\EventMe\app\build\intermediates\pre-dexed\debug\internal_impl-22.0.0-cca105b5de19d988bb96977335148104afa2d6c2.jar" />
     </item>
     <item
-        jar="C:\Development\studio-workspace\EventMe\app\build\intermediates\exploded-aar\com.android.support\support-v4\22.0.0\classes.jar"
-        jumboMode="false"
-        revision="21.1.2"
-        sha1="4e86306289ace4aa0cfec44a05ed2b410d36989d">
-        <dex dex="C:\Development\studio-workspace\EventMe\app\build\intermediates\pre-dexed\debug\classes-01a169a7ad7eb61e75d7ed222ff41186bc4e49e9.jar" />
-    </item>
-    <item
         jar="C:\Development\studio-workspace\EventMe\app\libs\android-async-http-1.4.6.jar"
         jumboMode="false"
         revision="21.1.2"
         sha1="a845a88238be0b5be9d238652c1bc0605ef91f52">
         <dex dex="C:\Development\studio-workspace\EventMe\app\build\intermediates\pre-dexed\debug\android-async-http-1.4.6-d6ea98d31fdb61310bb3ac4374fb2c1db0d1935f.jar" />
+    </item>
+    <item
+        jar="C:\Development\studio-workspace\EventMe\app\build\intermediates\exploded-aar\com.android.support\support-v4\22.0.0\classes.jar"
+        jumboMode="false"
+        revision="21.1.2"
+        sha1="4e86306289ace4aa0cfec44a05ed2b410d36989d">
+        <dex dex="C:\Development\studio-workspace\EventMe\app\build\intermediates\pre-dexed\debug\classes-01a169a7ad7eb61e75d7ed222ff41186bc4e49e9.jar" />
     </item>
 
 </items>

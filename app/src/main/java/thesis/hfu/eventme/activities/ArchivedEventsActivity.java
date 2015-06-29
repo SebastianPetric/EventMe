@@ -71,6 +71,10 @@ public class ArchivedEventsActivity extends ActionBarActivity {
         return true;
     }
 
+    public void onBackPressed() {
+        StartActivity.getInstance().startAllEventsActivity(getApplicationContext());
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.action_search) {

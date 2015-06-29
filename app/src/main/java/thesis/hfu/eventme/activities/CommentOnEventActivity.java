@@ -125,6 +125,10 @@ public class CommentOnEventActivity extends ActionBarActivity {
         return true;
     }
 
+    public void onBackPressed() {
+        StartActivity.getInstance().startAllTasksActivity(getApplicationContext(),getEvent_id());
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.action_search) {

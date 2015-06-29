@@ -7,7 +7,7 @@ public class CheckIf {
 
     private static CheckIf instance;
 
-    public static CheckIf getInstance(){
+    public static synchronized CheckIf getInstance(){
         if (CheckIf.instance == null){
             CheckIf.instance = new CheckIf();
         }

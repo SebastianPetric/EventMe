@@ -154,7 +154,7 @@ public class DBfunctions {
                 try {
                     Toast.makeText(context.getApplicationContext(), response.getString(MESSAGE), Toast.LENGTH_SHORT).show();
                     if (response.getInt(STATUS) == 200) {
-                        CheckSharedPreferences.getInstance().setPreferances(context.getApplicationContext(), response.getString(USER_ID));
+                        CheckSharedPreferences.getInstance().setPreferences(context.getApplicationContext(), response.getInt(USER_ID));
                         StartActivity.getInstance().startAllEventsActivity(context.getApplicationContext());
                     }
                 } catch (JSONException e) {
@@ -178,15 +178,10 @@ public class DBfunctions {
                     e.printStackTrace();
                 }
             }
-
-            @Override
-            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-                Log.d("schlecht",responseString);
-            }
         });
     }
 
-    public void getAllEvents(final Activity context,  final SwipeRefreshLayout swipeRefreshLayout, final RecyclerView recyclerView, String admin_id) {
+    public void getAllEvents(final Activity context,  final SwipeRefreshLayout swipeRefreshLayout, final RecyclerView recyclerView, int admin_id) {
 
         RequestParams params = BuildJSON.getInstance().getAllEventsJSON(admin_id);
         DBconnection.post(URL_GET_ALL_EVENTS, params, new JsonHttpResponseHandler() {
@@ -224,7 +219,7 @@ public class DBfunctions {
         });
     }
 
-    public void getAllArchivEvents(final Activity context,  final SwipeRefreshLayout swipeRefreshLayout, final RecyclerView recyclerView, String admin_id) {
+    public void getAllArchivEvents(final Activity context,  final SwipeRefreshLayout swipeRefreshLayout, final RecyclerView recyclerView, int admin_id) {
 
         RequestParams params = BuildJSON.getInstance().getAllEventsJSON(admin_id);
         DBconnection.post(URL_GET_ALL_ARCHIV_EVENTS, params, new JsonHttpResponseHandler() {
@@ -300,7 +295,7 @@ public class DBfunctions {
         );
     }
 
-    public void createEvent(final Context context, String eventName, String location, Date date, String admin_id) {
+    public void createEvent(final Context context, String eventName, String location, Date date, int admin_id) {
 
         RequestParams params = BuildJSON.getInstance().createEventJSON(eventName, location, date, admin_id);
         DBconnection.post(URL_CREATE_EVENT, params, new JsonHttpResponseHandler() {
@@ -317,7 +312,7 @@ public class DBfunctions {
         });
     }
 
-    public void createTask(final Context context, final int event_id, String admin_id, int editor_id, String task, String description, String quantity) {
+    public void createTask(final Context context, final int event_id, int admin_id, int editor_id, String task, String description, String quantity) {
 
         RequestParams params = BuildJSON.getInstance().createTaskJSON(event_id, admin_id, editor_id, task, description, quantity);
         DBconnection.post(URL_CREATE_TASK, params, new JsonHttpResponseHandler() {
@@ -334,7 +329,7 @@ public class DBfunctions {
         });
     }
 
-    public void searchAllUsers(final Context context, final SwipeRefreshLayout swipeRefreshLayout, final RecyclerView recyclerView, String search, String admin_id) {
+    public void searchAllUsers(final Context context, final SwipeRefreshLayout swipeRefreshLayout, final RecyclerView recyclerView, String search, int admin_id) {
 
         RequestParams params = BuildJSON.getInstance().searchAllUsersJSON(search, admin_id);
         DBconnection.post(URL_SEARCH_USER, params, new JsonHttpResponseHandler() {
@@ -371,7 +366,7 @@ public class DBfunctions {
         });
     }
 
-    public void searchFriendsForEvent(final Context context,final SwipeRefreshLayout swipeRefreshLayout, final RecyclerView recyclerView, String search, String admin_id, final int event_id) {
+    public void searchFriendsForEvent(final Context context,final SwipeRefreshLayout swipeRefreshLayout, final RecyclerView recyclerView, String search, int admin_id, final int event_id) {
 
         RequestParams params = BuildJSON.getInstance().searchFriendsForEventJSON(admin_id, event_id, search);
         DBconnection.post(URL_SEARCH_FRIENDS_EVENT, params, new JsonHttpResponseHandler() {
@@ -408,7 +403,7 @@ public class DBfunctions {
         });
     }
 
-    public void searchFriendsForTask(final Activity activity,final Context context,final SwipeRefreshLayout swipeRefreshLayout, final RecyclerView recyclerView, final String search, String admin_id, final int event_id) {
+    public void searchFriendsForTask(final Activity activity,final Context context,final SwipeRefreshLayout swipeRefreshLayout, final RecyclerView recyclerView, final String search, int admin_id, final int event_id) {
 
         RequestParams params = BuildJSON.getInstance().searchFriendsForTaskJSON(admin_id, search);
         DBconnection.post(URL_SEARCH_FRIENDS_TASK, params, new JsonHttpResponseHandler() {
@@ -445,7 +440,7 @@ public class DBfunctions {
         });
     }
 
-    public void searchFriendsList(final Context context, final SwipeRefreshLayout swipeRefreshLayout, final RecyclerView recyclerView, String search, String admin_id) {
+    public void searchFriendsList(final Context context, final SwipeRefreshLayout swipeRefreshLayout, final RecyclerView recyclerView, String search, int admin_id) {
 
         RequestParams params = BuildJSON.getInstance().getFriendsListJSON(search, admin_id);
         DBconnection.post(URL_SEARCH_FRIENDSLIST, params, new JsonHttpResponseHandler() {
@@ -482,7 +477,7 @@ public class DBfunctions {
         });
     }
 
-    public void deleteTask(final Context context, int task_id, String admin_id, final int event_id){
+    public void deleteTask(final Context context, int task_id, int admin_id, final int event_id){
 
         RequestParams params = BuildJSON.getInstance().deleteTaskJSON(task_id, admin_id);
         DBconnection.post(URL_DELETE_TASK,params,new JsonHttpResponseHandler(){
@@ -542,7 +537,7 @@ public class DBfunctions {
     }
 
     //Delete Event in Activity with all the other Events
-    public void deleteEvent(final Context context, final ArrayList<Event> eventList, final RecyclerView.Adapter<AllEventsListAdapter.MyViewHolder> adapter, final int position,String admin_id, final int event_id){
+    public void deleteEvent(final Context context, final ArrayList<Event> eventList, final RecyclerView.Adapter<AllEventsListAdapter.MyViewHolder> adapter, final int position,int admin_id, final int event_id){
 
         RequestParams params = BuildJSON.getInstance().deleteArchivEventJSON(event_id, admin_id);
         DBconnection.post(URL_DELETE_EVENT,params,new JsonHttpResponseHandler(){
@@ -563,7 +558,7 @@ public class DBfunctions {
     }
 
     //Delete Event in Activity from Event Detail Site
-    public void deleteEvent(final Context context, String admin_id, final int event_id){
+    public void deleteEvent(final Context context, int admin_id, final int event_id){
 
         RequestParams params = BuildJSON.getInstance().deleteArchivEventJSON(event_id, admin_id);
         DBconnection.post(URL_DELETE_EVENT,params,new JsonHttpResponseHandler(){
@@ -583,7 +578,7 @@ public class DBfunctions {
     }
 
     //Archive Event in Activity with all the other Events
-    public void archivEvent(final Context context, final ArrayList<Event> eventList, final RecyclerView.Adapter<AllEventsListAdapter.MyViewHolder> adapter, final int position,String admin_id, final int event_id){
+    public void archivEvent(final Context context, final ArrayList<Event> eventList, final RecyclerView.Adapter<AllEventsListAdapter.MyViewHolder> adapter, final int position,int admin_id, final int event_id){
 
         RequestParams params = BuildJSON.getInstance().deleteArchivEventJSON(event_id, admin_id);
         DBconnection.post(URL_ARCHIV_EVENT,params,new JsonHttpResponseHandler(){
@@ -604,7 +599,7 @@ public class DBfunctions {
     }
 
     //Archiv Event in Activity from Event Detail Site
-    public void archiveEvent(final Context context, String admin_id, final int event_id){
+    public void archiveEvent(final Context context, int admin_id, final int event_id){
 
         RequestParams params = BuildJSON.getInstance().deleteArchivEventJSON(event_id, admin_id);
         DBconnection.post(URL_ARCHIV_EVENT,params,new JsonHttpResponseHandler(){
@@ -623,7 +618,7 @@ public class DBfunctions {
         });
     }
 
-    public void editEventDetails(final Context context,final TextView eventNameTextView, final TextView eventDateTextView,final TextView eventLocationTextView,String admin_id,int event_id, final String name, final String location, final Date date){
+    public void editEventDetails(final Context context,final TextView eventNameTextView, final TextView eventDateTextView,final TextView eventLocationTextView,int admin_id,int event_id, final String name, final String location, final Date date){
 
         RequestParams params = BuildJSON.getInstance().editEventDetailsJSON(event_id, admin_id, name, location, date);
         DBconnection.post(URL_EDIT_EVENT_DETAILS,params,new JsonHttpResponseHandler(){
@@ -710,9 +705,9 @@ public class DBfunctions {
         });
     }
 
-    public void changeEditorOfTask(final Context context,final TextView editorTextView,final String editor_id, int task_id){
+    public void changeEditorOfTask(final Context context,final TextView editorTextView,final int editor_id, int task_id){
 
-        RequestParams params= BuildJSON.getInstance().becomeEditorOfTaskJSON(Integer.parseInt(editor_id), task_id);
+        RequestParams params= BuildJSON.getInstance().becomeEditorOfTaskJSON(editor_id, task_id);
         DBconnection.post(URL_BECOME_EDITOR_OF_TASK, params, new JsonHttpResponseHandler() {
 
             @Override
@@ -775,7 +770,7 @@ public class DBfunctions {
         });
     }
 
-    public void removeFriendFromFriendsList(final Context context, final RecyclerView.Adapter<FriendsListAdapter.MyViewHolder> adapter, final ArrayList<User> userList, final int position,int user_id,String admin_id) {
+    public void removeFriendFromFriendsList(final Context context, final RecyclerView.Adapter<FriendsListAdapter.MyViewHolder> adapter, final ArrayList<User> userList, final int position,int user_id,int admin_id) {
 
         RequestParams params = BuildJSON.getInstance().addRemoveFriendJSON(admin_id, user_id);
         DBconnection.post(URL_REMOVE_FRIEND_FROM_FRIENDSLIST, params, new JsonHttpResponseHandler() {
@@ -795,7 +790,7 @@ public class DBfunctions {
         });
     }
 
-    public void addFriendToFriendslist(final Context context, final RecyclerView.Adapter<FriendsListAdapter.MyViewHolder> adapter, final ArrayList<User> userList, final int position,int user_id,String admin_id) {
+    public void addFriendToFriendslist(final Context context, final RecyclerView.Adapter<FriendsListAdapter.MyViewHolder> adapter, final ArrayList<User> userList, final int position,int user_id,int admin_id) {
 
         RequestParams params = BuildJSON.getInstance().addRemoveFriendJSON(admin_id, user_id);
         DBconnection.post(URL_ADD_FRIEND_TO_FRIENDSLIST, params, new JsonHttpResponseHandler() {
@@ -825,7 +820,7 @@ public class DBfunctions {
         });
     }
 
-    public void sendFriendRequest(final Context context, final RecyclerView.Adapter<SearchListAdapter.MyViewHolder> adapter, final ArrayList<User> userList, final int position, int user_id, String admin_id){
+    public void sendFriendRequest(final Context context, final RecyclerView.Adapter<SearchListAdapter.MyViewHolder> adapter, final ArrayList<User> userList, final int position, int user_id, int admin_id){
 
         RequestParams params = BuildJSON.getInstance().addRemoveFriendJSON(admin_id, user_id);
         DBconnection.post(URL_SEND_FRIEND_REQUEST, params, new JsonHttpResponseHandler() {
@@ -855,7 +850,7 @@ public class DBfunctions {
     }
 
 
-    public void removeFriend(final Context context, final RecyclerView.Adapter<SearchListAdapter.MyViewHolder> adapter, final ArrayList<User> userList, final int position,int user_id,String admin_id) {
+    public void removeFriend(final Context context, final RecyclerView.Adapter<SearchListAdapter.MyViewHolder> adapter, final ArrayList<User> userList, final int position,int user_id,int admin_id) {
 
         RequestParams params = BuildJSON.getInstance().addRemoveFriendJSON(admin_id, user_id);
         DBconnection.post(URL_REMOVE_FRIEND, params, new JsonHttpResponseHandler() {
@@ -1000,7 +995,7 @@ public class DBfunctions {
         });
     }
 
-    public void updateEventDetails(final SwipeRefreshLayout swipeRefreshLayout,final ProgressBar progressBar,String admin_id, final TextView totalOrganizersTextView, final TextView totalPercentageTextView, final TextView totalCostsTextView, final TextView eventNameTextView, final TextView eventDateTextView, final TextView eventLocationTextView,final int event_id) {
+    public void updateEventDetails(final SwipeRefreshLayout swipeRefreshLayout,final ProgressBar progressBar,int admin_id, final TextView totalOrganizersTextView, final TextView totalPercentageTextView, final TextView totalCostsTextView, final TextView eventNameTextView, final TextView eventDateTextView, final TextView eventLocationTextView,final int event_id) {
 
         RequestParams params = BuildJSON.getInstance().getEventDetailsJSON(admin_id, event_id);
         DBconnection.post(URL_UPDATE_EVENT_DETAILS, params, new JsonHttpResponseHandler() {
@@ -1061,7 +1056,7 @@ public class DBfunctions {
         });
     }
 
-    public void updateTaskNameQuantity(final Context context, final ProgressBar progressBarTask,final SwipeRefreshLayout syncRefresh,final RecyclerView recyclerView,final TextView taskNameTextView, final TextView quantityTextView,final TextView eventNameTextView, final TextView costsTextView, final TextView percentageTextView, final TextView editorTextView, final int task_id, String editor_id, final String quantity, final String task_name){
+    public void updateTaskNameQuantity(final Context context, final ProgressBar progressBarTask,final SwipeRefreshLayout syncRefresh,final RecyclerView recyclerView,final TextView taskNameTextView, final TextView quantityTextView,final TextView eventNameTextView, final TextView costsTextView, final TextView percentageTextView, final TextView editorTextView, final int task_id, int editor_id, final String quantity, final String task_name){
 
         RequestParams params = BuildJSON.getInstance().updateTaskNameQuantityJSON(editor_id, task_id, quantity, task_name);
         DBconnection.post(URL_EDIT_TASK_DETAILS,params,new JsonHttpResponseHandler(){

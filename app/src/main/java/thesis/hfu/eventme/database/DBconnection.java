@@ -8,11 +8,6 @@ public class DBconnection {
 
     private static DBconnection instance;
     public AsyncHttpClient client;
-
-    //------------------------localhost-----------------------------
-    //private static final String URL ="http://10.0.3.2/eventmyDB/";
-    //--------------------------------------------------------------
-
     private static final String URL = "http://eventmy.besaba.com/";
     private static final String ACCEPT = "Accept";
     private static final String MIME_TYPE = "application/json";
@@ -34,3 +29,10 @@ public class DBconnection {
         getInstance().client.post(DBconnection.URL +url, params,handler );
     }
 }
+
+
+
+
+//------------------------localhost-----------------------------
+//private static final String URL ="http://10.0.3.2/eventmyDB/";
+//--------------------------------------------------------------

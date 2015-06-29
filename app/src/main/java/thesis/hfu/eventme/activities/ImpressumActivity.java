@@ -35,6 +35,11 @@ public class ImpressumActivity extends ActionBarActivity {
     }
 
     @Override
+    public void onBackPressed() {
+        StartActivity.getInstance().startAllEventsActivity(getApplicationContext());
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId()==R.id.action_search) {
             StartActivity.getInstance().startSearchActivity(getApplicationContext());

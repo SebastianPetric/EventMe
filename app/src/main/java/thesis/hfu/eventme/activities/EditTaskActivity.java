@@ -138,6 +138,11 @@ public class EditTaskActivity extends ActionBarActivity {
     }
 
     @Override
+    public void onBackPressed() {
+        StartActivity.getInstance().startAllTasksActivity(getApplicationContext(),getEvent_id());
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.action_search) {
             StartActivity.getInstance().startSearchActivity(getApplicationContext());

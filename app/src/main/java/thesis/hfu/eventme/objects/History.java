@@ -7,7 +7,7 @@ public class History {
     private String comment,editor_name,date;
     private int history_id,editor_id;
     private boolean isEditor;
-    private int admin_id= Integer.parseInt(CheckSharedPreferences.getInstance().getAdmin_id());
+    private int admin_id= CheckSharedPreferences.getInstance().getAdmin_id();
 
     public History(String date, String editor_name, String comment, int history_id,int editor_id){
         this.comment=comment;

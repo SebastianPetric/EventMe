@@ -10,6 +10,7 @@ import android.widget.Toast;
 import thesis.hfu.eventme.R;
 import thesis.hfu.eventme.database.DBfunctions;
 import thesis.hfu.eventme.functions.CheckIf;
+import thesis.hfu.eventme.functions.CheckSharedPreferences;
 import thesis.hfu.eventme.functions.StartActivity;
 
 public class LoginActivity extends ActionBarActivity {
@@ -27,6 +28,9 @@ public class LoginActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        if(CheckSharedPreferences.getInstance().isLoggedIn(this)){
+            StartActivity.getInstance().startAllEventsActivity(this);
+        }
         setEmailEditText(R.id.loginEmailEditText);
         setPasswordEditText(R.id.loginPasswortEditText);
         setLoginFinishButton(R.id.loginButton);

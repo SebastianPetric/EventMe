@@ -30,9 +30,9 @@ public class CommentOnEventDialog extends DialogFragment {
         return CommentOnEventDialog.instance;
     }
 
-    public void startCommentDialog(Context context,RecyclerView recyclerView,SwipeRefreshLayout syncRefresh,FragmentManager manager,int event_id,String admin_id) {
+    public void startCommentDialog(Context context,RecyclerView recyclerView,SwipeRefreshLayout syncRefresh,FragmentManager manager,int event_id,int admin_id) {
         setEvent_id(event_id);
-        setAdmin_id(Integer.valueOf(admin_id));
+        setAdmin_id(admin_id);
         setContext(context);
         setRecyclerView(recyclerView);
         setSyncRefresh(syncRefresh);

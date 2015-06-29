@@ -25,8 +25,7 @@ public class EditTaskDialog extends DialogFragment {
     private RecyclerView recyclerView;
     private SwipeRefreshLayout syncRefresh;
     private ProgressBar progressBarTask;
-    private String editor_id;
-    private int task_id;
+    private int task_id,editor_id;
 
     public static EditTaskDialog getInstance() {
         if (EditTaskDialog.instance == null) {
@@ -35,7 +34,7 @@ public class EditTaskDialog extends DialogFragment {
         return EditTaskDialog.instance;
     }
 
-    public void startEditTaskDialog(FragmentManager manager,ProgressBar progressBarTask, Context context,SwipeRefreshLayout syncRefresh, RecyclerView recyclerView, TextView taskNameTextView, TextView quantityTextView,final TextView eventNameTextView, final TextView costsTextView, final TextView percentageTextView, final TextView editorTextView,int task_id,String editor_id) {
+    public void startEditTaskDialog(FragmentManager manager,ProgressBar progressBarTask, Context context,SwipeRefreshLayout syncRefresh, RecyclerView recyclerView, TextView taskNameTextView, TextView quantityTextView,final TextView eventNameTextView, final TextView costsTextView, final TextView percentageTextView, final TextView editorTextView,int task_id,int editor_id) {
         setContext(context);
         setTaskNameTextView(taskNameTextView);
         setQuantityTextView(quantityTextView);
@@ -99,10 +98,10 @@ public class EditTaskDialog extends DialogFragment {
     public void setQuantityTextView(TextView quantityTextView) {
         this.quantityTextView = quantityTextView;
     }
-    public String getEditor_id() {
+    public int getEditor_id() {
         return editor_id;
     }
-    public void setEditor_id(String editor_id) {
+    public void setEditor_id(int editor_id) {
         this.editor_id = editor_id;
     }
     public int getTask_id() {

@@ -34,9 +34,9 @@ public class CommentOnTaskDialog extends DialogFragment {
         return CommentOnTaskDialog.instance;
     }
 
-    public void startCommentDialog(FragmentManager manager,ProgressBar progressBarTask,SwipeRefreshLayout syncRefresh,final RecyclerView recyclerView,Context context, int task_id,String admin_id,final TextView eventNameTextView,final TextView taskFieldTextView, final TextView quantityTextView, final TextView costTextView, TextView percentageTextView, final TextView editorTextView) {
+    public void startCommentDialog(FragmentManager manager,ProgressBar progressBarTask,SwipeRefreshLayout syncRefresh,final RecyclerView recyclerView,Context context, int task_id,int admin_id,final TextView eventNameTextView,final TextView taskFieldTextView, final TextView quantityTextView, final TextView costTextView, TextView percentageTextView, final TextView editorTextView) {
         setTask_id(task_id);
-        setAdmin_id(Integer.valueOf(admin_id));
+        setAdmin_id(admin_id);
         setContext(context);
         setEventNameTextView(eventNameTextView);
         setTaskNameTextView(taskFieldTextView);
